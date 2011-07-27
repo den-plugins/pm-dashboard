@@ -1,0 +1,21 @@
+<table id="pm_dashboard_header">
+  <tr>
+    <td><span>Client</span><%= @project.assignee "client" %></td>
+    
+    <td><span>Planned Start Date</span></td>
+    
+    
+    <td><span>Project Manager</span><%= User.current.name %></td>
+  
+  </tr>
+  
+  <tr>
+   
+    <td><span>Project Name</span><%= @project.name %></td>
+    
+    <td><span>Planned End Date</span><%= %></td>
+    
+    <td><span>Technical Architect</span><%= @project.assignee "technical_architect" %></td>
+    
+  </tr>   
+</table>  

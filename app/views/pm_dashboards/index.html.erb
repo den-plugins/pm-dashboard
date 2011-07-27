@@ -1,0 +1,40 @@
+<% content_for :header_tags do %>
+    
+<% end %>
+<% html_title 'Project Management Dashboard' -%>
+<style>
+  td span {
+    font-weight: bold;
+    display: inline-block;
+    width: 200px;
+    text-align: right;
+    padding-right: 10px
+  }
+  
+  td span:after { content: ":" }
+
+  pm_dashboard_header { width: 75% }
+</style>
+
+<h2>Project Management Dashboard</h2>
+
+<% tabs = pm_dashboard_tabs %>
+<% selected_tab = params[:tab] ? params[:tab].to_s : tabs.first[:name] %>
+
+<div class="tabs">
+<ul>
+<% tabs.each do |tab| -%>
+    <li><%= link_to (tab[:label]), { :tab => tab[:name] },
+                                    :id => "tab-#{tab[:name]}",
+                                    :class => (tab[:name] != selected_tab ? nil : 'selected'),
+                                    :onclick => "showTab('#{tab[:name]}'); this.blur(); return false;" %></li>
+<% end -%>
+</ul>
+</div>
+
+<% tabs.each do |tab| -%>
+<%= content_tag('div', render(:partial => tab[:partial]),
+                       :id => "tab-content-#{tab[:name]}",
+                       :style => (tab[:name] != selected_tab ? 'display:none' : nil),
+                       :class => 'tab-content') %>
+<% end -%>

@@ -1,0 +1,17 @@
+nbproject
+.project
+.loadpath
+log/*.log
+tmp
+actionmailer_config_DONOTVERSION.rb
+*DONOTVERSION*
+test.txt
+coverage
+.svn
+*/.svn
+**/**/.svn
+*/.svn/*
+files/*
+*.swp
+production_data
+*.*~
