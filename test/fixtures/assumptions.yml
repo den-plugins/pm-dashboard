@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  ref_number: 1
+  project_id: 1
+  description: MyText
+  validation: MyText
+  owner: 1
+  date_due: 2011-07-27
+  date_closed: 2011-07-27
+  days_overdue: 1
+two:
+  id: 2
+  ref_number: 1
+  project_id: 1
+  description: MyText
+  validation: MyText
+  owner: 1
+  date_due: 2011-07-27
+  date_closed: 2011-07-27
+  days_overdue: 1
