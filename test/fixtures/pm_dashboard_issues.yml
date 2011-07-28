@@ -1,0 +1,29 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  env: 
+  date_raised: 
+  raised_by: 1
+  issue_description: MyText
+  action: MyText
+  impact: 1
+  owner: 1
+  date_due: 
+  days_overdue: 1
+  date_close: 
+  related_risk_assumption: 1
+  project_id: 1
+two:
+  id: 2
+  env: 
+  date_raised: 
+  raised_by: 1
+  issue_description: MyText
+  action: MyText
+  impact: 1
+  owner: 1
+  date_due: 
+  days_overdue: 1
+  date_close: 
+  related_risk_assumption: 1
+  project_id: 1
