@@ -12,6 +12,7 @@ module ProjectExtn
       unloadable # Send unloadable so it will not be unloaded in development
      # belongs_to :deliverable ----- new relationship?
       has_many :assumptions
+      has_many :pm_dashboard_issues
     end
 
   end
