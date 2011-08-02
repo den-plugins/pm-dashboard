@@ -1,39 +1,11 @@
-<h4>Assumptions</h4>
-
 <div class="contextual">
-  <%= link_to "New Assumption", {}, :class => 'icon icon-add' %>
+  <%= link_to "New Assumption", { :controller => 'assumptions' , :action => 'add', :project_id => @project}, :class => 'icon icon-add' %>
 </div>
 
-# temporary
-<table id="assumptions" class="list">
+<h2>Assumptions</h2>
+
 <% if @assumptions.any? %>
-  <thead>
-    <tr>
-      <th>Ref #</th>
-      <th>Assumption Description</th>
-      <th>Validation</th>
-      <th>Owner</th>
-      <th>Date Recorded</th>
-      <th>Date Due</th>
-      <th>Days Overdue</th>
-      <th>Related Risk</th>
-      <th>Date Closed</th>
-    </tr>
-  </thead>
-  <% @assumptions.each do |assumption| %>
-    <tr>
-      <td><%= assumption.ref_number %></td>
-      <td><%= assumption.description %></td>
-      <td><%= assumption.validation  %></td>
-      <td><%= assumption.owner  %></td>
-      <td><%= assumption.created_at.to_date %></td>
-      <td><%= assumption.date_due %></td>
-      <td><%= assumption.days_overdue %></td>
-      <td></td>
-      <td><%= assumption.date_closed %></td>
-    </tr>
-  <% end %>
+  <%= render :partial => 'pm_dashboards/assumptions/list' %>
 <% else %>
-  <tr>NO DATA TO DISPLAY</tr>
+<p class="nodata" colspan='9'><%= l(:label_no_data) %></p>
 <% end %>
-</table>

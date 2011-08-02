@@ -1,6 +1,6 @@
 require 'redmine'
 
-Redmine::Plugin.register :redmine_pm_dashboards do
+Redmine::Plugin.register :pm_dashboard do
   name 'Redmine Pm Dashboards plugin'
   author 'Author name'
   description 'This is a plugin for Redmine'

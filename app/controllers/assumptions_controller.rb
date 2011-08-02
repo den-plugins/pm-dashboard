@@ -1,0 +1,53 @@
+class AssumptionsController < ApplicationController
+  include Redmine::I18n
+  
+  before_filter :require_login
+  before_filter :get_project, :only => [:add, :update, :destroy]
+  before_filter :get_assumption, :only => [:update, :destroy]
+  
+  def add
+    if request.get?
+      @assumption = Assumption.new
+      render :template => "pm_dashboards/assumptions/add" 
+    else
+      @assumption = @project.assumptions.create(params[:assumption])
+      if @assumption.save
+        puts @assumption.inspect
+        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :assumptions
+      else
+        render :template => "pm_dashboards/assumptions/add" 
+      end
+    end
+  end
+  
+  def update
+    if request.get?
+      puts @assumption.inspect
+      render :template => "pm_dashboards/assumptions/edit"
+    else
+      if @assumption.update_attributes(params[:assumption])
+        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :assumptions
+      end
+    end
+  end
+  
+  def destroy
+    if @assumption.destroy
+      redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :assumptions
+    end
+  end
+    
+  private
+  def get_project
+    @project = Project.find(params[:project_id])
+    rescue ActiveRecord::RecordNotFound
+      render_404
+  end
+  
+  def get_assumption
+    @assumption = Assumption.find(params[:id])
+    puts @assumption.inspect
+    rescue ActiveRecord::RecordNotFound
+      render_404
+  end
+end

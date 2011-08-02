@@ -2,9 +2,13 @@ en:
   assumption_new: New Assumption
   assumption_update: Update Assumption
   
+  field_ref_number: "Ref #"
   field_description: Description
   field_validation: Validation
   field_owner: Owner
+  field_date_recorded: Date Recorded
   field_date_due: Date Due
   field_date_closed: Date Closed
   field_days_overdue: Days Overdue
+  field_related_risk: Related Risk
+  field_status: Status

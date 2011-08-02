@@ -1,0 +1,39 @@
+<table id="assumptions" class="list issues" style='text-align: center; '>
+  <thead>
+    <tr>
+      <th><%= l(:field_ref_number) %></th>
+      <th><%= l(:field_description) %></th>
+      <th><%= l(:field_validation) %></th>
+      <th><%= l(:field_owner) %></th>
+      <th><%= l(:field_date_recorded) %></th>
+      <th><%= l(:field_date_due) %></th>
+      <th><%= l(:field_days_overdue) %></th>
+      <th><%= l(:field_date_closed) %></th>
+      <th><%= l(:field_related_risk) %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <% @assumptions.each do |assumption| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= assumption.ref_number %></td>
+      <td style='text-align: left;'><%= assumption.description %></td>
+      <td style='text-align: left;'><%= assumption.validation  %></td>
+      <td><%= User.find(assumption.owner).name  %></td>
+      <td><%= assumption.created_at.to_date %></td>
+      <td><%= assumption.date_due %></td>
+      <td><%= assumption.days_overdue %></td>
+      <td><%= assumption.date_closed %></td>
+      <td></td>
+      <td align="center">
+      <%# if assumption.editable_by?(@user) -%>
+        <%= link_to image_tag('edit.png'), {:controller => 'assumptions', :action => 'update', :id => assumption, :project_id => @project},
+                                             :title => l(:button_edit) %>
+        <%= link_to image_tag('delete.png'), {:controller => 'assumptions', :action => 'destroy', :id => assumption, :project_id => @project},
+                                             :confirm => l(:text_are_you_sure),
+                                             :method => :post,
+                                             :title => l(:button_delete) %>
+      <%# end -%>
+    </td>
+    </tr>
+  <% end %>
+</table>
