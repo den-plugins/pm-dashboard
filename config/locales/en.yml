@@ -12,3 +12,20 @@ en:
   field_days_overdue: Days Overdue
   field_related_risk: Related Risk
   field_status: Status
+
+  issue_new: New Issue
+  issue_update: Update Issue
+
+  field_ref_number: "Ref #"
+  field_issue_description: Description
+  field_env: Env
+  field_action: Action Required/Taken
+  field_owner: Owner
+  field_date_raised: Date Raised
+  field_date_due: Date Due
+  field_date_closed: Date Closed
+  field_days_overdue: Days Overdue
+  field_related_risk_assumption: Related Risk
+  field_status: Status
+  field_impact: Impact
+  field_raised_by: Raised By

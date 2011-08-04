@@ -1,42 +1,11 @@
 <div class="contextual">
-  <%= link_to "New Issue", {:controller =>'pm_dashboard_issues', :action => 'new'}, :class => 'icon icon-add' %>
+  <%= link_to "New Issue", {:controller =>'pm_dashboard_issues', :action => 'add', :project_id => @project}, :class => 'icon icon-add' %>
 </div>
 
 <h2>Issues</h2>
 
-<table id="issues" class="list">
-  <thead>
-    <tr>
-      <th>Ref #</th>
-      <th>Env</th>
-      <th>Date Raised</th>
-      <th>Raised By</th>
-      <th>Issue Description</th>
-      <th>Action Required / Taken</th>
-      <th>Impact</th>
-      <th>Owner</th>
-      <th>Date Due</th>
-      <th>Days Overdue</th>
-      <th>Date Closed</th>
-      <th>Related Risk / Assumption</th>
-    </tr>
-  </thead>
-  <% if @issues.any? %>
-    <% @issues.each do |issue| %>
-      <tr>
-        <td><%= issue.id %></td>
-        <td></td>
-        <td></td>
-        <td><%= issue.raised_by %></td>
-        <td><%= issue.issue_description %></td>
-        <td><%= issue.action %></td>
-        <td><%= issue.impact %></td>
-        <td><%= issue.owner %></td>
-        <td></td>
-        <td><%= issue.days_overdue %></td>
-        <td></td>
-        <td><%= issue.related_risk_assumption %></td>
-      </tr>
-    <% end %>
-  <% end %>
-</table>
+<% if @issues.any? %>
+  <%= render :partial => 'pm_dashboards/pm_dashboard_issues/list' %>
+<% else %>
+<p class="nodata" colspan='9'><%= l(:label_no_data) %></p>
+<% end %>

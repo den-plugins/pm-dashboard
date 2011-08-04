@@ -1,1 +1,10 @@
-<h2>PmDashboardIssues#add</h2>
+<h2><%= l(:issue_new)%></h2>
+
+<% labelled_tabular_form_for  :issue, @issue,
+                                                       :url => {:controller => 'pm_dashboard_issues', :action => 'add', :project_id => @project},
+                                                       :html => {:id => 'issue-form'} do |f| %>
+  <%= error_messages_for 'issue' %>
+  <div class="box"> <%= render :partial => 'pm_dashboards/pm_dashboard_issues/form', :locals => {:f => f} %></div>
+  <%= submit_tag l(:button_save) %>
+<% end %>
+

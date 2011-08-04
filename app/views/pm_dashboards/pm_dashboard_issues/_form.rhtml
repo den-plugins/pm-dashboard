@@ -1,0 +1,22 @@
+<p> <%= f.text_area :issue_description,
+                   :required => true,
+                   :cols => 20,
+                   :rows => (@issue.issue_description.blank? ? 3 : [[3, @issue.issue_description.length / 15].max, 30].min),
+                   :accesskey => accesskey(:edit),
+                   :class => 'wiki-edit' %></p>
+<p><%= f.text_area :action, :rows => 7, :cols => 35, :class=> 'wiki-edit', :required => true %></p>
+
+  <div class="attributes">
+<div class="splitcontentleft">
+  <p><%= f.select :status, %w(open closed), :selected => 'open'  %></p>
+  <p><%= f.select :impact, ((1..3).to_a.collect), :required => true %></p>
+  <p><%= f.select :owner, (@project.members.collect {|p| [p.name, p.user.id]}), :required => true %></p>
+</div>
+<div class="splitcontentright">
+  <p><%= f.select :env, %w(I E), :selected => 'I', :required => true  %></p>
+  <p><%= f.text_field :date_due, :size => 10, :required  => true  %><%= calendar_for('issue_date_due') %></p>
+  <p><%= f.text_field :days_overdue, :size => 3 %></p>
+</div>
+<div style="clear:both;"> </div>
+  </div>
+  <!%= wikitoolbar_for 'issue_description' %>

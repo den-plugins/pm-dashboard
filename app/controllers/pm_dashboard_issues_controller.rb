@@ -1,17 +1,46 @@
 class PmDashboardIssuesController < ApplicationController
 
+  before_filter :require_login
+  before_filter :get_project, :only => [:add, :update, :destroy]
+  before_filter :get_issue, :only => [:update, :destroy]
+
   def index
   end
 
-  def new
-  end
-
   def add
+    if request.get?
+      @issue = PmDashboardIssue.new
+      render :template => "pm_dashboards/pm_dashboard_issues/add"
+    else
+      @issue = @project.pm_dashboard_issues.create(params[:issue])
+      if @issue.save
+        puts @issue.inspect
+        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :issues
+      else
+        render :template => "pm_dashboards/pm_dashboard_issues/add"
+      end
+    end
   end
 
   def edit
+    if request.get?
+      puts @issue.inspect
+      render :template => "pm_dashboards/pm_dashboard_issues/edit"
+    else
+      if @issue.update_attributes(params[:issue])
+        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :issues
+      end
+    end
   end
 
   def delete
+  end
+
+  def get_project
+    @project = Project.find(params[:project_id])
+  end
+
+  def get_issue
+    @issue = PmDashboardIssue.find(params[:id])
   end
 end
