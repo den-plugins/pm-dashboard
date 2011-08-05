@@ -10,6 +10,7 @@ class PmDashboardIssue < ActiveRecord::Base
 
   before_save :set_ref_number
   before_save :set_status
+  before_save :set_raised_by
 
   def set_ref_number
     self.ref_number = "I" + "%0.5d" % id
@@ -17,6 +18,10 @@ class PmDashboardIssue < ActiveRecord::Base
 
   def set_status
     self.date_closed = Date.today.to_s if status.eql? "close"
+  end
+
+  def set_raised_by
+    self.raised_by = User.current
   end
 
 end

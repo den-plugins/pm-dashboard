@@ -1,4 +1,5 @@
-<table id="issues" class="list">
+<!table id="issues" class="list">
+<table class="list issues">
   <thead>
     <tr>
       <th>Ref #</th>
@@ -18,23 +19,22 @@
   <% if @issues.any? %>
     <% @issues.each do |issue| %>
       <tr>
-        <td><%= issue.id %></td>
-        <td></td>
-        <td></td>
+        <td><%= issue.ref_number %></td>
+        <td><%= issue.env %></td>
+        <td><%= issue.date_raised %></td>
         <td><%= issue.raised_by %></td>
         <td><%= issue.issue_description %></td>
         <td><%= issue.action %></td>
         <td><%= issue.impact %></td>
         <td><%= issue.owner %></td>
-        <td></td>
+        <td><%= issue.date_due %></td>
         <td><%= issue.days_overdue %></td>
-        <td></td>
+        <td><%= issue.date_close %></td>
         <td><%= issue.related_risk_assumption %></td>
         <td align="center">
-      <%# if assumption.editable_by?(@user) -%>
         <%= link_to image_tag('edit.png'), {:controller => 'pm_dashboard_issues', :action => 'edit', :id => issue, :project_id => @project},
                                              :title => l(:button_edit) %>
-        <%= link_to image_tag('delete.png'), {:controller => 'pm_dashboard_issues', :action => 'destroy', :id => issue, :project_id => @project},
+        <%= link_to image_tag('delete.png'), {:controller => 'pm_dashboard_issues', :action => 'delete', :id => issue, :project_id => @project},
                                              :confirm => l(:text_are_you_sure),
                                              :method => :post,
                                              :title => l(:button_delete) %>

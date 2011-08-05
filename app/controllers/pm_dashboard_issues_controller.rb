@@ -1,8 +1,8 @@
 class PmDashboardIssuesController < ApplicationController
 
   before_filter :require_login
-  before_filter :get_project, :only => [:add, :update, :destroy]
-  before_filter :get_issue, :only => [:update, :destroy]
+  before_filter :get_project, :only => [:add, :edit, :delete]
+  before_filter :get_issue, :only => [:edit, :delete]
 
   def index
   end
@@ -34,6 +34,9 @@ class PmDashboardIssuesController < ApplicationController
   end
 
   def delete
+    if @issue.destroy
+      redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :issues
+    end
   end
 
   def get_project
