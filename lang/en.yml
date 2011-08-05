@@ -2,9 +2,31 @@ en:
   assumption_new: New Assumption
   assumption_update: Update Assumption
   
+  field_ref_number: "Ref #"
   field_description: Description
   field_validation: Validation
   field_owner: Owner
+  field_date_recorded: Date Recorded
   field_date_due: Date Due
   field_date_closed: Date Closed
   field_days_overdue: Days Overdue
+  field_related_risks: Related Risks
+  field_status: Status
+  
+  issue_new: New Issue
+  issue_update: Update Issue
+
+  field_issue_description: Description
+  field_env: Env
+  field_action: Action Required/Taken
+  field_date_raised: Date Raised
+  field_related_risk_assumption: Related Risk
+  field_impact: Impact
+  field_raised_by: Raised By
+  
+  label_assumptions_summary: Summary
+  label_assumptions_pclosed: "% Closed"
+  label_assumptions_status_open: Open
+  label_assumptions_status_closed: Closed
+  label_assumptions_overdue: Over Due
+  label_add_another_risk: Add Another Risk

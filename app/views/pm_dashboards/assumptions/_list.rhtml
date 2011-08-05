@@ -9,7 +9,7 @@
       <th><%= l(:field_date_due) %></th>
       <th><%= l(:field_days_overdue) %></th>
       <th><%= l(:field_date_closed) %></th>
-      <th><%= l(:field_related_risk) %></th>
+      <th><%= l(:field_related_risks) %></th>
       <th></th>
     </tr>
   </thead>
@@ -23,7 +23,10 @@
       <td><%= assumption.date_due %></td>
       <td><%= assumption.days_overdue %></td>
       <td><%= assumption.date_closed %></td>
-      <td></td>
+      <td><% assumption.risks.each do |risk|%>
+        <%= link_to risk.ref_number, "#" %>
+        <br/>
+      <% end %></td>
       <td align="center">
       <%# if assumption.editable_by?(@user) -%>
         <%= link_to image_tag('edit.png'), {:controller => 'assumptions', :action => 'update', :id => assumption, :project_id => @project},

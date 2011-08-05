@@ -1,0 +1,31 @@
+<% content_tag 'fieldset', :id => 'assumptions_summary' do %>
+<legend><%= l(:label_assumptions_summary) %></legend>
+
+<% all = @assumptions.count %>
+<% open = assumptions_by_status(Assumption::STATUS_OPEN).count %>
+<% closed = assumptions_by_status(Assumption::STATUS_CLOSED).count %>
+<% overdued = assumptions_overdued.count %>
+
+<table id='assumptions_summary'>
+	<tr>
+	  <th><%= l(:label_assumptions_pclosed) %></th>
+	  <td><%="%0.2f " % (@assumptions.any? ? ((closed.to_f/all.to_f)*100) : 0) %>%</td>
+	</tr>
+	<tr>
+	  <th><%= l(:label_assumptions_status_open) %></th>
+	  <td><%= open %></td>
+	</tr>
+	<tr>
+	  <th><%= l(:label_assumptions_status_closed) %></th>
+	  <td><%=  closed %></td>
+	</tr>
+	<tr>
+	  <th><%= l(:label_assumptions_overdue) %></th>
+	  <td><%= "%0.2f " % (@assumptions.any? ? ((overdued.to_f/all.to_f)*100) : 0 ) %>%</td>
+	</tr>
+</table>
+<% end %>
+
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
+<% end %>

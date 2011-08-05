@@ -1,5 +1,4 @@
 class AssumptionsController < ApplicationController
-  include Redmine::I18n
   
   before_filter :require_login
   before_filter :get_project, :only => [:add, :update, :destroy]
@@ -12,7 +11,7 @@ class AssumptionsController < ApplicationController
     else
       @assumption = @project.assumptions.create(params[:assumption])
       if @assumption.save
-        puts @assumption.inspect
+        flash[:notice] = l(:notice_successful_create)
         redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :assumptions
       else
         render :template => "pm_dashboards/assumptions/add" 
@@ -22,11 +21,13 @@ class AssumptionsController < ApplicationController
   
   def update
     if request.get?
-      puts @assumption.inspect
       render :template => "pm_dashboards/assumptions/edit"
     else
       if @assumption.update_attributes(params[:assumption])
+        flash[:notice] = l(:notice_successful_update)
         redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :assumptions
+      else
+        render :template => "pm_dashboards/assumptions/edit"
       end
     end
   end
@@ -46,7 +47,6 @@ class AssumptionsController < ApplicationController
   
   def get_assumption
     @assumption = Assumption.find(params[:id])
-    puts @assumption.inspect
     rescue ActiveRecord::RecordNotFound
       render_404
   end
