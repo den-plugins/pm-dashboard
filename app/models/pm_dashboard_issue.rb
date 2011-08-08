@@ -6,7 +6,7 @@ class PmDashboardIssue < ActiveRecord::Base
   validates_presence_of :env, :issue_description, :action, :impact, :project, :owner, :date_due
   validates_inclusion_of :status, :in => %w(open closed)
   validates_inclusion_of :env, :in => %w(I E)
-  validates_inclusion_of :impact, :in => 1..3
+  validates_inclusion_of :impact, :in => %w(Low Medium High)
 
   before_save :set_ref_number
   before_save :set_status
