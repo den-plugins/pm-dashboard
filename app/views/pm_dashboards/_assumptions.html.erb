@@ -1,8 +1,8 @@
 <div class="contextual">
-  <%= link_to "New Assumption", { :controller => 'assumptions' , :action => 'add', :project_id => @project}, :class => 'icon icon-add' %>
+  <%= link_to l(:label_assumption_new), { :controller => 'assumptions' , :action => 'add', :project_id => @project}, :class => 'icon icon-add' %>
 </div>
 
-<h2>Assumptions</h2>
+<h2><%= l(:label_assumptions) %></h2>
 
 <%= render :partial => 'pm_dashboards/assumptions/summary' %>
 <% if @assumptions.any? %>

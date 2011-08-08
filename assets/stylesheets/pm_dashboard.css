@@ -1,15 +1,23 @@
 table#assumptions_summary {
+  margin-top: 10px;
   margin-left: 10px;
-  display: block;
+  border-collapse: collapse;
 }
 
 #assumptions_summary tr th {
+  border: 1px solid #989898;
   text-align: right;
-  padding: 2px;
+  padding: 4px;
+  width: 100px;
 }
 
 #assumptions_summary tr td {
-  display: inline-block;
-  padding: 2px;
-  margin-left: 5px;
+  border: 1px solid #989898;
+  padding: 4px;
+  padding-left: 10px;
+  width: 100px;
 }
+
+td.one { background-color: #FF1D1D; }
+td.two { background-color: #FFFF00; }
+td.three { background-color: #50FF50; }

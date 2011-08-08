@@ -1,0 +1,24 @@
+<p> <%= f.text_area :risk_description,
+                   :required => true,
+                   :rows => (@risk.risk_description.blank? ? 3 : [[3, @risk.risk_description.length / 50].max, 100].min),
+                   :accesskey => accesskey(:edit),
+                   :class => 'wiki-edit' %></p>
+ <p><%= f.text_area :potential_effect, :rows => 3, :cols => 30, :class=> 'wiki-edit' %></p>
+ <p><%= f.text_area :mitigating_action,  :rows => 3, :cols => 30, :class=> 'wiki-edit' %></p>
+<div class="attributes">
+  <div class="splitcontentleft">
+    <p><%= f.select :owner, (@project.members.collect {|p| [p.name, p.user.id]}), :selected => User.current.id , :required => true %></p>
+    <p><%= f.select :env, (Risk::RISK_ENV.keys.collect {|r| [l(Risk::RISK_ENV[r][:name]), r]}), :required => true %></p>
+    <p><%= f.select :risk_type, (Risk::RISK_TYPE.keys.collect {|r| [l(Risk::RISK_TYPE[r][:name]), r]}), :required => true %></p>
+    <p><%= f.select :probability, %w(1 2 3 4 5), :required => true %></p>
+    <p><%= f.select :impact, %w(1 2 3 4 5), :required => true %></p>
+  </div>
+  <div class="splitcontentright">
+    <p><%= f.text_field :target_resolution_date, :size => 10, :required  => true  %><%= calendar_for('risk_target_resolution_date') %></p>
+    <p><%= f.select :status,  (Risk::STATUS.keys.collect {|r| [l(Risk::STATUS[r][:name]), r ]}), :required => true %></p>
+    <p><%= f.select :probability_final, %w(1 2 3 4 5), :include_blank => true %></p>
+    <p><%= f.select :impact_final, %w(1 2 3 4 5), :include_blank => true  %></p>
+  </div>
+  <div style="clear:both;"> </div>
+</div>
+<hr/>

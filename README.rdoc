@@ -1,3 +1,16 @@
-= pm_dashboards
+PM Dashboard Plugin
 
-Description goes here
+August 8, 2011
+  
+  * RISKS
+            Features:
+              = Risks Tab (list, add, update, delete)
+
+            ToDo:
+              = risk association with issues and assumptions
+              = summary (index)
+              = autocalculation of days_overdue
+   
+  * ASSUMPTIONS
+            ToDo:
+              = fix view for 'related risks' in add/update of assumption

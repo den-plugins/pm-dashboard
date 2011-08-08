@@ -1,1 +1,12 @@
-<h4>Risks</h4>
+<div class="contextual">
+  <%= link_to l(:label_risk_new), { :controller => 'risks' , :action => 'add', :project_id => @project}, :class => 'icon icon-add' %>
+</div>
+
+<h2><%= l(:label_risks) %></h2>
+
+<% if @assumptions.any? %>
+  <p></p>
+  <%= render :partial => 'pm_dashboards/risks/list' %>
+<% else %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>

@@ -5,6 +5,7 @@ class Assumption < ActiveRecord::Base
   STATUS = {  STATUS_OPEN => {:name => :label_assumptions_status_open},
                          STATUS_CLOSED => {:name => :label_assumptions_status_closed}}
   
+  
   belongs_to :project
   has_one :user
   has_and_belongs_to_many :risks
@@ -22,11 +23,11 @@ class Assumption < ActiveRecord::Base
   end
   
   def set_date_closed
-    self.date_closed = Date.today.to_s if status.eql? STATUS_CLOSED
+    self.date_closed = (status.eql? STATUS_CLOSED) ?  Date.today.to_s : nil
   end
   
   def date_due_not_past
     errors.add(:date_due, 'is in the past') if date_due and date_due.past?
   end
-  
+
 end

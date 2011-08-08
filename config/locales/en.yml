@@ -1,5 +1,6 @@
 en:
-  assumption_new: New Assumption
+  label_assumptions: Assumptions
+  label_assumption_new: New Assumption
   assumption_update: Update Assumption
   
   field_ref_number: "Ref #"
@@ -25,8 +26,36 @@ en:
   field_raised_by: Raised By
   
   label_assumptions_summary: Summary
-  label_assumptions_pclosed: "% Closed"
+  label_assumptions_pclosed: Percent Closed
   label_assumptions_status_open: Open
   label_assumptions_status_closed: Closed
   label_assumptions_overdue: Over Due
-  label_add_another_risk: Add Another Risk
+  label_add_risk: Add Risk
+  label_remove_risk: Remove Risk
+  
+  label_risks: Risks
+  label_risk_new: New Risk
+  label_risk_update: Update Risk
+  
+  field_risk_type: Risk Type
+  field_risk_description: Risk Description
+  field_potential_effect: Potential Effect
+  field_probability: Probability
+  field_initial_risk_rating: Initial Risk Rating
+  field_mitigating_action: Mitigating Action/ Contingency Strategy
+  field_probability_final: Probability (Final)
+  field_impact_final: Impact (Final)
+  field_final_risk_rating: Final Risk Rating
+  field_target_resolution_date: Target Resolution Date
+  field_related_issue_assumption: Related Issues/ Assumptions
+  
+  label_risk_status_monitor: M - Monitor
+  label_risk_status_realized: R - Realized
+  label_risk_status_closed: C - Closed
+  label_risk_env_internal: I - Internal
+  label_risk_env_external: E - External
+  label_risk_type_monetary: M - Monetary
+  label_risk_type_business: B - Business/Legal
+  label_risk_type_project: P - Project
+  label_risk_type_technical: T - Technical
+  label_risk_type_security: S - Security

@@ -13,6 +13,7 @@ module ProjectExtn
      # belongs_to :deliverable ----- new relationship?
       has_many :assumptions, :dependent => :destroy
       has_many :pm_dashboard_issues
+      has_many :risks
     end
 
   end
