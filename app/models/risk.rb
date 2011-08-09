@@ -4,8 +4,8 @@ class Risk < ActiveRecord::Base
                          "R" =>  {:name => :label_risk_status_realized},
                          "C" =>  {:name => :label_risk_status_closed} }
                          
-  RISK_ENV= { "I"  => {:name => :label_risk_env_internal },
-                          "E" => {:name => :label_risk_env_external}}
+  RISK_ENV= { "I"  => {:name => :label_env_internal },
+                          "E" => {:name => :label_env_external}}
                              
   RISK_TYPE = { "M" => {:name => :label_risk_type_monetary},
                               "B" => {:name => :label_risk_type_business},
@@ -14,6 +14,7 @@ class Risk < ActiveRecord::Base
                               "S" => {:name => :label_risk_type_security}}
                          
   has_and_belongs_to_many :assumptions
+  has_and_belongs_to_many :pmdashboardissues
   belongs_to :project
   
   validates_presence_of :env, :risk_type, :risk_description, :probability, :impact, :owner, :target_resolution_date, :status

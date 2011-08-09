@@ -9,6 +9,7 @@ class Assumption < ActiveRecord::Base
   belongs_to :project
   has_one :user
   has_and_belongs_to_many :risks
+  belongs_to :pmdashboardissue
   
   validates_presence_of :description, :project, :owner, :date_due
   validates_inclusion_of :status, :in => STATUS.keys

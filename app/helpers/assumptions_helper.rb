@@ -27,5 +27,5 @@ module AssumptionsHelper
   def collection_for_risk_select
     risks = @project.risks.select { |r| !@assumption.risks.include?(r) }
   end
-  
+
 end

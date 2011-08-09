@@ -1,0 +1,25 @@
+<%= hidden_field_tag 'issue[assumption_ids][]', '', :id => nil %>
+<div class='attributes'>
+  <table>
+	<tr>
+	  <td><%= select_tag 'available_assumptions',
+		          options_for_select(collection_for_assumption_select.collect{|r| [ r.ref_number, r.id]}),
+		          :multiple => true, :size => 10, :style => "width:150px" %>
+	  </td>
+	  <td align="center" valign="middle">
+	    <input type="button" value="--&gt;"
+			 onclick="moveOptions(this.form.available_assumptions, this.form.selected_assumptions);" /><br />
+		<input type="button" value="&lt;--"
+			 onclick="moveOptions(this.form.selected_assumptions, this.form.available_assumptions);" />
+	  </td>
+	  <td><%= select_tag 'issue[assumption_ids][]',
+		          options_for_select(@issue.assumptions.collect{|r| [r.ref_number, r.id]}),
+		          :id => 'selected_assumptions', :multiple => true, :size => 10, :style => "width:150px" %>
+	  </td>
+	</tr>
+  </table>
+</div>
+
+<% content_for :header_tags do %>
+<%= javascript_include_tag 'select_list_move' %>
+<% end %>
