@@ -1,1 +1,54 @@
-<h2>Project Info</h2>
+<%= render :partial => "dashboard_header" %>
+
+<h4>Project Definition </h4>
+<% if !@project.description.nil? %>
+  <p class="indent"><%= @project.description %></p>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
+
+<h4>Project Scope</h4>
+<% if !@project_scope.nil? %>
+  <p class="indent"><%= @project_scope_value %></p>
+  <% if @project_scope_value.to_s.eql? "" %>
+    <p class="nodata"><%= l(:label_no_data) %></p>
+  <% end %>
+<% else %>
+  <p class="nodata">
+    "Project Scope" Field is not yet added in the Projects Custom Field.
+    <% if User.current.admin? %>
+      To add it, click <%= link_to "here", {:controller => 'custom_fields', 
+                            :action => 'new', :type => 'ProjectCustomField'} %>
+    <% else %>
+      Please contact admin to add the "Project Scope" in Administration > Custom Fields > Projects.
+    <% end %>
+  </p>
+<% end %>
+
+<h4>Project Sponsor/Stakeholders</h4>
+<% if @stakeholders.any? %>
+  <%= render :partial => 'pm_dashboards/project_info/stakeholders' %>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
+
+<h4>Project Team: </h4>
+<% if @members.any? %>
+  <table class="list">
+  <tr>
+  <th>Name</th>
+  <th>Position</th>
+  <th>Role</th>
+  <th>Email Address</th>
+  <th>Hand Phone #</th>
+  <th>Office #</th>
+  <th>Rate</th>
+  <th>Billable?</th>
+  <th>Remarks</th>
+  </tr>
+  <%= proj_team %>
+  </table>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
+

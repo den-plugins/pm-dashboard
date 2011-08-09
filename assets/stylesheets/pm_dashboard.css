@@ -1,4 +1,4 @@
-table#assumptions_summary {
+table#assumptions_summary{
   margin-top: 10px;
   margin-left: 10px;
   border-collapse: collapse;
@@ -21,3 +21,11 @@ table#assumptions_summary {
 td.one { background-color: #FF1D1D; }
 td.two { background-color: #FFFF00; }
 td.three { background-color: #50FF50; }
+
+.indent{
+  text-indent: 2em;
+  padding: 0px 10px;
+  text-align: justify;
+}
+
+
