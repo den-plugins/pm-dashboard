@@ -4,7 +4,7 @@
 <table class='pmsummary'>
 	<tr>
 	  <th><%= l(:label_mean) %></th>
-	  <td><%= "%0.3f" % Risk.average(:final_risk_rating, :conditions => ["project_id = ?", @project]) %></td>
+	  <td><%= "%0.3f" % (@risks ? Risk.average(:final_risk_rating, :conditions => ["project_id = ?", @project]) : 0) %></td>
 	</tr>
 	<tr>
 	  <th class='red'></th>

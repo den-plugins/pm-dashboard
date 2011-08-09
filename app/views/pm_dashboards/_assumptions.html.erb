@@ -4,8 +4,8 @@
 
 <h2><%= l(:label_assumptions) %></h2>
 
-<%= render :partial => 'pm_dashboards/assumptions/summary' %>
 <% if @assumptions.any? %>
+  <%= render :partial => 'pm_dashboards/assumptions/summary' %>
   <p></p>
   <%= render :partial => 'pm_dashboards/assumptions/list' %>
 <% else %>

@@ -24,7 +24,7 @@
       <td><%= assumption.days_overdue %></td>
       <td><%= assumption.date_closed %></td>
       <td><% assumption.risks.each do |risk|%>
-        <%= link_to risk.ref_number, "#" %>
+        <%= link_to risk.ref_number, :project_id => @project, :tab => 'risks', :risk => risk.id %>
         <br/>
       <% end %></td>
       <td align="center">

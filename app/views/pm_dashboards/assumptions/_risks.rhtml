@@ -11,7 +11,8 @@
 	  <tr>
 		  <td><%= select_tag 'available_risks',
 		            options_for_select(collection_for_risk_select.collect{|r| [ r.ref_number, r.id]}),
-		            :multiple => true, :size => 10, :style => "width:150px" %>
+		            :multiple => true, :size => 10, :style => "width:150px",
+		            :ondblclick => "handleSelect(this, '#{@project.identifier}')" %>
 		  </td>
 		  <td align="center" valign="middle">
 			  <input type="button" value="--&gt;"
@@ -21,7 +22,8 @@
 		  </td>
 		  <td><%= select_tag 'assumption[risk_ids][]',
 		            options_for_select(@assumption.risks.collect{|r| [r.ref_number, r.id]}),
-		            :id => 'selected_risks', :multiple => true, :size => 10, :style => "width:150px" %>
+		            :id => 'selected_risks', :multiple => true, :size => 10, :style => "width:150px",
+		            :ondblclick => "handleSelect(this, '#{@project.identifier}')" %>
 		  </td>
 	  </tr>
   </table>
@@ -29,4 +31,5 @@
 </p>
 <% content_for :header_tags do %>
 <%= javascript_include_tag 'select_list_move' %>
+<%= javascript_include_tag 'pm_dashboard', :plugin => 'pm_dashboard'  %>
 <% end %>

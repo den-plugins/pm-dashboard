@@ -39,6 +39,7 @@ en:
   label_risks: Risks
   label_risk_new: New Risk
   label_risk_update: Update Risk
+  label_view_all_risks: View All Risks
   
   field_risk_type: Risk Type
   field_risk_description: Risk Description

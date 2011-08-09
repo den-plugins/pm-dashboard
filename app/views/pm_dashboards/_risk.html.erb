@@ -4,8 +4,10 @@
 
 <h2><%= l(:label_risks) %></h2>
 
-<%= render :partial => 'pm_dashboards/risks/summary' %>
-<% if @risks.any? %>
+<p><%= link_to l(:label_view_all_risks), :controller => 'pm_dashboards', :project_id => @project, :tab => 'risks'  if params[:risk]  %></p>
+ 
+<% if @risks.any? %> 
+  <%= render :partial => 'pm_dashboards/risks/summary' %>
   <p></p>
   <%= render :partial => 'pm_dashboards/risks/list' %>
 <% else %>
