@@ -9,14 +9,14 @@ module AssumptionsHelper
     @assumption.new_record? ? {:selected => Assumption::STATUS_CLOSED} : {:selected => @assumption.status}
   end
   
-  def color_code(p)
-    case p
+  def color_code(percentage)
+    case percentage
       when 0 ... 50
-        "one"
+        "red"
       when 50 ... 100
-        "two"
+        "yellow"
       when 100
-        "three"
+        "green"
     end
   end
   
@@ -25,7 +25,7 @@ module AssumptionsHelper
   end
   
   def collection_for_risk_select
-    risks = @project.risks.select { |r| !@assumption.risks.include?(r) }
+    @project.risks.select { |r| !@assumption.risks.include?(r) }
   end
   
 end

@@ -18,7 +18,5 @@
 </div>
 <%#= wikitoolbar_for 'assumption_description' %>
 <hr/>
-<p>
-  <label for="related_risks"><%= l(:field_related_risks).to_sym %></label>
-  <%= render :partial => 'pm_dashboards/assumptions/risks', :locals => {:f => f} %>
-</p>
+
+<%= render :partial => 'pm_dashboards/assumptions/risks', :locals => {:f => f} %>

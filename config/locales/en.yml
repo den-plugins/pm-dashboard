@@ -1,7 +1,7 @@
 en:
   label_assumptions: Assumptions
   label_assumption_new: New Assumption
-  assumption_update: Update Assumption
+  label_assumption_update: Update Assumption
   
   field_ref_number: "Ref #"
   field_description: Description
@@ -25,13 +25,13 @@ en:
   field_impact: Impact
   field_raised_by: Raised By
   
-  label_assumptions_summary: Summary
+  label_summary: Summary
   label_assumptions_pclosed: Percent Closed
   label_assumptions_status_open: Open
   label_assumptions_status_closed: Closed
   label_assumptions_overdue: Over Due
-  label_add_risk: Add Risk
-  label_remove_risk: Remove Risk
+  label_available_risks: Available Risks
+  label_related_risks: Related Risks
   
   label_risks: Risks
   label_risk_new: New Risk
@@ -59,3 +59,16 @@ en:
   label_risk_type_project: P - Project
   label_risk_type_technical: T - Technical
   label_risk_type_security: S - Security
+  label_risk_prob_1: Very unlikely to occur
+  label_risk_prob_2: Less likely to occur
+  label_risk_prob_3: 50/50 chance of occuring
+  label_risk_prob_4: More likely to occur than not
+  label_risk_prob_5: Certain, Already Observed
+  label_risk_impact_1: Insignificant changes, re-planning may be required
+  label_risk_impact_2: Small delay, small increased cost, but absorbable
+  label_risk_impact_3: Delay, increased cost in excess of tolerance 
+  label_risk_impact_4: Substantial delay, key deliverable not met, incur costs
+  label_risk_impact_5: Inability to deliver, business case/objective not viable
+  
+  label_mean: Mean
+  label_total: Total

@@ -1,5 +1,6 @@
 class PmDashboardsController < ApplicationController
   helper :assumptions
+  helper :risks
   
   def index
     @project = Project.find(params[:project_id])

@@ -32,12 +32,12 @@
       <td><%= risk.potential_effect %></td>
       <td><%= risk.probability %></td>
       <td><%= risk.impact %></td>
-      <td><%= risk.initial_risk_rating %></td>
+      <td class="<%= risk_rating_color_code(risk.initial_risk_rating)%>"><%= risk.initial_risk_rating %></td>
       <td><%= User.find(risk.owner).name  %></td>
       <td><%= risk.mitigating_action %></td>
       <td><%= risk.probability_final %></td>
       <td><%= risk.impact_final %></td>
-      <td><%= risk.final_risk_rating %></td>
+      <td class="<%= risk_rating_color_code(risk.final_risk_rating)%>"><%= risk.final_risk_rating %></td>
       <td><%= risk.target_resolution_date %></td>
       <td><%= risk.days_overdue %></td>
       <td><%= risk.status %></td>

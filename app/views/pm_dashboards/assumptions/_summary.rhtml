@@ -1,12 +1,12 @@
 <% content_tag 'fieldset', :id => 'assumptions_summary' do %>
-<legend><%= l(:label_assumptions_summary) %></legend>
+<legend><%= l(:label_summary) %></legend>
 
 <% all = @assumptions.count %>
 <% open = assumptions_by_status(Assumption::STATUS_OPEN).count %>
 <% closed = assumptions_by_status(Assumption::STATUS_CLOSED).count %>
 <% pclosed = @assumptions.any? ? ((closed.to_f/all.to_f)*100) : 0 %>
 
-<table id='assumptions_summary'>
+<table class='pmsummary'>
 	<tr>
 	  <th><%= l(:label_assumptions_pclosed) %></th>
 	  <td class="<%= color_code(pclosed) %>"><%="%0.2f " % pclosed %>%</td>

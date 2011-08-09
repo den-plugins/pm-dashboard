@@ -4,9 +4,10 @@
 
 <h2><%= l(:label_risks) %></h2>
 
-<% if @assumptions.any? %>
+<%= render :partial => 'pm_dashboards/risks/summary' %>
+<% if @risks.any? %>
   <p></p>
   <%= render :partial => 'pm_dashboards/risks/list' %>
 <% else %>
-<p class="nodata"><%= l(:label_no_data) %></p>
+  <p class="nodata"><%= l(:label_no_data) %></p>
 <% end %>
