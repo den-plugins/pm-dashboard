@@ -22,8 +22,4 @@ td.red, th.red { background-color: #DD0806; color: #FFF; }
 td.yellow, th.yellow { background-color: #F4EB05; }
 td.green, th.green { background-color: #006411; color: #FFF; }
 
-.indent{
-  text-indent: 2em;
-  padding: 0px 10px;
-  text-align: justify;
-}
+
