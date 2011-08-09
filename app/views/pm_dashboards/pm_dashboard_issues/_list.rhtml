@@ -1,5 +1,4 @@
-<!table id="issues" class="list">
-<table class="list issues">
+<table id="pm_dashboard_issues" class="list issues" style='text-align: center; '>
   <thead>
     <tr>
       <th>Ref #</th>
@@ -30,7 +29,15 @@
         <td><%= issue.date_due %></td>
         <td><%= issue.days_overdue %></td>
         <td><%= issue.date_close %></td>
-        <td><%= issue.related_risk_assumption %></td>
+        <td><% issue.risks.each do |risk|%>
+            <%= link_to risk.ref_number, "#" %>
+            <br/>
+            <% end %>
+            <% issue.assumptions.each do |assumption|%>
+            <%= link_to assumption.ref_number, "#" %>
+            <br/>
+            <% end %>
+        </td>
         <td align="center">
         <%= link_to image_tag('edit.png'), {:controller => 'pm_dashboard_issues', :action => 'edit', :id => issue, :project_id => @project},
                                              :title => l(:button_edit) %>

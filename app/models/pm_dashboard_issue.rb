@@ -1,27 +1,23 @@
 class PmDashboardIssue < ActiveRecord::Base
 
+
+  ENV= { "I" => {:name => :label_env_internal },
+         "E" => {:name => :label_env_external}}
+
   belongs_to :project
   belongs_to :user
 
-  validates_presence_of :env, :issue_description, :action, :impact, :project, :owner, :date_due
-  validates_inclusion_of :status, :in => %w(open closed)
-  validates_inclusion_of :env, :in => %w(I E)
+  has_and_belongs_to_many :risks
+  has_many :assumptions
+
+  validates_presence_of :env, :date_raised, :raised_by, :issue_description, :impact, :owner, :project
+  validates_inclusion_of :env, :in => ENV.keys
   validates_inclusion_of :impact, :in => %w(Low Medium High)
 
   before_save :set_ref_number
-  before_save :set_status
-  before_save :set_raised_by
 
   def set_ref_number
     self.ref_number = "I" + "%0.5d" % id
-  end
-
-  def set_status
-    self.date_closed = Date.today.to_s if status.eql? "close"
-  end
-
-  def set_raised_by
-    self.raised_by = User.current
   end
 
 end

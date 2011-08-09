@@ -1,5 +1,7 @@
 class PmDashboardIssuesController < ApplicationController
 
+  helper :assumptions
+
   before_filter :require_login
   before_filter :get_project, :only => [:add, :edit, :delete]
   before_filter :get_issue, :only => [:edit, :delete]

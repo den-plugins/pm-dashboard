@@ -5,6 +5,6 @@
                                                        :html => {:id => 'issue-form'} do |f| %>
   <%= error_messages_for 'issue' %>
   <div class="box"> <%= render :partial => 'pm_dashboards/pm_dashboard_issues/form', :locals => {:f => f} %></div>
-  <%= submit_tag l(:button_save) %>
+  <%= submit_tag l(:button_save), :onclick => "selectAllOptions('selected_risks');selectAllOptions('selected_assumptions')" %>
 <% end %>
 

@@ -21,9 +21,12 @@ en:
   field_env: Env
   field_action: Action Required/Taken
   field_date_raised: Date Raised
-  field_related_risk_assumption: Related Risk
+  field_related_risk: Related Risks
+  field_related_assumption: Related Assumptions
   field_impact: Impact
   field_raised_by: Raised By
+  field_date_close: Date Closed
+
   
   label_summary: Summary
   label_assumptions_pclosed: Percent Closed
@@ -52,8 +55,6 @@ en:
   label_risk_status_monitor: M - Monitor
   label_risk_status_realized: R - Realized
   label_risk_status_closed: C - Closed
-  label_risk_env_internal: I - Internal
-  label_risk_env_external: E - External
   label_risk_type_monetary: M - Monetary
   label_risk_type_business: B - Business/Legal
   label_risk_type_project: P - Project
@@ -72,3 +73,6 @@ en:
   
   label_mean: Mean
   label_total: Total
+
+  label_env_internal: Internal
+  label_env_external: External
