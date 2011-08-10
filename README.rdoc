@@ -26,3 +26,4 @@ August 10, 2011
   Features/Fixes:
     = assumption status set to 'closed' if assumption has related risk/s
     = risk associated with pm_dashboard_issues and assumptions (relations)
+    = autocalculation of assumption's days_overdue

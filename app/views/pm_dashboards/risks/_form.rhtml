@@ -8,20 +8,33 @@
 <div class="attributes">
   <div class="splitcontentleft">
     <p><%= f.select :owner, (@project.members.collect {|p| [p.name, p.user.id]}), :selected => (@risk.new_record? ? User.current.id : @risk.owner) , :required => true %></p>
-    <p><%= f.select :env, (Risk::RISK_ENV.keys.collect {|r| [l(Risk::RISK_ENV[r][:name]), r]}), :required => true %></p>
-    <p><%= f.select :risk_type, (Risk::RISK_TYPE.keys.collect {|r| [l(Risk::RISK_TYPE[r][:name]), r]}), :required => true %></p>
-    <p><%= f.select :probability, Risk::PROBABILITY.keys.sort, :required => true %></p>
-    <p><%= f.select :impact, Risk::IMPACT.keys.sort, :required => true %></p>
+    <p><%= f.select :env, collection_for_risk_env_select, :required => true %></p>
+    <p><%= f.select :risk_type, collection_for_risk_type_select, :required => true %></p>
+    <p><%= f.select :status, collection_for_risk_status_select, :required => true %></p>
   </div>
   <div class="splitcontentright">
     <p><%= f.text_field :target_resolution_date, :size => 10, :required  => true  %><%= calendar_for('risk_target_resolution_date') %></p>
-    <p><%= f.select :status,  (Risk::STATUS.keys.collect {|r| [l(Risk::STATUS[r][:name]), r ]}), :required => true %></p>
+    <p><%= f.select :probability, Risk::PROBABILITY.keys.sort, :required => true %></p>
+    <p><%= f.select :impact, Risk::IMPACT.keys.sort, :required => true %></p>
     <p><%= f.select :probability_final, Risk::PROBABILITY.keys.sort, :include_blank => true %></p>
     <p><%= f.select :impact_final, Risk::IMPACT.keys.sort, :include_blank => true  %></p>
   </div>
   <div style="clear:both;"> </div>
+  <div class="guide">
+    <%= render_probability_guide %>
+    <br/>
+    <%= render_impact_guide %>
+  </div>
 </div>
 <hr/>
 
-<%= render :partial => 'pm_dashboards/risks/assumptions', :locals => {:f => f} %>
-<%= render :partial => 'pm_dashboards/risks/issues', :locals => {:f => f} %>
+<p>
+  <div class='splitcontentleft'><%= render :partial => 'pm_dashboards/risks/assumptions', :locals => {:f => f} %></div>
+  <div class='splitcontentright'><%= render :partial => 'pm_dashboards/risks/issues', :locals => {:f => f} %></div>
+</p>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
+  <%= javascript_include_tag 'select_list_move' %>
+  <%= javascript_include_tag 'pm_dashboard', :plugin => 'pm_dashboard'  %>
+<% end %>

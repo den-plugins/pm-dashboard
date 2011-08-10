@@ -62,14 +62,14 @@ en:
   field_final_risk_rating: Final Risk Rating
   field_target_resolution_date: Target Resolution Date
   
-  label_risk_status_monitor: M - Monitor
-  label_risk_status_realized: R - Realized
-  label_risk_status_closed: C - Closed
-  label_risk_type_monetary: M - Monetary
-  label_risk_type_business: B - Business/Legal
-  label_risk_type_project: P - Project
-  label_risk_type_technical: T - Technical
-  label_risk_type_security: S - Security
+  label_risk_status_monitor: Monitor
+  label_risk_status_realized: Realized
+  label_risk_status_closed: Closed
+  label_risk_type_monetary: Monetary
+  label_risk_type_business: Business/Legal
+  label_risk_type_project: Project
+  label_risk_type_technical: Technical
+  label_risk_type_security: Security
   label_risk_prob_1: Very unlikely to occur
   label_risk_prob_2: Less likely to occur
   label_risk_prob_3: 50/50 chance of occuring

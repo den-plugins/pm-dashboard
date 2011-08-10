@@ -18,6 +18,7 @@ class Assumption < ActiveRecord::Base
   before_save :set_status
   before_save :set_ref_number
   before_save :set_date_closed
+  before_save :set_days_overdue
   
   def set_ref_number
     self.ref_number = "A" + "%0.5d" % id
@@ -33,6 +34,10 @@ class Assumption < ActiveRecord::Base
   
   def set_status
     self.status = STATUS_CLOSED unless risk_ids.empty?
+  end
+  
+  def set_days_overdue
+    self.days_overdue = (date_due < Date.today && validation.blank?) ? (Date.today - date_due).numerator : 0
   end
 
 end

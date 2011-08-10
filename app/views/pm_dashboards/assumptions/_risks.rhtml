@@ -1,7 +1,6 @@
 <p>
   <label for="related_risks"><%= l(:field_related_risks).to_sym %></label>
   <%= hidden_field_tag 'assumption[risk_ids][]', '', :id => nil %>
-  <div>
   <table style="padding-left: 180px">
     <tr>
       <td><%= l(:label_available_risks) %></td>
@@ -27,7 +26,6 @@
 		  </td>
 	  </tr>
   </table>
-  </div>
 </p>
 <% content_for :header_tags do %>
 <%= javascript_include_tag 'select_list_move' %>

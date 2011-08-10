@@ -1,10 +1,10 @@
-<p> <%= f.text_area :description,
+<p><%= f.text_area :description,
                    :required => true,
                    :cols => 60,
                    :rows => (@assumption.description.blank? ? 10 : [[10, @assumption.description.length / 50].max, 100].min),
                    :accesskey => accesskey(:edit),
                    :class => 'wiki-edit' %></p>
- <p><%= f.text_area :validation, :rows => 3, :cols => 30, :class=> 'wiki-edit' %></p>
+<p><%= f.text_area :validation, :rows => 3, :cols => 30, :class=> 'wiki-edit' %></p>
 <div class="attributes">
   <div class="splitcontentleft">
     <p><%= f.select :owner, (@project.members.collect {|p| [p.name, p.user.id]}), :required => true %></p>
@@ -12,11 +12,14 @@
   </div>
   <div class="splitcontentright">
     <p><%= f.text_field :date_due, :size => 10, :required  => true  %><%= calendar_for('assumption_date_due') %></p>
-    <p><%= f.text_field :days_overdue, :size => 3 %> </p>
+    <% if params[:action].eql? "update" %>
+      <p><%= f.text_field :days_overdue, :value => @assumption.days_overdue, :size => 3, :readonly => true %> </p>
+    <% end %>
   </div>
   <div style="clear:both;"> </div>
 </div>
-<%#= wikitoolbar_for 'assumption_description' %>
 <hr/>
 
-<%= render :partial => 'pm_dashboards/assumptions/risks', :locals => {:f => f} %>
+<p>
+  <div class='splitcontentleft'><%= render :partial => 'pm_dashboards/assumptions/risks', :locals => {:f => f} %></div>
+</p>

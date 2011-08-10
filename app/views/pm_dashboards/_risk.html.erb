@@ -3,11 +3,15 @@
 </div>
 
 <h2><%= l(:label_risks) %></h2>
- 
-<% if @risks.any? %> 
+
+<% if @risks.any? %>
   <%= render :partial => 'pm_dashboards/risks/summary' unless params[:risk] %>
   <p><%= link_to l(:label_view_all_risks), :controller => 'pm_dashboards', :project_id => @project, :tab => 'risks'  if params[:risk]  %></p>
   <%= render :partial => 'pm_dashboards/risks/list' %>
 <% else %>
   <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
+
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
 <% end %>

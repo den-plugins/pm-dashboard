@@ -16,7 +16,7 @@ class RisksController < ApplicationController
         flash[:notice] = l(:notice_successful_create)
         redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :risks
       else
-        render :template => "pm_dashboards/risks/add" 
+        render :template => "pm_dashboards/risks/add"
       end
     end
   end

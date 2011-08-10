@@ -10,3 +10,7 @@
 <% else %>
   <p class="nodata"><%= l(:label_no_data) %></p>
 <% end %>
+
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
+<% end %>

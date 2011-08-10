@@ -1,8 +1,7 @@
 <p>
   <label for="related_issues"><%= l(:field_related_issues).to_sym %></label>
   <%= hidden_field_tag 'risk[pm_dashboard_issue_ids][]', '', :id => nil %>
-  <div>
-  <table style="padding-left: 180px">
+  <table>
     <tr>
       <td><%= l(:label_available_issues) %></td>
       <td></td>
@@ -21,14 +20,8 @@
 		  </td>
 		  <td><%= select_tag 'risk[pm_dashboard_issue_ids][]',
 		            options_for_select(@risk.pm_dashboard_issues.collect{|r| [r.ref_number, r.id]}),
-		            :id => 'selected_issues', :multiple => true, :size => 10, :style => "width:150px",
-		            :ondblclick => "handleSelect(this, '#{@project.identifier}')" %>
+		            :id => 'selected_issues', :multiple => true, :size => 10, :style => "width:150px" %>
 		  </td>
 	  </tr>
   </table>
-  </div>
 </p>
-<% content_for :header_tags do %>
-<%= javascript_include_tag 'select_list_move' %>
-<%= javascript_include_tag 'pm_dashboard', :plugin => 'pm_dashboard'  %>
-<% end %>

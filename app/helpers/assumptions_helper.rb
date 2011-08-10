@@ -11,12 +11,9 @@ module AssumptionsHelper
   
   def color_code(percentage)
     case percentage
-      when 0 ... 50
-        "red"
-      when 50 ... 100
-        "yellow"
-      when 100
-        "green"
+      when 0 ... 50; "red"
+      when 50 ... 100; "yellow"
+      when 100; "green"
     end
   end
   
