@@ -10,5 +10,17 @@ module PmDashboardsHelper
             ]
     tabs
   end
+  
+  def collection_for_risk_select(related)
+    @project.risks.select { |r| !related.risks.include?(r) }
+  end
+  
+  def collection_for_assumption_select(related)
+    @project.assumptions.select { |r| !related.assumptions.include?(r) }
+  end
+  
+  def collection_for_issues_select(related)
+    @project.pm_dashboard_issues.select {|r| !related.pm_dashboard_issues.include?(r) }
+  end
 
 end

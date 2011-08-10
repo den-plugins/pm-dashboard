@@ -27,7 +27,7 @@ class Risk < ActiveRecord::Base
                                  
                                  
   has_and_belongs_to_many :assumptions
-  has_and_belongs_to_many :pmdashboardissues
+  has_and_belongs_to_many :pm_dashboard_issues
   belongs_to :project
   
   validates_presence_of :env, :risk_type, :risk_description, :probability, :impact, :owner, :target_resolution_date, :status

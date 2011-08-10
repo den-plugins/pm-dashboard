@@ -19,3 +19,10 @@ August 9, 2011
     = risks summary in index page
     = fixed view for 'related risks' in add/update of assumption
     = color code for risk rating columns (risks index page)
+
+
+August 10, 2011
+  
+  Features/Fixes:
+    = assumption status set to 'closed' if assumption has related risk/s
+    = risk associated with pm_dashboard_issues and assumptions (relations)

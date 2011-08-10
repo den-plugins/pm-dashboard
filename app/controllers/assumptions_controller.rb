@@ -1,5 +1,7 @@
 class AssumptionsController < ApplicationController
   
+  helper :pm_dashboards
+  
   before_filter :require_login
   before_filter :get_project, :only => [:add, :update, :destroy]
   before_filter :get_assumption, :only => [:update, :destroy]

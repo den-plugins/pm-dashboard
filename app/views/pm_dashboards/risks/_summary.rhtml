@@ -1,6 +1,3 @@
-<% content_tag 'fieldset', :id => 'risks_summary' do %>
-<legend><%= l(:label_summary) %></legend>
-
 <table class='pmsummary'>
 	<tr>
 	  <th><%= l(:label_mean) %></th>
@@ -23,7 +20,6 @@
 	  <td><%= @risks.count %></td>
 	</tr>
 </table>
-<% end %>
 
 <% content_for :header_tags do %>
     <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>

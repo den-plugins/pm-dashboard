@@ -1,6 +1,3 @@
-<% content_tag 'fieldset', :id => 'assumptions_summary' do %>
-<legend><%= l(:label_summary) %></legend>
-
 <% all = @assumptions.count %>
 <% open = assumptions_by_status(Assumption::STATUS_OPEN).count %>
 <% closed = assumptions_by_status(Assumption::STATUS_CLOSED).count %>
@@ -20,7 +17,6 @@
 	  <td><%=  closed %></td>
 	</tr>
 </table>
-<% end %>
 
 <% content_for :header_tags do %>
     <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>

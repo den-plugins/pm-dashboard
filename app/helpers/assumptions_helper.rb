@@ -23,9 +23,5 @@ module AssumptionsHelper
   def assumptions_by_status(status)
     @assumptions.select {|a| a.status == status}
   end
-  
-  def collection_for_risk_select
-    @project.risks.select { |r| !@assumption.risks.include?(r) }
-  end
 
 end

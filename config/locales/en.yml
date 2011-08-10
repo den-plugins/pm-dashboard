@@ -23,6 +23,9 @@ en:
   field_date_raised: Date Raised
   field_related_risk: Related Risks
   field_related_assumption: Related Assumptions
+  field_related_risks: Related Risks
+  field_related_assumptions: Related Assumptions
+  field_related_issues: Related PM Issues
   field_impact: Impact
   field_raised_by: Raised By
   field_date_close: Date Closed
@@ -35,6 +38,10 @@ en:
   label_assumptions_overdue: Over Due
   label_available_risks: Available Risks
   label_related_risks: Related Risks
+  label_available_assumptions: Available Assumptions
+  label_related_assumptions: Related Assumptions
+  label_available_issues: Available PM Issues
+  label_related_issues: Related PM Issues
   
   label_risks: Risks
   label_risk_new: New Risk
@@ -51,7 +58,6 @@ en:
   field_impact_final: Impact (Final)
   field_final_risk_rating: Final Risk Rating
   field_target_resolution_date: Target Resolution Date
-  field_related_issue_assumption: Related Issues/ Assumptions
   
   label_risk_status_monitor: M - Monitor
   label_risk_status_realized: R - Realized

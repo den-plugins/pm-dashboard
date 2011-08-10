@@ -6,7 +6,6 @@
 
 <% if @assumptions.any? %>
   <%= render :partial => 'pm_dashboards/assumptions/summary' %>
-  <p></p>
   <%= render :partial => 'pm_dashboards/assumptions/list' %>
 <% else %>
   <p class="nodata"><%= l(:label_no_data) %></p>
