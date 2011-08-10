@@ -13,18 +13,19 @@
       <th>Days Overdue</th>
       <th>Date Closed</th>
       <th>Related Risk / Assumption</th>
+      <th></th>
     </tr>
   </thead>
-  <% if @issues.any? %>
+
     <% @issues.each do |issue| %>
       <tr>
         <td><%= issue.ref_number %></td>
         <td><%= issue.env %></td>
         <td><%= issue.date_raised %></td>
         <td><%= issue.raised_by %></td>
-        <td><%= issue.issue_description %></td>
-        <td><%= issue.action %></td>
-        <td><%= issue.impact %></td>
+        <td style='text-align: left;'><%= issue.issue_description %></td>
+        <td style='text-align: left;'><%= issue.action %></td>
+        <td class="<%= issue_impact_color_coding(issue.impact)%>"><%= issue.impact %></td>
         <td><%= issue.owner %></td>
         <td><%= issue.date_due %></td>
         <td><%= issue.days_overdue %></td>
@@ -49,5 +50,4 @@
     </td>
       </tr>
     <% end %>
-  <% end %>
 </table>

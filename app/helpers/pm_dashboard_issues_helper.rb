@@ -8,4 +8,17 @@ module PmDashboardIssuesHelper
     assumptions = @project.assumptions.select { |r| !@issue.assumptions.include?(r) }
   end
 
+  def issue_impact_color_coding(impact)
+    case impact
+      when 1
+        "green"
+      when 2
+        "yellow"
+      when 3
+        "red"
+      else
+        "blue"
+    end
+  end
+
 end

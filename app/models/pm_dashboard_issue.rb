@@ -4,6 +4,10 @@ class PmDashboardIssue < ActiveRecord::Base
   ENV= { "I" => {:name => :label_env_internal },
          "E" => {:name => :label_env_external}}
 
+  IMPACT = { 1 => {:name => :label_issue_impact_low },
+             2 => {:name => :label_issue_impact_medium },
+             3 => {:name => :label_issue_impact_high }}
+
   belongs_to :project
   belongs_to :user
 
@@ -12,7 +16,7 @@ class PmDashboardIssue < ActiveRecord::Base
 
   validates_presence_of :env, :date_raised, :raised_by, :issue_description, :impact, :owner, :project
   validates_inclusion_of :env, :in => ENV.keys
-  validates_inclusion_of :impact, :in => %w(Low Medium High)
+  validates_inclusion_of :impact, :in => IMPACT.keys
 
   before_save :set_ref_number
 

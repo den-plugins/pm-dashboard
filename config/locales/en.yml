@@ -30,6 +30,9 @@ en:
   field_raised_by: Raised By
   field_date_close: Date Closed
 
+  label_issue_impact_low: Low
+  label_issue_impact_medium: Medium
+  label_issue_impact_high: High
   
   label_summary: Summary
   label_assumptions_pclosed: Percent Closed
@@ -83,3 +86,5 @@ en:
 
   label_env_internal: Internal
   label_env_external: External
+
+  label_issue_average: Average (Open)
