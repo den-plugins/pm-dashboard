@@ -11,6 +11,7 @@ class PmDashboardsController < ApplicationController
     @risks = params[:risk] ? @project.risks.find(params[:risk]).to_a : @project.risks.find(:all, :order => 'ref_number DESC')
     @members = @project.members.all(:order => "role_id")
     @project_scope = CustomField.find_by_name("Project Scope")
+    @user_custom_fields = CustomField.find(:all, :conditions => "type = 'UserCustomField'")
     if !@project_scope.nil?
       @project_scope_value = @project.custom_values.find(:all, :conditions => "custom_field_id = #{@project_scope.id}")
     end
