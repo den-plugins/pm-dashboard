@@ -1,0 +1,27 @@
+<% if classification == "Stakeholders" %>
+  <% tmp = "stakeholder" %>
+<% else %>
+  <% tmp = "proj_team" %>
+<% end %>
+<div id="add_<%= tmp %>">
+
+  <div class="contextual">
+    <%= link_to_remote "Add to #{classification}", {:url => { :controller => 'project_info' , :action => 'pm_member_add', :project_id => @project, :classification => classification}, :update => "add_#{tmp}"}, :class => 'icon icon-add' %>
+  </div>
+
+</div>
+
+<% if !members.empty? %>
+  <table class="list">
+  <tr>
+  <th>Name</th>
+  <th>Role</th>
+  <th>Email Address</th>
+  <%= custom_field_headers %>
+  <th></th>
+  </tr>
+  <%= proj_team(members, tmp.to_sym) %>
+  </table>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>

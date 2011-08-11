@@ -1,0 +1,24 @@
+<fieldset><legend>Add to <%= classification %></legend>
+<% if classification == "Project Team" %>
+  <% classification = :proj_team %>
+<% else %>
+  <% classification = :stakeholder %>
+<% end %>
+<div class="contextual">
+  <%= link_to "Cancel", {:controller => 'pm_dashboards', :action => 'index', :project_id => @project, :tab => :info}, :class => 'icon icon-cancel' %>
+</div>
+<div style="height:300px; overflow:auto;">
+<% @project.members.sort.each do |member| %>
+  <% if !member.proj_team and !member.stakeholder %>
+    <% form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_add', :id => member}, :method => :post) do |f| %>
+      <p>
+      <%= f.check_box classification, :checked => true, :style => 'visibility: hidden' %>
+      <span><%= submit_tag " + ", :class => "small" %></span>
+      <span><%= member.name %></span> 
+      </p>
+    <% end %>
+  <% end %>
+<% end %>
+<div>
+</fieldset>
+

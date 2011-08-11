@@ -1,25 +1,22 @@
 module ProjectInfoHelper
 
-  def proj_team(members, member_type)
+  def proj_team(members, classification)
     str = ""
-   
     members.each do |member|
-      condition = false
-      if member_type == "Stakeholders"
-        condition = (@stakeholder_roles.member?(member.role))
-      else
-        condition = (!@stakeholder_roles.member?(member.role))
-      end
-      if condition
-        str += "<tr class='#{cycle('odd', 'even')}'>
-          <td>#{member.name}</td>
-          <td>#{member.role.name}</td>
-          <td>#{member.user.mail}</td>"
-          member.user.custom_field_values.each do |value|
-            str += "<td>#{value}</td>" if value.custom_field.editable
-          end
-        str += "</tr>"
-      end
+      str += "<tr class='#{cycle('odd', 'even')}'>
+        <td>#{member.name}</td>
+        <td>#{member.role.name}</td>
+        <td>#{member.user.mail}</td>"
+        member.user.custom_field_values.each do |value|
+          str += "<td>#{value}</td>" if value.custom_field.editable
+        end
+      str += "<td>
+              #{link_to image_tag('delete.png'), {:controller => 'project_info', :action => 'pm_member_remove', :id => member, :member => {classification => false}},
+                                             :confirm => l(:text_are_you_sure),
+                                             :method => :post,
+                                             :title => 'Remove' }
+              </td>
+              </tr>"
     end
     str
   end
