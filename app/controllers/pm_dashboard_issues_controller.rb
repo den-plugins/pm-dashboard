@@ -31,6 +31,8 @@ class PmDashboardIssuesController < ApplicationController
     else
       if @issue.update_attributes(params[:issue])
         redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :issues
+      else
+        render :template => "pm_dashboards/pm_dashboard_issues/edit"
       end
     end
   end

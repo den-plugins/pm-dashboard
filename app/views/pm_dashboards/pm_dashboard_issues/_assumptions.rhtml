@@ -1,5 +1,6 @@
-<%= hidden_field_tag 'issue[assumption_ids][]', '', :id => nil %>
-<div class='attributes'>
+<p>
+  <label for="related_assumption"><%= l(:field_related_assumption).to_sym %></label>
+  <%= hidden_field_tag 'issue[assumption_ids][]', '', :id => nil %>
   <table>
 	<tr>
 	  <td><%= select_tag 'available_assumptions',
@@ -18,8 +19,4 @@
 	  </td>
 	</tr>
   </table>
-</div>
-
-<% content_for :header_tags do %>
-<%= javascript_include_tag 'select_list_move' %>
-<% end %>
+</p>

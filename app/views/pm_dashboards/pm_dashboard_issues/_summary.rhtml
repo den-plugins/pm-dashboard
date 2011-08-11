@@ -4,27 +4,23 @@
 <table class='pmsummary'>
 	<tr>
 	  <th><%= l(:label_issue_average) %></th>
-	  <td></td>
+	  <td><%= "%0.3f" % (@issues.select{|a| a.date_close.nil?}.count.to_f / @issues.count.to_f) %></td>
 	</tr>
 	<tr>
 	  <th class='red'><%= l(:label_issue_impact_high) %></th>
-	  <td></td>
+	  <td><%= (@issues.select{|a| a.impact === 3 && a.date_close.nil? }).count %></td>
 	</tr>
 	<tr>
 	  <th class='yellow'><%= l(:label_issue_impact_medium) %></th>
-	  <td></td>
+	  <td><%= (@issues.select{|a| a.impact === 2 && a.date_close.nil? }).count %></td>
 	</tr>
 	<tr>
 	  <th class='green'><%= l(:label_issue_impact_low) %></th>
-	  <td></td>
+	  <td><%= (@issues.select{|a| a.impact === 1 && a.date_close.nil? }).count %></td>
 	</tr>
 	<tr>
 	  <th><%= l(:label_total) %></th>
-	  <td></td>
+	  <td><%= (@issues.select{|a| a.date_close.nil? }).count %></td>
 	</tr>
 </table>
-<% end %>
-
-<% content_for :header_tags do %>
-    <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
 <% end %>

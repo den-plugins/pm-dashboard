@@ -22,11 +22,11 @@
         <td><%= issue.ref_number %></td>
         <td><%= issue.env %></td>
         <td><%= issue.date_raised %></td>
-        <td><%= issue.raised_by %></td>
+        <td><%= User.find(issue.raised_by).name %></td>
         <td style='text-align: left;'><%= issue.issue_description %></td>
         <td style='text-align: left;'><%= issue.action %></td>
         <td class="<%= issue_impact_color_coding(issue.impact)%>"><%= issue.impact %></td>
-        <td><%= issue.owner %></td>
+        <td><%= User.find(issue.owner).name %></td>
         <td><%= issue.date_due %></td>
         <td><%= issue.days_overdue %></td>
         <td><%= issue.date_close %></td>

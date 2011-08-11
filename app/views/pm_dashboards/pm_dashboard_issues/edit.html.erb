@@ -16,7 +16,7 @@
 
     <div class="splitcontentleft">
       <p><%= f.select :env, (PmDashboardIssue::ENV.keys.collect {|r| [l(PmDashboardIssue::ENV[r][:name]), r]}), :required => true%></p>
-      <p><%= f.select :impact, %w(Low Medium High), :required => true %></p>
+      <p><%= f.select :impact, (PmDashboardIssue::IMPACT.keys.collect {|r| [l(PmDashboardIssue::IMPACT[r][:name]), r]}), :required => true %></p>
       <p><%= f.select :raised_by, (@project.members.collect {|p| [p.name, p.user.id]}), :required => true, :selected => User.current %></p>
       <p><%= f.select :owner, (@project.members.collect {|p| [p.name, p.user.id]}), :required => true, :include_blank => true %></p>
     </div>
@@ -24,7 +24,7 @@
     <div class="splitcontentright">
       <p><%= f.text_field :date_raised, :size => 10, :required => true %><%= calendar_for('issue_date_raised') %></p>
       <p><%= f.text_field :date_due, :size => 10 %><%= calendar_for('issue_date_due') %></p>
-      <p><%= f.text_field :days_overdue, :size => 3, :selected => '-0' %></p>
+      <p><%= f.text_field :days_overdue, :value => @issue.days_overdue, :size => 3, :readonly => true %></p>
       <p><%= f.text_field :date_close, :size => 10 %><%= calendar_for('issue_date_close') %></p>
     </div>
 
