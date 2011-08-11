@@ -5,7 +5,8 @@
 	<tr>
 	  <td><%= select_tag 'available_assumptions',
 		          options_for_select(collection_for_assumption_select.collect{|r| [ r.ref_number, r.id]}),
-		          :multiple => true, :size => 10, :style => "width:150px" %>
+		          :multiple => true, :size => 10, :style => "width:150px",
+                  :ondblclick => "handleSelect(this, '#{@project.identifier}')" %>
 	  </td>
 	  <td align="center" valign="middle">
 	    <input type="button" value="--&gt;"
@@ -15,7 +16,9 @@
 	  </td>
 	  <td><%= select_tag 'issue[assumption_ids][]',
 		          options_for_select(@issue.assumptions.collect{|r| [r.ref_number, r.id]}),
-		          :id => 'selected_assumptions', :multiple => true, :size => 10, :style => "width:150px" %>
+		          :id => 'selected_assumptions',
+                  :multiple => true, :size => 10, :style => "width:150px",
+                  :ondblclick => "handleSelect(this, '#{@project.identifier}')" %>
 	  </td>
 	</tr>
   </table>

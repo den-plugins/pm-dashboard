@@ -19,14 +19,14 @@ class PmDashboardIssue < ActiveRecord::Base
   validates_inclusion_of :impact, :in => IMPACT.keys
 
   before_save :set_ref_number
-  before_save :set_days_overdue
+  before_update :set_days_overdue
 
   def set_ref_number
     self.ref_number = "I" + "%0.5d" % id
   end
 
   def set_days_overdue
-    self.days_overdue = (date_due < Date.today) ? (Date.today - date_due).numerator : 0
+    self.days_overdue = (date_due && date_due < Date.today) ? (Date.today - date_due).numerator : 0
   end
 
 end
