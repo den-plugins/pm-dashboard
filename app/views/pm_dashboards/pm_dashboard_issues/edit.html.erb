@@ -32,21 +32,24 @@
 
   </div>
 
-  <hr />
+<hr />
 
-  <p>
-    <label for="related_risks"><%= l(:field_related_risks).to_sym %></label>
+<p>
+  <div class="splitcontentleft">
     <%= render :partial => 'pm_dashboards/pm_dashboard_issues/risks', :locals => {:f => f} %>
-  </p>
-
-  <hr />
-
-  <p>
-    <label for="related_assumption"><%= l(:field_related_assumption).to_sym %></label>
+  </div>
+  <div class="splitcontentright">
     <%= render :partial => 'pm_dashboards/pm_dashboard_issues/assumptions', :locals => {:f => f} %>
-  </p>
+  </div>
+</p>
 
   <%= submit_tag l(:button_save), :onclick => "selectAllOptions('selected_risks');selectAllOptions('selected_assumptions')" %>
 
+<% end %>
+
+<% content_for :header_tags do %>
+  <%= javascript_include_tag 'pm_dashboard', :plugin => 'pm_dashboard'  %>
+  <%= javascript_include_tag 'select_list_move' %>
+  <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
 <% end %>
 
