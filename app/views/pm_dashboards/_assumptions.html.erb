@@ -5,7 +5,8 @@
 <h2><%= l(:label_assumptions) %></h2>
 
 <% if @assumptions.any? %>
-  <%= render :partial => 'pm_dashboards/assumptions/summary' %>
+  <%= render :partial => 'pm_dashboards/assumptions/summary' unless params[:q] %>
+  <p><%= link_to l(:label_view_all_assumptions), :controller => 'pm_dashboards', :project_id => @project, :tab => 'assumptions'  if params[:q]  %></p>
   <%= render :partial => 'pm_dashboards/assumptions/list' %>
 <% else %>
   <p class="nodata"><%= l(:label_no_data) %></p>

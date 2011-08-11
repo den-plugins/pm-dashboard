@@ -50,6 +50,8 @@ en:
   label_risk_new: New Risk
   label_risk_update: Update Risk
   label_view_all_risks: View All Risks
+  label_view_all_assumptions: View All Assumptions
+  label_view_all_project_issues: View All Project Issues
   
   field_risk_type: Risk Type
   field_risk_description: Risk Description
