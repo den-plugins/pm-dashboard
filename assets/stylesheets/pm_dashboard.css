@@ -4,6 +4,29 @@ table.pmsummary {
   border-collapse: collapse;
 }
 
+table#risks tr td{
+  font-size: 11px;
+}
+
+table#risks tr.risks_header {
+  padding: 1px;
+  background-color: #EEEEEE;
+}
+
+table#risks tr th { white-space: normal; }
+
+table#risks tr th.narrow {
+  background-color: transparent;
+  width: 1px;
+  zoom: 1;
+  -moz-transform: rotate(270deg);  /* FF3.5+ */
+  -o-transform: rotate(270deg);  /* Opera 10.5 */
+  -webkit-transform: rotate(270deg);  /* Saf3.1+, Chrome */
+  -ms-transform: rotate(270deg);  /* IE9 */
+  transform: rotate(270deg);  
+  filter: progid:DXImageTransform.Microsoft.Matrix(M11=-1.836909530733566e-16, M12=1, M21=-1, M22=-1.836909530733566e-16, sizingMethod='auto expand');
+}
+
 .pmsummary tr th {
   border: 1px solid #989898;
   text-align: right;

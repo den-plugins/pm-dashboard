@@ -1,22 +1,22 @@
-<table id="risks" class="list issues" style='text-align: center; '>
+<table id="risks" class="list" style='text-align: center; '>
   <thead>
-    <tr>
+    <tr class='risks_header'>
       <th><%= l(:field_ref_number) %></th>
       <th><%= l(:field_env) %></th>
       <th><%= l(:field_date_recorded) %></th>
       <th><%= l(:field_risk_type) %></th>
       <th><%= l(:field_risk_description) %></th>
       <th><%= l(:field_potential_effect) %></th>
-      <th><%= l(:field_probability) %></th>
-      <th><%= l(:field_impact) %></th>
-      <th><%= l(:field_initial_risk_rating) %></th>
+      <th class='narrow'><%= l(:field_probability) %></th>
+      <th class='narrow'><%= l(:field_impact) %></th>
+      <th class='narrow'><%= l(:field_initial_risk_rating) %></th>
       <th><%= l(:field_owner) %></th>
       <th><%= l(:field_mitigating_action) %></th>
-      <th><%= l(:field_probability_final) %></th>
-      <th><%= l(:field_impact_final) %></th>
-      <th><%= l(:field_final_risk_rating) %></th>
+      <th class='narrow'><%= l(:field_probability_final) %></th>
+      <th class='narrow'><%= l(:field_impact_final) %></th>
+      <th class='narrow'><%= l(:field_final_risk_rating) %></th>
       <th><%= l(:field_target_resolution_date) %></th>
-      <th><%= l(:field_days_overdue) %></th>
+      <th class='narrow'><%= l(:field_days_overdue) %></th>
       <th><%= l(:field_status) %></th>
       <th><%= l(:field_related_issues) + "/ <br/>" + l(:field_related_assumptions)%></th>
       <th></th>
