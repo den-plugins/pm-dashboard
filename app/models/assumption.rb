@@ -13,7 +13,7 @@ class Assumption < ActiveRecord::Base
   validates_presence_of :description, :project, :owner, :date_due
   validates_inclusion_of :status, :in => STATUS.keys
   validates_numericality_of :days_overdue, :allow_nil => true
-  validate :date_due_not_past
+  #validate :date_due_not_past
 
   before_save :set_status
   before_save :set_ref_number

@@ -25,7 +25,7 @@ en:
   field_related_assumption: Related Assumptions
   field_related_risks: Related Risks
   field_related_assumptions: Related Assumptions
-  field_related_issues: Related PM Issues
+  field_related_issues: Related Project Issues
   field_impact: Impact
   field_raised_by: Raised By
   field_date_close: Date Closed
@@ -43,8 +43,8 @@ en:
   label_related_risks: Related Risks
   label_available_assumptions: Available Assumptions
   label_related_assumptions: Related Assumptions
-  label_available_issues: Available PM Issues
-  label_related_issues: Related PM Issues
+  label_available_issues: Available Project Issues
+  label_related_issues: Related Project Issues
   
   label_risks: Risks
   label_risk_new: New Risk

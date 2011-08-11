@@ -6,7 +6,7 @@ module AssumptionsHelper
   end
   
   def selected
-    @assumption.new_record? ? {:selected => Assumption::STATUS_CLOSED} : {:selected => @assumption.status}
+    @assumption.new_record? ? {:selected => Assumption::STATUS_OPEN} : {:selected => @assumption.status}
   end
   
   def color_code(percentage)
