@@ -1,4 +1,4 @@
-class AssumptionsController < ApplicationController
+class ProjectInfoController < ApplicationController
   
   before_filter :require_login
   before_filter :get_project, :only => [:add, :update, :destroy]

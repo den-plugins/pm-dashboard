@@ -1,9 +1,16 @@
 module ProjectInfoHelper
 
-  def proj_team
+  def proj_team(members, member_type)
     str = ""
-    @members.each do |member|
-      
+   
+    members.each do |member|
+      condition = false
+      if member_type == "Stakeholders"
+        condition = (@stakeholder_roles.member?(member.role))
+      else
+        condition = (!@stakeholder_roles.member?(member.role))
+      end
+      if condition
         str += "<tr class='#{cycle('odd', 'even')}'>
           <td>#{member.name}</td>
           <td>#{member.role.name}</td>
@@ -12,7 +19,7 @@ module ProjectInfoHelper
             str += "<td>#{value}</td>" if value.custom_field.editable
           end
         str += "</tr>"
-      
+      end
     end
     str
   end

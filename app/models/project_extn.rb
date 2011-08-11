@@ -14,6 +14,7 @@ module ProjectExtn
       has_many :assumptions, :dependent => :destroy
       has_many :pm_dashboard_issues
       has_many :risks
+      
     end
 
   end

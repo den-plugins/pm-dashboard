@@ -15,7 +15,7 @@ class PmDashboardsController < ApplicationController
     if !@project_scope.nil?
       @project_scope_value = @project.custom_values.find(:all, :conditions => "custom_field_id = #{@project_scope.id}")
     end
-    @stakeholders = []
+    @stakeholder_roles = Role.find(:all, :conditions => "name LIKE '%Clients%'")
     
     rescue ActiveRecord::RecordNotFound
       render_404

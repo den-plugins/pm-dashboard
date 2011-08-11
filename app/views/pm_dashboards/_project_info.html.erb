@@ -26,13 +26,22 @@
 <% end %>
 
 <h4>Project Sponsor/Stakeholders</h4>
-<% if @stakeholders.any? %>
-  <%= render :partial => 'pm_dashboards/project_info/stakeholders' %>
+
+<% if !@stakeholder_roles.nil? %>
+  <table class="list">
+  <tr>
+  <th>Name</th>
+  <th>Role</th>
+  <th>Email Address</th>
+  <%= custom_field_headers %>
+  </tr>
+  <%= proj_team(@members, "Stakeholders") %>
+  </table>
 <% else %>
   <p class="nodata"><%= l(:label_no_data) %></p>
 <% end %>
 
-<h4>Project Team: </h4>
+<h4>Project Team </h4>
 <% if @members.any? %>
   <table class="list">
   <tr>
@@ -41,7 +50,7 @@
   <th>Email Address</th>
   <%= custom_field_headers %>
   </tr>
-  <%= proj_team %>
+  <%= proj_team(@members, "Project Team") %>
   </table>
 <% else %>
   <p class="nodata"><%= l(:label_no_data) %></p>
