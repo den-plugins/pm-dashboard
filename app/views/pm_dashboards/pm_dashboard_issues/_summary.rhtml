@@ -1,26 +1,31 @@
+<% high = (@issues.select{|a| a.impact === 3 && a.date_close.nil? }).count * 3 %>
+<% medium = (@issues.select{|a| a.impact === 2 && a.date_close.nil? }).count * 2 %>
+<% low = (@issues.select{|a| a.impact === 1 && a.date_close.nil? }).count %>
+<% total = high + medium + low %>
+
 <% content_tag 'fieldset', :id => 'pm_dashboard_issues_summary' do %>
 <legend><%= l(:label_summary) %></legend>
 
 <table class='pmsummary'>
 	<tr>
 	  <th><%= l(:label_issue_average) %></th>
-	  <td><%= "%0.3f" % (@issues.select{|a| a.date_close.nil?}.count.to_f / @issues.count.to_f) %></td>
+	  <td><%= "%0.3f" % (total.to_f / (@issues.select{|a| a.date_close.nil?}.count.to_f)) %></td>
 	</tr>
 	<tr>
 	  <th class='red'><%= l(:label_issue_impact_high) %></th>
-	  <td><%= (@issues.select{|a| a.impact === 3 && a.date_close.nil? }).count %></td>
+	  <td><%= high %></td>
 	</tr>
 	<tr>
 	  <th class='yellow'><%= l(:label_issue_impact_medium) %></th>
-	  <td><%= (@issues.select{|a| a.impact === 2 && a.date_close.nil? }).count %></td>
+	  <td><%= medium %></td>
 	</tr>
 	<tr>
 	  <th class='green'><%= l(:label_issue_impact_low) %></th>
-	  <td><%= (@issues.select{|a| a.impact === 1 && a.date_close.nil? }).count %></td>
+	  <td><%= low %></td>
 	</tr>
 	<tr>
 	  <th><%= l(:label_total) %></th>
-	  <td><%= (@issues.select{|a| a.date_close.nil? }).count %></td>
+	  <td><%= total %></td>
 	</tr>
 </table>
 <% end %>
