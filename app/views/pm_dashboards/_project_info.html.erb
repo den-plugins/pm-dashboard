@@ -1,18 +1,25 @@
-<%= render :partial => "dashboard_header" %>
+<div id="info_<%= @project.id %>">
 
-<h4>Project Definition </h4>
-<% if !@project.description.nil? %>
-  <p class="description indent"><%= @project.description %></p>
-<% else %>
-  <p class="description nodata"><%= l(:label_no_data) %></p>
-<% end %>
+<div class="contextual">
+    <%= link_to_remote "Update", {:url => { :controller => 'project_info' , :action => 'update', :project_id => @project}, :update => "info_#{@project.id}", :onclick => "new Effect.Highlight('info_#{@project.id}')"}, :class => 'icon icon-edit' %>
+</div>
 
-<h4>Project Scope</h4>
-<% if !@project.scope.nil? %>
-  <p class="indent"><%= @project.scope %></p>
-<% else %>
-  <p class="nodata"><%= l(:label_no_data) %></p>
-<% end %>
+ <%= render :partial => "dashboard_header" %>
+
+  <h4>Project Definition </h4>
+  <% if !@project.description.nil? %>
+    <p class="indent"><%= @project.description %></p>
+  <% else %>
+    <p class="nodata"><%= l(:label_no_data) %></p>
+  <% end %>
+
+  <h4>Project Scope</h4>
+  <% if !@project.scope.nil? %>
+    <p class="indent"><%= @project.scope %></p>
+  <% else %>
+    <p class="nodata"><%= l(:label_no_data) %></p>
+  <% end %>
+</div>
 
 <h4>Project Sponsor/Stakeholders</h4>
 

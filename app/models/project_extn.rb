@@ -27,18 +27,11 @@ module ProjectExtn
   
   module InstanceMethods
   
-    def assignee(role)
-      case role
-        when "technical_architect" : id = 13
-        when "client" : id = 8
-        else id = 0        
+    def pm_or_ta(id)
+      if !id.nil?
+        pm = @project.member.find_by_user_id(id)
+        pm.name
       end
-      
-      if id > 0
-        result = self.members.find_by_role_id(id)
-      end
-      
-      return result.nil? ? "None assigned" : result.name
     end
     
   end

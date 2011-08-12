@@ -1,6 +1,7 @@
 class ProjectInfoController < ApplicationController
-  
-  before_filter :require_login
+
+  helper :application
+
   before_filter :get_project, :only => [:add, :update, :destroy]
 
   def add
@@ -8,7 +9,13 @@ class ProjectInfoController < ApplicationController
   end
 
   def update
-
+    if request.post? and !request.xhr?
+      if @project.update_attributes(params[:project])
+        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+      end
+    else 
+      render :partial => "pm_dashboards/project_info/edit"
+    end
   end
 
   def destroy
