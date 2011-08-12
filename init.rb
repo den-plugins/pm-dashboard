@@ -26,3 +26,4 @@ end
 require File.dirname(__FILE__) + '/app/models/mailer_extn.rb'
 require File.dirname(__FILE__) + '/app/models/project_extn.rb'
 require File.dirname(__FILE__) + '/app/models/member_extn.rb'
+require File.dirname(__FILE__) + '/app/models/user_extn.rb'

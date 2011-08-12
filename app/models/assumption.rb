@@ -7,7 +7,7 @@ class Assumption < ActiveRecord::Base
   
   
   belongs_to :project
-  has_one :user
+  belongs_to :user, :foreign_key => :owner, :class_name => 'User'
   has_and_belongs_to_many :risks
   
   validates_presence_of :description, :project, :owner, :date_due
