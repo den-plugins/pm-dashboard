@@ -14,6 +14,11 @@ module ProjectExtn
       has_many :assumptions, :dependent => :destroy
       has_many :pm_dashboard_issues
       has_many :risks
+
+      validates_presence_of :client
+      validates_presence_of :planned_start_date
+      validates_presence_of :planned_end_date
+      validates_presence_of :description
       
     end
 

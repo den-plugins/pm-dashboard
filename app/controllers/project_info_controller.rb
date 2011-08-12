@@ -10,6 +10,8 @@ class ProjectInfoController < ApplicationController
     if request.post? and !request.xhr?
       if @project.update_attributes(params[:project])
         redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+      else
+        render :template => "pm_dashboards/project_info/edit_with_error"
       end
     else 
       render :partial => "pm_dashboards/project_info/edit"
