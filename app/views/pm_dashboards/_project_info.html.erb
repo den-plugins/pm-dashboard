@@ -1,7 +1,10 @@
 <div id="info_<%= @project.id %>">
 
 <div class="contextual">
-    <%= link_to_remote "Update", {:url => { :controller => 'project_info' , :action => 'update', :project_id => @project}, :update => "info_#{@project.id}", :onclick => "new Effect.Highlight('info_#{@project.id}')"}, :class => 'icon icon-edit' %>
+    <%= link_to_remote "Update", {:url => { :controller => 'project_info' , 
+                                  :action => 'update', :project_id => @project}, 
+                                  :update => "info_#{@project.id}", :complete => "new Effect.Highlight('info_#{@project.id}')"}, 
+                                  :class => 'icon icon-edit' %>
 </div>
 
  <%= render :partial => "dashboard_header" %>

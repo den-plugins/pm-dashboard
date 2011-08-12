@@ -6,7 +6,7 @@
 <div id="add_<%= tmp %>">
 
   <div class="contextual">
-    <%= link_to_remote "Add to #{classification}", {:url => { :controller => 'project_info' , :action => 'pm_member_add', :project_id => @project, :classification => classification}, :update => "add_#{tmp}", :onclick => "new Effect.Highlight('add_#{tmp}')"}, :class => 'icon icon-add' %>
+    <%= link_to_remote "Add to #{classification}", {:url => { :controller => 'project_info' , :action => 'pm_member_add', :project_id => @project, :classification => classification}, :update => "add_#{tmp}", :complete => "new Effect.Highlight('add_#{tmp}')"}, :class => 'icon icon-add' %>
   </div>
 
 </div>

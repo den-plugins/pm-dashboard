@@ -1,10 +1,10 @@
 
-<% form_for(:project, @project, :url => {:controller => 'project_info', :action => 'update', :project_id => @project}, :method => :post, :html => {:id => "proj_info_form"}) do |f| %>
+<% remote_form_for(:project, @project, :url => {:controller => 'project_info', :action => 'update', :project_id => @project}, :method => :post, :html => {:id => "proj_info_form"}) do |f| %>
 
 <div class="contextual">
   <%= link_to "Cancel", {:controller => 'pm_dashboards', :action => 'index', :project_id => @project, :tab => :info}, :class => 'icon icon-cancel' %>
   
-  <%= link_to "Save", "#", :onclick => "$('proj_info_form').request({
+  <%= link_to "Save", "#", :onclick => "$('proj_info_form').submit({
   success: function(){ alert('Successfully saved!') }
 })", :class => 'icon icon-save' %>
 </div>
@@ -17,7 +17,9 @@
     </td>
     
     
-    <td><span>Project Manager</span><%= @project.pm_or_ta(@project.proj_manager) %></td>
+    <td><span>Project Manager</span>
+    <%= f.select :proj_manager, (@project.members.collect {|p| [p.name, p.user.id]}), :required => true %>
+    </td>
   
   </tr>
   
@@ -28,7 +30,9 @@
     <td><span>Planned End Date</span>
     <%= f.text_field :planned_end_date, :size => 10, :required  => true  %><%= calendar_for('project_planned_end_date') %></td>
     
-    <td><span>Technical Architect</span><%= @project.pm_or_ta(@project.tech_architect) %></td>
+    <td><span>Technical Architect</span>
+    <%= f.select :tech_architect, (@project.members.collect {|p| [p.name, p.user.id]}), :required => true %>
+    </td>
     
   </tr>   
 </table>

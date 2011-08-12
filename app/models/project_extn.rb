@@ -27,9 +27,9 @@ module ProjectExtn
   
   module InstanceMethods
   
-    def pm_or_ta(id)
+    def pm_or_ta(id, project)
       if !id.nil?
-        pm = @project.member.find_by_user_id(id)
+        pm = project.members.find_by_user_id(id)
         pm.name
       end
     end

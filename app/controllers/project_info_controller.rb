@@ -1,7 +1,5 @@
 class ProjectInfoController < ApplicationController
 
-  helper :application
-
   before_filter :get_project, :only => [:add, :update, :destroy]
 
   def add
