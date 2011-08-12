@@ -5,7 +5,8 @@ module ProjectInfoHelper
     members.each do |member|
       str += "<tr class='#{cycle('odd', 'even')}'>
         <td>#{member.name}</td>
-        <td>#{member.role.name}</td>
+        <td>#{member.pm_position.name if not member.pm_position.nil?}</td>
+        <td>#{member.pm_role.name if not member.pm_role.nil?}</td>
         <td>#{member.user.mail}</td>"
         member.user.custom_field_values.each do |value|
           str += "<td>#{value}</td>" if value.custom_field.editable

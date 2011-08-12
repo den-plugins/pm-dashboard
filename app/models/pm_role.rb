@@ -1,6 +1,6 @@
 class PmRole < ActiveRecord::Base
 
-  belongs_to :members
+  has_many :members
   validates_presence_of :name
 
 end

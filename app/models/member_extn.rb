@@ -11,8 +11,8 @@ module MemberExtn
     base.class_eval do
       unloadable 
 
-      has_one :pm_role
-      has_one :pm_position
+      belongs_to :pm_role
+      belongs_to :pm_position
       
     end
 

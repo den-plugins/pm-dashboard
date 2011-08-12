@@ -19,3 +19,4 @@ Redmine::Plugin.register :pm_dashboard do
 end
 
 require File.dirname(__FILE__) + '/app/models/project_extn.rb'
+require File.dirname(__FILE__) + '/app/models/member_extn.rb'

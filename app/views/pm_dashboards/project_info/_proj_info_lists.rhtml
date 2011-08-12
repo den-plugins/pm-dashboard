@@ -6,7 +6,7 @@
 <div id="add_<%= tmp %>">
 
   <div class="contextual">
-    <%= link_to_remote "Add to #{classification}", {:url => { :controller => 'project_info' , :action => 'pm_member_add', :project_id => @project, :classification => classification}, :update => "add_#{tmp}"}, :class => 'icon icon-add' %>
+    <%= link_to_remote "Add to #{classification}", {:url => { :controller => 'project_info' , :action => 'pm_member_add', :project_id => @project, :classification => classification}, :update => "add_#{tmp}", :onclick => "new Effect.SlideDown('add_#{tmp}', { duration: 5.0 })"}, :class => 'icon icon-add' %>
   </div>
 
 </div>
@@ -15,6 +15,7 @@
   <table class="list">
   <tr>
   <th>Name</th>
+  <th>Position</th>
   <th>Role</th>
   <th>Email Address</th>
   <%= custom_field_headers %>
