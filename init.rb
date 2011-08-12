@@ -1,4 +1,9 @@
 require 'redmine'
+require 's3_attachment/s3_send_file'
+
+config.after_initialize do 
+  ActiveRecord::Base.observers << :assumption_observer
+end 
 
 Redmine::Plugin.register :pm_dashboard do
   name 'Redmine Pm Dashboards plugin'
@@ -18,5 +23,6 @@ Redmine::Plugin.register :pm_dashboard do
         :param => :project_id
 end
 
+require File.dirname(__FILE__) + '/app/models/mailer_extn.rb'
 require File.dirname(__FILE__) + '/app/models/project_extn.rb'
 require File.dirname(__FILE__) + '/app/models/member_extn.rb'

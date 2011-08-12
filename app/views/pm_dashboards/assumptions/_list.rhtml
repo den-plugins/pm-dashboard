@@ -19,7 +19,7 @@
       <td style='text-align: left;'><%= assumption.description %></td>
       <td style='text-align: left;'><%= assumption.validation  %></td>
       <td><%= User.find(assumption.owner).name  %></td>
-      <td><%= assumption.created_at.to_date %></td>
+      <td><%= assumption.created_on.to_date %></td>
       <td><%= assumption.date_due %></td>
       <td><%= assumption.days_overdue %></td>
       <td><%= assumption.date_closed %></td>

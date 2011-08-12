@@ -1,0 +1,7 @@
+<%= "##{assumption.ref_number}: #{assumption.description}" %>
+<%= assumption_url %>
+
+<%=l(:field_owner)%>: <%= assumption.owner %>
+<%=l(:field_validation)%>: <%= assumption.validation %>
+<%=l(:field_status)%>: <%= assumption.status %>
+<%=l(:field_date_due) %>: <%= assumption.date_due.to_date %>
