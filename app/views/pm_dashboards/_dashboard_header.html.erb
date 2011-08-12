@@ -1,8 +1,8 @@
 <table id="pm_dashboard_header">
   <tr>
-    <td><span>Client</span><%= @project.assignee "client" %></td>
+    <td><span>Client</span><%= @project.client %></td>
     
-    <td><span>Planned Start Date</span></td>
+    <td><span>Planned Start Date</span><%= @project.planned_start_date.to_s %></td>
     
     
     <td><span>Project Manager</span><%= User.current.name %></td>
@@ -13,7 +13,7 @@
    
     <td><span>Project Name</span><%= @project.name %></td>
     
-    <td><span>Planned End Date</span><%= %></td>
+    <td><span>Planned End Date</span><%= @project.planned_end_date.to_s %></td>
     
     <td><span>Technical Architect</span><%= @project.assignee "technical_architect" %></td>
     
