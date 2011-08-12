@@ -30,7 +30,17 @@ module MailerExtn
     def assumption_edit(assumption)
       assumption_common_header(assumption)
     end
-    
+
+
+    def pm_dashboard_issue_add(issue)
+      redmine_headers 'Project' => issue.project.identifier,
+          'Issue-Ref-Number' => issue.ref_number
+      message_id issue
+      recipients issue.owner
+      subject "[#{issue.project.name}] ##{issue.ref_number} - #issue.description"
+      body :issue => issue,
+              :issue_url => url_for(:controller => 'pm_dashboards', :action => 'index', :tab => 'issues', :q => issue)
+    end
   end
 end
 

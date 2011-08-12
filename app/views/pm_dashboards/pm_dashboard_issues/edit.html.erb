@@ -22,7 +22,7 @@
     </div>
 
     <div class="splitcontentright">
-      <p><%= f.text_field :date_raised, :size => 10, :required => true %><%= calendar_for('issue_date_raised') %></p>
+      <p><%= f.text_field :created_on, :size => 10, :required => true %><%= calendar_for('issue_created_on') %></p>
       <p><%= f.text_field :date_due, :size => 10 %><%= calendar_for('issue_date_due') %></p>
       <p><%= f.text_field :days_overdue, :value => @issue.days_overdue, :size => 3, :readonly => true %></p>
       <p><%= f.text_field :date_close, :size => 10 %><%= calendar_for('issue_date_close') %></p>
