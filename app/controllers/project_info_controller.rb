@@ -48,6 +48,10 @@ class ProjectInfoController < ApplicationController
     end
   end
 
+  def update_pos_role
+
+  end
+
 private
   def get_project
     @project = Project.find(params[:project_id])

@@ -11,8 +11,10 @@
 
 </div>
 
+<div class="clear"> </div>
+
 <% if !members.empty? %>
-  <table class="list">
+  <table class="list" style="text-align: center;">
   <tr>
   <th>Name</th>
   <th>Position</th>
@@ -21,7 +23,7 @@
   <%= custom_field_headers %>
   <th></th>
   </tr>
-  <%= proj_team(members, tmp.to_sym) %>
+  <%= pm_members(members, tmp.to_sym) %>
   </table>
 <% else %>
   <p class="nodata"><%= l(:label_no_data) %></p>

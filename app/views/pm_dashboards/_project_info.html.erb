@@ -1,3 +1,4 @@
+<h2> Project Info </h2>
 <div id="info_<%= @project.id %>">
 
 <div class="contextual">
@@ -6,6 +7,8 @@
                                   :update => "info_#{@project.id}", :complete => "new Effect.Highlight('info_#{@project.id}')"}, 
                                   :class => 'icon icon-edit' %>
 </div>
+
+<div class="clear"> </div>
 
  <%= render :partial => "dashboard_header" %>
 
