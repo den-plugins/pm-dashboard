@@ -20,7 +20,7 @@ en:
   field_issue_description: Description
   field_env: Env
   field_action: Action Required/Taken
-  field_date_raised: Date Raised
+  field_created_on: Date Raised
   field_related_risk: Related Risks
   field_related_assumption: Related Assumptions
   field_related_risks: Related Risks

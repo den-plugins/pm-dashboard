@@ -16,7 +16,7 @@
   </div>
 
   <div class="splitcontentright">
-    <p><%= f.text_field :date_raised, :size => 10, :required => true, :value => Date.today %><%= calendar_for('issue_date_raised') %></p>
+    <p><%= f.text_field :created_on, :size => 10, :required => true, :value => Date.today %><%= calendar_for('issue_created_on') %></p>
     <p><%= f.text_field :date_due, :size => 10 %><%= calendar_for('issue_date_due') %></p>
   </div>
 

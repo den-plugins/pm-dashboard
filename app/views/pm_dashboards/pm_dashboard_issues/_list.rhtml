@@ -21,7 +21,7 @@
       <tr>
         <td><%= issue.ref_number %></td>
         <td><%= issue.env %></td>
-        <td><%= issue.date_raised %></td>
+        <td><%= issue.created_on %></td>
         <td><%= User.find(issue.raised_by).name %></td>
         <td style='text-align: left;'><%= issue.issue_description %></td>
         <td style='text-align: left;'><%= issue.action %></td>

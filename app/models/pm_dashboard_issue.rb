@@ -14,7 +14,7 @@ class PmDashboardIssue < ActiveRecord::Base
   has_and_belongs_to_many :risks
   has_many :assumptions
 
-  validates_presence_of :env, :date_raised, :raised_by, :issue_description, :impact, :owner, :project
+  validates_presence_of :env, :created_on, :raised_by, :issue_description, :impact, :owner, :project
   validates_inclusion_of :env, :in => ENV.keys
   validates_inclusion_of :impact, :in => IMPACT.keys
 

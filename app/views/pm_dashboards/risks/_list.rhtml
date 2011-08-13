@@ -26,14 +26,14 @@
     <tr class="<%= cycle('odd', 'even') %>">
       <td><%= risk.ref_number %></td>
       <td><%= risk.env %></td>
-      <td><%= risk.created_at.to_date %></td>
+      <td><%= risk.created_on.to_date %></td>
       <td><%= risk.risk_type %></td>
       <td style='text-align: left;'><%= risk.risk_description %></td>
       <td><%= risk.potential_effect %></td>
       <td><%= risk.probability %></td>
       <td><%= risk.impact %></td>
       <td class="<%= risk_rating_color_code(risk.initial_risk_rating)%>"><%= risk.initial_risk_rating %></td>
-      <td><%= User.find(risk.owner).name  %></td>
+      <td><%= risk.user.name  %></td>
       <td><%= risk.mitigating_action %></td>
       <td><%= risk.probability_final %></td>
       <td><%= risk.impact_final %></td>
