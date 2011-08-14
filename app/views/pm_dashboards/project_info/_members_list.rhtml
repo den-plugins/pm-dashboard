@@ -1,0 +1,31 @@
+<% members.each do |member| %>
+
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= member.name %></td>
+    <td id="pos_<%= member.id %>">
+      <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'update_role_pos', :id => member, :role_or_pos => 'pm_pos_id'}, :method => :post) do |f| %>
+        <%= f.select :pm_pos_id, @positions.collect{|p| [p.name, p.id]}, {:include_blank => 'Others'}, :class => "small" %>
+        <%= submit_tag l(:button_change), :class => "small" %>
+      <% end %>
+    </td>
+    <td id="role_<%= member.id %>">
+      <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'update_role_pos', :id => member, :role_or_pos => 'pm_role_id'}, :method => :post) do |f| %>
+        <%= f.select :pm_role_id, @roles.collect{|r| [r.name, r.id]}, {:include_blank => 'Others'}, :class => "small" %>
+        <%= submit_tag l(:button_change), :class => "small" %>
+      <% end %>
+    </td>
+    <td><%= member.user.mail %></td>
+    <% member.user.custom_field_values.each do |value| %>
+      <% if value.custom_field.editable %>
+        <td><%= value %></td>
+      <% end %>
+    <% end %>
+    <td>
+      <%= link_to image_tag('delete.png'), {:controller => 'project_info', :action => 'pm_member_remove', :id => member, :member => {classification => false}},
+                                             :confirm => l(:text_are_you_sure),
+                                             :method => :post,
+                                             :title => 'Remove' %>
+    </td>
+  </tr>
+
+<% end %>
