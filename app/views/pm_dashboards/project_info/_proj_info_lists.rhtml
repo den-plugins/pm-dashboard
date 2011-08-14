@@ -6,7 +6,7 @@
 <div id="add_<%= tmp %>">
 
   <div class="contextual">
-    <%= link_to_remote "Add to #{classification}", {:url => { :controller => 'project_info' , :action => 'pm_member_add', :project_id => @project, :classification => classification}, :update => "add_#{tmp}", :complete => "new Effect.Highlight('add_#{tmp}')"}, :class => 'icon icon-add' %>
+    <%= link_to_remote "Add to #{classification}", {:url => { :controller => 'project_info' , :action => 'pm_member_update', :project_id => @project, :classification => classification}, :update => "add_#{tmp}", :complete => "new Effect.Highlight('add_#{tmp}')"}, :class => 'icon icon-add' %>
   </div>
 
 </div>
@@ -20,6 +20,10 @@
   <th>Position</th>
   <th>Role</th>
   <th>Email Address</th>
+  <% if classification.eql?("Project Team") %>
+    <th>Rate</th>
+    <!-- <th>Billable</th> -->
+  <% end %>
   <%= custom_field_headers %>
   <th></th>
   </tr>

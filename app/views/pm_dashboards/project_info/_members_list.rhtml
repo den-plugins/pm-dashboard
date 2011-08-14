@@ -15,6 +15,15 @@
       <% end %>
     </td>
     <td><%= member.user.mail %></td>
+    <% if classification.eql?(:proj_team) %>
+      <td>
+        <% form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project}, :method => :post) do |f| %>
+          <%= f.text_field :sow_rate, :size => 5, :id => 'pteam_sow_rate_' + member.id.to_s %>
+          <%= submit_tag l(:button_change), :class => "small", :onclick => "return validateFloat(document.getElementById('pteam_sow_rate_#{member.id}'))" %>                     
+        <% end %>
+      </td>
+     <!-- <td></td> -->
+    <% end %>
     <% member.user.custom_field_values.each do |value| %>
       <% if value.custom_field.editable %>
         <td><%= value %></td>
@@ -29,3 +38,24 @@
   </tr>
 
 <% end %>
+
+<script type="text/javascript">
+  function isFloat(val) {
+    var isNumber = !isNaN(new Number(val));
+    if(isNumber) {
+      return(true);
+    } else {
+      return(false);
+    }
+  }
+  
+  function validateFloat(elem){
+    if(isFloat(elem.value)){
+      return true;
+    }else{
+      alert('invalid value type: need float');
+      elem.value = '0';
+      return false;
+    }
+  }
+</script>

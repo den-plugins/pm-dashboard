@@ -14,7 +14,7 @@ class ProjectInfoController < ApplicationController
     end
   end
 
-  def pm_member_add
+  def pm_member_update
     if request.post? and !request.xhr?
       @member = Member.find(params[:id]) 
       @project = @member.project

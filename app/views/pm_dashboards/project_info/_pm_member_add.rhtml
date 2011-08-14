@@ -10,7 +10,7 @@
 <div style="height:300px; overflow:auto;">
 <% @project.members.sort.each do |member| %>
   <% if !member.proj_team and !member.stakeholder %>
-    <% form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_add', :id => member}, :method => :post) do |f| %>
+    <% form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member}, :method => :post) do |f| %>
       <p>
       <%= f.check_box classification, :checked => true, :style => 'visibility: hidden' %>
       <span><%= submit_tag " + ", :class => "small" %></span>
