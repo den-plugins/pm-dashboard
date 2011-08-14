@@ -23,6 +23,10 @@
         <% end %>
       </td>
      <!-- <td></td> -->
+      <td id="remarks_<%= member.id %>">
+        <%= member.remarks %>
+        <%= link_to_remote image_tag('edit.png'), :url => {:controller => 'project_info', :action => 'update_remarks', :id => member}, :update => "remarks_#{member.id}" %>
+      </td>
     <% end %>
     <% member.user.custom_field_values.each do |value| %>
       <% if value.custom_field.editable %>

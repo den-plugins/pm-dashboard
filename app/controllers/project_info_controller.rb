@@ -73,6 +73,11 @@ class ProjectInfoController < ApplicationController
     redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
   end
 
+  def update_remarks
+    @member = Member.find(params[:id])
+    render :partial => 'pm_dashboards/project_info/edit_remarks'
+  end
+
 private
   def get_project
     @project = Project.find(params[:project_id])
