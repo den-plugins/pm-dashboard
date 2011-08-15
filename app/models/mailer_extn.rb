@@ -31,16 +31,24 @@ module MailerExtn
       assumption_common_header(assumption)
     end
 
-
-    def pm_dashboard_issue_add(issue)
+    def pm_dashboard_issue_common_header(issue)
       redmine_headers 'Project' => issue.project.identifier,
           'Issue-Ref-Number' => issue.ref_number
       message_id issue
       recipients issue.owner
-      subject "[#{issue.project.name}] ##{issue.ref_number} - #issue.description"
+      subject "Issue - ##{issue.ref_number}"
       body :issue => issue,
               :issue_url => url_for(:controller => 'pm_dashboards', :action => 'index', :tab => 'issues', :q => issue)
     end
+
+    def pm_dashboard_issue_add(issue)
+      pm_dashboard_issue_common_header(issue)
+    end
+
+    def pm_dashboard_issue_edit(issue)
+      pm_dashboard_issue_common_header(issue)
+    end
+
   end
 end
 
