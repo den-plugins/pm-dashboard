@@ -25,13 +25,13 @@ class Risk < ActiveRecord::Base
                        4 => {:name => :label_risk_impact_4},
                        5 => {:name => :label_risk_impact_5}}
                                  
-                                 
-  has_and_belongs_to_many :assumptions
-  has_and_belongs_to_many :pm_dashboard_issues
+              
   belongs_to :project
   belongs_to :user, :foreign_key => :owner, :class_name => 'User'
+  has_and_belongs_to_many :assumptions
+  has_and_belongs_to_many :pm_dashboard_issues
   
-  validates_presence_of :env, :risk_type, :risk_description, :probability, :impact, :owner, :target_resolution_date, :status
+  validates_presence_of :env, :risk_type, :risk_description, :probability, :impact, :owner, :target_resolution_date, :status, :project
   validates_inclusion_of :status, :in => STATUS.keys
   validates_inclusion_of :env, :in => RISK_ENV.keys
   validates_inclusion_of :probability, :in => PROBABILITY.keys
@@ -39,26 +39,20 @@ class Risk < ActiveRecord::Base
                                                                             :allow_nil => true,
                                                                             :if => Proc.new {|risk| !risk.probability_final == 0 }
   
-  before_save :set_ref_number
-  before_save :set_initial_risk_rating
-  before_save :set_final_risk_rating
-  before_save :set_days_overdue
+  before_create :set_ref_number
+  before_save :set_to_conditions
   
   def set_ref_number
-    self.ref_number = "R" + "%0.5d" % id
+    last = @project.risks.find(:last, :order => 'pid ASC')
+    self.pid = (last) ? last.pid+1 : 1
+    self.ref_number = "A" + "%0.5d" % pid
   end
   
-  def set_initial_risk_rating
+  def set_to_conditions
+    self.days_overdue = (target_resolution_date < Date.today) ? (Date.today - target_resolution_date).numerator : 0
     self.initial_risk_rating = probability * impact
-  end
-  
-  def set_final_risk_rating
     self.probability_final = 0 if probability_final.nil?
     self.impact_final = 0 if impact_final.nil?
     self.final_risk_rating = probability_final * impact_final
-  end
-  
-  def set_days_overdue
-    self.days_overdue = (target_resolution_date < Date.today) ? (Date.today - target_resolution_date).numerator : 0
   end
 end
