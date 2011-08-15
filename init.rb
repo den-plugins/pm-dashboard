@@ -4,6 +4,7 @@ require 's3_attachment/s3_send_file'
 config.after_initialize do 
   ActiveRecord::Base.observers << :assumption_observer
   ActiveRecord::Base.observers << :pm_dashboard_issue_observer
+  ActiveRecord::Base.observers << :risk_observer
 end 
 
 Redmine::Plugin.register :pm_dashboard do

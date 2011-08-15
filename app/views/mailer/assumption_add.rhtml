@@ -1,4 +1,3 @@
-
-
-----------------------------------------
-<%= render :partial => "assumption_details_plain", :locals => { :assumption => @assumption, :assumption_url => @assumption_url } %>
+<%= l(:text_hello, :name => @assumption.user.name) %>
+<%= l(:text_new, :feature => "assumption", :ref_number => @assumption.ref_number) %>
+<%= l(:text_view_details, :url => @assumption_url) %>

@@ -18,7 +18,7 @@ module MailerExtn
                                        'Assumption-Ref-Number' => assumption.ref_number
       message_id assumption
       recipients assumption.user.mail
-      subject "[#{assumption.project.name}] ##{assumption.ref_number} - #assumption.description"
+      subject "Assumption ##{assumption.ref_number}"
       body :assumption => assumption,
                 :assumption_url => url_for(:controller => 'pm_dashboards', :action => 'index', :project_id => assumption.project.identifier, :tab => 'assumptions', :q => assumption )
     end
@@ -48,7 +48,27 @@ module MailerExtn
     def pm_dashboard_issue_edit(issue)
       pm_dashboard_issue_common_header(issue)
     end
-
+    
+    def risk_common_header(risk)
+      redmine_headers 'Project' => risk.project.identifier,
+                                       'Risk-Ref-Number' => risk.ref_number
+      message_id risk
+      recipients risk.user.mail
+      subject "Risk ##{risk.ref_number}"
+      body :risk => risk,
+                :risk_url => url_for(:controller => 'pm_dashboards', :action => 'index', :project_id => risk.project.identifier, :tab => 'risks', :q => risk )
+    end
+    
+    def risk_add(risk)
+      puts "Add"
+      risk_common_header(risk)
+    end
+    
+    def risk_edit(risk)
+      puts "edit"
+      risk_common_header(risk)
+    end
+    
   end
 end
 

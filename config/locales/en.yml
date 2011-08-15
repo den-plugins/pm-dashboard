@@ -90,3 +90,8 @@ en:
   label_env_external: External
 
   label_issue_average: Average (Open)
+  
+  text_hello: Hello {{name}},
+  text_update: An update has been made to {{feature}} {{ref_number}}
+  text_new: You are the owner of {{feature}} {{ref_number}}
+  text_view_details: To view the details, click here {{url}}
