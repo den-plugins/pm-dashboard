@@ -18,11 +18,17 @@ class PmDashboardIssue < ActiveRecord::Base
   validates_inclusion_of :env, :in => ENV.keys
   validates_inclusion_of :impact, :in => IMPACT.keys
 
-  before_save :set_ref_number
+  before_create :set_pid_and_ref_number
   before_update :set_days_overdue
 
-  def set_ref_number
-    self.ref_number = "I" + "%0.5d" % id
+  def set_pid_and_ref_number
+    if !@project.pm_dashboard_issues.last.nil?
+      self.pid = @project.pm_dashboard_issues.last.pid + 1
+    else
+      self.pid = 1
+    end
+
+    self.ref_number = "I" + "%0.5d" % pid
   end
 
   def set_days_overdue
