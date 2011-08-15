@@ -9,7 +9,7 @@ class AssumptionsController < ApplicationController
   def add
     if request.get?
       @assumption = Assumption.new
-      render :template => "pm_dashboards/assumptions/add" 
+      render :template => "pm_dashboards/assumptions/add"
     else
       @assumption = @project.assumptions.create(params[:assumption])
       if @assumption.save

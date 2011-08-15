@@ -1,4 +1,4 @@
-<p> <%= f.text_area :risk_description,
+<p><%= f.text_area :risk_description,
                    :required => true,
                    :rows => (@risk.risk_description.blank? ? 3 : [[3, @risk.risk_description.length / 50].max, 100].min),
                    :accesskey => accesskey(:edit),
