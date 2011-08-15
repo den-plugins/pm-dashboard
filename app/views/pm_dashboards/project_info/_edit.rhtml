@@ -42,9 +42,12 @@
 </table>
 
   <h4>Project Definition </h4>
-  <p class="indent"><%= f.text_area :description, :required  => true, :style => "width:80%; height:200px;" %></p>
+  <p class="indent"><%= f.text_area :description, :required  => true, :style => "width:80%; height:200px;",
+                                    :class => 'wiki-edit' %></p>
+  <%= wikitoolbar_for 'project_description' %>
 
   <h4>Project Scope</h4>
-  <p class="indent"><%= f.text_area :scope, :style => "width:80%; height:200px;" %></p>
+  <p class="indent"><%= f.text_area :scope, :style => "width:80%; height:200px;", :class => 'wiki-edit' %></p>
+  <%= wikitoolbar_for 'project_scope' %>
 
 <% end %>

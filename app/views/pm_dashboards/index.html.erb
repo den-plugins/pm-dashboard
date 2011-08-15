@@ -3,6 +3,10 @@
 <% end %>
 
 <%= include_calendar_headers_tags %>
+<%= javascript_include_tag('jstoolbar/jstoolbar') %>
+<%= javascript_include_tag('jstoolbar/textile') %>
+<%= javascript_include_tag("jstoolbar/lang/jstoolbar-#{current_language}") %>
+<%= heads_for_wiki_formatter %>
 
 <% html_title 'Project Management Dashboard' -%>
 <style>
@@ -18,8 +22,8 @@
 
   pm_dashboard_header { width: 75% }
 
-  .indent{
-     text-indent: 2em;
+  p{
+     margin: 2em;
      padding: 0px 10px;
      text-align: justify;
    }

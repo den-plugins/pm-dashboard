@@ -14,14 +14,14 @@
 
   <h4>Project Definition </h4>
   <% if !@project.description.nil? %>
-    <p class="indent"><%= @project.description %></p>
+    <%= textilizable(@project, :description) %>
   <% else %>
     <p class="nodata"><%= l(:label_no_data) %></p>
   <% end %>
 
   <h4>Project Scope</h4>
   <% if !@project.scope.nil? %>
-    <p class="indent"><%= @project.scope %></p>
+    <%= textilizable(@project, :scope) %>
   <% else %>
     <p class="nodata"><%= l(:label_no_data) %></p>
   <% end %>
