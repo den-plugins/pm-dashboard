@@ -1,5 +1,8 @@
+<div id='risks-<%= @project.id %>'>
 <div class="contextual">
-  <%= link_to l(:label_risk_new), { :controller => 'risks' , :action => 'add', :project_id => @project}, :class => 'icon icon-add' %>
+  <%= link_to_remote l(:label_risk_new),  :url => { :controller => 'risks' , :action => 'add', :project_id => @project},
+                                                                          :update => "risks-#{@project.id}",
+                                                                          :class => 'icon icon-add' %>
 </div>
 
 <h2><%= l(:label_risks) %></h2>
@@ -11,7 +14,11 @@
 <% else %>
   <p class="nodata"><%= l(:label_no_data) %></p>
 <% end %>
+</div>
 
 <% content_for :header_tags do %>
-    <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
+  <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
+  <%= javascript_include_tag 'select_list_move' %>
+  <%= javascript_include_tag 'pm_dashboard', :plugin => 'pm_dashboard'  %>
 <% end %>
+

@@ -32,9 +32,3 @@
   <div class='splitcontentleft'><%= render :partial => 'pm_dashboards/risks/assumptions', :locals => {:f => f} %></div>
   <div class='splitcontentright'><%= render :partial => 'pm_dashboards/risks/issues', :locals => {:f => f} %></div>
 </p>
-
-<% content_for :header_tags do %>
-  <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
-  <%= javascript_include_tag 'select_list_move' %>
-  <%= javascript_include_tag 'pm_dashboard', :plugin => 'pm_dashboard'  %>
-<% end %>

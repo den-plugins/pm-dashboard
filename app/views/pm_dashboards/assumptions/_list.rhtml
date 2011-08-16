@@ -24,13 +24,14 @@
       <td><%= assumption.days_overdue %></td>
       <td><%= assumption.date_closed %></td>
       <td><% assumption.risks.each do |risk|%>
-        <%= link_to risk.ref_number, :project_id => @project, :tab => 'risks', :q => risk.id %>
+        <%= link_to risk.ref_number, :tab => 'risks', :q => risk.id %>
         <br/>
       <% end %></td>
       <td align="center">
       <%# if assumption.editable_by?(@user) -%>
-        <%= link_to image_tag('edit.png'), {:controller => 'assumptions', :action => 'update', :id => assumption, :project_id => @project},
-                                             :title => l(:button_edit) %>
+        <%= link_to_remote image_tag('edit.png'), :url => {:controller => 'assumptions', :action => 'update', :id => assumption, :project_id => @project},
+                                             :title => l(:button_edit),
+                                              :update => "assumptions-#{@project.id}" %>
         <%= link_to image_tag('delete.png'), {:controller => 'assumptions', :action => 'destroy', :id => assumption, :project_id => @project},
                                              :confirm => l(:text_are_you_sure),
                                              :method => :post,

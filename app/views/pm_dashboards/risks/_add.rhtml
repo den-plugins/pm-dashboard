@@ -1,0 +1,13 @@
+<div class="contextual">
+  <%= link_to "Cancel", {:controller => 'pm_dashboards', :action => 'index', :project_id => @project, :tab => :risks}, :class => 'icon icon-cancel' %> | 
+  <%= link_to "Save", "#", :onclick => "selectAllOptions('selected_assumptions');selectAllOptions('selected_issues');$('risk-form').submit()", :class => 'icon icon-save' %>
+</div>
+<h2><%= l(:label_risk_new)%></h2>
+<% remote_labelled_tabular_form_for  :risk, @risk,
+                                                       :url => {:controller =>  'risks', :action => 'add', :project_id => @project}, 
+                                                       :html => {:id => 'risk-form'} do |f| %>
+  <%= error_messages_for 'risk' %>
+  <div class="box"> <%= render :partial => 'pm_dashboards/risks/form', :locals => {:f => f} %></div>
+  <%= submit_tag l(:button_save), :onclick => "selectAllOptions('selected_assumptions');selectAllOptions('selected_issues');$('risk-form').submit()" %>
+<% end %>
+

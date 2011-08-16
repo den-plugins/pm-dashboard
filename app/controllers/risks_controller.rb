@@ -7,30 +7,30 @@ class RisksController < ApplicationController
   before_filter :get_risk, :only => [:update, :destroy]
   
   def add
-    if request.get?
-      @risk = Risk.new
-      render :template => "pm_dashboards/risks/add" 
-    else
+   if request.post? and !request.xhr?
       @risk = @project.risks.create(params[:risk])
       if @risk.save
         flash[:notice] = l(:notice_successful_create)
         redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :risks
       else
-        render :template => "pm_dashboards/risks/add"
+        render :partial => "pm_dashboards/risks/add"
       end
+    else
+      @risk = Risk.new
+      render :partial => "pm_dashboards/risks/add" 
     end
   end
   
   def update
-    if request.get?
-      render :template => "pm_dashboards/risks/edit"
-    else
+    if request.post? and !request.xhr?
       if @risk.update_attributes(params[:risk])
         flash[:notice] = l(:notice_successful_update)
         redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :risks
       else
-        render :template => "pm_dashboards/risks/edit"
+        render :partial => "pm_dashboards/risks/edit"
       end
+    else
+      render :partial => "pm_dashboards/risks/edit"
     end
   end
   
