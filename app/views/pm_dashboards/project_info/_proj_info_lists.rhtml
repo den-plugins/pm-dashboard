@@ -14,7 +14,7 @@
 <div class="clear"> </div>
 
 <% if !members.empty? %>
-  <table class="list" style="text-align: center;">
+  <table id="<%= classification.downcase.sub(' ', '_') %>_<%= @project.id %>" class="list" style="text-align: center;">
   <tr>
   <th>Name</th>
   <th>Position</th>
