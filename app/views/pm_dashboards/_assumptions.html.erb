@@ -1,11 +1,9 @@
-<div id='assumptions-<%= @project.id %>'>
 <div class="contextual">
-  <%= link_to_remote l(:label_assumption_new), :url => { :controller => 'assumptions' , :action => 'add', :project_id => @project},
-                                                                                        :update => "assumptions-#{@project.id}",
-                                                                                        :method => :get,
-                                                                                        :class => 'icon icon-add' %>
+  <%= link_to l(:label_assumption_new), { :controller => 'assumptions' , :action => 'add', :project_id => @project}, :class => 'icon icon-add' %>
 </div>
+
 <h2><%= l(:label_assumptions) %></h2>
+
 <% if @assumptions.any? %>
   <%= render :partial => 'pm_dashboards/assumptions/summary' unless params[:q] %>
   <p><%= link_to l(:label_view_all_assumptions), :controller => 'pm_dashboards', :project_id => @project, :tab => 'assumptions'  if params[:q]  %></p>
@@ -13,12 +11,7 @@
 <% else %>
   <p class="nodata"><%= l(:label_no_data) %></p>
 <% end %>
-</div>
 
 <% content_for :header_tags do %>
-  <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
-  <%= javascript_include_tag 'prototype' %>
-  <%= javascript_include_tag 'select_list_move' %>
-  <%= javascript_include_tag 'pm_dashboard', :plugin => 'pm_dashboard'  %>
+    <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
 <% end %>
-

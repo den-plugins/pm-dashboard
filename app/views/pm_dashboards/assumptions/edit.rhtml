@@ -1,0 +1,10 @@
+<h2><%= l(:label_assumption_update) %></h2>
+
+<% labelled_tabular_form_for  :assumption, @assumption, 
+                                                       :url => {:controller => 'assumptions', :action => 'update', :project_id => @project}, 
+                                                       :html => {:id => 'assumption-form'} do |f| %>
+  <%= error_messages_for 'assumption' %>
+  <div class="box"> <%= render :partial => 'pm_dashboards/assumptions/form', :locals => {:f => f} %></div>
+  <%= submit_tag l(:button_save), :onclick => "selectAllOptions('selected_risks');" %>
+<% end %>
+

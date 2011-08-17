@@ -6,35 +6,31 @@ class AssumptionsController < ApplicationController
   before_filter :get_project, :only => [:add, :update, :destroy]
   before_filter :get_assumption, :only => [:update, :destroy]
   
-  
   def add
-    if request.post? and !request.xhr?
+    if request.get?
+      @assumption = Assumption.new
+      render :template => "pm_dashboards/assumptions/add"
+    else
       @assumption = @project.assumptions.create(params[:assumption])
       if @assumption.save
         flash[:notice] = l(:notice_successful_create)
         redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :assumptions
       else
-        #redirect_to :action => 'add', :project_id => @project, :method => :get
-        render :update, :layout => 'base' do |page|
-          page.replace_html "assumptions-#{@project.id}", :partial => "pm_dashboards/assumptions/add"
-        end
+        render :template => "pm_dashboards/assumptions/add"
       end
-    else
-      @assumption = Assumption.new
-      render :partial => "pm_dashboards/assumptions/add"
     end
   end
   
   def update
-    if request.post? and !request.xhr?
+    if request.get?
+      render :template => "pm_dashboards/assumptions/edit"
+    else
       if @assumption.update_attributes(params[:assumption])
         flash[:notice] = l(:notice_successful_update)
         redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :assumptions
       else
         render :template => "pm_dashboards/assumptions/edit"
       end
-    else
-      render :partial => "pm_dashboards/assumptions/edit"
     end
   end
   
