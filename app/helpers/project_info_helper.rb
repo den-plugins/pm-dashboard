@@ -10,4 +10,20 @@ module ProjectInfoHelper
     str
   end
 
+  def selected_members(classification)
+    members = Array.new
+    @project.members.each do |m|
+      if classification.eql? :stakeholder
+        members << m if m.stakeholder
+      else
+        members << m if m.proj_team
+      end
+    end
+    members
+  end
+
+  def available_members(classification)
+    @project.members - selected_members(classification)
+  end
+
 end

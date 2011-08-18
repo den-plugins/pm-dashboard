@@ -1,6 +1,6 @@
 class ProjectInfoController < ApplicationController
 
-  before_filter :get_project, :only => [:add, :update, :destroy, :add_pm_position, :add_pm_role]
+  before_filter :get_project, :only => [:add, :update, :destroy, :add_pm_position, :add_pm_role, :pm_member_add]
 
   def update
     if request.post? and !request.xhr?
@@ -29,6 +29,18 @@ class ProjectInfoController < ApplicationController
     end
   end
 
+  def pm_member_add
+    member_ids = params[:project][:member_ids]
+    @project.members.each do |member|
+      if member_ids.member?(member.id.to_s)
+        member.update_attributes(params[:classification].to_sym => true)
+      else
+        member.update_attributes(params[:classification].to_sym => false)
+      end
+    end
+    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+  end
+
 #  "#{params[:classification].downcase.sub(' ', '_')}_#{@project.id}"
 
   def pm_member_remove
@@ -43,7 +55,7 @@ class ProjectInfoController < ApplicationController
   end
 
   def update_role_pos
-    @member = Member.find(params[:id]) 
+    @member = Member.find(params[:id])
     @project = @member.project
 
     role_or_pos = params[:member][params[:role_or_pos].to_sym]
