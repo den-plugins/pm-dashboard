@@ -22,8 +22,8 @@ module ProjectInfoHelper
     members
   end
 
-  def available_members(classification)
-    @project.members - selected_members(classification)
+  def available_members()
+    @project.members - selected_members(:proj_team) - selected_members(:stakeholder)
   end
 
 end
