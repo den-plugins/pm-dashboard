@@ -26,7 +26,11 @@
           <%= submit_tag "Ok", :class => "small", :onclick => "return validateFloat(document.getElementById('pteam_sow_rate_#{member.id}'))" %>                     
         <% end %>
       </td>
-     <!-- <td></td> -->
+      <td>
+        <% form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project}, :method => :post, :html => {:id => "form_billable_#{member.id}"}) do |f| %>
+          <%= f.check_box "billable?".to_sym, :onchange => "$('form_billable_#{member.id}').submit()" %>                   
+        <% end %>
+      </td>
       <td id="remarks_<%= member.id %>">
         <%= member.remarks %>
         <%= link_to_remote image_tag('edit.png'), :url => {:controller => 'project_info', :action => 'update_remarks', :id => member}, :update => "remarks_#{member.id}" %>
