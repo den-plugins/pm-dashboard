@@ -44,7 +44,7 @@
 </p>
 
   <%= submit_tag l(:button_save), :onclick => "selectAllOptions('selected_risks');selectAllOptions('selected_assumptions')" %>
-
+  <%= link_to 'Cancel', :controller => 'pm_dashboards', :tab => 'issues', :project_id => @project %>
 <% end %>
 
 <% content_for :header_tags do %>

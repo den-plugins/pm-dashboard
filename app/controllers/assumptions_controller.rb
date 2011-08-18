@@ -16,7 +16,7 @@ class AssumptionsController < ApplicationController
         flash[:notice] = l(:notice_successful_create)
         redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :assumptions
       else
-        render :template => "pm_dashboards/assumptions/add" 
+        render :template => "pm_dashboards/assumptions/add"
       end
     end
   end

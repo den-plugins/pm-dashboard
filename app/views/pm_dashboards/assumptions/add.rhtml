@@ -6,5 +6,6 @@
   <%= error_messages_for 'assumption' %>
   <div class="box"> <%= render :partial => 'pm_dashboards/assumptions/form', :locals => {:f => f} %></div>
   <%= submit_tag l(:button_save), :onclick => "selectAllOptions('selected_risks');" %>
+  <%= link_to 'Cancel', :controller => 'pm_dashboards', :tab => 'assumptions', :project_id => @project %>
 <% end %>
 

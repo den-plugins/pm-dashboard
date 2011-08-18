@@ -35,7 +35,7 @@
             <br/>
             <% end %>
             <% issue.assumptions.each do |assumption|%>
-            <%= link_to assumption.ref_number, :project_id => @project, :tab => 'assumptions', :q => assumption %>
+            <%= link_to assumption.ref_number, :tab => 'assumptions', :q => assumption %>
             <br/>
             <% end %>
         </td>
