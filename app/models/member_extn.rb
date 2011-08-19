@@ -25,11 +25,11 @@ module MemberExtn
   module InstanceMethods
 
     def pmposition
-      PmPosition.find(self.pm_pos_id).name
+      PmPosition.find(self.pm_pos_id).name if !self.pm_pos_id.nil?
     end
 
     def pmrole
-      PmRole.find(self.pm_role_id).name
+      PmRole.find(self.pm_role_id).name if !self.pm_role_id.nil?
     end
   end
 end
