@@ -30,12 +30,14 @@
   <% end %>
 
   <h4>Project Scope</h4>
-  <% if !@project.scope.nil? %>
+  <% if !@project.scope.nil? and !@project.scope.empty? %>
     <%= textilizable(@project, :scope) %>
   <% else %>
     <p class="nodata"><%= l(:label_no_data) %></p>
   <% end %>
 </div>
+
+<hr />
 
 <h4>Project Sponsor/Stakeholders</h4>
 <%= render :partial => "pm_dashboards/project_info/proj_info_lists", 

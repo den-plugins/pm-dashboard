@@ -11,9 +11,9 @@ class PmDashboardsController < ApplicationController
     @assumptions ||= @project.assumptions.find(:all, :order => 'ref_number DESC')
     @issues ||= @project.pm_dashboard_issues.find(:all, :order => 'ref_number DESC')
     @risks ||= @project.risks.find(:all, :order => 'ref_number DESC')
-    @stakeholders = @project.members.find(:all, :order => "role_id", 
+    @stakeholders = @project.members.find(:all, :order => "users.firstname", 
                                           :conditions => "stakeholder = true")
-    @proj_team = @project.members.find(:all, :order => "role_id", 
+    @proj_team = @project.members.find(:all, :order => "users.firstname", 
                                        :conditions => "proj_team = true")
     @positions = PmPosition.find(:all) #Positions created by PM
     @roles = PmRole.find(:all) #Roles created by PM
