@@ -11,9 +11,9 @@ module ProjectExtn
     base.class_eval do
       unloadable # Send unloadable so it will not be unloaded in development
      # belongs_to :deliverable ----- new relationship?
-      has_many :assumptions, :dependent => :destroy
-      has_many :pm_dashboard_issues, :dependent => :destroy
-      has_many :risks, :dependent => :destroy
+      has_many :assumptions, :dependent => :destroy, :order => "ref_number ASC"
+      has_many :pm_dashboard_issues, :dependent => :destroy, :order => "ref_number ASC"
+      has_many :risks, :dependent => :destroy, :order => "ref_number ASC"
 
       validates_presence_of :client
       validates_presence_of :planned_start_date

@@ -9,7 +9,7 @@ class PmDashboardsController < ApplicationController
   def index
     @project = Project.find(params[:project_id]) if params[:project_id]
     @assumptions ||= @project.assumptions.find(:all, :order => 'ref_number DESC')
-    @issues ||= @project.pm_dashboard_issues.all
+    @issues ||= @project.pm_dashboard_issues.find(:all, :order => 'ref_number DESC')
     @risks ||= @project.risks.find(:all, :order => 'ref_number DESC')
     @stakeholders = @project.members.find(:all, :order => "users.firstname", 
                                           :conditions => "stakeholder = true")

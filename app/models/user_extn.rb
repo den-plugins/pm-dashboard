@@ -9,6 +9,7 @@ module UserExtn
       unloadable 
       has_many :assumptions, :foreign_key => :owner
       has_many :risks, :foreign_key => :owner
+      has_many :pm_dashboard_issues, :foreign_key => :owner
     end
   end
   
