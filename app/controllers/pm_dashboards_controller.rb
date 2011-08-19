@@ -15,8 +15,7 @@ class PmDashboardsController < ApplicationController
                                           :conditions => "stakeholder = true")
     @proj_team = @project.members.find(:all, :order => "users.firstname", 
                                        :conditions => "proj_team = true")
-    @positions = PmPosition.find(:all) #Positions created by PM
-    @roles = PmRole.find(:all) #Roles created by PM
+    
     @user_custom_fields = CustomField.find(:all, :conditions => "type = 'UserCustomField'")
     
     rescue ActiveRecord::RecordNotFound

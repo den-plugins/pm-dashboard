@@ -23,7 +23,14 @@ module MemberExtn
   end
   
   module InstanceMethods
-    
+
+    def pmposition
+      PmPosition.find(self.pm_pos_id).name
+    end
+
+    def pmrole
+      PmRole.find(self.pm_role_id).name
+    end
   end
 end
 

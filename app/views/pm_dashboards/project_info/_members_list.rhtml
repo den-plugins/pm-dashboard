@@ -1,47 +1,24 @@
 <% members.each do |member| %>
 
-  <tr class="<%= cycle('odd', 'even') %>">
+  <tr class="<%= cycle('odd', 'even') %>" id="tr_<%= classification.to_s %>_<%= member.id %>" >
     <td><%= member.name %></td>
-    <td id="pos_<%= member.id %>">
-      <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'update_role_pos', :id => member, :role_or_pos => 'pm_pos_id'}, :method => :post) do |f| %>
-        <%= f.select :pm_pos_id, @positions.collect{|p| [p.name, p.id]}.insert(0, "Others"), {:include_blank => true}, 
-                     :class => "small", :onchange => "$('pos_#{member.id}_submit').show()" %>
-        <%= submit_tag "Ok", :class => "small", :id => "pos_#{member.id}_submit", 
-                             :style => "display:none", :onclick => "$('pos_#{member.id}_submit').hide()" %>
-      <% end %>
-    </td>
-    <td id="role_<%= member.id %>">
-      <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'update_role_pos', :id => member, :role_or_pos => 'pm_role_id'}, :method => :post) do |f| %>
-        <%= f.select :pm_role_id, @roles.collect{|r| [r.name, r.id]}.insert(0, "Others"), {:include_blank => true}, 
-                     :class => "small", :onchange => "$('role_#{member.id}_submit').show()" %>
-        <%= submit_tag "Ok", :class => "small", :id => "role_#{member.id}_submit", 
-                             :style => "display:none", :onclick => "$('role_#{member.id}_submit').hide()" %>
-      <% end %>
-    </td>
+    <td><%= member.pmposition %></td>
+    <td><%= member.pmrole %></td>
     <td><%= member.user.mail %></td>
     <% if classification.eql?(:proj_team) %>
-      <td>
-        <% form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project}, :method => :post) do |f| %>
-          <%= f.text_field :sow_rate, :size => 5, :id => 'pteam_sow_rate_' + member.id.to_s %>
-          <%= submit_tag "Ok", :class => "small", :onclick => "return validateFloat(document.getElementById('pteam_sow_rate_#{member.id}'))" %>                     
-        <% end %>
-      </td>
-      <td>
-        <% form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project}, :method => :post, :html => {:id => "form_billable_#{member.id}"}) do |f| %>
-          <%= f.check_box "billable?".to_sym, :onchange => "$('form_billable_#{member.id}').submit()" %>                   
-        <% end %>
-      </td>
-      <td id="remarks_<%= member.id %>">
-        <%= member.remarks %>
-        <%= link_to_remote image_tag('edit.png'), :url => {:controller => 'project_info', :action => 'update_remarks', :id => member}, :update => "remarks_#{member.id}" %>
-      </td>
+      <td> <%= member.sow_rate %> </td>
+      <td> <%= member.billable ? image_tag('true.png') : '' %> </td>
+      <td> <%= member.remarks %> </td>
     <% end %>
     <% member.user.custom_field_values.each do |value| %>
       <% if value.custom_field.editable %>
         <td><%= value %></td>
       <% end %>
     <% end %>
+
     <td>
+      <%= link_to_remote image_tag('edit.png'), {:url => { :controller => 'project_info' , :action => 'pm_member_edit', :id => member, :project_id => @project, :classification => classification}, :update => "tr_#{classification.to_s}_#{member.id}", :complete => "new Effect.Highlight('tr_#{classification.to_s}_#{member.id}')"} %>
+
       <%= link_to image_tag('delete.png'), {:controller => 'project_info', :action => 'pm_member_remove', :id => member, :member => {classification => false}},
                                              :confirm => l(:text_are_you_sure),
                                              :method => :post,
@@ -50,24 +27,3 @@
   </tr>
 
 <% end %>
-
-<script type="text/javascript">
-  function isFloat(val) {
-    var isNumber = !isNaN(new Number(val));
-    if(isNumber) {
-      return(true);
-    } else {
-      return(false);
-    }
-  }
-  
-  function validateFloat(elem){
-    if(isFloat(elem.value)){
-      return true;
-    }else{
-      alert('invalid value type: need float');
-      elem.value = '0';
-      return false;
-    }
-  }
-</script>

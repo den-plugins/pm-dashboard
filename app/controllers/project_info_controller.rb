@@ -1,6 +1,6 @@
 class ProjectInfoController < ApplicationController
 
-  before_filter :get_project, :only => [:add, :update, :destroy, :add_pm_position, :add_pm_role, :pm_member_add]
+  before_filter :get_project, :only => [:add, :update, :destroy, :add_pm_position, :add_pm_role, :pm_member_add, :pm_member_edit]
 
   def update
     if request.post? and !request.xhr?
@@ -14,6 +14,14 @@ class ProjectInfoController < ApplicationController
     end
   end
 
+  def pm_member_edit
+    @positions = PmPosition.find(:all) #Positions created by PM
+    @roles = PmRole.find(:all) #Roles created by PM
+    @member = Member.find(params[:id])
+    render :partial => "pm_dashboards/project_info/pm_member_edit", 
+           :locals => {:member => @member, :classification => params[:classification].to_sym}
+  end
+
   def pm_member_update
     if request.post? and !request.xhr?
       @member = Member.find(params[:id]) 
@@ -23,9 +31,20 @@ class ProjectInfoController < ApplicationController
         redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
       end
     else 
-      @project = Project.find(params[:project_id])
-      render :partial => "pm_dashboards/project_info/pm_member_add", 
-                    :locals => {:classification => params[:classification]}
+      if params[:classification]
+        @project = Project.find(params[:project_id])
+        render :partial => "pm_dashboards/project_info/pm_member_add", 
+                      :locals => {:classification => params[:classification]}
+      else
+        @member = Member.find(params[:id]) 
+        @project = @member.project
+
+        if @member.update_attributes(params[:member])
+          render(:update) {|page| page.replace_html "tr_#{params[:proj_team]}_#{@member.id}", 
+          {:partial => "pm_dashboards/project_info/pm_member_edit", 
+           :locals => {:member => @member, :classification => params[:proj_team].to_sym}}}
+        end
+      end
     end
   end
 

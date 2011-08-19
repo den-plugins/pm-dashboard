@@ -35,4 +35,25 @@
   <p class="nodata"><%= l(:label_no_data) %></p>
 <% end %>
 
+<script type="text/javascript">
+  function isFloat(val) {
+    var isNumber = !isNaN(new Number(val));
+    if(isNumber) {
+      return(true);
+    } else {
+      return(false);
+    }
+  }
+  
+  function validateFloat(elem){
+    if(isFloat(elem.value)){
+      return true;
+    }else{
+      alert('invalid value type: need float');
+      elem.value = '0';
+      return false;
+    }
+  }
+</script>
+
 
