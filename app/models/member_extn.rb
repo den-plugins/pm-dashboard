@@ -25,11 +25,23 @@ module MemberExtn
   module InstanceMethods
 
     def pmposition
-      PmPosition.find(self.pm_pos_id).name if !self.pm_pos_id.nil?
+      pmposition = nil
+      PmPosition.all.each do |pos|
+        if pos.id == self.pm_pos_id
+          pmposition = pos.name if !self.pm_pos_id.nil?
+        end
+      end
+      pmposition
     end
 
     def pmrole
-      PmRole.find(self.pm_role_id).name if !self.pm_role_id.nil?
+      pmrole = nil
+      PmRole.all.each do |role|
+        if role.id == self.pm_role_id
+          pmrole = role.name if !self.pm_role_id.nil?
+        end
+      end
+      pmrole
     end
   end
 end

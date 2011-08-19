@@ -81,7 +81,9 @@ class ProjectInfoController < ApplicationController
 
     if role_or_pos.blank? or role_or_pos.eql?("Others")
       form_name = ((params[:role_or_pos].split("_")[1].eql?("role"))? "role" : "position")
-      render(:update) {|page| page.replace_html "#{params[:role_or_pos].split('_')[1]}_#{params[:id]}", {:partial => 'pm_dashboards/project_info/add_role_pos', :locals => {:form_name => form_name}}}
+      render(:update) {|page| page.replace_html "#{params[:role_or_pos].split('_')[1]}_#{params[:id]}", 
+      {:partial => 'pm_dashboards/project_info/add_role_pos', :locals => {:form_name => form_name, 
+      :classification => params[:classification].to_sym}}}
     else
       if @member.update_attributes(params[:member])
         redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
@@ -94,24 +96,34 @@ class ProjectInfoController < ApplicationController
     @member = Member.find(params[:member_id]) 
     @position = PmPosition.new(params[:position])
     if @position.save
+      @positions = PmPosition.find(:all) #Positions created by PM
+      @roles = PmRole.find(:all) #Roles created by PM
       @member.update_attributes(:pm_pos_id => @position.id)
     end
-    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+#    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+    render(:update) {|page| page.replace_html "tr_#{params[:classification]}_#{@member.id}", 
+          {:partial => "pm_dashboards/project_info/pm_member_edit", 
+           :locals => {:member => @member, :classification => params[:classification].to_sym}}}
   end
 
   def add_pm_role
     @member = Member.find(params[:member_id]) 
     @role = PmRole.new(params[:role])
     if @role.save
+      @positions = PmPosition.find(:all) #Positions created by PM
+      @roles = PmRole.find(:all) #Roles created by PM
       @member.update_attributes(:pm_role_id => @role.id)
     end
-    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+    render(:update) {|page| page.replace_html "tr_#{params[:classification]}_#{@member.id}", 
+          {:partial => "pm_dashboards/project_info/pm_member_edit", 
+           :locals => {:member => @member, :classification => params[:classification].to_sym}}}
+#    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
   end
 
-  def update_remarks
-    @member = Member.find(params[:id])
-    render :partial => 'pm_dashboards/project_info/edit_remarks'
-  end
+#  def update_remarks
+#    @member = Member.find(params[:id])
+#    render :partial => 'pm_dashboards/project_info/edit_remarks'
+#  end
 
 private
   def get_project

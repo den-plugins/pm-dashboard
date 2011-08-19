@@ -3,7 +3,7 @@
   <!-- <tr class="<%# cycle('odd', 'even') %>"> -->
     <td><%= member.name %></td>
     <td id="pos_<%= member.id %>">
-      <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'update_role_pos', :id => member, :role_or_pos => 'pm_pos_id'}, :method => :post) do |f| %>
+      <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'update_role_pos', :id => member, :role_or_pos => 'pm_pos_id', :classification => classification}, :method => :post) do |f| %>
         <%= f.select :pm_pos_id, @positions.collect{|p| [p.name, p.id]}.insert(0, "Others"), {:include_blank => true}, 
                      :class => "small", :onchange => "$('pos_#{member.id}_submit').show()" %>
         <%= submit_tag "Ok", :class => "small", :id => "pos_#{member.id}_submit", 
@@ -11,7 +11,7 @@
       <% end %>
     </td>
     <td id="role_<%= member.id %>">
-      <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'update_role_pos', :id => member, :role_or_pos => 'pm_role_id'}, :method => :post) do |f| %>
+      <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'update_role_pos', :id => member, :role_or_pos => 'pm_role_id', :classification => classification}, :method => :post) do |f| %>
         <%= f.select :pm_role_id, @roles.collect{|r| [r.name, r.id]}.insert(0, "Others"), {:include_blank => true}, 
                      :class => "small", :onchange => "$('role_#{member.id}_submit').show()" %>
         <%= submit_tag "Ok", :class => "small", :id => "role_#{member.id}_submit", 
