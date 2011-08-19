@@ -20,7 +20,7 @@
 	  <tr>
 		  <td><%= select_tag 'available_members',
 		            options_for_select(available_members().collect{|m| [m.name, m.id]}),
-		            :multiple => true, :size => 10, :style => "width:150px",
+		            :multiple => true, :size => 10, :style => "width:250px",
 		            :ondblclick => "handleSelect(this, '#{@project.identifier}', 'members')" %>
 		  </td>
 		  <td align="center" valign="middle">
@@ -31,7 +31,7 @@
 		  </td>
 		  <td><%= select_tag 'project[member_ids][]',
 		            options_for_select(selected_members(classification).collect{|m| [m.name, m.id]}),
-		            :id => 'selected_members', :multiple => true, :size => 10, :style => "width:150px",
+		            :id => 'selected_members', :multiple => true, :size => 10, :style => "width:250px",
 		            :ondblclick => "handleSelect(this, '#{@project.identifier}', 'members')" %>
 		  </td>
 	  </tr>
