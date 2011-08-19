@@ -26,7 +26,7 @@
         <td style='text-align: left;'><%= issue.issue_description %></td>
         <td style='text-align: left;'><%= issue.action %></td>
         <td class="<%= issue_impact_color_coding(issue.impact)%>"><%= issue.impact %></td>
-        <td><%= User.find(issue.owner).name %></td>
+        <td><%= issue.user.name %></td>
         <td><%= issue.date_due %></td>
         <td><%= issue.days_overdue %></td>
         <td><%= issue.date_close %></td>

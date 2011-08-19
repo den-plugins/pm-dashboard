@@ -9,7 +9,7 @@ class PmDashboardIssue < ActiveRecord::Base
              3 => {:name => :label_issue_impact_high }}
 
   belongs_to :project
-  belongs_to :user
+  belongs_to :user, :foreign_key => :owner, :class_name => 'User'
 
   has_and_belongs_to_many :risks
   has_many :assumptions

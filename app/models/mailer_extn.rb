@@ -35,7 +35,7 @@ module MailerExtn
       redmine_headers 'Project' => issue.project.identifier,
           'Issue-Ref-Number' => issue.ref_number
       message_id issue
-      recipients issue.owner
+      recipients issue.user.mail
       subject "Issue - ##{issue.ref_number}"
       body :issue => issue,
               :issue_url => url_for(:controller => 'pm_dashboards', :action => 'index', :tab => 'issues', :q => issue)
