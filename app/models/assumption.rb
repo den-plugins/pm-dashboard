@@ -19,7 +19,7 @@ class Assumption < ActiveRecord::Base
 
   def set_ref_number
     last = @project.assumptions.find(:last, :order => 'pid ASC')
-    self.pid = (last) ? last.pid+1 : 1
+    self.pid = (last.nil?) ? 1 : last.pid+1
     self.ref_number = "A" + "%0.5d" % pid
   end
   

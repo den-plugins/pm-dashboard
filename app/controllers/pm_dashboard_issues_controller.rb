@@ -16,7 +16,6 @@ class PmDashboardIssuesController < ApplicationController
     else
       @issue = @project.pm_dashboard_issues.create(params[:issue])
       if @issue.save
-        puts @issue.inspect
         redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :issues
       else
         render :template => "pm_dashboards/pm_dashboard_issues/add"
@@ -26,7 +25,6 @@ class PmDashboardIssuesController < ApplicationController
 
   def edit
     if request.get?
-      puts @issue.inspect
       render :template => "pm_dashboards/pm_dashboard_issues/edit"
     else
       if @issue.update_attributes(params[:issue])

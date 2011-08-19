@@ -60,12 +60,10 @@ module MailerExtn
     end
     
     def risk_add(risk)
-      puts "Add"
       risk_common_header(risk)
     end
     
     def risk_edit(risk)
-      puts "edit"
       risk_common_header(risk)
     end
     
