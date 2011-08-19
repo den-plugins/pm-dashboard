@@ -12,7 +12,7 @@ module ProjectInfoHelper
 
   def selected_members(classification)
     members = Array.new
-    @project.members.each do |m|
+    @project.members.all(:order => "users.firstname").each do |m|
       if classification.eql? :stakeholder
         members << m if m.stakeholder
       else
@@ -23,7 +23,7 @@ module ProjectInfoHelper
   end
 
   def available_members()
-    @project.members - selected_members(:proj_team) - selected_members(:stakeholder)
+    @project.members.all(:order => "users.firstname") - selected_members(:proj_team) - selected_members(:stakeholder)
   end
 
 end
