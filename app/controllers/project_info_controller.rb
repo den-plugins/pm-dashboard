@@ -74,8 +74,13 @@ class ProjectInfoController < ApplicationController
   end
 
   def update_role_pos
-    @member = Member.find(params[:id])
-    @project = @member.project
+    if params[:no_accnt]
+      @member = Stakeholder.find(params[:id])
+      @project = Project.find(params[:project_id])
+    else
+      @member = Member.find(params[:id])
+      @project = @member.project
+    end
 
     role_or_pos = params[:member][params[:role_or_pos].to_sym]
 
@@ -93,7 +98,12 @@ class ProjectInfoController < ApplicationController
   end
 
   def add_pm_position
-    @member = Member.find(params[:member_id]) 
+    if params[:no_accnt]
+      @member = Stakeholder.find(params[:id])
+    else
+      @member = Member.find(params[:id])
+    end
+    
     @position = PmPosition.new(params[:position])
     if @position.save
       @positions = PmPosition.find(:all) #Positions created by PM
@@ -101,22 +111,38 @@ class ProjectInfoController < ApplicationController
       @member.update_attributes(:pm_pos_id => @position.id)
     end
 #    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
-    render(:update) {|page| page.replace_html "tr_#{params[:classification]}_#{@member.id}", 
+    if params[:no_accnt]
+      render(:update) {|page| page.replace_html "tr_stakeholder_#{@member.id}", 
+          {:partial => "pm_dashboards/project_info/stakeholder_edit", 
+           :locals => {:member => @member, :classification => :stakeholder}}}
+    else
+      render(:update) {|page| page.replace_html "tr_#{params[:classification]}_#{@member.id}", 
           {:partial => "pm_dashboards/project_info/pm_member_edit", 
            :locals => {:member => @member, :classification => params[:classification].to_sym}}}
+    end
   end
 
   def add_pm_role
-    @member = Member.find(params[:member_id]) 
+    if params[:no_accnt]
+      @member = Stakeholder.find(params[:id])
+    else
+      @member = Member.find(params[:id])
+    end 
     @role = PmRole.new(params[:role])
     if @role.save
       @positions = PmPosition.find(:all) #Positions created by PM
       @roles = PmRole.find(:all) #Roles created by PM
       @member.update_attributes(:pm_role_id => @role.id)
     end
-    render(:update) {|page| page.replace_html "tr_#{params[:classification]}_#{@member.id}", 
+    if params[:no_accnt]
+      render(:update) {|page| page.replace_html "tr_stakeholder_#{@member.id}", 
+          {:partial => "pm_dashboards/project_info/stakeholder_edit", 
+           :locals => {:member => @member, :classification => :stakeholder}}}
+    else
+      render(:update) {|page| page.replace_html "tr_#{params[:classification]}_#{@member.id}", 
           {:partial => "pm_dashboards/project_info/pm_member_edit", 
            :locals => {:member => @member, :classification => params[:classification].to_sym}}}
+    end
 #    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
   end
 

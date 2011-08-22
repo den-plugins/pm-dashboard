@@ -4,7 +4,7 @@
     <td><%= member.name %></td>
     <td><%= member.pmposition %></td>
     <td><%= member.pmrole %></td>
-    <td><%= member.user.mail %></td>
+    <td><%= member.mail %></td>
     <td><%= member.phone_no %></td>
     <td><%= member.office_no %></td>
     <td><%= member.im_id %></td>
@@ -13,20 +13,31 @@
       <td> <%= member.billable ? image_tag('true.png') : '' %> </td>
       <td> <%= member.remarks %> </td>
     <% end %>
-    <% member.user.custom_field_values.each do |value| %>
-      <% if value.custom_field.editable %>
-        <td><%= value %></td>
-      <% end %>
+    <% if member.is_a?(Member) %>
+      <%# member.user.custom_field_values.each do |value| %>
+        <%# if value.custom_field.editable %>
+          <!--<td><%# value %></td>-->
+        <%# end %>
+      <%# end %>
+      <td>
+        <%= link_to_remote image_tag('edit.png'), {:url => { :controller => 'project_info' , :action => 'pm_member_edit', :id => member, :project_id => @project, :classification => classification}, :update => "tr_#{classification.to_s}_#{member.id}", :complete => "new Effect.Highlight('tr_#{classification.to_s}_#{member.id}')"} %>
+
+        <%= link_to image_tag('delete.png'), {:controller => 'project_info', :action => 'pm_member_remove', :id => member, :member => {classification => false}},
+                                               :confirm => l(:text_are_you_sure),
+                                               :method => :post,
+                                               :title => 'Remove' %>
+      </td>
+    <% else %>
+      <td>
+        <%= link_to_remote image_tag('edit.png'), {:url => { :controller => 'stakeholders' , :action => 'edit', :id => member, :project_id => @project}, :update => "tr_#{classification.to_s}_#{member.id}", :complete => "new Effect.Highlight('tr_#{classification.to_s}_#{member.id}')"} %>
+        <%= link_to image_tag('delete.png'), {:controller => 'stakeholders', :action => 'remove', :id => member, :project_id => @project},
+                                               :confirm => l(:text_are_you_sure),
+                                               :method => :post,
+                                               :title => 'Remove' %>
+      </td>
     <% end %>
 
-    <td>
-      <%= link_to_remote image_tag('edit.png'), {:url => { :controller => 'project_info' , :action => 'pm_member_edit', :id => member, :project_id => @project, :classification => classification}, :update => "tr_#{classification.to_s}_#{member.id}", :complete => "new Effect.Highlight('tr_#{classification.to_s}_#{member.id}')"} %>
-
-      <%= link_to image_tag('delete.png'), {:controller => 'project_info', :action => 'pm_member_remove', :id => member, :member => {classification => false}},
-                                             :confirm => l(:text_are_you_sure),
-                                             :method => :post,
-                                             :title => 'Remove' %>
-    </td>
+    
   </tr>
 
 <% end %>

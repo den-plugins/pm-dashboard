@@ -5,6 +5,10 @@
   <% classification = :stakeholder %>
 <% end %>
 <div class="contextual">
+<% if classification.eql? :stakeholder %>
+  <%= link_to_remote "New Stakeholder", {:url => { :controller => 'stakeholders' , :action => 'new', :project_id => @project, :classification => classification}, :update => "add_stakeholder", :complete => "new Effect.Highlight('add_stakeholder')"}, :class => 'icon icon-add' %>
+  <br />
+<% end %>
   <%= link_to "Cancel", {:controller => 'pm_dashboards', :action => 'index', :project_id => @project, :tab => :info}, :class => 'icon icon-cancel' %>
 </div>
 <div style="height:300px; overflow:auto;">

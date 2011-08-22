@@ -27,6 +27,10 @@ module MemberExtn
   
   module InstanceMethods
 
+    def mail
+      self.user.mail
+    end
+
     def pmposition
       pmposition = nil
       PmPosition.all.each do |pos|

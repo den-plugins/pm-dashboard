@@ -18,7 +18,7 @@
                              :style => "display:none", :onclick => "$('role_#{member.id}_submit').hide()" %>
       <% end %>
     </td>
-    <td><%= member.user.mail %></td>
+    <td><%= member.mail %></td>
     <td>
       <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :classif => classification}, :method => :post, :html => {:id => "form_phone_#{member.id}"}) do |f| %>
         <%= f.text_field :phone_no, :size => 10, :onblur => "$('form_phone_#{member.id}').request();" %>
@@ -54,11 +54,11 @@
         <% end %>
       </td>
     <% end %>
-    <% member.user.custom_field_values.each do |value| %>
-      <% if value.custom_field.editable %>
-        <td><%= value %></td>
-      <% end %>
-    <% end %>
+    <%# member.user.custom_field_values.each do |value| %>
+      <%# if value.custom_field.editable %>
+        <!--<td><%# value %></td>-->
+      <%# end %>
+    <%# end %>
     <td>
       <%= link_to "Done", {:controller => 'pm_dashboards', :action => 'index', :project_id => @project, :tab => :info}, :class => 'icon icon-checked' %>
     </td>

@@ -1,5 +1,6 @@
-<% remote_form_for(form_name.to_sym, :url => {:controller => 'project_info', :action => "add_pm_#{form_name}", :project_id => @project, :member_id => @member, :classification => classification}) do |f| %>
-  <%= f.text_field :name, :required => true %>
+<% no_accnt = (@member.is_a?(Stakeholder))? true : false %>
+<% remote_form_for(form_name.to_sym, :url => {:controller => 'project_info', :action => "add_pm_#{form_name}", :project_id => @project, :id => @member, :classification => classification, :no_accnt => no_accnt}) do |f| %>
+  <%= f.text_field :name, :size => 15, :required => true %>
   <%= submit_tag "Add", :class => "small" %>
   <%= link_to "Cancel", {:controller => 'pm_dashboards', :action => 'index', :project_id => @project, :tab => :info}, :class => 'icon icon-cancel' %>
 <% end %>

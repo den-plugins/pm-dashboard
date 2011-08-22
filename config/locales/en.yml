@@ -63,6 +63,10 @@ en:
   field_impact_final: Impact (Final)
   field_final_risk_rating: Final Risk Rating
   field_target_resolution_date: Target Resolution Date
+
+  field_phone_no: Phone No.
+  field_office_no: Office No.
+  field_im: IM ID
   
   label_risk_status_monitor: Monitor
   label_risk_status_realized: Realized

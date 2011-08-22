@@ -1,0 +1,30 @@
+<fieldset><legend>New Stakeholder</legend>
+<% labelled_tabular_form_for :stakeholder, @stakeholder,
+                                                       :url => {:controller => 'stakeholders', :action => 'create', :project_id => @project},
+                                                       :html => {:id => 'stakeholder-form'} do |f| %>
+  <%= error_messages_for 'stakeholder' %>
+  <div class="box">
+    <p> 
+    <%= f.text_field :firstname %>
+    </p>
+    <p> 
+    <%= f.text_field :lastname %>
+    </p>
+    <p> 
+    <%= f.text_field :mail %>
+    </p>
+    <p> 
+    <%= f.text_field :phone_no %>
+    </p>
+    <p> 
+    <%= f.text_field :office_no %>
+    </p>
+    <p> 
+    <%= f.text_field :im_id %>
+    </p>
+  </div>
+  <%= f.submit "Save" %>
+  <%= link_to 'Cancel', {:controller => 'pm_dashboards', :tab => 'info', :project_id => @project}, 
+              :class => 'icon icon-cancel' %>
+<% end %>
+</fieldset>

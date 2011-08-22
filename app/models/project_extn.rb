@@ -14,6 +14,7 @@ module ProjectExtn
       has_many :assumptions, :dependent => :destroy, :order => "ref_number ASC"
       has_many :pm_dashboard_issues, :dependent => :destroy, :order => "ref_number ASC"
       has_many :risks, :dependent => :destroy, :order => "ref_number ASC"
+      has_and_belongs_to_many :stakeholders
 
       validates_presence_of :client
       validates_presence_of :planned_start_date

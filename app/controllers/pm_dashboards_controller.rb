@@ -13,6 +13,10 @@ class PmDashboardsController < ApplicationController
     @risks ||= @project.risks.find(:all, :order => 'ref_number DESC')
     @stakeholders = @project.members.find(:all, :order => "users.firstname", 
                                           :conditions => "stakeholder = true")
+    if !@project.stakeholders.empty?
+      @stakeholders.concat(@project.stakeholders.all)
+    end
+#    puts @stakeholders.inspect
     @proj_team = @project.members.find(:all, :order => "users.firstname", 
                                        :conditions => "proj_team = true")
     
