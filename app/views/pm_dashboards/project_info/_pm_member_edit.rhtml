@@ -19,21 +19,36 @@
       <% end %>
     </td>
     <td><%= member.user.mail %></td>
+    <td>
+      <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :classif => classification}, :method => :post, :html => {:id => "form_phone_#{member.id}"}) do |f| %>
+        <%= f.text_field :phone_no, :size => 10, :onblur => "$('form_phone_#{member.id}').request();" %>
+      <% end %>
+    </td>
+    <td>
+      <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :classif => classification}, :method => :post, :html => {:id => "form_office_#{member.id}"}) do |f| %>
+        <%= f.text_field :office_no, :size => 10, :onblur => "$('form_office_#{member.id}').request();" %>
+      <% end %>
+    </td>
+    <td>
+      <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :classif => classification}, :method => :post, :html => {:id => "form_im_#{member.id}"}) do |f| %>
+        <%= f.text_field :im_id, :size => 10, :onblur => "$('form_im_#{member.id}').request();" %>
+      <% end %>
+    </td>
     <% if classification.eql?(:proj_team) %>
       <td>
-        <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :proj_team => classification}, :method => :post, :html => {:id => "form_sowrate_#{member.id}"}) do |f| %>
+        <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :classif => classification}, :method => :post, :html => {:id => "form_sowrate_#{member.id}"}) do |f| %>
           <%= f.text_field :sow_rate, :size => 5, :id => 'pteam_sow_rate_' + member.id.to_s, 
                 :onblur => "$('form_sowrate_#{member.id}').request(); return validateFloat(document.getElementById('pteam_sow_rate_#{member.id}'));" %>
           <%# submit_tag "Ok", :class => "small", :onclick => "return validateFloat(document.getElementById('pteam_sow_rate_#{member.id}'))" %>                     
         <% end %>
       </td>
       <td>
-        <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :proj_team => classification}, :method => :post, :html => {:id => "form_billable_#{member.id}"}) do |f| %>
+        <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :classif => classification}, :method => :post, :html => {:id => "form_billable_#{member.id}"}) do |f| %>
           <%= f.check_box :billable, :onchange => "$('form_billable_#{member.id}').request()" %>                   
         <% end %>
       </td>
       <td id="remarks_<%= member.id %>">
-        <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :proj_team => classification}, :method => :post, :html => {:id => "form_remarks_#{member.id}"}) do |f| %>
+        <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :classif => classification}, :method => :post, :html => {:id => "form_remarks_#{member.id}"}) do |f| %>
           <%= f.text_area :remarks, :size => "20x3", :onblur => "$('form_remarks_#{member.id}').request()" %><br />
           <%# submit_tag "Ok", :class => "small" %>
         <% end %>

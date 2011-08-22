@@ -5,6 +5,9 @@
     <td><%= member.pmposition %></td>
     <td><%= member.pmrole %></td>
     <td><%= member.user.mail %></td>
+    <td><%= member.phone_no %></td>
+    <td><%= member.office_no %></td>
+    <td><%= member.im_id %></td>
     <% if classification.eql?(:proj_team) %>
       <td> <%= member.sow_rate %> </td>
       <td> <%= member.billable ? image_tag('true.png') : '' %> </td>

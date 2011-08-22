@@ -13,6 +13,9 @@ module MemberExtn
 
       belongs_to :pm_role
       belongs_to :pm_position
+
+      validates_format_of :phone_no, :office_no, :with => /^[0-9]*$/i, :allow_nil => true
+      validates_length_of :phone_no, :office_no, :maximum => 15, :allow_nil => true
       
     end
 

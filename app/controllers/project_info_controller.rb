@@ -40,9 +40,9 @@ class ProjectInfoController < ApplicationController
         @project = @member.project
 
         if @member.update_attributes(params[:member])
-          render(:update) {|page| page.replace_html "tr_#{params[:proj_team]}_#{@member.id}", 
+          render(:update) {|page| page.replace_html "tr_#{params[:classif]}_#{@member.id}", 
           {:partial => "pm_dashboards/project_info/pm_member_edit", 
-           :locals => {:member => @member, :classification => params[:proj_team].to_sym}}}
+           :locals => {:member => @member, :classification => params[:classif].to_sym}}}
         end
       end
     end
