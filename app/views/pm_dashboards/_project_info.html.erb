@@ -1,5 +1,5 @@
-<style>
-  #info_<%= @project.id %> p{
+<style type="text/css">
+  div.indent p{
      margin: 2em;
      padding: 0px 10px;
      text-align: justify;
@@ -24,14 +24,14 @@
 
   <h4>Project Definition </h4>
   <% if !@project.description.nil? %>
-    <%= textilizable(@project, :description) %>
+    <div class="indent"><%= textilizable(@project, :description) %></div>
   <% else %>
     <p class="nodata"><%= l(:label_no_data) %></p>
   <% end %>
 
   <h4>Project Scope</h4>
   <% if !@project.scope.nil? and !@project.scope.empty? %>
-    <%= textilizable(@project, :scope) %>
+    <div class="indent"><%= textilizable(@project, :scope) %></div>
   <% else %>
     <p class="nodata"><%= l(:label_no_data) %></p>
   <% end %>
