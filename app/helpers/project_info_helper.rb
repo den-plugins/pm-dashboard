@@ -19,11 +19,11 @@ module ProjectInfoHelper
         members << m if m.proj_team
       end
     end
-    members
+    members.concat(@project.stakeholders.all(:order => "stakeholders.firstname"))
   end
 
   def available_members()
-    @project.members.all(:order => "users.firstname") - selected_members(:proj_team) - selected_members(:stakeholder)
+    @project.members.all(:order => "users.firstname").concat(Stakeholder.all(:order => "stakeholders.firstname")) - selected_members(:proj_team) - selected_members(:stakeholder)
   end
 
 end

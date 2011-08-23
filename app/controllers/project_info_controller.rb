@@ -50,6 +50,13 @@ class ProjectInfoController < ApplicationController
 
   def pm_member_add
     member_ids = params[:project][:member_ids]
+    @project.stakeholders.clear
+    member_ids.each do |id|
+      if id.split("_").last.eql? "s"
+        @stakeholder = Stakeholder.find(id.split("_").first)
+        @project.stakeholders << @stakeholder
+      end
+    end
     @project.members.each do |member|
       if member_ids.member?(member.id.to_s)
         member.update_attributes(params[:classification].to_sym => true)

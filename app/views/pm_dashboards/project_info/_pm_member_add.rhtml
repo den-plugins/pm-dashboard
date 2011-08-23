@@ -23,7 +23,7 @@
     </tr>
 	  <tr>
 		  <td><%= select_tag 'available_members',
-		            options_for_select(available_members().collect{|m| [m.name, m.id]}),
+		            options_for_select(available_members().collect{|m| [m.name, (m.is_a?(Stakeholder))? (m.id.to_s + "_s") : m.id]}),
 		            :multiple => true, :size => 10, :style => "width:250px",
 		            :ondblclick => "handleSelect(this, '#{@project.identifier}', 'members')" %>
 		  </td>
@@ -34,7 +34,7 @@
 			   onclick="moveOptions(this.form.selected_members, this.form.available_members);" />
 		  </td>
 		  <td><%= select_tag 'project[member_ids][]',
-		            options_for_select(selected_members(classification).collect{|m| [m.name, m.id]}),
+		            options_for_select(selected_members(classification).collect{|m| [m.name, (m.is_a?(Stakeholder))? (m.id.to_s + "_s") : m.id]}),
 		            :id => 'selected_members', :multiple => true, :size => 10, :style => "width:250px",
 		            :ondblclick => "handleSelect(this, '#{@project.identifier}', 'members')" %>
 		  </td>
