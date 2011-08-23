@@ -19,11 +19,15 @@ module ProjectInfoHelper
         members << m if m.proj_team
       end
     end
-    members.concat(@project.stakeholders.all(:order => "stakeholders.firstname"))
+    members.concat(@project.stakeholders.all(:order => "stakeholders.firstname")) if classification.eql?(:stakeholder)
+    members
   end
 
-  def available_members()
-    @project.members.all(:order => "users.firstname").concat(Stakeholder.all(:order => "stakeholders.firstname")) - selected_members(:proj_team) - selected_members(:stakeholder)
+  def available_members(classification)
+    members = @project.members.all(:order => "users.firstname")
+    members.concat(Stakeholder.all(:order => "stakeholders.firstname")) if classification.eql?(:stakeholder)
+    members = members - selected_members(:proj_team) - selected_members(:stakeholder)
+    members
   end
 
 end

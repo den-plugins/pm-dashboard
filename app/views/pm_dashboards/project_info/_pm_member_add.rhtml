@@ -23,7 +23,7 @@
     </tr>
 	  <tr>
 		  <td><%= select_tag 'available_members',
-		            options_for_select(available_members().collect{|m| [m.name, (m.is_a?(Stakeholder))? (m.id.to_s + "_s") : m.id]}),
+		            options_for_select(available_members(classification).collect{|m| [m.name, (m.is_a?(Stakeholder))? (m.id.to_s + "_s") : m.id]}),
 		            :multiple => true, :size => 10, :style => "width:250px",
 		            :ondblclick => "handleSelect(this, '#{@project.identifier}', 'members')" %>
 		  </td>
