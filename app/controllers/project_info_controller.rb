@@ -50,11 +50,13 @@ class ProjectInfoController < ApplicationController
 
   def pm_member_add
     member_ids = params[:project][:member_ids]
-    @project.stakeholders.clear
-    member_ids.each do |id|
-      if id.split("_").last.eql? "s"
-        @stakeholder = Stakeholder.find(id.split("_").first)
-        @project.stakeholders << @stakeholder
+    if params[:classification].eql?("stakeholder")
+      @project.stakeholders.clear
+      member_ids.each do |id|
+        if id.split("_").last.eql? "s"
+          @stakeholder = Stakeholder.find(id.split("_").first)
+          @project.stakeholders << @stakeholder
+        end
       end
     end
     @project.members.each do |member|
