@@ -4,3 +4,4 @@ function handleSelect(elm, project, tab) {
   var x = window.open('', "_blank");
   x.location = root + risk_page;
 }
+

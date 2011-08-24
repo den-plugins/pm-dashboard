@@ -15,8 +15,9 @@ class ProjectInfoController < ApplicationController
   end
 
   def pm_member_edit
+    bool = ((params[:classification].eql?("stakeholder"))? true : false)
     @positions = PmPosition.find(:all) #Positions created by PM
-    @roles = PmRole.find(:all) #Roles created by PM
+    @roles = PmRole.find(:all, :conditions => "for_stakeholder = #{bool}") #Roles created by PM
     @member = Member.find(params[:id])
     render :partial => "pm_dashboards/project_info/pm_member_edit", 
            :locals => {:member => @member, :classification => params[:classification].to_sym}
@@ -138,9 +139,11 @@ class ProjectInfoController < ApplicationController
       @member = Member.find(params[:id])
     end 
     @role = PmRole.new(params[:role])
+    @role.check_stakeholder(@member)
     if @role.save
+      bool = ((params[:classification].eql?("stakeholder") || @member.is_a?(Stakeholder))? true : false)
       @positions = PmPosition.find(:all) #Positions created by PM
-      @roles = PmRole.find(:all) #Roles created by PM
+      @roles = PmRole.find(:all, :conditions => "for_stakeholder = #{bool}") #Roles created by PM
       @member.update_attributes(:pm_role_id => @role.id)
     end
     if params[:no_accnt]

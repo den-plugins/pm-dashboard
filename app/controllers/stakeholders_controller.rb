@@ -18,7 +18,7 @@ class StakeholdersController < ApplicationController
 
   def edit
     @positions = PmPosition.find(:all) #Positions created by PM
-    @roles = PmRole.find(:all) #Roles created by PM
+    @roles = PmRole.find(:all, :conditions => "for_stakeholder = TRUE") #Roles created by PM
     @stakeholder = @project.stakeholders.find(params[:id])
     render :partial => "pm_dashboards/project_info/stakeholder_edit", :locals => {:member => @stakeholder}
   end
