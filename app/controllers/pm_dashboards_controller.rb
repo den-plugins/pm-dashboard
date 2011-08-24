@@ -21,6 +21,12 @@ class PmDashboardsController < ApplicationController
                                        :conditions => "proj_team = true")
     
     @user_custom_fields = CustomField.find(:all, :conditions => "type = 'UserCustomField'")
+
+    @stakeholder_roles = RolesPositionsDefault::STAKEHOLDER_ROLES
+    @proj_team_roles = RolesPositionsDefault::PROJ_TEAM_ROLES
+    @proj_team_positions = RolesPositionsDefault::PROJ_TEAM_POS
+
+    set_roles_pos @stakeholder_roles, @proj_team_roles, @proj_team_positions
     
     rescue ActiveRecord::RecordNotFound
       render_404
@@ -44,6 +50,43 @@ class PmDashboardsController < ApplicationController
     end
     rescue ActiveRecord::RecordNotFound
       render_404
+  end
+
+  def set_roles_pos(stakeholder_roles, proj_team_roles, proj_team_positions)
+    #----generate default data for positions and roles------
+    #----so naugthy :P--------------------------------------
+
+    stakeholder_roles.each do |r|
+      @role = PmRole.find_by_name(r)
+      if @role.nil?
+        @role = PmRole.new(:name => r, :for_stakeholder => true)
+        @role.save
+      else
+        break
+      end
+    end
+
+    proj_team_roles.each do |r|
+      @role = PmRole.find_by_name(r)
+      if @role.nil?
+        @role = PmRole.new(:name => r)
+        @role.save
+      else
+        break
+      end
+    end
+
+    proj_team_positions.each do |p|
+      @pos = PmPosition.find_by_name(p)
+      if @pos.nil?
+        @pos = PmPosition.new(:name => p)
+        @pos.save
+      else
+        break
+      end
+    end
+
+    #-------------------------------------------------------
   end
   
 end
