@@ -1,7 +1,7 @@
 <td><%= member.name %></td>
 <td id="pos_<%= member.id %>">
   <% remote_form_for(:member, member, :url => {:controller => 'stakeholders', :action => 'update', :id => member, :project_id => @project}, :method => :post, :html => {:id => "form_position_#{member.id}"}) do |f| %>
-    <%= f.text_field :position, :size => 10, :onblur => "$('form_position_#{member.id}').request();" %>
+    <%= f.text_field :stakeholder_position, :size => 10, :onblur => "$('form_position_#{member.id}').request();" %>
   <% end %>
 </td>
 <td id="role_<%= member.id %>">

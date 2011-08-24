@@ -2,7 +2,7 @@
 
   <tr class="<%= cycle('odd', 'even') %>" id="tr_<%= classification.to_s %>_<%= member.id %>" >
     <td><%= member.name %></td>
-    <td><%= ((classification.eql?(:proj_team))? member.pmposition : member.position) %></td>
+    <td><%= ((classification.eql?(:proj_team))? member.pmposition : member.stakeholder_position) %></td>
     <td><%= member.pmrole %></td>
     <td><%= member.mail %></td>
     <td><%= member.phone_no %></td>

@@ -116,8 +116,9 @@ class ProjectInfoController < ApplicationController
     
     @position = PmPosition.new(params[:position])
     if @position.save
+      bool = ((params[:classification].eql?("stakeholder") || @member.is_a?(Stakeholder))? true : false)
       @positions = PmPosition.find(:all) #Positions created by PM
-      @roles = PmRole.find(:all) #Roles created by PM
+      @roles = PmRole.find(:all, :conditions => "for_stakeholder = #{bool}") #Roles created by PM
       @member.update_attributes(:pm_pos_id => @position.id)
     end
 #    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info

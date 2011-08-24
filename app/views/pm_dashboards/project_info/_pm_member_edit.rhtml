@@ -12,7 +12,7 @@
       <% end %>
     <% else %>
       <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :classif => classification}, :method => :post, :html => {:id => "form_memposition_#{member.id}"}) do |f| %>
-        <%= f.text_field :position, :size => 10, :onblur => "$('form_memposition_#{member.id}').request();" %>
+        <%= f.text_field :stakeholder_position, :size => 10, :onblur => "$('form_memposition_#{member.id}').request();" %>
       <% end %>
     <% end %>
     </td>
