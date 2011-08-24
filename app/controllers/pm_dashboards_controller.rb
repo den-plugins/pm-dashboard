@@ -61,8 +61,6 @@ class PmDashboardsController < ApplicationController
       if @role.nil?
         @role = PmRole.new(:name => r, :for_stakeholder => true)
         @role.save
-      else
-        break
       end
     end
 
@@ -71,8 +69,6 @@ class PmDashboardsController < ApplicationController
       if @role.nil?
         @role = PmRole.new(:name => r)
         @role.save
-      else
-        break
       end
     end
 
@@ -81,8 +77,6 @@ class PmDashboardsController < ApplicationController
       if @pos.nil?
         @pos = PmPosition.new(:name => p)
         @pos.save
-      else
-        break
       end
     end
 
