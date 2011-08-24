@@ -54,7 +54,7 @@ class PmDashboardsController < ApplicationController
 
   def set_roles_pos(stakeholder_roles, proj_team_roles, proj_team_positions)
     #----generate default data for positions and roles------
-    #----so naugthy :P--------------------------------------
+    #----so naughty :P--------------------------------------
 
     stakeholder_roles.each do |r|
       @role = PmRole.find_by_name(r)
