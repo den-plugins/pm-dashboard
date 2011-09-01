@@ -5,13 +5,13 @@
   <%= error_messages_for 'stakeholder' %>
   <div class="box">
     <p> 
-    <%= f.text_field :firstname %>
+    <%= f.text_field :firstname, :required => true %>
     </p>
     <p> 
-    <%= f.text_field :lastname %>
+    <%= f.text_field :lastname, :required => true %>
     </p>
     <p> 
-    <%= f.text_field :mail %>
+    <%= f.text_field :mail, :required => true %>
     </p>
     <p> 
     <%= f.text_field :phone_no %>
