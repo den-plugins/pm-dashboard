@@ -17,8 +17,6 @@ module ProjectExtn
       has_and_belongs_to_many :stakeholders
 
       validates_presence_of :client
-      validates_presence_of :planned_start_date
-      validates_presence_of :planned_end_date
       validates_presence_of :description
     end
   end
