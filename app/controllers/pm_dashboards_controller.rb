@@ -8,6 +8,7 @@ class PmDashboardsController < ApplicationController
     
   def index
     @project = Project.find(params[:project_id]) if params[:project_id]
+    @project.update_days_overdue
     @assumptions ||= @project.assumptions.find(:all, :order => 'ref_number DESC')
     @issues ||= @project.pm_dashboard_issues.find(:all, :order => 'ref_number DESC')
     @risks ||= @project.risks.find(:all, :order => 'ref_number DESC')

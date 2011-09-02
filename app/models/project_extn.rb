@@ -20,15 +20,10 @@ module ProjectExtn
       validates_presence_of :planned_start_date
       validates_presence_of :planned_end_date
       validates_presence_of :description
-      
     end
-
   end
   
   module ClassMethods
-    
-     
-    
   end
   
   module InstanceMethods
@@ -40,6 +35,12 @@ module ProjectExtn
       end
     end
     
+    def update_days_overdue
+      assumptions.each { |a| a.save}
+      risks.each { |r| r.save }
+      pm_dashboard_issues.each { |p| p.save }
+    end
+
   end
 end
 
