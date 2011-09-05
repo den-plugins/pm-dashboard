@@ -40,6 +40,7 @@ class Risk < ActiveRecord::Base
                                                                             :if => Proc.new {|risk| !risk.probability_final == 0 }
   
   before_create :set_ref_number
+  before_save :update_days_overdue
   before_save :set_to_conditions
   
   def set_ref_number
@@ -48,8 +49,11 @@ class Risk < ActiveRecord::Base
     self.ref_number = "R" + "%0.5d" % pid
   end
   
-  def set_to_conditions
+  def update_days_overdue
     self.days_overdue = (target_resolution_date < Date.today) ? (Date.today - target_resolution_date).numerator : 0
+  end
+    
+  def set_to_conditions
     self.initial_risk_rating = probability * impact
     self.probability_final = 0 if probability_final.nil?
     self.impact_final = 0 if impact_final.nil?

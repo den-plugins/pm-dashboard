@@ -12,9 +12,9 @@ class Assumption < ActiveRecord::Base
   validates_presence_of :description, :project, :owner, :date_due
   validates_inclusion_of :status, :in => STATUS.keys
   validates_numericality_of :days_overdue, :allow_nil => true
-  #validate :date_due_not_past
 
   before_create :set_ref_number
+  before_save :update_days_overdue
   before_save :set_to_conditions
 
   def set_ref_number
@@ -26,11 +26,10 @@ class Assumption < ActiveRecord::Base
   def set_to_conditions
     self.status = STATUS_CLOSED unless risk_ids.empty?
     self.date_closed = (status.eql? STATUS_CLOSED) ?  Date.today.to_s : nil
-    self.days_overdue = (date_due < Date.today && validation.blank?) ? (Date.today - date_due).numerator : 0
   end
   
-  def date_due_not_past
-    errors.add(:date_due, 'is in the past') if date_due and date_due.past?
+  def update_days_overdue
+    self.days_overdue = (date_due < Date.today && validation.blank?) ? (Date.today - date_due).numerator : 0
   end
 
 end
