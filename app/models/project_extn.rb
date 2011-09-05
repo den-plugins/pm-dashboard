@@ -16,7 +16,7 @@ module ProjectExtn
       has_many :risks, :dependent => :destroy, :order => "ref_number ASC"
       has_and_belongs_to_many :stakeholders
 
-      validates_presence_of :client
+#      validates_presence_of :client
       validates_presence_of :description
       
     end
@@ -36,6 +36,11 @@ module ProjectExtn
         pm = project.members.find_by_user_id(id)
         pm.name
       end
+    end
+
+    def validate_client(client)
+      errors.add :client, :cant_be_blank if client.empty?
+      client.empty?
     end
     
   end

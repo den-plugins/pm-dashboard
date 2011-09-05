@@ -4,7 +4,7 @@ class ProjectInfoController < ApplicationController
 
   def update
     if request.post? and !request.xhr?
-      if @project.update_attributes(params[:project])
+      if @project.validate_client(params[:project][:client]).eql?(false) and @project.update_attributes(params[:project])
         redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
       else
         render :template => "pm_dashboards/project_info/edit_with_error"
