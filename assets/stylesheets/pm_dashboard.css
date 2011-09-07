@@ -45,6 +45,10 @@ td.red, th.red { background-color: #DD0806; color: #FFF; }
 td.yellow, th.yellow { background-color: #F4EB05; }
 td.green, th.green { background-color: #006411; color: #FFF; }
 
+td.left { text-align: left; }
+td.right { text-align: right; }
+
+
 div.guide p {
   font-size: 9px;
   line-height: 0.15em;

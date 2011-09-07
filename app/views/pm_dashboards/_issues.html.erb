@@ -1,8 +1,8 @@
 <div class="contextual">
-  <%= link_to "New Issue", {:controller =>'pm_dashboard_issues', :action => 'add', :project_id => @project}, :class => 'icon icon-add' %>
+  <%= link_to l(:label_pm_issue_new), {:controller =>'pm_dashboard_issues', :action => 'add', :project_id => @project}, :class => 'icon icon-add' %>
 </div>
 
-<h2>Issues</h2>
+<h2><%= l(:label_pm_issue_plural) %></h2>
 
 <% if @issues.any? %>
   <%= render :partial => 'pm_dashboards/pm_dashboard_issues/summary' unless params[:q] %>

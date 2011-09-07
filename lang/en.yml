@@ -1,8 +1,67 @@
 en:
-  label_assumptions: Assumptions
-  label_assumption_new: New Assumption
-  label_assumption_update: Update Assumption
+  label_pm_dashboard: Dashboard
+  label_info: Info
+  label_assumption_plural: Assumptions
+  label_pm_issue_plural: Project Issues
+  label_risk_plural: Risks
+  label_change_control_plural: Change Controls
+  label_resource_cost_forecast_plural: Resource Cost Forecasts
   
+  label_assumption_new: New Assumption
+  label_pm_issue_new: New Project Issue
+  label_risk_new: New Risk
+  
+  label_assumption_update: Update Assumption
+  label_pm_issue_update: Update Project Issue
+  label_risk_update: Update Risk
+  
+  label_view_all_risks: View All Risks
+  label_view_all_assumptions: View All Assumptions
+  label_view_all_pm_issues: View All Project Issues
+
+  label_issue_impact_low: Low
+  label_issue_impact_medium: Medium
+  label_issue_impact_high: High
+  label_mean: Mean
+  label_total: Total
+  label_env_internal: Internal
+  label_env_external: External
+  label_issue_average: Average (Open)    
+
+  label_risk_status_monitor: Monitor
+  label_risk_status_realized: Realized
+  label_risk_status_closed: Closed
+  label_risk_type_monetary: Monetary
+  label_risk_type_business: Business/Legal
+  label_risk_type_project: Project
+  label_risk_type_technical: Technical
+  label_risk_type_security: Security
+  label_risk_prob_1: Very unlikely to occur
+  label_risk_prob_2: Less likely to occur
+  label_risk_prob_3: 50/50 chance of occuring
+  label_risk_prob_4: More likely to occur than not
+  label_risk_prob_5: Certain, Already Observed
+  label_risk_impact_1: Insignificant changes, re-planning may be required
+  label_risk_impact_2: Small delay, small increased cost, but absorbable
+  label_risk_impact_3: Delay, increased cost in excess of tolerance 
+  label_risk_impact_4: Substantial delay, key deliverable not met, incur costs
+  label_risk_impact_5: Inability to deliver, business case/objective not viable
+
+  label_summary: Summary
+  label_assumptions_pclosed: Percent Closed
+  label_assumptions_status_open: Open
+  label_assumptions_status_closed: Closed
+  label_assumptions_overdue: Over Due
+  label_available_risks: Available Risks
+  label_related_risks: Related Risks
+  label_available_assumptions: Available Assumptions
+  label_related_assumptions: Related Assumptions
+  label_available_pm_issues: Available Project Issues
+  label_related_pm_issues: Related Project Issues
+  
+  label_direct_labor: Direct Labor
+  label_daily_rate: Daily Rate
+
   field_ref_number: "Ref #"
   field_description: Description
   field_validation: Validation
@@ -11,31 +70,18 @@ en:
   field_date_due: Date Due
   field_date_closed: Date Closed
   field_days_overdue: Days Overdue
-  field_related_risks: Related Risks
   field_status: Status
-  
-  issue_new: New Issue
-  issue_update: Update Issue
 
   field_issue_description: Description
   field_env: Env
   field_action: Action Required/Taken
-  field_date_raised: Date Raised
-  field_related_risk_assumption: Related Risk
+  field_created_on: Date Raised
+  field_related_risks: Related Risks
+  field_related_assumptions: Related Assumptions
+  field_related_pm_issues: Related Project Issues
   field_impact: Impact
   field_raised_by: Raised By
-  
-  label_summary: Summary
-  label_assumptions_pclosed: Percent Closed
-  label_assumptions_status_open: Open
-  label_assumptions_status_closed: Closed
-  label_assumptions_overdue: Over Due
-  label_available_risks: Available Risks
-  label_related_risks: Related Risks
-  
-  label_risks: Risks
-  label_risk_new: New Risk
-  label_risk_update: Update Risk
+  field_date_close: Date Closed
   
   field_risk_type: Risk Type
   field_risk_description: Risk Description
@@ -47,28 +93,12 @@ en:
   field_impact_final: Impact (Final)
   field_final_risk_rating: Final Risk Rating
   field_target_resolution_date: Target Resolution Date
-  field_related_issue_assumption: Related Issues/ Assumptions
+
+  field_phone_no: Phone No.
+  field_office_no: Office No.
+  field_im: IM ID
   
-  label_risk_status_monitor: M - Monitor
-  label_risk_status_realized: R - Realized
-  label_risk_status_closed: C - Closed
-  label_risk_env_internal: I - Internal
-  label_risk_env_external: E - External
-  label_risk_type_monetary: M - Monetary
-  label_risk_type_business: B - Business/Legal
-  label_risk_type_project: P - Project
-  label_risk_type_technical: T - Technical
-  label_risk_type_security: S - Security
-  label_risk_prob_1: Very unlikely to occur
-  label_risk_prob_2: Less likely to occur
-  label_risk_prob_3: 50/50 chance of occuring
-  label_risk_prob_4: More likely to occur than not
-  label_risk_prob_5: Certain, Already Observed
-  label_risk_impact_1: Insignificant changes, re-planning may be required
-  label_risk_impact_2: Small delay, small increased cost, but absorbable
-  label_risk_impact_3: Delay, increased cost in excess of tolerance 
-  label_risk_impact_4: Substantial delay, key deliverable not met, incur costs
-  label_risk_impact_5: Inability to deliver, business case/objective not viable
-  
-  label_mean: Mean
-  label_total: Total
+  text_hello: Hello {{name}},
+  text_update: An update has been made to {{feature}} {{ref_number}}
+  text_new: You are the owner of {{feature}} {{ref_number}}
+  text_view_details: To view the details, click here {{url}}

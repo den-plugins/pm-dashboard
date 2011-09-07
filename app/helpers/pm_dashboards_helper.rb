@@ -4,9 +4,10 @@ module PmDashboardsHelper
     tabs = [{:label => 'Dashboard', :name => 'dashboard', :partial => 'dashboard_header'},
             {:label => 'Info', :name => 'info', :partial => 'project_info'},
             {:label => 'Assumptions', :name => 'assumptions', :partial => 'assumptions'},
-            {:label => 'Issues', :name => 'issues', :partial => 'issues'},
+            {:label => 'Project Issues', :name => 'issues', :partial => 'issues'},
             {:label => 'Risks', :name => 'risks', :partial => 'risk'},
             {:label => 'Change Control', :name => 'change_control', :partial => 'change_control'},
+            {:label => 'Resource Cost Forecast', :name => 'resource_cost', :partial => 'resource_cost'}
             ]
     tabs
   end
@@ -28,5 +29,4 @@ module PmDashboardsHelper
     options[:html][:class] = 'tabular' unless options[:html].has_key?(:class)
     remote_form_for(name, object, options.merge({ :builder => TabularFormBuilder, :lang => current_language}), &proc)
   end
-
 end

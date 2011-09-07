@@ -7,7 +7,8 @@ class AssumptionObserver < ActiveRecord::Observer
   end
   
   def before_update(assumption)
-    @@changed = true if assumption.changed?
+    assumption.changes.delete_if {|k| k.eql? "updated_on" or k.eql?  "days_overdue"}
+    @@changed = assumption.changed? ? true :  false
   end
   
   def after_update(assumption)

@@ -7,7 +7,8 @@ class RiskObserver < ActiveRecord::Observer
   end
   
   def before_update(risk)
-    @@changed = true if risk.changed?
+    risk.changes.delete_if {|k| k.eql? "updated_on" or k.eql?  "days_overdue"}
+    @@changed = risk.changed? ? true :  false
   end
   
   def after_update(risk)

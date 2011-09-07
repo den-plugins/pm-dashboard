@@ -1,11 +1,11 @@
 <p>
-  <label for="related_issues"><%= l(:field_related_issues).to_sym %></label>
+  <label for="related_issues"><%= l(:field_related_pm_issues).to_sym %></label>
   <%= hidden_field_tag 'risk[pm_dashboard_issue_ids][]', '', :id => nil %>
   <table>
     <tr>
-      <td><%= l(:label_available_issues) %></td>
+      <td><%= l(:label_available_pm_issues) %></td>
       <td></td>
-      <td><%= l(:label_related_issues) %></td>
+      <td><%= l(:label_related_pm_issues) %></td>
     </tr>
 	  <tr>
 		  <td><%= select_tag 'available_issues',

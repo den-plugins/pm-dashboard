@@ -34,7 +34,7 @@
     <li><%= link_to (tab[:label]), {:project_id => @project,  :tab => tab[:name] },
                                     :id => "tab-#{tab[:name]}",
                                     :class => (tab[:name] != selected_tab ? nil : 'selected'),
-                                    :onclick => "showTab('#{tab[:name]}'); this.blur(); return false;" %></li>
+                                    :onclick => "showTab('#{tab[:name]}'); this.blur();" %></li>
 <% end -%>
 </ul>
 </div>
