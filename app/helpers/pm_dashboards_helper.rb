@@ -6,8 +6,7 @@ module PmDashboardsHelper
             {:label => 'Assumptions', :name => 'assumptions', :partial => 'assumptions'},
             {:label => 'Project Issues', :name => 'issues', :partial => 'issues'},
             {:label => 'Risks', :name => 'risks', :partial => 'risk'},
-            {:label => 'Change Control', :name => 'change_control', :partial => 'change_control'},
-            {:label => 'Resource Cost Forecast', :name => 'resource_cost', :partial => 'resource_cost'}
+            {:label => 'Change Control', :name => 'change_control', :partial => 'change_control'}
             ]
     tabs
   end
