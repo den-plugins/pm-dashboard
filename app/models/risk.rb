@@ -31,6 +31,7 @@ class Risk < ActiveRecord::Base
   has_and_belongs_to_many :assumptions
   has_and_belongs_to_many :pm_dashboard_issues
   
+  attr_protected :days_overdue, :ref_number, :pid, :initial_risk_rating, :final_risk_rating, :project_id
   validates_presence_of :env, :risk_type, :risk_description, :probability, :impact, :owner, :target_resolution_date, :status, :project
   validates_inclusion_of :status, :in => STATUS.keys
   validates_inclusion_of :env, :in => RISK_ENV.keys
@@ -40,7 +41,6 @@ class Risk < ActiveRecord::Base
                                                                             :if => Proc.new {|risk| !risk.probability_final == 0 }
   
   before_create :set_ref_number
-  before_save :update_days_overdue
   before_save :set_to_conditions
   
   def set_ref_number
@@ -51,12 +51,13 @@ class Risk < ActiveRecord::Base
   
   def update_days_overdue
     self.days_overdue = (target_resolution_date < Date.today) ? (Date.today - target_resolution_date).numerator : 0
+    self.send(:update_without_callbacks)
   end
     
   def set_to_conditions
     self.initial_risk_rating = probability * impact
-    self.probability_final = 0 if probability_final.nil?
-    self.impact_final = 0 if impact_final.nil?
+    self.probability_final = probability_final.to_i
+    self.impact_final = impact_final.to_i
     self.final_risk_rating = probability_final * impact_final
   end
 end

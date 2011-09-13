@@ -1,6 +1,5 @@
 require_dependency 'project'
 
-
 module ProjectExtn
   def self.included(base)
     base.extend(ClassMethods)
@@ -37,9 +36,9 @@ module ProjectExtn
     end
     
     def update_days_overdue
-      assumptions.each { |a| a.save}
-      risks.each { |r| r.save }
-      pm_dashboard_issues.each { |p| p.save }
+      assumptions.each { |a| a.update_days_overdue }
+      risks.each { |r| r.update_days_overdue }
+      pm_dashboard_issues.each { |p| p.update_days_overdue }
     end
 
   end
