@@ -1,0 +1,29 @@
+<p>Project Allocation of <%= @member.name %></p>
+
+<div style="width: 100%; margin-t:op: 20px;" >
+
+<% form_tag :action => 'edit', :member_id => @member, 
+                        :id => 'allocation_form' do %>
+  
+  <% @resource_allocations.each do |r| %>
+    <% fields_for "resource_allocations[#{r.id}]", r do |f| %>
+      <p id='date_range'>
+        <%= l(:label_date_from_to,  :start => (f.text_field :from, :size => 10) + calendar_for("resource_allocations_#{r.id}_from"),
+                                                           :end => (f.text_field :to, :size => 10) + calendar_for("resource_allocations_#{r.id}_to")) %>
+        <%= f.select :resource_allocation, ((0..4).to_a.collect {|r| ["#{r*25} %", r*25] }) %>
+        <%= image_tag 'bullet_toggle_plus.png', :size => '10x10', :id => 'date_range_add', :onclick => "addToFromFields('date_range');" %>
+      </p>
+    <% end %>
+  <% end %>
+  
+  <br/>
+    <p><%= submit_tag l(:button_save), :style => 'float: right;' %></p>
+  <div style='clear: both' ></div>
+<% end %>
+</div>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'facebox', :plugin => 'facebox_render' %>
+  <%= javascript_include_tag 'facebox', :plugin => 'facebox_render' %>
+<% end %>
+

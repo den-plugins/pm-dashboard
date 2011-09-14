@@ -58,4 +58,17 @@ div.guide p {
   margin-left: 180px;
 }
 
+.resources_container {
+  float: left;
+  white-space: nowrap;
+  width: 25%;
+}
+
+.resource_cost_container {
+  float: left;
+  width: 75%;
+  position: relative;
+  overflow-x: scroll;
+}
+
 

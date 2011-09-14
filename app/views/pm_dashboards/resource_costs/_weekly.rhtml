@@ -1,0 +1,23 @@
+<table id='resource_cost_weekly' class='list resource_cost_table'>
+  <tr>
+  <% for i in 1 .. 60 %>
+    <th>week</th>
+    <th>pay</th>
+  <% end %>
+  </tr>
+    
+  <% days = 5 %>
+  <% @proj_team.each do |member| %>
+  <tr class="<%= cycle('even', 'odd', :name => 'members') %>">
+    <% for i in 1 .. 60 %>
+      <td><%= days %></td>
+      <% if params[:rate] && params[:rate].eql?('internal_rate') %>
+        <td><%= days.to_f * member.internal_rate.to_f %></td>
+      <% else %>
+        <td><%= days.to_f * member.sow_rate.to_f %></td>
+      <% end %>
+    <% end %>
+  </tr>
+  <% end %>
+  <% reset_cycle('members') %>
+</table>

@@ -1,0 +1,15 @@
+<h2><%= l(:label_resource_cost_forecast_plural) %></h2>
+
+<% if @proj_team.any? %>
+  <p><%= render :partial => 'pm_dashboards/resource_costs/header' %></p>
+  <p><%= render :partial => 'pm_dashboards/resource_costs/filters' %></p>
+  <div style='width: 100%;' id='resource_members_content'>
+    <%= render :partial => 'pm_dashboards/resource_costs/list' %>
+  </div>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
+<% end %>

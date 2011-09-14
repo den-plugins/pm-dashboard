@@ -10,6 +10,6 @@ class CreateResourceAllocations < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :weeks
+    drop_table :resource_allocations
   end
 end

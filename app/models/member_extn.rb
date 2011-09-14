@@ -10,7 +10,8 @@ module MemberExtn
     # Same as typing in the class
     base.class_eval do
       unloadable 
-
+      
+      has_many :resource_allocations
       belongs_to :pm_role
       belongs_to :pm_position
 

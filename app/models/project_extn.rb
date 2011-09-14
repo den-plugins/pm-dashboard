@@ -13,7 +13,8 @@ module ProjectExtn
       has_many :pm_dashboard_issues, :dependent => :destroy, :order => "ref_number ASC"
       has_many :risks, :dependent => :destroy, :order => "ref_number ASC"
       has_and_belongs_to_many :stakeholders
-
+      has_many :weeks
+      
       validates_presence_of :description
     end
   end

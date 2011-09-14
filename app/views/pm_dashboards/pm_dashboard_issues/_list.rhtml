@@ -18,7 +18,7 @@
   </thead>
 
     <% @issues.each do |issue| %>
-      <tr class=<%= cycle ('odd', 'even') %> >
+      <tr class=<%= cycle('odd', 'even') %> >
         <td><%= issue.ref_number %></td>
         <td><%= issue.env %></td>
         <td><%= issue.created_on %></td>

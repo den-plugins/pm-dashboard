@@ -1,6 +1,9 @@
-<% content_for :header_tags do %>
-<%= javascript_include_tag 'prototype' %>
+<% content_for :header_tags do %
+  <%= javascript_include_tag 'prototype' %>
+  <%= javascript_include_tag 'jquery', :plugin => 'pm_dashboard' %>
+  <%= javascript_include_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
 <% end %>
+
 <%= include_calendar_headers_tags %>
 <%= javascript_include_tag('jstoolbar/jstoolbar') %>
 <%= javascript_include_tag('jstoolbar/textile') %>

@@ -27,3 +27,21 @@ August 10, 2011
     = assumption status set to 'closed' if assumption has related risk/s
     = risk associated with pm_dashboard_issues and assumptions (relations)
     = autocalculation of assumption's days_overdue
+
+September 8, 2011
+  
+  Fixes/Enhancements:
+    = prevented email notifications during update of days_overdue (in index/view) of issues, risks, & assumptions in PM Dashboard
+    = added protection to attributes
+    
+September 14, 2011
+  
+  Fixes/Enhancements:
+    = the manager has the option to view the resource cost forecast either Weekly or Monthly (partial stage)
+    = the manager can also view the resource cost forecast using SOW rate or internal rate
+    
+  In-Progress:
+    = each resource name is clickable so that PM can determine resource's project allocation. Once clicked, a pop-up will appear to enable user to add/edit resource's project allocation
+  
+  ToDo:
+    = weekly and monthly view of resource cost forecast

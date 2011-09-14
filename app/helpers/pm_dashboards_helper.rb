@@ -6,7 +6,8 @@ module PmDashboardsHelper
             {:label => 'Assumptions', :name => 'assumptions', :partial => 'assumptions'},
             {:label => 'Project Issues', :name => 'issues', :partial => 'issues'},
             {:label => 'Risks', :name => 'risks', :partial => 'risk'},
-            {:label => 'Change Control', :name => 'change_control', :partial => 'change_control'}
+            {:label => 'Change Control', :name => 'change_control', :partial => 'change_control'},
+            {:label => 'Resource Cost Forecast', :name => 'resource_costs', :partial => 'resource_costs'}
             ]
     tabs
   end
@@ -28,4 +29,11 @@ module PmDashboardsHelper
     options[:html][:class] = 'tabular' unless options[:html].has_key?(:class)
     remote_form_for(name, object, options.merge({ :builder => TabularFormBuilder, :lang => current_language}), &proc)
   end
+  
+  def multiple_calendar_for(field_id)
+    include_calendar_headers_tags
+    image_tag("calendar.png", {:id => "#{field_id}_trigger", :class => "calendar-trigger"}) +
+    javascript_tag("Calendar.setup({inputField : '#{field_id}', ifFormat : '%Y-%m-%d', button : '#{field_id}_trigger' , cache: true});")
+  end
+  
 end

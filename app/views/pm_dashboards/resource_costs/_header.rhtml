@@ -1,0 +1,27 @@
+<table id='pm_dashboard_header'>
+  <tr>
+    <td colspan='7'><span>CLIENT</span><%= @project.client %></td>
+  </tr>
+  <tr>
+    <td colspan='7'><span>Active</span>Baseline</td>
+    </tr>
+  <tr><br/></tr>
+  <tr>
+    <td><span>Budget Hours (BAC)</span>15, 296</td>
+    <td></td>
+    <td><span>Contingency %</span>
+      <% form_remote_tag(:url => {:controller => 'projects', :action => 'edit' }) do %>
+        <% text_field_tag :contingency_per, :size => 3, :place_holder => '0,0', :onchange => "this.form.onsubmit();" %>%
+      <% end %>
+    </td>
+    <td></td>
+    <td><span>Total Project Budget</span>$2, 834,242.00</td>
+  </tr>
+  
+  <tr>
+    <td><span>Budget Amount (BAC)</span>$2, 834,242.00</td>
+    <td></td>
+    <td><span>Contingency Amount</span>0.0</td>
+  </tr>
+  
+</table>

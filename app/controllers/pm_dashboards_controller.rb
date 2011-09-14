@@ -1,4 +1,6 @@
 class PmDashboardsController < ApplicationController
+  include FaceboxRender
+  
   helper :assumptions
   helper :risks
   helper :project_info
@@ -13,13 +15,6 @@ class PmDashboardsController < ApplicationController
     @issues ||= @project.pm_dashboard_issues.find(:all, :order => 'ref_number DESC')
     @risks ||= @project.risks.find(:all, :order => 'ref_number DESC')
     
-    # member list with pagination
-    # @member_count = @project.members.count(:all)
-    # @member_pages = Paginator.new self, @members_count, per_page_option, params['page']
-    @members = @project.members.find :all, :order => "users.firstname"
-    #        :limit  =>  @member_pages.items_per_page,
-    #        :offset =>  @member_pages.current.offset
-    
     @stakeholders = @project.members.find(:all, :order => "users.firstname", 
                                           :conditions => "stakeholder = true")
     if !@project.stakeholders.empty?
@@ -28,6 +23,8 @@ class PmDashboardsController < ApplicationController
 
     @proj_team = @project.members.find(:all, :order => "users.firstname", 
                                        :conditions => "proj_team = true")
+    
+    update_resource_list if params[:tab].eql?('resource_costs')
     
     @user_custom_fields = CustomField.find(:all, :conditions => "type = 'UserCustomField'")
 
@@ -39,6 +36,12 @@ class PmDashboardsController < ApplicationController
     
     rescue ActiveRecord::RecordNotFound
       render_404
+  end
+  
+  def update_resource_list
+    if params[:view] or params[:rate]
+      render(:update) {|p| p.replace_html "resource_members_content", :partial => 'pm_dashboards/resource_costs/list' }
+    end
   end
   
   private

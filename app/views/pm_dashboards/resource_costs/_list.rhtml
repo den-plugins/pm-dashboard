@@ -1,0 +1,40 @@
+<div class="resources_container">
+  <table id='resource_cost' class='list'>
+    <tr>
+      <th><%= l(:label_direct_labor) %></th>
+      <th><%= l(:label_daily_rate)%></th>
+    </tr>
+    
+    <% @proj_team.each do |member| %>
+    <tr class="<%= cycle('even', 'odd', :name => 'members') %>">
+      <td>
+        <%= facebox_link_to member.name, {:url => {:controller => 'resource_costs', :action => 'allocation', :project_id => @project, :member_id => member }} %>
+      </td>
+      <% if params[:rate] && params[:rate].eql?('internal_rate') %>
+        <td class='right'><%= member.internal_rate.to_f %></td>
+      <% else %>
+        <td class='right'><%= member.sow_rate.to_f %></td>
+      <% end %>
+    </tr>
+    <% end %>
+    <% reset_cycle('members') %>
+  </table>
+</div>
+
+<%= 
+  # the monthly and weekly partials are just samples
+  # delete/modify this comment according to your changes in either partial files :)
+%>
+
+<div class='resource_cost_container' >
+  <% if params[:view] && params[:view].eql?('month') %>
+    <%= render :partial => 'pm_dashboards/resource_costs/monthly' %>
+  <% else %>
+    <%= render :partial => 'pm_dashboards/resource_costs/weekly' %>
+  <% end %>
+</div>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'facebox', :plugin => 'facebox_render' %>
+  <%= javascript_include_tag 'facebox', :plugin => 'facebox_render' %>
+<% end %>
