@@ -45,3 +45,6 @@ September 14, 2011
   
   ToDo:
     = weekly and monthly view of resource cost forecast
+    
+  Dependencies:
+    = install the facebox_render plugin: script/plugin install git://github.com/ihower/facebox_render.git
