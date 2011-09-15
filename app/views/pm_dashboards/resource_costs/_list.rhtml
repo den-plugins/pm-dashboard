@@ -1,8 +1,8 @@
 <div class="resources_container">
   <table id='resource_cost' class='list'>
     <tr>
-      <th><%= l(:label_direct_labor) %></th>
-      <th><%= l(:label_daily_rate)%></th>
+      <th height="40px"><%= l(:label_direct_labor) %></th>
+      <th height="40px"><%= l(:label_daily_rate)%></th>
     </tr>
     
     <% @proj_team.each do |member| %>
@@ -36,5 +36,5 @@
 
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag 'facebox', :plugin => 'facebox_render' %>
-  <%= javascript_include_tag 'facebox', :plugin => 'facebox_render' %>
+  <%= javascript_include_tag 'facebox.js', :plugin => 'facebox_render' %>
 <% end %>
