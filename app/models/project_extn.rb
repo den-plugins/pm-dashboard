@@ -16,6 +16,8 @@ module ProjectExtn
       has_many :weeks
       
       validates_presence_of :description
+      before_save :validate_dates
+
     end
   end
   
@@ -40,6 +42,16 @@ module ProjectExtn
       assumptions.each { |a| a.update_days_overdue }
       risks.each { |r| r.update_days_overdue }
       pm_dashboard_issues.each { |p| p.update_days_overdue }
+    end
+
+    def validate_dates
+      if self.planned_start_date and self.planned_end_date
+        self.planned_start_date, self.planned_end_date = self.planned_end_date, self.planned_start_date if self.planned_start_date > self.planned_end_date
+        self.planned_start_date += 1.day if self.planned_start_date.wday.eql? 0
+        self.planned_end_date += 1.day if self.planned_end_date.wday.eql? 0
+        self.planned_start_date -= 1.day if self.planned_start_date.cwday.eql? 6
+        self.planned_end_date -= 1.day if self.planned_end_date.cwday.eql? 6
+      end
     end
 
   end

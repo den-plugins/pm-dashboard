@@ -104,3 +104,36 @@ div.guide p {
 .popup table {
   width: 100%;
 }
+
+div.indent p{
+     margin: 2em;
+     padding: 0px 10px;
+     text-align: justify;
+   }
+   div.main_holder{
+    padding: 3px;
+    background: #eee;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+   }
+   div.content_holder{
+    margin: 0;
+    border: 1px solid #ccc;
+   }
+   div.content_header{
+    height: 33px;
+    padding: 0 6px;
+    border-bottom: 1px solid #ccc;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    font-weight: bolder;
+   }
+   div.main_content{
+    position: relative;
+    padding: 0 6px;
+    color: #333;
+    font-size: 12px;
+    overflow: auto;
+    background: #fbfbfb;
+   }
