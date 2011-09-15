@@ -11,7 +11,7 @@ module MemberExtn
     base.class_eval do
       unloadable 
       
-      has_many :resource_allocations
+      has_many :resource_allocations, :dependent => :destroy, :order => "start_date ASC"
       belongs_to :pm_role
       belongs_to :pm_position
 

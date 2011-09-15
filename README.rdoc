@@ -48,3 +48,9 @@ September 14, 2011
     
   Dependencies:
     = install the facebox_render plugin: script/plugin install git://github.com/ihower/facebox_render.git
+    
+    
+September 15, 2011
+  
+  Fixes/Enhancements:
+    = each resource name is clickable so that PM can determine resource's project allocation. Once clicked, a pop-up will appear to enable user to add/edit resource's project allocation

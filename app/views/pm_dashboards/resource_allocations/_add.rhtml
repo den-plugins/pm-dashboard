@@ -1,0 +1,16 @@
+<hr>
+<%= error_messages_for 'resource_allocation' %>
+<% remote_form_for(:resource_allocation, ResourceAllocation.new,
+                                       :url => {:action => 'add', :member_id => @member },
+                                       :html => { :name => 'new_resource_allocation'}) do |f| %>
+  
+  <%= image_submit_tag('true.png', :class => 'contextual') %>
+
+  <p id='date_range'>
+    <%= l(:label_date_from_to,  :start => (f.text_field :start_date, :size => 10) + calendar_for("resource_allocation_start_date"),
+                                                       :end => (f.text_field :end_date, :size => 10) + calendar_for("resource_allocation_end_date")) %>
+    <%= f.select :resource_allocation, ((0..4).to_a.collect {|a| ["#{a*25} %", a*25] }) %>
+  </p>
+  
+  <div style='clear: both'></div>
+<% end %>

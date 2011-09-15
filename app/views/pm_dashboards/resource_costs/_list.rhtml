@@ -8,7 +8,7 @@
     <% @proj_team.each do |member| %>
     <tr class="<%= cycle('even', 'odd', :name => 'members') %>">
       <td>
-        <%= facebox_link_to member.name, {:url => {:controller => 'resource_costs', :action => 'allocation', :project_id => @project, :member_id => member }} %>
+        <%= facebox_link_to member.name, {:url => {:controller => 'resource_allocations', :action => 'index', :project_id => @project, :member_id => member }} %>
       </td>
       <% if params[:rate] && params[:rate].eql?('internal_rate') %>
         <td class='right'><%= member.internal_rate.to_f %></td>

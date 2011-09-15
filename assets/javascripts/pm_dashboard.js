@@ -7,16 +7,23 @@ function handleSelect(elm, project, tab) {
 
 j=jQuery.noConflict();
 
-var fields = 0;
+function edit_allocations() {
+  jQuery('#allocation_edit').show();
+  jQuery('#allocation_show').hide();
+  jQuery('#show_actions').hide();
+  jQuery('#edit_actions').show();
+}
 
-function setFieldsCount(c) { fields = c; }
+function show_allocations() {
+  jQuery('#allocation_edit').hide();
+  jQuery('#allocation_add').hide();
+  jQuery('#allocation_show').show();
+  jQuery('#show_actions').show();
+  jQuery('#edit_actions').hide();
+}
 
-function addToFromFields(id) {
-  fields += 1;
-  jQuery("#" + id).clone(true)
-    .attr('id', id + '_' + fields).insertAfter("#"+ id);
-  
-  jQuery(".close").click(function() {
-    fields = 0;
-  });
+function add_allocations() {
+  jQuery('#allocation_add').show();
+  jQuery('#show_actions').hide();
+  jQuery('#edit_actions').show();
 }

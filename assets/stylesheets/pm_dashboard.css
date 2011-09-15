@@ -71,4 +71,36 @@ div.guide p {
   overflow-x: scroll;
 }
 
+#date_range {
+  padding-bottom: 3px;
+  width: 100%;
+  padding: 1px 0px;
+}
 
+#date_range span.button-like {
+  display: inline-block;
+  background: #E2E2E2;
+  font-size: 12px;
+  -moz-border-radius: 2px;
+  border-radius: 3px;
+  padding: 3px 5px;
+  width: 51px;
+  margin-top: 2px;
+  margin-bottom: 1px;
+}
+
+#facebox .body {
+  width: 380px;
+}
+
+#facebox .popup {
+  width: 420px;
+}
+
+#facebox .tl, #facebox .tr, #facebox .bl, #facebox .br {
+  background-repeat: no-repeat;
+}
+
+.popup table {
+  width: 100%;
+}
