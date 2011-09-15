@@ -1,8 +1,8 @@
 <div class="resources_container">
-  <table id='resource_cost' class='list'>
+  <table id='resource_costs' class='list'>
     <tr>
-      <th><%= l(:label_direct_labor) %></th>
-      <th><%= l(:label_daily_rate)%></th>
+      <th style="width: 65%;"><%= l(:label_direct_labor) %></th>
+      <th style="width: 35%;" class='daily_rate'><%= l(:label_daily_rate)%></th>
     </tr>
     
     <% @proj_team.each do |member| %>
@@ -11,9 +11,9 @@
         <%= facebox_link_to member.name, {:url => {:controller => 'resource_allocations', :action => 'index', :project_id => @project, :member_id => member }} %>
       </td>
       <% if params[:rate] && params[:rate].eql?('internal_rate') %>
-        <td class='right'><%= member.internal_rate.to_f %></td>
+        <td class='daily_rate'><%= member.internal_rate.to_f %></td>
       <% else %>
-        <td class='right'><%= member.sow_rate.to_f %></td>
+        <td class='daily_rate'><%= member.sow_rate.to_f %></td>
       <% end %>
     </tr>
     <% end %>

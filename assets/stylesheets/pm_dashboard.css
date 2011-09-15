@@ -77,7 +77,7 @@ div.guide p {
   padding: 1px 0px;
 }
 
-#date_range span.button-like {
+span.button-like {
   display: inline-block;
   background: #E2E2E2;
   font-size: 12px;
@@ -103,6 +103,22 @@ div.guide p {
 
 .popup table {
   width: 100%;
+}
+
+table#resource_costs {
+  table-layout: fixed;
+}
+
+table#resource_costs tr td {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+td.daily_rate, th.daily_rate {
+  padding-right: 10px;
+  border-right: 2px solid black;
+  text-align: right;
 }
 
 div.indent p{
