@@ -5,13 +5,21 @@ class WeeksController < ApplicationController
 
   def new
     @week = @project.weeks.build(params[:week])
-    @week.save
+    if not @week.save
+      err_msg = []
+      @week.errors.each { |attr, message| err_msg << "#{message}<br />" }
+      flash[:error] = err_msg.join("<br />")
+    end
     redirect_to :controller => 'pm_dashboards', :action => 'index', :tab => 'resource_costs', :project_id => @project
   end
 
   def edit
     @week = Week.find(params[:id])
-    @week.update_attributes(params[:week])
+    if not @week.update_attributes(params[:week])
+       err_msg = []
+       @week.errors.each { |attr, message| err_msg << "#{message}<br />" }
+       flash[:error] = err_msg.join("<br />")
+    end
     redirect_to :controller => 'pm_dashboards', :action => 'index', :tab => 'resource_costs', :project_id => @project
   end
 

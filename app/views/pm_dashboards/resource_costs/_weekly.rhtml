@@ -1,6 +1,7 @@
 <% weeks = get_weeks(@project.planned_start_date, @project.planned_end_date) %>
 <% week_start = @project.planned_start_date %>
 <% days = [] %>
+
 <table id='resource_cost_weekly' class='list resource_cost_table'>
   <% unless weeks.nil? %>
     <tr>
@@ -52,7 +53,7 @@
       <th id="undef_weeks" height="2">Undefined number of weeks. Please specify Planned Start Date and Planned End Date.</th>
     </tr>
     <script type="text/javascript">
-      document.getElementById("undef_weeks").height = document.getElementById("resource_cost").offsetHeight;
+      document.getElementById("undef_weeks").height = document.getElementById("resource_cost").offsetHeight+"px";
     </script>
   <% end %>
 </table>
