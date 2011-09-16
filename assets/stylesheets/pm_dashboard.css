@@ -116,6 +116,16 @@ table#resource_costs tr td {
   white-space: nowrap;
 }
 
+.resource_cost_table_container {
+  margin-left: 3px;
+  width: 1000%;
+}
+
+.floating_table {
+  float: left;
+  display: inline-block;
+}
+
 td.daily_rate, th.daily_rate {
   padding-right: 10px;
   border-right: 2px solid black;
@@ -166,3 +176,14 @@ div.indent p{
     overflow: auto;
     background: #fbfbfb;
    }
+
+.milestone table {
+	width: 1000px;	
+}
+
+.milestone tr th {
+	background: gray;
+  border: 1px solid #989898;
+  text-align: middle;
+  padding: 4px;
+}

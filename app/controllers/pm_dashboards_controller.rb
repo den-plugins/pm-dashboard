@@ -18,22 +18,14 @@ class PmDashboardsController < ApplicationController
     
     @key_risks ||= @project.risks.find(:all, :limit => 5, :order => 'ref_number DESC')
     @key_issues ||= @project.pm_dashboard_issues.find(:all, :limit => 5, :order => 'ref_number DESC')
+
+    @stakeholders = @project.members.stakeholders
     
-    # member list with pagination
-    # @member_count = @project.members.count(:all)
-    # @member_pages = Paginator.new self, @members_count, per_page_option, params['page']
-    @members = @project.members.find :all, :order => "users.firstname"
-    #        :limit  =>  @member_pages.items_per_page,
-    #        :offset =>  @member_pages.current.offset
-    
-    @stakeholders = @project.members.find(:all, :order => "users.firstname", 
-                                          :conditions => "stakeholder = true")
     if !@project.stakeholders.empty?
       @stakeholders.concat(@project.stakeholders.all)
     end
 
-    @proj_team = @project.members.find(:all, :order => "users.firstname", 
-                                       :conditions => "proj_team = true")
+    @proj_team = @project.members.project_team
     
     update_resource_list if params[:tab].eql?('resource_costs')
     
@@ -45,6 +37,7 @@ class PmDashboardsController < ApplicationController
 
     set_roles_pos @stakeholder_roles, @proj_team_roles, @proj_team_positions
     
+    @releases = Release.find_all_by_project_id(@project)
     rescue ActiveRecord::RecordNotFound
       render_404
   end
