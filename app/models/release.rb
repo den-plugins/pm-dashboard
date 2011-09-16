@@ -1,3 +1,3 @@
 class Release < ActiveRecord::Base
-	has_many :milestones, :dependent => :destroy_all
+	has_many :milestones, :dependent => :nullify
 end
