@@ -45,6 +45,7 @@ class PmDashboardsController < ApplicationController
 
     set_roles_pos @stakeholder_roles, @proj_team_roles, @proj_team_positions
     
+    @releases = Release.find_all_by_project_id(@project)
     rescue ActiveRecord::RecordNotFound
       render_404
   end
