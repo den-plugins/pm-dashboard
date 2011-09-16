@@ -7,6 +7,34 @@ en:
   label_change_control_plural: Change Controls
   label_resource_cost_forecast_plural: Resource Cost Forecasts
   
+  label_dashboard_highlights: Highlights / Progress This Period
+  label_dashboard_events: Planned Activities For The Week / Upcoming Events
+  label_dashboard_status_as_of: Cost / Financial Status As Of
+  label_dashboard_risks: Key Risks
+  label_dashboard_billability: Utilization / Billability As Of Last Month end
+  label_dashboard_milestones: Project Schedule / Upcoming Milestones
+  label_dashboard_issues: Key Issues
+  label_dashboard_sprint: Sprint Burndown Chart
+  
+  label_billing_model : Billing Model
+  label_time_material : Time and Material
+  label_budget_amount : Budget Amount
+  label_contingency_amount : Contingency Amount
+  label_total_budget : Total Project Budget
+  label_budget_cumulative : Budget Cumulative
+  label_actuals_cumulative : Actuals Cumulative
+  label_variance_amount : Variance Amt (Cumulative)
+  label_variance_percent : Variance % (Cumulative)
+  label_variance_at_complete : Variance at Complete(VAC)
+  label_vac : VAC (with Contingency)
+  
+  label_actual_start_date : Actual Start Date
+  label_actual_finish_date : Actual Finish Date
+  label_phases_stages : Phases /Stages
+  label_orig_target_date : Orig Target date
+  label_latest_replan_date : Latest Re-Plan Date
+  label_schedule_status : Status
+  
   label_assumption_new: New Assumption
   label_pm_issue_new: New Project Issue
   label_risk_new: New Risk

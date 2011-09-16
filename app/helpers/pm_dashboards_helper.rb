@@ -1,7 +1,7 @@
 module PmDashboardsHelper
 
   def pm_dashboard_tabs
-    tabs = [{:label => 'Dashboard', :name => 'dashboard', :partial => 'dashboard_header'},
+    tabs = [{:label => 'Dashboard', :name => 'dashboard', :partial => 'dashboard'},
             {:label => 'Info', :name => 'info', :partial => 'project_info'},
             {:label => 'Assumptions', :name => 'assumptions', :partial => 'assumptions'},
             {:label => 'Project Issues', :name => 'issues', :partial => 'issues'},

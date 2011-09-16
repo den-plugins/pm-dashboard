@@ -15,6 +15,16 @@ class PmDashboardsController < ApplicationController
     @issues ||= @project.pm_dashboard_issues.find(:all, :order => 'ref_number DESC')
     @risks ||= @project.risks.find(:all, :order => 'ref_number DESC')
     
+    @key_risks ||= @project.risks.find(:all, :limit => 5, :order => 'ref_number DESC')
+    @key_issues ||= @project.pm_dashboard_issues.find(:all, :limit => 5, :order => 'ref_number DESC')
+    
+    # member list with pagination
+    # @member_count = @project.members.count(:all)
+    # @member_pages = Paginator.new self, @members_count, per_page_option, params['page']
+    @members = @project.members.find :all, :order => "users.firstname"
+    #        :limit  =>  @member_pages.items_per_page,
+    #        :offset =>  @member_pages.current.offset
+    
     @stakeholders = @project.members.find(:all, :order => "users.firstname", 
                                           :conditions => "stakeholder = true")
     if !@project.stakeholders.empty?

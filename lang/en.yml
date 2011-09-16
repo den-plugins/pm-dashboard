@@ -6,7 +6,16 @@ en:
   label_risk_plural: Risks
   label_change_control_plural: Change Controls
   label_resource_cost_forecast_plural: Resource Cost Forecasts
-  
+
+  label_dashboard_highlights: Highlights / Progress This Period
+  label_dashboard_events: Planned Activities For The Week / Upcoming Events
+  label_dashboard_status_as_of: Cost / Financial Status As Of
+  label_dashboard_risks: Key Risks
+  label_dashboard_billability: Utilization / Billability As Of Last Month end
+  label_dashboard_milestones: Project Schedule / Upcoming Milestones
+  label_dashboard_issues: Key Issues
+  label_dashboard_sprint: Sprint Burndown Chart
+
   label_assumption_new: New Assumption
   label_pm_issue_new: New Project Issue
   label_risk_new: New Risk
@@ -61,7 +70,7 @@ en:
   
   label_direct_labor: Direct Labor
   label_daily_rate: Daily Rate
-
+  
   field_ref_number: "Ref #"
   field_description: Description
   field_validation: Validation

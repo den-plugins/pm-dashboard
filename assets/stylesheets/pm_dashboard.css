@@ -58,6 +58,7 @@ div.guide p {
   margin-left: 180px;
 }
 
+
 .resources_container {
   float: left;
   white-space: nowrap;
@@ -69,6 +70,13 @@ div.guide p {
   width: 75%;
   position: relative;
   overflow-x: scroll;
+}
+
+
+.singleCol {
+  float:left;
+  width:31%;
+  padding:0.95em;
 }
 
 
