@@ -17,7 +17,7 @@
           <% action = 'edit' %>
           <% actual_week_start, week_end = @week.from, @week.to %>
         <% end %>
-        <% days << (week_end - actual_week_start).numerator + 1 %>
+        <% days <<(actual_week_start .. week_end) %>
         <span>
           <% form_for :week, @week, 
                        :url => { :controller => 'weeks', :action => action , :project_id => @project.id, :id => @week }, 
@@ -32,18 +32,16 @@
         </span>
       </th>
       <% week_start += 1.week %>
-      <th>Cost</th>
+      <th class='cost'>Cost</th>
     <% end %>
     </tr>
     <% @proj_team.each do |member| %>
     <tr class="<%= cycle('even', 'odd', :name => 'members') %>">
       <% for i in 0 .. weeks %>
-        <td><%= days[i] %></td>
-        <% if params[:rate] && params[:rate].eql?('internal_rate') %>
-          <td><%= days[i].to_f * member.internal_rate.to_f %></td>
-        <% else %>
-          <td><%= days[i].to_f * member.sow_rate.to_f %></td>
-        <% end %>
+        <% rate = (params[:rate] && params[:rate].eql?('internal_rate')) ? member.internal_rate : member.sow_rate %>
+        <% days_cost = member.days_and_cost(days[i], rate) %>
+        <td><%= days_cost[0] %></td>
+        <td class='cost'><%= days_cost[1].to_f %></td>
       <% end %>
     </tr>
     <% end %>
