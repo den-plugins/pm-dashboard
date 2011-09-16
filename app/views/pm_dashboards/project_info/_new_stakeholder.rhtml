@@ -2,7 +2,6 @@
 <% labelled_tabular_form_for :stakeholder, @stakeholder,
                                                        :url => {:controller => 'stakeholders', :action => 'create', :project_id => @project},
                                                        :html => {:id => 'stakeholder-form'} do |f| %>
-  <%= error_messages_for 'stakeholder' %>
   <div class="box">
     <p> 
     <%= f.text_field :firstname, :required => true %>

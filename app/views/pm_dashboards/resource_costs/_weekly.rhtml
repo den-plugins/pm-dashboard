@@ -1,23 +1,57 @@
+<% weeks = get_weeks(@project.planned_start_date, @project.planned_end_date) %>
+<% week_start = @project.planned_start_date %>
+<% days = [] %>
+
 <table id='resource_cost_weekly' class='list resource_cost_table'>
-  <tr>
-  <% for i in 1 .. 60 %>
-    <th>week</th>
-    <th>pay</th>
-  <% end %>
-  </tr>
-    
-  <% days = 5 %>
-  <% @proj_team.each do |member| %>
-  <tr class="<%= cycle('even', 'odd', :name => 'members') %>">
-    <% for i in 1 .. 60 %>
-      <td><%= days %></td>
-      <% if params[:rate] && params[:rate].eql?('internal_rate') %>
-        <td><%= days.to_f * member.internal_rate.to_f %></td>
-      <% else %>
-        <td><%= days.to_f * member.sow_rate.to_f %></td>
-      <% end %>
+  <% unless weeks.nil? %>
+    <tr>
+    <% for i in 0 .. weeks %>
+      <% action = 'new' %>
+      <% week_start -= 1.day until week_start.wday.eql? 1 %>
+      <% week_end = (i.eql?(weeks)? @project.planned_end_date : (week_start + 4.days))  %>
+      <% actual_week_start = (i.zero? ? @project.planned_start_date : week_start) %>
+      <th height="40px">
+        w<%= i+1 %>
+        <% @week = @project.weeks.select {|w| w.from.cweek.eql?(actual_week_start.cweek) and w.to.cweek.eql?(week_end.cweek)}.first %>
+        <% if @week %>
+          <% action = 'edit' %>
+          <% actual_week_start, week_end = @week.from, @week.to %>
+        <% end %>
+        <% days <<(actual_week_start .. week_end) %>
+        <span>
+          <% form_for :week, @week, 
+                       :url => { :controller => 'weeks', :action => action , :project_id => @project.id, :id => @week }, 
+                       :html => {:id => "week_#{i}_form"} do |f| %>
+            <%= f.text_field :from, :size => 8, :id => "week_#{i}_from", :value => actual_week_start %>
+            <%= calendar_for("week_#{i}_from") %>
+            <%= "&raquo;" %>
+            <%= f.text_field :to, :size => 8, :id => "week_#{i}_to", :value => week_end %>
+            <%= calendar_for("week_#{i}_to") %>
+            <%= link_to image_tag('true.png'), "#", :onclick => "$('week_#{i}_form').submit()" %>
+          <% end %>
+        </span>
+      </th>
+      <% week_start += 1.week %>
+      <th class='cost'>Cost</th>
     <% end %>
-  </tr>
+    </tr>
+    <% @proj_team.each do |member| %>
+    <tr class="<%= cycle('even', 'odd', :name => 'members') %>">
+      <% for i in 0 .. weeks %>
+        <% rate = (params[:rate] && params[:rate].eql?('internal_rate')) ? member.internal_rate : member.sow_rate %>
+        <% days_cost = member.days_and_cost(days[i], rate) %>
+        <td><%= days_cost[0] %></td>
+        <td class='cost'><%= days_cost[1].to_f %></td>
+      <% end %>
+    </tr>
+    <% end %>
+    <% reset_cycle('members') %>
+  <% else %>
+    <tr>
+      <th id="undef_weeks" height="2">Undefined number of weeks. Please specify Planned Start Date and Planned End Date.</th>
+    </tr>
+    <script type="text/javascript">
+      document.getElementById("undef_weeks").height = document.getElementById("resource_costs").offsetHeight+"px";
+    </script>
   <% end %>
-  <% reset_cycle('members') %>
 </table>

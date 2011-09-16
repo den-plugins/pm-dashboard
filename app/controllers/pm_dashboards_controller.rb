@@ -5,6 +5,7 @@ class PmDashboardsController < ApplicationController
   helper :risks
   helper :project_info
   helper :pm_dashboard_issues
+  helper :resource_costs
 
   before_filter :get_id, :only => [:index]
     

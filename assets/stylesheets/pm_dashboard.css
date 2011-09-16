@@ -72,6 +72,61 @@ div.guide p {
   overflow-x: scroll;
 }
 
+#date_range {
+  padding-bottom: 3px;
+  width: 100%;
+  padding: 1px 0px;
+}
+
+span.button-like {
+  display: inline-block;
+  background: #E2E2E2;
+  font-size: 12px;
+  -moz-border-radius: 2px;
+  border-radius: 3px;
+  padding: 3px 5px;
+  width: 51px;
+  margin-top: 2px;
+  margin-bottom: 1px;
+}
+
+#facebox .body {
+  width: 380px;
+}
+
+#facebox .popup {
+  width: 420px;
+}
+
+#facebox .tl, #facebox .tr, #facebox .bl, #facebox .br {
+  background-repeat: no-repeat;
+}
+
+.popup table {
+  width: 100%;
+}
+
+table#resource_costs {
+  table-layout: fixed;
+}
+
+table#resource_costs tr td {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+td.daily_rate, th.daily_rate {
+  padding-right: 10px;
+  border-right: 2px solid black;
+  text-align: right;
+}
+
+th.cost, td.cost {
+  padding-right: 10px;
+  border-right: 2px solid #BBBBBB;
+  text-align: right;
+}
 
 .singleCol {
   float:left;
@@ -79,4 +134,35 @@ div.guide p {
   padding:0.95em;
 }
 
-
+div.indent p{
+     margin: 2em;
+     padding: 0px 10px;
+     text-align: justify;
+   }
+   div.main_holder{
+    padding: 3px;
+    background: #eee;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+   }
+   div.content_holder{
+    margin: 0;
+    border: 1px solid #ccc;
+   }
+   div.content_header{
+    height: 33px;
+    padding: 0 6px;
+    border-bottom: 1px solid #ccc;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    font-weight: bolder;
+   }
+   div.main_content{
+    position: relative;
+    padding: 0 6px;
+    color: #333;
+    font-size: 12px;
+    overflow: auto;
+    background: #fbfbfb;
+   }

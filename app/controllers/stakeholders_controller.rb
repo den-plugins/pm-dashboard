@@ -8,11 +8,14 @@ class StakeholdersController < ApplicationController
   end
 
   def create
-    @stakeholder = @project.stakeholders.create(params[:stakeholder])
-    if @stakeholder.save
-      redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info 
+    begin
+      @stakeholder = @project.stakeholders.create(params[:stakeholder])
+    rescue
+      flash[:error] = "Missing required fields in creating stakeholder. Record not saved."
+      redirect_to :controller => 'pm_dashboards', :action => 'index', :project_id => @project, :tab => :info
     else
-      redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+      flash[:notice] = "Successful creation of Stakeholder."
+      redirect_to :controller => 'pm_dashboards', :action => 'index', :project_id => @project, :tab => :info
     end
   end
 

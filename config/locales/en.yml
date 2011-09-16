@@ -126,7 +126,12 @@ en:
   field_office_no: Office No.
   field_im: IM ID
   
+  field_start_date: Start Date
+  field_end_date: End Date
+  field_resource_allocation: Resource Allocation
+  
   text_hello: Hello {{name}},
   text_update: An update has been made to {{feature}} {{ref_number}}
   text_new: You are the owner of {{feature}} {{ref_number}}
   text_view_details: To view the details, click here {{url}}
+
