@@ -47,8 +47,8 @@ module ProjectExtn
     def validate_dates
       if self.planned_start_date and self.planned_end_date
         self.planned_start_date, self.planned_end_date = self.planned_end_date, self.planned_start_date if self.planned_start_date > self.planned_end_date
-        self.planned_start_date += 1.day if self.planned_start_date.wday.eql? 0
-        self.planned_end_date += 1.day if self.planned_end_date.wday.eql? 0
+        self.planned_start_date -= 2.days if self.planned_start_date.cwday.eql? 7
+        self.planned_end_date -= 2.days if self.planned_end_date.cwday.eql? 7
         self.planned_start_date -= 1.day if self.planned_start_date.cwday.eql? 6
         self.planned_end_date -= 1.day if self.planned_end_date.cwday.eql? 6
       end
