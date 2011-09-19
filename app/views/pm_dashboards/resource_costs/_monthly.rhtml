@@ -1,23 +1,62 @@
-<table id='resource_cost_monthly' class='list'>
-  <tr>
-  <% for i in 1 .. 60 %>
-    <th>month</th>
-    <th>pay</th>
-  <% end %>
-  </tr>
-    
-  <% days = 5 %>
-  <% @proj_team.each do |member| %>
-  <tr class="<%= cycle('even', 'odd', :name => 'members') %>">
-    <% for i in 1 .. 60 %>
-      <td><%= days %></td>
-      <% if params[:rate] && params[:rate].eql?('internal_rate') %>
-        <td><%= days.to_f * member.internal_rate.to_f %></td>
-      <% else %>
-        <td><%= days.to_f * member.sow_rate.to_f %></td>
-      <% end %>
+<% start_date, end_date = @project.planned_start_date, @project.planned_end_date %>
+<% months = get_months(start_date, end_date) %>
+
+<% unless months.nil? %>
+  <div id='resource_cost_monthly' class='resource_cost_table_container' >
+    <% months.each do |m| %>
+      <% start_range = (start_date.month.eql?(m) ? start_date : (start_date + (m - start_date.month).month).beginning_of_month ) %>
+      <% end_range = (end_date.month.eql?(m) ? end_date : start_range.end_of_month ) %>
+      <% weeks = get_weeks(start_range, end_range) %>
+      <% week_start = start_range %>
+      <% days = [] %>
+      <div class='floating_table'>
+      <table class='list'>
+        <tr>
+          <th height="40px">
+            <%= Date::MONTHNAMES[m] %>
+          </th>
+          <th class='cost'>Cost</th>
+        </tr>
+        <% total_days, total_cost = 0, 0 %>
+        <% @proj_team.each do |member| %>
+        <% actual_days, cost = 0, 0 %>
+        <tr class="<%= cycle('even', 'odd', :name => 'members') %>">
+          <% for i in 0 .. weeks %>
+            <% week_start = week_start.monday %>
+            <% week_end = (i.eql?(weeks)? end_range : (week_start + 4.days))  %>
+            <% actual_week_start = (i.zero? ? start_range : week_start) %>
+              <% @week = @project.weeks.select {|w| w.from.cweek.eql?(actual_week_start.cweek) and w.to.cweek.eql?(week_end.cweek)}.first %>
+              <% if @week %>
+                <% actual_week_start, week_end = @week.from, @week.to %>
+              <% end %>
+              <% days << (actual_week_start .. week_end) %>
+            <% week_start += 1.week %>
+            
+            <%  rate = (params[:rate] && params[:rate].eql?('internal_rate')) ? member.internal_rate : member.sow_rate
+                    actual_days_cost = member.days_and_cost(days[i], rate)
+                    actual_days += actual_days_cost.first
+                    cost += actual_days_cost.last
+            %>
+          <% end %>
+          <td><%= actual_days %></td>
+          <td class='cost'><%= cost.to_f %></td>
+          <% total_days += actual_days %>
+          <% total_cost += cost %>
+        <% end %>
+        </tr>
+        <% reset_cycle('members') %>
+        
+        <tr>
+          <th style='text-align: left'><%= total_days %></th>
+          <th class='cost'><%= total_cost.to_f %></th>
+        </tr>
+      </table>
+      </div>
     <% end %>
-  </tr>
-  <% end %>
-  <% reset_cycle('members') %>
-</table>
+  </div>
+<% else %>
+  <p id="undef_weeks" height="2">Undefined date range. Please specify Planned Start Date and Planned End Date.</p>
+  <script type="text/javascript">
+    document.getElementById("undef_weeks").height = document.getElementById("resource_costs").offsetHeight+"px";
+  </script>
+<% end %>

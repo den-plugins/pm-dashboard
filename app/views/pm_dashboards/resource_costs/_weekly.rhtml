@@ -9,7 +9,7 @@
       <table class='list'>
         <tr>
           <% action = 'new' %>
-          <% week_start -= 1.day until week_start.wday.eql? 1 %>
+          <% week_start = week_start.monday %>
           <% week_end = (i.eql?(weeks)? @project.planned_end_date : (week_start + 4.days))  %>
           <% actual_week_start = (i.zero? ? @project.planned_start_date : week_start) %>
           <th height="40px">
@@ -60,7 +60,7 @@
     <% end %>
   </div>
 <% else %>
-  <p id="undef_weeks" height="2">Undefined number of weeks. Please specify Planned Start Date and Planned End Date.</p>
+  <p id="undef_weeks" height="2">Undefined date range. Please specify Planned Start Date and Planned End Date.</p>
   <script type="text/javascript">
     document.getElementById("undef_weeks").height = document.getElementById("resource_costs").offsetHeight+"px";
   </script>
