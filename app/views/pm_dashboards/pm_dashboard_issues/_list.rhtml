@@ -1,6 +1,7 @@
 <table id="pm_dashboard_issues" class="list issues" style='text-align: center; '>
   <thead>
     <tr>
+      <th>Key Issue</th>
       <th>Ref #</th>
       <th>Env</th>
       <th>Date Raised</th>
@@ -19,6 +20,7 @@
 
     <% @issues.each do |issue| %>
       <tr class=<%= cycle('odd', 'even') %> >
+        <td><%= issue.key_issue %></td>
         <td><%= issue.ref_number %></td>
         <td><%= issue.env %></td>
         <td><%= issue.created_on %></td>

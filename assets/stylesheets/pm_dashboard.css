@@ -69,7 +69,7 @@ div.guide p {
   float: left;
   width: 75%;
   position: relative;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 #date_range {
@@ -124,6 +124,16 @@ table#resource_costs tr td {
 .floating_table {
   float: left;
   display: inline-block;
+}
+
+.list.with_width {
+  width: 150px;
+}
+
+#undef_weeks{
+  height: 2px;
+  text-align: center;
+  padding: 10px;
 }
 
 td.daily_rate, th.daily_rate {

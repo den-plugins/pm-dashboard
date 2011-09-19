@@ -33,11 +33,12 @@ class MilestonePlansController < ApplicationController
   end
 
   def update
-  	@milestone = Milestone.find(params[:milestone_id])
+  	@version = Version.find(params[:version_id])
+
     if request.get?
       render_milestone_plans('edit')
     else
-      if @milestone.update_attributes(params[:milestone])
+      if @version.update_attributes(params[:version])
         flash[:notice] = l(:notice_successful_update)
         redirect_to_milestone_plans
       else

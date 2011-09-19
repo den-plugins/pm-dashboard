@@ -1,60 +1,21 @@
-<h3> Milestone Plans </h3>
-
-<%= link_to "Add Release", :controller => "milestone_plans", :action => "add_release", :project_id => @project %>
-
-<table class='milestone'>
-
-
-	<% @release_count = 0 %>
-	<% @releases.each do |release| %>
-	<tr>
-		<td colspan="5">
-
-		<table style="background-color:silver">
-		<tr>
-			<td colspan="5">
-
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<table>
-				<tr>
-					<td colspan="6"><h4>Release <%= @release_count %></h4>
-					
-					<%= link_to l(:button_create), { :controller => "milestone_plans", :action => "add", :project_id => @project, :release_id => release }, :class => 'icon icon-add' %>
-					
-					<%= link_to l(:button_delete), {:controller => 'milestone_plans', :action => 'destroy_release', :release_id => release, :project_id => @project}, :confirm => l(:text_are_you_sure), :method => :post, :class => 'icon icon-del'  %>
-
-					</td>
-				</tr>
-
-				<% @milestones = Milestone.milestones(release) %>
-				<% if @milestones.count > 0 %>
-					<tr>
-					  <th>Phase/Milestones</th>
-					  <th>Original Target Date</th>
-					  <th>Lates Re-Plan Date</th>
-					  <th>Remarks</th>
-					  <th>Status</th>
-					  <th>Action</th>
-					</tr>
-				
-					<% @milestones.each do |t| %>
-						<%= release_milestone_details(t,@project) %>
-					<% end %>
-				<% end %>
-
-				</table>
-			</td>
-		</tr>
-		</table>
-
-
-		</td>
-	</tr>
-	<% @release_count += 1 %>
-	<% end %>
-
+<table id="milestone_plans_list" class="list">
+  <tr>
+    <th>Version Name</th>
+    <th>Description</th>
+    <th>Wiki Page</th>
+    <th>Original Date</th>
+    <th>Start Date</th>
+    <th>Effective Date</th>
+  <th>
+  <% @versions.each do |t| %>
+	  <tr class="<%= cycle('even', 'odd') %>">
+		  <td><em><%= t.name %></em></td>
+		  <td><%= t.description %></td>
+		  <td><%= t.wiki_page_title %></td>
+      <td><%= t.original_date %></td>
+      <td><%= t.started_date %></td>
+      <td><%= t.effective_date %></td>
+		  <td><%= link_to image_tag('edit.png'), :controller => 'milestone_plans', :action => 'update', :project_id => @project, :version_id => t  %></td>
+    </tr>
+  <% end %>
 </table>
-

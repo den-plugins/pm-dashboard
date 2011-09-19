@@ -11,6 +11,7 @@
     <p><%= f.select :env, collection_for_risk_env_select, :required => true %></p>
     <p><%= f.select :risk_type, collection_for_risk_type_select, :required => true %></p>
     <p><%= f.select :status, collection_for_risk_status_select, :required => true %></p>
+    <p><%= f.check_box :key_risk %></p>
   </div>
   <div class="splitcontentright">
     <p><%= f.text_field :target_resolution_date, :size => 10, :required  => true  %><%= calendar_for('risk_target_resolution_date') %></p>
