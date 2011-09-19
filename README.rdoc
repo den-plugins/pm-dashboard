@@ -11,7 +11,6 @@ August 8, 2011
     = autocalculation of days_overdue (risks)
     = fix view for 'related risks' in add/update of assumption
               
-              
 August 9, 2011
 
   Features/Fixes:
@@ -19,7 +18,6 @@ August 9, 2011
     = risks summary in index page
     = fixed view for 'related risks' in add/update of assumption
     = color code for risk rating columns (risks index page)
-
 
 August 10, 2011
   
@@ -47,10 +45,16 @@ September 14, 2011
     = weekly and monthly view of resource cost forecast
     
   Dependencies:
-    = install the facebox_render plugin: script/plugin install git://github.com/ihower/facebox_render.git
-    
+    = install the facebox_render plugin:
+        = run from den core: script/plugin install git://github.com/ihower/facebox_render.git
     
 September 15, 2011
   
   Fixes/Enhancements:
     = each resource name is clickable so that PM can determine resource's project allocation. Once clicked, a pop-up will appear to enable user to add/edit resource's project allocation
+    
+Septermber 16, 2011
+
+  Todo:
+    = investigate on this error: The :dependent option expects either :destroy, :delete_all, or :nullify (:destroy_all)
+        = temp. sol'n, replaced 'destroy_all' with 'nullify' (rails v=2.3.5)

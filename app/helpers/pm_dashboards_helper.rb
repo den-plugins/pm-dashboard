@@ -7,7 +7,8 @@ module PmDashboardsHelper
             {:label => 'Project Issues', :name => 'issues', :partial => 'issues'},
             {:label => 'Risks', :name => 'risks', :partial => 'risk'},
             {:label => 'Change Control', :name => 'change_control', :partial => 'change_control'},
-            {:label => 'Resource Cost Forecast', :name => 'resource_costs', :partial => 'resource_costs'}
+            {:label => 'Resource Cost Forecast', :name => 'resource_costs', :partial => 'resource_costs'},
+            {:label => 'Milestone Plans', :name => 'milestone_plans', :partial => 'milestone_plans'}
             ]
     tabs
   end
@@ -35,5 +36,23 @@ module PmDashboardsHelper
     image_tag("calendar.png", {:id => "#{field_id}_trigger", :class => "calendar-trigger"}) +
     javascript_tag("Calendar.setup({inputField : '#{field_id}', ifFormat : '%Y-%m-%d', button : '#{field_id}_trigger' , cache: true});")
   end
-  
+
+  def release_milestone_details(milestone, project)
+  	@milestone = Milestone.find(milestone)
+	  	table = []
+
+	  	table << "<tr>"
+	  	table << "<td>#{@milestone.name}</td>"
+	  	table << "<td>#{@milestone.original_target_date}</td>"
+	  	table << "<td>#{@milestone.latest_re_plan_date}</td>"
+	  	table << "<td>#{@milestone.remarks}</td>"
+	  	table << "<td>#{@milestone.status}</td>"
+	  	table << "<td align='center'>
+	  							#{link_to l(:button_edit), {:controller => 'milestone_plans', :action => 'update', :milestone_id => milestone, :project_id => project}, :class => 'icon icon-edit' } 
+	  							|| 
+	  							#{link_to l(:button_delete), {:controller => 'milestone_plans', :action => 'destroy', :milestone_id => milestone, :project_id => project}, :confirm => l(:text_are_you_sure), :method => :post, :class => 'icon icon-del' }
+	  						</td>"
+	  	table << "</tr>"
+	  	table
+  end  
 end
