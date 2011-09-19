@@ -1,60 +1,34 @@
-<h3> Milestone Plans </h3>
 
-<%= link_to "Add Release", :controller => "milestone_plans", :action => "add_release", :project_id => @project %>
-
-<table class='milestone'>
-
-
-	<% @release_count = 0 %>
-	<% @releases.each do |release| %>
+<% @versions.each do |t| %>
+<p>
+<table>
 	<tr>
-		<td colspan="5">
-
-		<table style="background-color:silver">
-		<tr>
-			<td colspan="5">
-
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<table>
-				<tr>
-					<td colspan="6"><h4>Release <%= @release_count %></h4>
-					
-					<%= link_to l(:button_create), { :controller => "milestone_plans", :action => "add", :project_id => @project, :release_id => release }, :class => 'icon icon-add' %>
-					
-					<%= link_to l(:button_delete), {:controller => 'milestone_plans', :action => 'destroy_release', :release_id => release, :project_id => @project}, :confirm => l(:text_are_you_sure), :method => :post, :class => 'icon icon-del'  %>
-
-					</td>
-				</tr>
-
-				<% @milestones = Milestone.milestones(release) %>
-				<% if @milestones.count > 0 %>
-					<tr>
-					  <th>Phase/Milestones</th>
-					  <th>Original Target Date</th>
-					  <th>Lates Re-Plan Date</th>
-					  <th>Remarks</th>
-					  <th>Status</th>
-					  <th>Action</th>
-					</tr>
-				
-					<% @milestones.each do |t| %>
-						<%= release_milestone_details(t,@project) %>
-					<% end %>
-				<% end %>
-
-				</table>
-			</td>
-		</tr>
-		</table>
-
-
-		</td>
+		<th>Version Name</th>
+		<td><em><%= t.name %></em></td>
 	</tr>
-	<% @release_count += 1 %>
-	<% end %>
-
+	<tr>
+		<th>Description</th>
+		<td><%= t.description %></td>
+	</tr>
+	<tr>
+		<th><b>Wiki Page</b></th>
+		<td><%= t.wiki_page_title %></td>
+	</tr>
+	<tr>
+		<th>Original Date</th>
+    <td><%= t.original_date %></td>
+  </tr>
+  <tr>
+  	<th>Start Date</th>
+    <td><%= t.started_date %></td>
+  </tr>
+  <tr>
+  	<th>Effective Date</th>
+    <td><%= t.effective_date %></td>
+    </tr>
+  </tr>
 </table>
 
+		<%= link_to l(:button_edit), :controller => 'milestone_plans', :action => 'update', :project_id => @project, :version_id => t  %>
+</p>
+<% end %>

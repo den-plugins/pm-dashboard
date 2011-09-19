@@ -1,25 +1,35 @@
+		<%#= collection_select(:milestone, :release_id, @options , :id, :id, :prompt => true ) %>
+		<%#= f.select(:release_id, @options.collect {|p| [ Release.release_option, p.id] }, {:prompt => true}) %>
 <div>
-	<div>
-		<%= f.label :name %><br>
-		<%= f.text_field :name %>
-	</div>
-  <div>
-    <p>
-    Original Target Date
-    <%= f.text_field :original_target_date, :size => 10 %><%= calendar_for('milestone_original_target_date') %></p>
-    <p>
-    Latest Re-Plan Date
-    <%= f.text_field :latest_re_plan_date, :size => 10 %><%= calendar_for('milestone_latest_re_plan_date') %></p>
-  </div>
 
-	<div class="field">
-		<%= f.label :remarks %><br>
-		<%= f.text_area :remarks %>
-	</div>
-	<div class="field">
-		<%= f.label :status %><br>
-		<%= f.text_field :status %>
-	</div>
+<table>
+	<tr>
+		<th>Version Name</th>
+		<td><em><%= @version.name %></em></td>
+	</tr>
+	<tr>
+		<th>Description</th>
+		<td><%= @version.description %></td>
+	</tr>
+	<tr>
+		<th><b>Wiki Page</b></th>
+		<td><%= @version.wiki_page_title %></td>
+	</tr>
+	<tr>
+		<th>Original Date</th>
+    <td><%= f.text_field :original_date, :size => 10 %><%= calendar_for('version_original_date') %></td>
+  </tr>
+  <tr>
+  	<th>Start Date</th>
+    <td><%= f.text_field :started_date, :size => 10 %><%= calendar_for('version_started_date') %></td>
+  </tr>
+  <tr>
+  	<th>Effective Date</th>
+    <td><%= f.text_field :effective_date, :size => 10 %><%= calendar_for('version_effective_date') %></td>
+    </tr>
+  </tr>
+</table>
+</p>
 	<div>
 		<%= f.submit button_label %>
 		<%= link_to "Cancel", :controller => "pm_dashboards", :project_id => @project, :tab => "milestone_plans" %>
