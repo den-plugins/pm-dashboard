@@ -16,8 +16,11 @@ class PmDashboardsController < ApplicationController
     @issues ||= @project.pm_dashboard_issues.find(:all, :order => 'ref_number DESC')
     @risks ||= @project.risks.find(:all, :order => 'ref_number DESC')
     
-    @key_risks ||= @project.risks.find(:all, :limit => 5, :order => 'ref_number DESC')
-    @key_issues ||= @project.pm_dashboard_issues.find(:all, :limit => 5, :order => 'ref_number DESC')
+    # replaced the next two lines with named_scopes, to be reflected in the Main Dashboard tab
+    # @key_risks ||= @project.risks.find(:all, :limit => 5, :order => 'ref_number DESC')
+    # @key_issues ||= @project.pm_dashboard_issues.find(:all, :limit => 5, :order => 'ref_number DESC')
+    @key_risks ||= @project.risks.key
+    @key_issues ||= @project.pm_dashboard_issues.key
     
     # member list with pagination
     # @member_count = @project.members.count(:all)

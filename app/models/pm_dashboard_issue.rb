@@ -22,6 +22,9 @@ class PmDashboardIssue < ActiveRecord::Base
 
   before_create :set_pid_and_ref_number
 
+  # For key issues to be reflected in the Main Dashboard tab
+  named_scope :key, :conditions => {:key_issue => true}
+  
   def set_pid_and_ref_number
     if !@project.pm_dashboard_issues.last.nil?
       self.pid = @project.pm_dashboard_issues.last.pid + 1
