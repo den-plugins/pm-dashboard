@@ -1,34 +1,21 @@
-
-<% @versions.each do |t| %>
-<p>
-<table>
-	<tr>
-		<th>Version Name</th>
-		<td><em><%= t.name %></em></td>
-	</tr>
-	<tr>
-		<th>Description</th>
-		<td><%= t.description %></td>
-	</tr>
-	<tr>
-		<th><b>Wiki Page</b></th>
-		<td><%= t.wiki_page_title %></td>
-	</tr>
-	<tr>
-		<th>Original Date</th>
-    <td><%= t.original_date %></td>
-  </tr>
+<table id="milestone_plans_list" class="list">
   <tr>
-  	<th>Start Date</th>
-    <td><%= t.started_date %></td>
-  </tr>
-  <tr>
-  	<th>Effective Date</th>
-    <td><%= t.effective_date %></td>
+    <th>Version Name</th>
+    <th>Description</th>
+    <th>Wiki Page</th>
+    <th>Original Date</th>
+    <th>Start Date</th>
+    <th>Effective Date</th>
+  <th>
+  <% @versions.each do |t| %>
+	  <tr class="<%= cycle('even', 'odd') %>">
+		  <td><em><%= t.name %></em></td>
+		  <td><%= t.description %></td>
+		  <td><%= t.wiki_page_title %></td>
+      <td><%= t.original_date %></td>
+      <td><%= t.started_date %></td>
+      <td><%= t.effective_date %></td>
+		  <td><%= link_to image_tag('edit.png'), :controller => 'milestone_plans', :action => 'update', :project_id => @project, :version_id => t  %></td>
     </tr>
-  </tr>
+  <% end %>
 </table>
-
-		<%= link_to l(:button_edit), :controller => 'milestone_plans', :action => 'update', :project_id => @project, :version_id => t  %>
-</p>
-<% end %>
