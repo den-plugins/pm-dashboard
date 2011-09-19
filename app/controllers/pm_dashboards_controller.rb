@@ -48,6 +48,25 @@ class PmDashboardsController < ApplicationController
     end
   end
   
+  # Edit @project
+  def edit_project
+    if request.post?
+      @project = Project.find(params[:project_id])
+      @project.attributes = params[:project]
+      @proj_team = @project.members.project_team
+      if @project.save
+        render(:update) { |page| page.reload }
+      else
+        render :update do |page|
+          page.replace_html :resource_costs_header , :partial => 'pm_dashboards/resource_costs/header'
+        end
+      end
+    end
+    rescue ActiveRecord::RecordNotFound
+      render_404
+  end
+  
+  
   private
   
   def get_id

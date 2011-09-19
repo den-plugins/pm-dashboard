@@ -23,13 +23,24 @@
       <th style='text-align: left;'>Other Direct Costs</th>
       <th class='daily_rate'>Subtotals</th>
     </tr>
+    <tr></tr>
+    <tr></tr>
+    <tr>
+      <th style='text-align: left;'>Other Charges</th>
+      <th class='daily_rate'>Sub-totals</th>
+    </tr>
+    <tr>
+      <th style='text-align: left;'>Contingency</th>
+      <th class='daily_rate'><%= @project.contingency.to_f %> %</th>
+    </tr>
+    <tr>
+      <th colspan='2' class='daily_rate'>Total Cost</th>
+    </tr>
+    <tr>
+      <th colspan='2' class='daily_rate'>Cumulative Cost</th>
+    </tr>
   </table>
 </div>
-
-<%= 
-  # the monthly and weekly partials are just samples
-  # delete/modify this comment according to your changes in either partial files :)
-%>
 
 <div class='resource_cost_container' >
   <% if params[:view] && params[:view].eql?('month') %>
@@ -39,7 +50,11 @@
   <% end %>
 </div>
 
+<script type='text/javascript'>
+  jQuery('#resource_costs_header').replaceWith("<%= escape_javascript(render :partial => 'pm_dashboards/resource_costs/header') %>");
+</script>
+
 <% content_for :header_tags do %>
-  <%= stylesheet_link_tag 'facebox', :plugin => 'facebox_render' %>
-  <%= javascript_include_tag 'facebox.js', :plugin => 'facebox_render' %>
+  <%= stylesheet_link_tag 'facebox' %>
+  <%= javascript_include_tag 'facebox.js' %>
 <% end %>

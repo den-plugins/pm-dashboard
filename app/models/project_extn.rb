@@ -16,6 +16,7 @@ module ProjectExtn
       has_many :weeks
       
       validates_presence_of :description
+      validates_numericality_of :contingency,  :only_integer => true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => 'input numbers from 0-100'
       before_save :validate_dates
 
     end

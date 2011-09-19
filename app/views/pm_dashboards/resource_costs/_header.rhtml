@@ -1,27 +1,36 @@
-<table id='pm_dashboard_header'>
-  <tr>
-    <td colspan='7'><span>CLIENT</span><%= @project.client %></td>
-  </tr>
-  <tr>
-    <td colspan='7'><span>Active</span>Baseline</td>
+<div id='resource_costs_header'>
+  <%= error_messages_for 'project' %>
+  
+  <%  @contingency_amount = @bac_amount.to_f * (@project.contingency.to_f)
+          @total_budget = @bac_amount.to_f + @contingency_amount  %>
+
+  <table id='pm_dashboard_header'>
+    <tr>
+      <td colspan='7'><span>CLIENT</span><%= @project.client %></td>
     </tr>
-  <tr><br/></tr>
-  <tr>
-    <td><span>Budget Hours (BAC)</span>15, 296</td>
-    <td></td>
-    <td><span>Contingency %</span>
-      <% form_remote_tag(:url => {:controller => 'projects', :action => 'edit' }) do %>
-        <% text_field_tag :contingency_per, :size => 3, :place_holder => '0,0', :onchange => "this.form.onsubmit();" %>%
-      <% end %>
-    </td>
-    <td></td>
-    <td><span>Total Project Budget</span>$2, 834,242.00</td>
-  </tr>
-  
-  <tr>
-    <td><span>Budget Amount (BAC)</span>$2, 834,242.00</td>
-    <td></td>
-    <td><span>Contingency Amount</span>0.0</td>
-  </tr>
-  
-</table>
+    <tr>
+      <td colspan='7'><span>Active</span><%= @project.active %></td>
+      </tr>
+    <tr><br/></tr>
+    <tr>
+      <td><span>Budget Hours (BAC)</span><%= @bac_hours %> hours</td>
+      <td></td>
+      <td><span>Contingency %</span>
+        <% remote_form_for(:project, @project, :url => {:controller => 'pm_dashboards', :action => 'edit_project', :project_id => @project }) do |f| %>
+          <%= image_submit_tag('true.png', :class => 'contextual', :id => 'contingency_submit', :style => 'display: none;') %>
+          <%= f.text_field :contingency, :size => 2, :value => (@project.contingency ? @project.contingency : 0.0), 
+                                        :onclick => "jQuery('#contingency_submit').show();" %>%
+        <% end %>
+      </td>
+      <td></td>
+      <td><span>Total Project Budget</span>$<%= @total_budget %></td>
+    </tr>
+    
+    <tr>
+      <td><span>Budget Amount (BAC)</span>$<%= @bac_amount %></td>
+      <td></td>
+      <td><span>Contingency Amount</span><%= @contingency_amount  %></td>
+    </tr>
+    
+  </table>
+</div>

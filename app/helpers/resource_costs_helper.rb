@@ -11,5 +11,12 @@ module ResourceCostsHelper
       (start_date .. end_date).map {|m| m.month}.uniq
     end
   end
+  
+  def get_cumulative_total(per_week, total)
+    per_week.each_value do |week|
+      total += week[2].to_f
+    end
+    total
+  end
 
 end
