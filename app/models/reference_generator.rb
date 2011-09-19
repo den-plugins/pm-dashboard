@@ -3,7 +3,7 @@ class ReferenceGenerator
     
     def generate(object, pid)
       begin
-        object.class.to_s.chr + "%0.5d" % pid
+        object.class.to_s.chars.first + "%0.5d" % pid
       rescue Exception => e
       end
     end
