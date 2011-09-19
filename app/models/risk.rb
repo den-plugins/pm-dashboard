@@ -43,6 +43,9 @@ class Risk < ActiveRecord::Base
   before_create :set_ref_number
   before_save :set_to_conditions
   
+  # For key risks to be reflected in the Main Dashboard tab
+  named_scope :key, :conditions => {:key_risk => true}
+  
   def set_ref_number
     last = @project.risks.find(:last, :order => 'pid ASC')
     self.pid = (last) ? last.pid+1 : 1
