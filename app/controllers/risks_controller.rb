@@ -33,7 +33,7 @@ class RisksController < ApplicationController
       end
     end
   end
-  
+    
   def destroy
     if @risk.destroy
       redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :risks

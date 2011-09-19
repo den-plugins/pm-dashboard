@@ -1,6 +1,7 @@
 <table id="risks" class="list" style='text-align: center; '>
   <thead>
     <tr class='risks_header'>
+      <th><%= l(:field_key_risk) %></th>
       <th><%= l(:field_ref_number) %></th>
       <th><%= l(:field_env) %></th>
       <th><%= l(:field_date_recorded) %></th>
@@ -23,7 +24,8 @@
     </tr>
   </thead>
   <% @risks.each do |risk| %>
-    <tr class="<%= cycle('odd', 'even') %>">
+      <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= risk.key_risk %></td>
       <td><%= risk.ref_number %></td>
       <td><%= risk.env %></td>
       <td><%= risk.created_on.to_date %></td>

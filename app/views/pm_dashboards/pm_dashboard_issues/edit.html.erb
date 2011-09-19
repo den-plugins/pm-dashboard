@@ -19,6 +19,7 @@
       <p><%= f.select :impact, (PmDashboardIssue::IMPACT.keys.collect {|r| [l(PmDashboardIssue::IMPACT[r][:name]), r]}), :required => true %></p>
       <p><%= f.select :raised_by, (@project.members.collect {|p| [p.name, p.user.id]}), :required => true, :selected => User.current %></p>
       <p><%= f.select :owner, (@project.members.collect {|p| [p.name, p.user.id]}), :required => true, :include_blank => true %></p>
+      <p><%= f.check_box :key_issue %></p>
     </div>
 
     <div class="splitcontentright">

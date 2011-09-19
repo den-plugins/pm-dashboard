@@ -74,7 +74,7 @@ en:
   label_risk_impact_3: Delay, increased cost in excess of tolerance 
   label_risk_impact_4: Substantial delay, key deliverable not met, incur costs
   label_risk_impact_5: Inability to deliver, business case/objective not viable
-
+  
   label_summary: Summary
   label_assumptions_pclosed: Percent Closed
   label_assumptions_status_open: Open
@@ -121,6 +121,8 @@ en:
   field_impact_final: Impact (Final)
   field_final_risk_rating: Final Risk Rating
   field_target_resolution_date: Target Resolution Date
+  field_key_risk: Key Risk
+  field_key_issue: Key Issue
 
   field_phone_no: Phone No.
   field_office_no: Office No.
