@@ -1,6 +1,6 @@
 <% weeks = get_weeks(@project.planned_start_date, @project.planned_end_date)
        week_start = @project.planned_start_date
-       days, per_week = [], {}
+       days, per_column = [], {}
        @bac_hours, @bac_amount = 0, 0
 %>
 
@@ -56,8 +56,8 @@
                 @bac_amount += total_cost
                 total_with_contingency = (total_cost * @project.contingency.to_f)/100
                 actual_total = total_cost + total_with_contingency
-                cumulative_total = get_cumulative_total(per_week, actual_total).to_f
-                per_week[i] = [total_cost, total_with_contingency, actual_total, cumulative_total]
+                cumulative_total = get_cumulative_total(per_column, actual_total).to_f
+                per_column[i] = [total_cost, total_with_contingency, actual_total, cumulative_total]
         %>
           
         <tr>
@@ -67,7 +67,7 @@
         
        <tr></tr>
        <tr></tr>
-        <%= render :partial => 'pm_dashboards/resource_costs/footer', :locals => {:per_week => per_week[i]} %>
+        <%= render :partial => 'pm_dashboards/resource_costs/footer', :locals => {:per_column => per_column[i]} %>
         
       </table>
       </div>
