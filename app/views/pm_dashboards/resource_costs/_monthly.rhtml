@@ -10,7 +10,7 @@
       <% week_start = start_range %>
       <% days = [] %>
       <div class='floating_table'>
-      <table class='list'>
+      <table class="list with_width">
         <tr>
           <th height="40px">
             <%= Date::MONTHNAMES[m] %>
@@ -55,7 +55,7 @@
     <% end %>
   </div>
 <% else %>
-  <p id="undef_weeks" height="2">Undefined date range. Please specify Planned Start Date and Planned End Date.</p>
+  <div id="undef_weeks">Undefined date range. Please specify Planned Start Date and Planned End Date.</div>
   <script type="text/javascript">
     document.getElementById("undef_weeks").height = document.getElementById("resource_costs").offsetHeight+"px";
   </script>
