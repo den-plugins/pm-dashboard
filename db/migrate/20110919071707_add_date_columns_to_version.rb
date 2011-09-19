@@ -1,6 +1,6 @@
 class AddDateColumnsToVersion < ActiveRecord::Migration
   def self.up
-    add_column :versions, :start_date, :date
+    add_column :versions, :started_date, :date
     add_column :versions, :original_date, :date
   end
 
