@@ -9,7 +9,7 @@ module ProjectExtn
     # Same as typing in the class
     base.class_eval do
       unloadable # Send unloadable so it will not be unloaded in development
-      attr_accessor :validate_contingency, :validate_client
+      attr_accessor :validate_client
       
       has_many :assumptions, :dependent => :destroy, :order => "ref_number ASC"
       has_many :pm_dashboard_issues, :dependent => :destroy, :order => "ref_number ASC"
@@ -19,7 +19,9 @@ module ProjectExtn
       
       validates_presence_of :description
       validates_presence_of :client, :if => :validate_client
-      validates_numericality_of :contingency,  :only_integer => true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => 'input numbers from 0-100', :if => :validate_contingency
+      validates_numericality_of :contingency,  :only_integer => true, :allow_nil => true,
+                                                     :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, 
+                                                     :message => 'should only be from 0 to 100'
       before_save :validate_dates
 
     end

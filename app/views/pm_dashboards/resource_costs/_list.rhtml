@@ -55,6 +55,6 @@
 </script>
 
 <% content_for :header_tags do %>
-  <%= stylesheet_link_tag 'facebox' %>
-  <%= javascript_include_tag 'facebox.js' %>
+  <%= stylesheet_link_tag 'facebox', :plugin => 'facebox_render' %>
+  <%= javascript_include_tag 'facebox.js', :plugin => 'facebox_render' %>
 <% end %>

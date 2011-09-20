@@ -54,7 +54,6 @@ class PmDashboardsController < ApplicationController
       @project = Project.find(params[:project_id])
       @project.attributes = params[:project]
       @proj_team = @project.members.project_team
-      @project.validate_contingency = true
       if @project.save
         render(:update) { |page| page.reload }
       else

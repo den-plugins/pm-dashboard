@@ -132,6 +132,8 @@ en:
   field_end_date: End Date
   field_resource_allocation: Resource Allocation
   
+  field_contingency: Contingency Percentage
+  
   text_hello: Hello {{name}},
   text_update: An update has been made to {{feature}} {{ref_number}}
   text_new: You are the owner of {{feature}} {{ref_number}}
