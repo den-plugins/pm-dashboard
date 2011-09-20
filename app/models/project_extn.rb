@@ -9,6 +9,8 @@ module ProjectExtn
     # Same as typing in the class
     base.class_eval do
       unloadable # Send unloadable so it will not be unloaded in development
+      attr_accessor :validate_contingency, :validate_client
+      
       has_many :assumptions, :dependent => :destroy, :order => "ref_number ASC"
       has_many :pm_dashboard_issues, :dependent => :destroy, :order => "ref_number ASC"
       has_many :risks, :dependent => :destroy, :order => "ref_number ASC"
@@ -16,7 +18,8 @@ module ProjectExtn
       has_many :weeks
       
       validates_presence_of :description
-      validates_numericality_of :contingency,  :only_integer => true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => 'input numbers from 0-100'
+      validates_presence_of :client, :if => :validate_client
+      validates_numericality_of :contingency,  :only_integer => true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :message => 'input numbers from 0-100', :if => :validate_contingency
       before_save :validate_dates
 
     end
@@ -32,11 +35,6 @@ module ProjectExtn
         pm = project.members.find_by_user_id(id)
         pm.name
       end
-    end
-
-    def validate_client(client)
-      errors.add :client, :cant_be_blank if client.empty?
-      client.empty?
     end
     
     def update_days_overdue

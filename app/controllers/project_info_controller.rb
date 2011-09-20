@@ -5,29 +5,8 @@ class ProjectInfoController < ApplicationController
 
   def update
     if request.post? and !request.xhr?
-      if @project.validate_client(params[:project][:client]).eql?(false) and @project.update_attributes(params[:project])
-#        if params[:project][:planned_start_date] and params[:project][:planned_end_date]
-#          if !@project.weeks.empty?
-#            @project.weeks.each do |w|
-#              @week = Week.find(w.id)
-#              @week.destroy
-#              puts "yeah"
-#            end
-#          end
-#          puts "oh"
-#          total_weeks = get_weeks(@project.planned_start_date, @project.planned_end_date)
-#          week_start = @project.planned_start_date
-#          week_start -= 1.day until week_start.wday.eql? 1
-#          for i in 0 .. total_weeks
-#            week_end = (i.eql? total_weeks ? @project.planned_end_date : (week_start + 4.days))
-#            @weeks = Week.new
-#            @weeks.project_id = @project.id
-#            @weeks.from = (i.zero? ? @project.planned_start_date : week_start)
-#            @weeks.to = week_end
-#            @weeks.save
-#            week_start = week_end + 3.days
-#          end
-#        end
+      @project.validate_client = true
+      if @project.update_attributes(params[:project])
         redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
       else
         render :template => "pm_dashboards/project_info/edit_with_error"

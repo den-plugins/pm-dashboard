@@ -54,6 +54,7 @@ class PmDashboardsController < ApplicationController
       @project = Project.find(params[:project_id])
       @project.attributes = params[:project]
       @proj_team = @project.members.project_team
+      @project.validate_contingency = true
       if @project.save
         render(:update) { |page| page.reload }
       else
@@ -88,8 +89,6 @@ class PmDashboardsController < ApplicationController
   end
 
   def set_roles_pos(stakeholder_roles, proj_team_roles, proj_team_positions)
-    #----generate default data for positions and roles------
-    #----so naughty :P--------------------------------------
 
     stakeholder_roles.each do |r|
       @role = PmRole.find_by_name(r)
@@ -115,7 +114,6 @@ class PmDashboardsController < ApplicationController
       end
     end
 
-    #-------------------------------------------------------
   end
   
 end
