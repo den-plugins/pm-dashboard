@@ -5,9 +5,9 @@
 %>
 
 <% unless weeks.nil? %>
-  <div id='resource_cost_weekly' class='resource_cost_table_container' >
+  <div id='resource_cost_weekly' class='resource_cost_table_container' style="width: <%= (weeks + 1) * 323 %>px">
     <% for i in 0 .. weeks %>
-      <div class='floating_table' >
+      <div class='floating_table' style=" width: 323px">
       <table class='list'>
         <tr>
           <% action = 'new' %>

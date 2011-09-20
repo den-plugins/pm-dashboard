@@ -3,7 +3,7 @@
 <% per_column, @bac_hours, @bac_amount = {}, 0, 0 %>
 
 <% unless months.nil? %>
-  <div id='resource_cost_monthly' class='resource_cost_table_container' >
+  <div id='resource_cost_monthly' class='resource_cost_table_container' style="width: <%= months.count * 150 %>px">
     <% months.each do |m| %>
       <% start_range = (start_date.month.eql?(m) ? start_date : (start_date + (m - start_date.month).month).beginning_of_month ) %>
       <% end_range = (end_date.month.eql?(m) ? end_date : start_range.end_of_month ) %>

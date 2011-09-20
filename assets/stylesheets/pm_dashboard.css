@@ -117,13 +117,13 @@ table#resource_costs tr td {
 }
 
 .resource_cost_table_container {
-  margin-left: 3px;
-  width: 1000%;
+  margin-left: 1px;
 }
 
 .floating_table {
   float: left;
   display: inline-block;
+  table-layout: fixed;
 }
 
 .list.with_width {
