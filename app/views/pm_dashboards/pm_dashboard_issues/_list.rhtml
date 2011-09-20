@@ -20,7 +20,7 @@
 
     <% @issues.each do |issue| %>
       <tr class=<%= cycle('odd', 'even') %> >
-        <td><%= issue.key_issue %></td>
+        <td><%= image_tag('true.png') if issue.key_issue %></td>
         <td><%= issue.ref_number %></td>
         <td><%= issue.env %></td>
         <td><%= issue.created_on %></td>
