@@ -1,9 +1,9 @@
 class ReferenceGenerator
   class << self
     
-    def generate(object, pid)
+    def generate(object, pid, char = nil)
       begin
-        object.class.to_s.chars.first + "%0.5d" % pid
+        (char ? char : object.class.to_s.chars.first) + "%0.5d" % pid
       rescue Exception => e
       end
     end
