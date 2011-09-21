@@ -1,4 +1,4 @@
-<table id="milestone_plans_list" class="list">
+<table class="list" border=1>
   <tr>
     <th>Version Name</th>
     <th>Description</th>
@@ -6,16 +6,22 @@
     <th>Original Date</th>
     <th>Start Date</th>
     <th>Effective Date</th>
-  <th>
+  	<th></th>
+  </tr>
   <% @versions.each do |t| %>
 	  <tr class="<%= cycle('even', 'odd') %>">
 		  <td><em><%= t.name %></em></td>
-		  <td><%= t.description %></td>
+		  <td><%= h t.description %></td>
 		  <td><%= t.wiki_page_title %></td>
       <td><%= t.original_date %></td>
       <td><%= t.started_date %></td>
       <td><%= t.effective_date %></td>
-		  <td><%= link_to image_tag('edit.png'), :controller => 'milestone_plans', :action => 'update', :project_id => @project, :version_id => t  %></td>
+		  <th>
+		  	<%= link_to image_tag('edit.png'), :controller => 'milestone_plans', :action => 'update', :project_id => @project, :version_id => t  %>
+		  	<%= link_to image_tag('delete.png'), {:controller => 'milestone_plans', :action => 'destroy', :project_id => @project, :version_id => t}, :confirm => "Are you sure?"  %>
+		  </th>
     </tr>
   <% end %>
 </table>
+
+<%= link_to l(:button_create), {:controller => :milestone_plans, :action => :add, :project_id => @project } %>

@@ -4,15 +4,15 @@
 <table class="box" align="center" style="width:500px">
 	<tr>
 		<th>Version Name:</th>
-		<td><em><%= @version.name %></em></td>
+		<td><em><%= f.text_field :name %></em></td>
 	</tr>
 	<tr>
 		<th>Description:</th>
-		<td><%= @version.description %></td>
+		<td><%= f.text_field :description %></td>
 	</tr>
 	<tr>
 		<th><b>Wiki Page:</b></th>
-		<td><%= @version.wiki_page_title %></td>
+		<td><%= f.text_field :wiki_page_title %></td>
 	</tr>
 	<tr>
 		<th>Original Date:</th>
