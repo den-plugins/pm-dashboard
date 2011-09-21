@@ -1,8 +1,10 @@
-
 <h2>Milestone Entry</h2>
+<%= error_messages_for 'version' %>
 
 <div class="box">
-<% form_for :version, @milestone, :url => {:controller => 'milestone_plans', :action => 'add', :project_id => @project, :milestone_id => @milestone, :release_id => params[:release_id]} do |f| %>
-	<%= render :partial => 'pm_dashboards/milestone_plans/form', :locals => { :button_label => "Create", :project => @project, :release_id => params[:release_id], :f => f } %>
-<% end %>
+	<% form_for :version, @milestone, :url => {:controller => 'milestone_plans', :action => 'add', :project_id => @project, :milestone_id => @milestone, :release_id => params[:release_id]} do |f| %>
+		
+		<%= render :partial => 'pm_dashboards/milestone_plans/form', :locals => { :button_label => l(:button_create), :project => @project, :f => f } %>
+
+	<% end %>
 </div>
