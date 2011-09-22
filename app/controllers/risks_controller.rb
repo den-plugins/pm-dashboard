@@ -14,7 +14,7 @@ class RisksController < ApplicationController
       @risk = @project.risks.create(params[:risk])
       if @risk.save
         flash[:notice] = l(:notice_successful_create)
-        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :risks
+        redirect_to_risks
       else
         render :template => "pm_dashboards/risks/add"
       end
@@ -27,7 +27,7 @@ class RisksController < ApplicationController
     else
       if @risk.update_attributes(params[:risk])
         flash[:notice] = l(:notice_successful_update)
-        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :risks
+        redirect_to_risks
       else
         render :template => "pm_dashboards/risks/edit"
       end
@@ -36,7 +36,7 @@ class RisksController < ApplicationController
     
   def destroy
     if @risk.destroy
-      redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :risks
+      redirect_to_risks
     end
   end
     
@@ -51,5 +51,9 @@ class RisksController < ApplicationController
     @risk = Risk.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       render_404
+  end
+  
+  def redirect_to_risks
+    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :risks
   end
 end

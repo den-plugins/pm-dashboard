@@ -14,7 +14,7 @@ class AssumptionsController < ApplicationController
       @assumption = @project.assumptions.create(params[:assumption])
       if @assumption.save
         flash[:notice] = l(:notice_successful_create)
-        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :assumptions
+        redirect_to_assumptions
       else
         render :template => "pm_dashboards/assumptions/add"
       end
@@ -27,7 +27,7 @@ class AssumptionsController < ApplicationController
     else
       if @assumption.update_attributes(params[:assumption])
         flash[:notice] = l(:notice_successful_update)
-        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :assumptions
+        redirect_to_assumptions
       else
         render :template => "pm_dashboards/assumptions/edit"
       end
@@ -36,7 +36,7 @@ class AssumptionsController < ApplicationController
   
   def destroy
     if @assumption.destroy
-      redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :assumptions
+      redirect_to_assumptions
     end
   end
     
@@ -51,5 +51,9 @@ class AssumptionsController < ApplicationController
     @assumption = Assumption.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       render_404
+  end
+  
+  def redirect_to_assumptions
+    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :assumptions
   end
 end

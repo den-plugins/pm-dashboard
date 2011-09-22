@@ -7,7 +7,7 @@ class ProjectInfoController < ApplicationController
     if request.post? and !request.xhr?
       @project.validate_client = true
       if @project.update_attributes(params[:project])
-        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+        redirect_to_info
       else
         render :template => "pm_dashboards/project_info/edit_with_error"
       end
@@ -31,7 +31,7 @@ class ProjectInfoController < ApplicationController
       @project = @member.project
 
       if @member.update_attributes(params[:member])
-        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+        redirect_to_info
       end
     else 
       if params[:classification]
@@ -69,7 +69,7 @@ class ProjectInfoController < ApplicationController
         member.update_attributes(params[:classification].to_sym => false)
       end
     end
-    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+    redirect_to_info
   end
 
 #  "#{params[:classification].downcase.sub(' ', '_')}_#{@project.id}"
@@ -80,7 +80,7 @@ class ProjectInfoController < ApplicationController
       @project = @member.project
 
       if @member.update_attributes(params[:member])
-        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+        redirect_to_info
       end
     end
   end
@@ -103,7 +103,7 @@ class ProjectInfoController < ApplicationController
       :classification => params[:classification].to_sym}}}
     else
       if @member.update_attributes(params[:member])
-        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+        redirect_to_info
       end
     end
 
@@ -123,7 +123,7 @@ class ProjectInfoController < ApplicationController
       @roles = PmRole.find(:all, :conditions => "for_stakeholder = #{bool}") #Roles created by PM
       @member.update_attributes(:pm_pos_id => @position.id)
     end
-#    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+#    redirect_to_info
     if params[:no_accnt]
       render(:update) {|page| page.replace_html "tr_stakeholder_#{@member.id}", 
           {:partial => "pm_dashboards/project_info/stakeholder_edit", 
@@ -158,7 +158,7 @@ class ProjectInfoController < ApplicationController
           {:partial => "pm_dashboards/project_info/pm_member_edit", 
            :locals => {:member => @member, :classification => params[:classification].to_sym}}}
     end
-#    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+#    redirect_to_info
   end
 
 #  def update_remarks
@@ -171,6 +171,10 @@ private
     @project = Project.find(params[:project_id])
     rescue ActiveRecord::RecordNotFound
       render_404
+  end
+  
+  def redirect_to_info
+    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
   end
 
 end

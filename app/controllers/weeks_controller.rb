@@ -11,7 +11,7 @@ class WeeksController < ApplicationController
       @week.errors.each { |attr, message| err_msg << "#{message}" }
       flash[:error] = err_msg.join("<br />")
     end
-    redirect_to :controller => 'pm_dashboards', :action => 'index', :tab => 'resource_costs', :project_id => @project
+    redirect_to_resource_costs
   end
 
   def edit
@@ -22,12 +22,16 @@ class WeeksController < ApplicationController
        @week.errors.each { |attr, message| err_msg << "#{message}" }
        flash[:error] = err_msg.join("<br />")
     end
-    redirect_to :controller => 'pm_dashboards', :action => 'index', :tab => 'resource_costs', :project_id => @project
+    redirect_to_resource_costs
   end
 
 private
   def get_project
     @project = Project.find(params[:project_id])
+  end
+  
+  def redirect_to_resource_costs
+    redirect_to :controller => 'pm_dashboards', :action => 'index', :tab => 'resource_costs', :project_id => @project
   end
 
 end

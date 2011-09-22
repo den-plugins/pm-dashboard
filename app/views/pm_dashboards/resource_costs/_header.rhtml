@@ -16,7 +16,7 @@
       <td><span>Budget Hours (BAC)</span><%= @bac_hours %> hours</td>
       <td></td>
       <td><span>Contingency %</span>
-        <% remote_form_for(:project, @project, :url => {:controller => 'pm_dashboards', :action => 'edit_project', :project_id => @project }) do |f| %>
+        <% form_for(:project, @project, :url => {:controller => 'pm_dashboards', :action => 'edit_project', :project_id => @project }) do |f| %>
           <%= image_submit_tag('true.png', :class => 'contextual', :id => 'contingency_submit', :style => 'display: none;') %>
           <%= f.text_field :contingency, :size => 2, :value => (@project.contingency ? @project.contingency : 0.0), 
                                         :onclick => "jQuery('#contingency_submit').show();" %>%

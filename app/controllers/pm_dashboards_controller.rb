@@ -55,7 +55,7 @@ class PmDashboardsController < ApplicationController
       @project.attributes = params[:project]
       @proj_team = @project.members.project_team
       if @project.save
-        render(:update) { |page| page.reload }
+        redirect_to :action => :index, :project_id => @project, :tab => 'resource_costs'
       else
         render :update do |page|
           page.replace_html :resource_costs_header , :partial => 'pm_dashboards/resource_costs/header'
