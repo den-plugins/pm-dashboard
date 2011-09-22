@@ -3,7 +3,7 @@
 <h2> Project Info </h2>
 <div id="info_<%= @project.id %>">
 
-<div class="contextual">
+<div class="contextual info_edit">
     <%= link_to_remote "Update", {:url => { :controller => 'project_info' , 
                                   :action => 'update', :project_id => @project}, 
                                   :update => "info_#{@project.id}", :complete => "new Effect.Highlight('info_#{@project.id}')"}, 

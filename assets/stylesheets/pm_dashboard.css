@@ -199,3 +199,13 @@ div.indent p{
   text-align: middle;
   padding: 4px;
 }
+
+.contextual.info_edit{
+  border: 1px solid #e4e4e4;
+  padding: 2px;
+  border-bottom: none;
+  background-color: #e4e4e4;
+  -moz-border-radius: 3px 3px 0px 0px;
+  -webkit-border-radius: 3px 3px 0px 0px;
+  border-radius: 3px 3px 0px 0px;
+}

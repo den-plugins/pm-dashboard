@@ -22,9 +22,10 @@
               <% actual_week_start, week_end = @week.from, @week.to %>
             <% end %>
             <% days << (actual_week_start .. week_end) %>
+            <% current_week = actual_week_start.cweek %>
             <span>
               <% form_for :week, @week,
-                           :url => { :controller => 'weeks', :action => action , :project_id => @project.id, :id => @week },
+                           :url => { :controller => 'weeks', :action => action , :project_id => @project.id, :id => @week, :inclosed_week => current_week },
                            :html => {:id => "week_#{i}_form"} do |f| %>
                 <%= f.text_field :from, :size => 8, :id => "week_#{i}_from", :value => actual_week_start %>
                 <%= calendar_for("week_#{i}_from") %>

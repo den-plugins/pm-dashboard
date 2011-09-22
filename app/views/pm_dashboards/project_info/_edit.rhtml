@@ -3,7 +3,7 @@
 
 <%= error_messages_for 'project' %>
 
-<div class="contextual">
+<div class="contextual info_edit">
   <%= link_to "Cancel", {:controller => 'pm_dashboards', :action => 'index', :project_id => @project, :tab => :info}, :class => 'icon icon-cancel' %>
   |
   <%= link_to "Save", "#", :onclick => "$('proj_info_form').submit({
