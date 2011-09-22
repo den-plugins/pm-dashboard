@@ -7,7 +7,7 @@ class AddNewFieldsToProject < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :projects, :scope
+    remove_column :projects, :client
     remove_column :projects, :planned_start_date
     remove_column :projects, :planned_end_date
   end
