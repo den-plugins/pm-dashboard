@@ -44,7 +44,10 @@ class PmDashboardsController < ApplicationController
   
   def update_resource_list
     if params[:view] or params[:rate]
-      render(:update) {|p| p.replace_html "resource_members_content", :partial => 'pm_dashboards/resource_costs/list' }
+      render(:update) do |p| 
+        p.replace_html "resource_members_content", :partial => 'pm_dashboards/resource_costs/list' 
+#        p.before "Element.show('ajax-indicator')"
+      end
     end
   end
   
