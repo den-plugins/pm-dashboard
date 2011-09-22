@@ -1,11 +1,13 @@
-<% weeks = get_weeks(@project.planned_start_date, @project.planned_end_date) %>
-<% week_start = @project.planned_start_date %>
-<% days = [] %>
+<% weeks = get_weeks(@project.planned_start_date, @project.planned_end_date)
+       week_start = @project.planned_start_date
+       days, per_column = [], {}
+       @bac_hours, @bac_amount = 0, 0
+%>
 
 <% unless weeks.nil? %>
-  <div id='resource_cost_weekly' class='resource_cost_table_container' >
+  <div id='resource_cost_weekly' class='resource_cost_table_container' style="width: <%= (weeks + 1) * 323 %>px">
     <% for i in 0 .. weeks %>
-      <div class='floating_table' >
+      <div class='floating_table' style=" width: 323px">
       <table class='list'>
         <tr>
           <% action = 'new' %>
@@ -20,9 +22,10 @@
               <% actual_week_start, week_end = @week.from, @week.to %>
             <% end %>
             <% days << (actual_week_start .. week_end) %>
+            <% current_week = actual_week_start.cweek %>
             <span>
               <% form_for :week, @week,
-                           :url => { :controller => 'weeks', :action => action , :project_id => @project.id, :id => @week },
+                           :url => { :controller => 'weeks', :action => action , :project_id => @project.id, :id => @week, :inclosed_week => current_week },
                            :html => {:id => "week_#{i}_form"} do |f| %>
                 <%= f.text_field :from, :size => 8, :id => "week_#{i}_from", :value => actual_week_start %>
                 <%= calendar_for("week_#{i}_from") %>
@@ -49,12 +52,24 @@
           <td class='cost'><%= cost.to_f %></td>
         <% end %>
         </tr>
-        <% reset_cycle('members') %>
-        
+        <%  reset_cycle('members')
+                @bac_hours += (total_days * 8)
+                @bac_amount += total_cost
+                total_with_contingency = (total_cost * @project.contingency.to_f)/100
+                actual_total = total_cost + total_with_contingency
+                cumulative_total = get_cumulative_total(per_column, actual_total).to_f
+                per_column[i] = [total_cost, total_with_contingency, actual_total, cumulative_total]
+        %>
+          
         <tr>
           <th style='text-align: left'><%= total_days %></th>
           <th class='cost'><%= total_cost.to_f %></th>
         </tr>
+        
+       <tr></tr>
+       <tr></tr>
+        <%= render :partial => 'pm_dashboards/resource_costs/footer', :locals => {:per_column => per_column[i]} %>
+        
       </table>
       </div>
     <% end %>

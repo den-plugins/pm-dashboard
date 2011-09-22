@@ -31,7 +31,7 @@ class PmDashboardIssue < ActiveRecord::Base
     else
       self.pid = 1
     end
-    self.ref_number = "I" + "%0.5d" % pid
+    self.ref_number = ReferenceGenerator.generate(self, pid, "I")
   end
 
   def update_days_overdue

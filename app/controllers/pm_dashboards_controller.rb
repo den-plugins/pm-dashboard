@@ -48,6 +48,25 @@ class PmDashboardsController < ApplicationController
     end
   end
   
+  # Edit @project
+  def edit_project
+    if request.post?
+      @project = Project.find(params[:project_id])
+      @project.attributes = params[:project]
+      @proj_team = @project.members.project_team
+      if @project.save
+        redirect_to :action => :index, :project_id => @project, :tab => 'resource_costs'
+      else
+        render :update do |page|
+          page.replace_html :resource_costs_header , :partial => 'pm_dashboards/resource_costs/header'
+        end
+      end
+    end
+    rescue ActiveRecord::RecordNotFound
+      render_404
+  end
+  
+  
   private
   
   def get_id
@@ -69,8 +88,6 @@ class PmDashboardsController < ApplicationController
   end
 
   def set_roles_pos(stakeholder_roles, proj_team_roles, proj_team_positions)
-    #----generate default data for positions and roles------
-    #----so naughty :P--------------------------------------
 
     stakeholder_roles.each do |r|
       @role = PmRole.find_by_name(r)
@@ -96,7 +113,6 @@ class PmDashboardsController < ApplicationController
       end
     end
 
-    #-------------------------------------------------------
   end
   
 end

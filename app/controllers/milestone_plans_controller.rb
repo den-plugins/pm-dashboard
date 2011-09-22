@@ -1,29 +1,21 @@
 class MilestonePlansController < ApplicationController
 
-	before_filter :get_project, :only => [:add, :update, :destroy, :destroy_release, :add_release]
-  
+	before_filter :get_project, :only => [:add, :update, :destroy]
+  before_filter :get_version, :only => [ :update, :destroy]
+
   def index
 
   end
 
-  def add_release
-    @release = Release.new(:project_id => @project.id)
-    @release.save
-
-    flash[:notice] = l(:notice_successful_create)
-    redirect_to_milestone_plans
-  end
-
   def add
   	if request.get?
-  		@milestone = Milestone.new
+  		@version = Version.new
   		render_milestone_plans('add')
   	else
-  		@release = Release.find(params[:release_id])
-  		@milestone = Milestone.new(params[:milestone])
-      @milestone.release_id = @release.id
+  		@version = Version.new(params[:version])
+      @version.project_id = @project.id
 
-      if @milestone.save
+      if @version.save
         flash[:notice] = l(:notice_successful_create)
         redirect_to_milestone_plans
       else
@@ -48,15 +40,8 @@ class MilestonePlansController < ApplicationController
   end
 
   def destroy
-  	@milestone = Milestone.find(params[:milestone_id])
-    if @milestone.destroy
-      redirect_to_milestone_plans
-    end
-  end
-
-  def destroy_release
-  	@release = Release.find(params[:release_id])
-    if @release.destroy
+  	@version = Version.find(params[:version_id])
+    if @version.destroy
       redirect_to_milestone_plans
     end
   end
@@ -68,6 +53,12 @@ private
 		rescue ActiveRecord::RecordNotFound
 			render 404
 	end
+
+	def get_version
+		@version = Version.find(params[:version_id])
+		rescue ActiveRecord::RecordNotFound
+			render 404
+	end	
 
 	def redirect_to_milestone_plans
 		redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :milestone_plans

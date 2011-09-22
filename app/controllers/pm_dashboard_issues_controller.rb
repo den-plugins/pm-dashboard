@@ -16,7 +16,7 @@ class PmDashboardIssuesController < ApplicationController
     else
       @issue = @project.pm_dashboard_issues.create(params[:issue])
       if @issue.save
-        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :issues
+        redirect_to_project_issues
       else
         render :template => "pm_dashboards/pm_dashboard_issues/add"
       end
@@ -28,7 +28,7 @@ class PmDashboardIssuesController < ApplicationController
       render :template => "pm_dashboards/pm_dashboard_issues/edit"
     else
       if @issue.update_attributes(params[:issue])
-        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :issues
+        redirect_to_project_issues
       else
         render :template => "pm_dashboards/pm_dashboard_issues/edit"
       end
@@ -37,7 +37,7 @@ class PmDashboardIssuesController < ApplicationController
 
   def delete
     if @issue.destroy
-      redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :issues
+      redirect_to_project_issues
     end
   end
 
@@ -47,5 +47,9 @@ class PmDashboardIssuesController < ApplicationController
 
   def get_issue
     @issue = PmDashboardIssue.find(params[:id])
+  end
+  
+  def redirect_to_project_issues
+    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :issues
   end
 end

@@ -25,7 +25,7 @@
   </thead>
   <% @risks.each do |risk| %>
       <tr class="<%= cycle('odd', 'even') %>">
-      <td><%= risk.key_risk %></td>
+      <td><%= image_tag('true.png') if risk.key_risk %></td>
       <td><%= risk.ref_number %></td>
       <td><%= risk.env %></td>
       <td><%= risk.created_on.to_date %></td>

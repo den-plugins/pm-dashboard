@@ -5,30 +5,9 @@ class ProjectInfoController < ApplicationController
 
   def update
     if request.post? and !request.xhr?
-      if @project.validate_client(params[:project][:client]).eql?(false) and @project.update_attributes(params[:project])
-#        if params[:project][:planned_start_date] and params[:project][:planned_end_date]
-#          if !@project.weeks.empty?
-#            @project.weeks.each do |w|
-#              @week = Week.find(w.id)
-#              @week.destroy
-#              puts "yeah"
-#            end
-#          end
-#          puts "oh"
-#          total_weeks = get_weeks(@project.planned_start_date, @project.planned_end_date)
-#          week_start = @project.planned_start_date
-#          week_start -= 1.day until week_start.wday.eql? 1
-#          for i in 0 .. total_weeks
-#            week_end = (i.eql? total_weeks ? @project.planned_end_date : (week_start + 4.days))
-#            @weeks = Week.new
-#            @weeks.project_id = @project.id
-#            @weeks.from = (i.zero? ? @project.planned_start_date : week_start)
-#            @weeks.to = week_end
-#            @weeks.save
-#            week_start = week_end + 3.days
-#          end
-#        end
-        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+      @project.validate_client = true
+      if @project.update_attributes(params[:project])
+        redirect_to_info
       else
         render :template => "pm_dashboards/project_info/edit_with_error"
       end
@@ -52,7 +31,7 @@ class ProjectInfoController < ApplicationController
       @project = @member.project
 
       if @member.update_attributes(params[:member])
-        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+        redirect_to_info
       end
     else 
       if params[:classification]
@@ -90,7 +69,7 @@ class ProjectInfoController < ApplicationController
         member.update_attributes(params[:classification].to_sym => false)
       end
     end
-    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+    redirect_to_info
   end
 
 #  "#{params[:classification].downcase.sub(' ', '_')}_#{@project.id}"
@@ -101,7 +80,7 @@ class ProjectInfoController < ApplicationController
       @project = @member.project
 
       if @member.update_attributes(params[:member])
-        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+        redirect_to_info
       end
     end
   end
@@ -124,7 +103,7 @@ class ProjectInfoController < ApplicationController
       :classification => params[:classification].to_sym}}}
     else
       if @member.update_attributes(params[:member])
-        redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+        redirect_to_info
       end
     end
 
@@ -144,7 +123,7 @@ class ProjectInfoController < ApplicationController
       @roles = PmRole.find(:all, :conditions => "for_stakeholder = #{bool}") #Roles created by PM
       @member.update_attributes(:pm_pos_id => @position.id)
     end
-#    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+#    redirect_to_info
     if params[:no_accnt]
       render(:update) {|page| page.replace_html "tr_stakeholder_#{@member.id}", 
           {:partial => "pm_dashboards/project_info/stakeholder_edit", 
@@ -179,7 +158,7 @@ class ProjectInfoController < ApplicationController
           {:partial => "pm_dashboards/project_info/pm_member_edit", 
            :locals => {:member => @member, :classification => params[:classification].to_sym}}}
     end
-#    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+#    redirect_to_info
   end
 
 #  def update_remarks
@@ -192,6 +171,10 @@ private
     @project = Project.find(params[:project_id])
     rescue ActiveRecord::RecordNotFound
       render_404
+  end
+  
+  def redirect_to_info
+    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
   end
 
 end

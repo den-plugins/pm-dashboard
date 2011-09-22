@@ -12,10 +12,10 @@ class StakeholdersController < ApplicationController
       @stakeholder = @project.stakeholders.create(params[:stakeholder])
     rescue
       flash[:error] = "Missing required fields in creating stakeholder. Record not saved."
-      redirect_to :controller => 'pm_dashboards', :action => 'index', :project_id => @project, :tab => :info
+      redirect_to_info
     else
       flash[:notice] = "Successful creation of Stakeholder."
-      redirect_to :controller => 'pm_dashboards', :action => 'index', :project_id => @project, :tab => :info
+      redirect_to_info
     end
   end
 
@@ -39,7 +39,7 @@ class StakeholdersController < ApplicationController
   def remove
     @stakeholder = Stakeholder.find(params[:id])
     @project.stakeholders.delete(@stakeholder)
-    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+    redirect_to_info
   end
 
 private
@@ -47,6 +47,10 @@ private
     @project = Project.find(params[:project_id])
     rescue ActiveRecord::RecordNotFound
       render_404
+  end
+  
+  def redirect_to_info
+    redirect_to :controller => 'pm_dashboards', :action => 'index', :project_id => @project, :tab => :info
   end
   
 end

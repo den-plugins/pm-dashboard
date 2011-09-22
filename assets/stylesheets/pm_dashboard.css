@@ -117,13 +117,13 @@ table#resource_costs tr td {
 }
 
 .resource_cost_table_container {
-  margin-left: 3px;
-  width: 1000%;
+  margin-left: 1px;
 }
 
 .floating_table {
   float: left;
   display: inline-block;
+  table-layout: fixed;
 }
 
 .list.with_width {
@@ -177,8 +177,8 @@ div.indent p{
     text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7);
     font-size: 14px;
     font-weight: bolder;
-    background-image: -moz-linear-gradient(top, #eee, #ccc);
-    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#ccc));
+/*    background-image: -moz-linear-gradient(top, #eee, #ccc);*/
+/*    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#ccc));*/
    }
    div.main_content{
     position: relative;
@@ -198,4 +198,14 @@ div.indent p{
   border: 1px solid #989898;
   text-align: middle;
   padding: 4px;
+}
+
+.contextual.info_edit{
+  border: 1px solid #e4e4e4;
+  padding: 2px;
+  border-bottom: none;
+  background-color: #e4e4e4;
+  -moz-border-radius: 3px 3px 0px 0px;
+  -webkit-border-radius: 3px 3px 0px 0px;
+  border-radius: 3px 3px 0px 0px;
 }

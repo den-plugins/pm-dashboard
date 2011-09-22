@@ -1,15 +1,4 @@
 PM Dashboard Plugin
-
-August 8, 2011
-
-  Features:
-    = Risks Tab (list, add, update, delete)
-
-  ToDo:
-    = risk association with issues and assumptions
-    = summary (index page, assumptions tab)
-    = autocalculation of days_overdue (risks)
-    = fix view for 'related risks' in add/update of assumption
               
 August 9, 2011
 
@@ -38,12 +27,6 @@ September 14, 2011
     = the manager has the option to view the resource cost forecast either Weekly or Monthly (partial stage)
     = the manager can also view the resource cost forecast using SOW rate or internal rate
     
-  In-Progress:
-    = each resource name is clickable so that PM can determine resource's project allocation. Once clicked, a pop-up will appear to enable user to add/edit resource's project allocation
-  
-  ToDo:
-    = weekly and monthly view of resource cost forecast
-    
   Dependencies:
     = install the facebox_render plugin:
         = run from den core: script/plugin install git://github.com/ihower/facebox_render.git
@@ -58,3 +41,8 @@ Septermber 16, 2011
   Todo:
     = investigate on this error: The :dependent option expects either :destroy, :delete_all, or :nullify (:destroy_all)
         = temp. sol'n, replaced 'destroy_all' with 'nullify' (rails v=2.3.5)
+        
+Septermber 19, 2011
+
+  Todo:
+    = make sure that you have facebox_render javascripts and images in your public folder in your DEN core.

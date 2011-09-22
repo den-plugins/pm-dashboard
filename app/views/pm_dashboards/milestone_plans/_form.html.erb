@@ -1,37 +1,54 @@
 		<%#= collection_select(:milestone, :release_id, @options , :id, :id, :prompt => true ) %>
 		<%#= f.select(:release_id, @options.collect {|p| [ Release.release_option, p.id] }, {:prompt => true}) %>
-<div>
 
-<table>
+<table class="box" align="center" style="width:500px">
 	<tr>
-		<th>Version Name</th>
-		<td><em><%= @version.name %></em></td>
+		<th>Version Name:</th>
+		<td><em><%= f.text_field :name %></em></td>
 	</tr>
 	<tr>
-		<th>Description</th>
-		<td><%= @version.description %></td>
+		<th>Description:</th>
+		<td><%= f.text_area :description, :rows => 10 %></td>
 	</tr>
 	<tr>
-		<th><b>Wiki Page</b></th>
-		<td><%= @version.wiki_page_title %></td>
+		<th><b>Wiki Page:</b></th>
+		<td><%= f.text_field :wiki_page_title %></td>
 	</tr>
 	<tr>
-		<th>Original Date</th>
+		<th>Original Date:</th>
     <td><%= f.text_field :original_date, :size => 10 %><%= calendar_for('version_original_date') %></td>
   </tr>
   <tr>
-  	<th>Start Date</th>
+  	<th>Start Date:</th>
     <td><%= f.text_field :started_date, :size => 10 %><%= calendar_for('version_started_date') %></td>
   </tr>
   <tr>
-  	<th>Effective Date</th>
+  	<th>Effective Date:</th>
     <td><%= f.text_field :effective_date, :size => 10 %><%= calendar_for('version_effective_date') %></td>
     </tr>
   </tr>
+  <tr>
+  	<th>Choose Version Type:</th>
+  	<td>
+  		<div>
+  			<%= f.radio_button :version_type, "0", :checked => "checked" %>None<br>
+  			<%= f.radio_button :version_type, "1" %>Development Iteration<br>
+  			<%= f.radio_button :version_type, "2" %>Build Release<br>
+  		</div>
+  	</td>
+  </tr>
+  <tr>
+  	<th>State:</th>
+  	<td>
+  		<div>
+  			<%= select("version", "state", Milestone::STATES) %>
+  		</div>
+  	</td>
+  </tr>
 </table>
-</p>
 	<div>
 		<%= f.submit button_label %>
 		<%= link_to "Cancel", :controller => "pm_dashboards", :project_id => @project, :tab => "milestone_plans" %>
 	</div>
-</div>
+</p>
+
