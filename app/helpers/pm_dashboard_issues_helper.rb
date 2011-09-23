@@ -7,5 +7,10 @@ module PmDashboardIssuesHelper
       when 3; "red"
     end
   end
+  
+  def display_issues_average
+    average = @issues ? PmDashboardIssue.average(:impact, :conditions => ["project_id = ? AND date_close IS NULL", @project]) : 0
+    h("%0.3f" % average.to_f)
+  end
 
 end
