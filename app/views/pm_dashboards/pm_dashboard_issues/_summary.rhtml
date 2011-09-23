@@ -2,7 +2,7 @@
 <table class='pmsummary'>
 	<tr>
 	  <th><%= l(:label_issue_average) %></th>
-	  <td><%= "%0.3f" % (@issues ? PmDashboardIssue.average(:impact, :conditions => ["project_id = ? AND date_close IS NULL", @project]) : 0) %></td>
+	  <td><%= display_issues_average %></td>
 	</tr>
 	<tr>
 	  <th class='red'><%= l(:label_issue_impact_high) %></th>
