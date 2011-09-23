@@ -37,7 +37,7 @@ class PmDashboardsController < ApplicationController
 
     set_roles_pos @stakeholder_roles, @proj_team_roles, @proj_team_positions
     
-    @versions = Version.find_all_by_project_id(@project)
+    @versions = Version.find(:all, :conditions => ["project_id = ?", @project], :order => 'effective_date IS NULL, effective_date DESC')
     rescue ActiveRecord::RecordNotFound
       render_404
   end
@@ -46,7 +46,6 @@ class PmDashboardsController < ApplicationController
     if params[:view] or params[:rate]
       render(:update) do |p| 
         p.replace_html "resource_members_content", :partial => 'pm_dashboards/resource_costs/list' 
-#        p.before "Element.show('ajax-indicator')"
       end
     end
   end
@@ -58,7 +57,9 @@ class PmDashboardsController < ApplicationController
       @project.attributes = params[:project]
       @proj_team = @project.members.project_team
       if @project.save
-        redirect_to :action => :index, :project_id => @project, :tab => 'resource_costs'
+        render :update do |page|
+          page.redirect_to :action => :index, :project_id => @project, :tab => 'resource_costs'
+        end
       else
         render :update do |page|
           page.replace_html :resource_costs_header , :partial => 'pm_dashboards/resource_costs/header'
