@@ -1,5 +1,13 @@
 class MilestonePlansController < ApplicationController
 
+  helper :assumptions
+  helper :risks
+  helper :project_info
+  helper :pm_dashboard_issues
+  helper :resource_costs
+	helper :pm_dashboards
+	helper :scrums
+
 	before_filter :get_project, :only => [:add, :update, :destroy]
   before_filter :get_version, :only => [ :update, :destroy]
 
@@ -27,14 +35,14 @@ class MilestonePlansController < ApplicationController
   def update
   	@version = Version.find(params[:version_id])
 
-    if request.get?
-      render_milestone_plans('edit')
+    if request.xhr?
+      render :partial => "pm_dashboards/milestone_plans/edit"
     else
       if @version.update_attributes(params[:version])
         flash[:notice] = l(:notice_successful_update)
         redirect_to_milestone_plans
       else
-        render_milestone_plans('edit')
+        render_milestone_plans('_edit')
       end
     end
   end
@@ -42,6 +50,7 @@ class MilestonePlansController < ApplicationController
   def destroy
   	@version = Version.find(params[:version_id])
     if @version.destroy
+      flash[:notice] = l(:notice_successful_delete)
       redirect_to_milestone_plans
     end
   end
