@@ -3,6 +3,10 @@
 <table class="list" border=1>
 	<tr>
 		<td align = "right" colspan="20">
+		    <%#= link_to_remote l(:label_version_new), {:url => { :controller => :milestone_plans, 
+			                                  :action => :add, :project_id => @project}, 
+			                                  :update => "info_1", :complete => "new Effect.Highlight('info_1')"}, 
+			                                  :class => 'icon icon-add' %>
 			<%= link_to l(:label_version_new), {:controller => :milestone_plans, :action => :add, :project_id => @project }, :class => 'icon icon-add' %>
 		</td>
 	</tr>

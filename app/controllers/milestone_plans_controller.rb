@@ -42,7 +42,7 @@ class MilestonePlansController < ApplicationController
         flash[:notice] = l(:notice_successful_update)
         redirect_to_milestone_plans
       else
-        render_milestone_plans('_edit')
+        render :template => "pm_dashboards/milestone_plans/edit_with_error"
       end
     end
   end
