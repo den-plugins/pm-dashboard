@@ -7,34 +7,34 @@
 <% unless weeks.nil? %>
   <div id='resource_cost_weekly' class='resource_cost_table_container' style="width: <%= (weeks + 1) * 323 %>px">
     <% for i in 0 .. weeks %>
-      <div class='floating_table' style=" width: 323px">
+      <div class='floating_table' style=" width: 150px">
       <table class='list'>
         <tr>
-          <% action = 'new' %>
+          <%# action = 'new' %>
           <% week_start = week_start.monday %>
           <% week_end = (i.eql?(weeks)? @project.planned_end_date : (week_start + 4.days))  %>
           <% actual_week_start = (i.zero? ? @project.planned_start_date : week_start) %>
           <th height="40px">
-            w<%= i+1 %>
-            <% @week = @project.weeks.select {|w| w.from.cweek.eql?(actual_week_start.cweek) and w.to.cweek.eql?(week_end.cweek)}.first %>
-            <% if @week %>
-              <% action = 'edit' %>
-              <% actual_week_start, week_end = @week.from, @week.to %>
-            <% end %>
+            week <%= i+1 %>
+            <%# @week = @project.weeks.select {|w| w.from.cweek.eql?(actual_week_start.cweek) and w.to.cweek.eql?(week_end.cweek)}.first %>
+            <%# if @week %>
+              <%# action = 'edit' %>
+              <%# actual_week_start, week_end = @week.from, @week.to %>
+            <%# end %>
             <% days << (actual_week_start .. week_end) %>
             <% current_week = actual_week_start.cweek %>
-            <span>
-              <% form_for :week, @week,
+            <!-- <span>
+              <%# form_for :week, @week,
                            :url => { :controller => 'weeks', :action => action , :project_id => @project.id, :id => @week, :inclosed_week => current_week },
                            :html => {:id => "week_#{i}_form"} do |f| %>
-                <%= f.text_field :from, :size => 8, :id => "week_#{i}_from", :value => actual_week_start %>
-                <%= calendar_for("week_#{i}_from") %>
-                <%= "&raquo;" %>
-                <%= f.text_field :to, :size => 8, :id => "week_#{i}_to", :value => week_end %>
-                <%= calendar_for("week_#{i}_to") %>
-                <%= link_to image_tag('true.png'), "#", :onclick => "$('week_#{i}_form').submit()" %>
-              <% end %>
-            </span>
+                <%# f.text_field :from, :size => 8, :id => "week_#{i}_from", :value => actual_week_start %>
+                <%# calendar_for("week_#{i}_from") %>
+                <%# "&raquo;" %>
+                <%# f.text_field :to, :size => 8, :id => "week_#{i}_to", :value => week_end %>
+                <%# calendar_for("week_#{i}_to") %>
+                <%# link_to image_tag('true.png'), "#", :onclick => "$('week_#{i}_form').submit()" %>
+              <%# end %>
+            </span> -->
           </th>
           <% week_start += 1.week %>
           <th class='cost'>Cost</th>

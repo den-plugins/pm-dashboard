@@ -26,10 +26,10 @@
             <% week_start = week_start.monday %>
             <% week_end = (i.eql?(weeks)? end_range : (week_start + 4.days))  %>
             <% actual_week_start = (i.zero? ? start_range : week_start) %>
-              <% @week = @project.weeks.select {|w| w.from.cweek.eql?(actual_week_start.cweek) and w.to.cweek.eql?(week_end.cweek)}.first %>
-              <% if @week %>
-                <% actual_week_start, week_end = @week.from, @week.to %>
-              <% end %>
+              <%# @week = @project.weeks.select {|w| w.from.cweek.eql?(actual_week_start.cweek) and w.to.cweek.eql?(week_end.cweek)}.first %>
+              <%# if @week %>
+                <%# actual_week_start, week_end = @week.from, @week.to %>
+              <%# end %>
               <% days << (actual_week_start .. week_end) %>
             <% week_start += 1.week %>
             
