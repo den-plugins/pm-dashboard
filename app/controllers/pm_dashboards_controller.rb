@@ -38,7 +38,7 @@ class PmDashboardsController < ApplicationController
     set_roles_pos @stakeholder_roles, @proj_team_roles, @proj_team_positions
     
     @versions = Version.find(:all, :conditions => ["project_id = ?", @project], :order => 'effective_date IS NULL, effective_date DESC')
-    rescue ActiveRecord::RecordNotFound
+    rescue
       render_404
   end
   

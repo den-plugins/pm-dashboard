@@ -7,7 +7,10 @@
     <%= render :partial => 'pm_dashboards/resource_costs/list' %>
   </div>
 <% else %>
-  <p class="nodata"><%= l(:label_no_data) %></p>
+  <p class="nodata">
+    <%= l(:label_no_data) %>. 
+    Click <%= link_to 'here', '#', :onclick => "showTab('info'); this.blur(); $('project_team').scrollTo().highlight({startColor : '#FF9999'}); return false;" %> to add a team for this project.
+  </p>
 <% end %>
 
 <% content_for :header_tags do %>
