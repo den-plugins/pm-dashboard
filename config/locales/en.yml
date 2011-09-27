@@ -131,6 +131,7 @@ en:
   field_version_original_date: Original Date
   field_version_start_date: Start Date
   field_version_end_date: End Date
+  field_version_state: State
 
   field_phone_no: Phone No.
   field_office_no: Office No.

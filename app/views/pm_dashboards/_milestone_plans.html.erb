@@ -13,6 +13,7 @@
     <th><%= l(:field_version_original_date) %></th>
     <th><%= l(:field_version_start_date) %></th>
     <th><%= l(:field_version_end_date) %></th>
+    <th><%= l(:field_version_state) %></th>
   	<th>Actions</th>
   </tr>
   <% @versions.each do |t| %>
@@ -23,6 +24,13 @@
 	      <td><%= t.original_date %></td>
 	      <td><%= t.started_date %></td>
 	      <td><%= t.effective_date %></td>
+	      <td>
+	        <% form_for :version, :url => {:action => :index, :version_id => t} do |f| %>
+	        <div id="<%= t.id %>">
+  	         <%= select_tag(:state, options_for_select(Milestone::STATES, t.state), {:onchange => "this.form.submit();new Effect.Highlight('#{t.id}');" }) %>
+	        </div>
+          <% end %>
+	      </td>
 		  <th>
 			    <%= link_to_remote image_tag('edit.png'), {:url => { :controller => 'milestone_plans' , 
 			                                  :action => 'update', :project_id => @project, :version_id => t}, 

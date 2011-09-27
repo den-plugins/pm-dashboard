@@ -2,6 +2,7 @@ class PmDashboardsController < ApplicationController
   include FaceboxRender
   
   helper :assumptions
+  helper :milestone_plans
   helper :risks
   helper :project_info
   helper :pm_dashboard_issues
@@ -10,6 +11,9 @@ class PmDashboardsController < ApplicationController
   before_filter :get_id, :only => [:index]
     
   def index
+    @version = Version.find(params[:version_id]) if params[:version_id]
+    @version.update_attribute(:state, params[:state]) if @version
+
     @project = Project.find(params[:project_id]) if params[:project_id]
     @project.update_days_overdue
     @assumptions ||= @project.assumptions.find(:all, :order => 'ref_number DESC')

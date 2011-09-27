@@ -27,9 +27,9 @@
   	<th>Choose Version Type:</th>
   	<td>
   		<div>
-  			<%= f.radio_button :version_type, "0" %>Milestone<br>
-  			<%= f.radio_button :version_type, "1" %>Development Iteration<br>
-  			<%= f.radio_button :version_type, "2" %>Build Release<br>
+  		  <% Milestone::VERSIONS.each do |k,v| %>
+  		    <%= f.radio_button :version_type, v %><%= k %><br>
+  			<% end %>
   		</div>
   	</td>
   </tr>
