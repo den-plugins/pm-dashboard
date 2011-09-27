@@ -4,10 +4,11 @@
 	<tr>
 		<td align = "right" colspan="20">
 		    <%#= link_to_remote l(:label_version_new), {:url => { :controller => :milestone_plans, 
-			                                  :action => :add, :project_id => @project}, 
-			                                  :update => "info_1", :complete => "new Effect.Highlight('info_1')"}, 
-			                                  :class => 'icon icon-add' %>
-			<%= link_to l(:label_version_new), {:controller => :milestone_plans, :action => :add, :project_id => @project }, :class => 'icon icon-add' %>
+			                                  #:action => :add, :project_id => @project}, 
+			                                  #:update => "info_1", :complete => "new Effect.Highlight('info_1')"}, 
+			                                  #:class => 'icon icon-add' 
+			                                  %>
+			<%= link_to l(:label_milestone_new), {:controller => :milestone_plans, :action => :add, :project_id => @project }, :class => 'icon icon-add' %>
 		</td>
 	</tr>
   <tr>
@@ -20,13 +21,13 @@
   	<th>Actions</th>
   </tr>
   <% @versions.each do |t| %>
-	  <tr class="<%= cycle('even', 'odd') %>">
+	<tr class="<%= cycle('even', 'odd') %>">
 		  <td><em><%= h t.name %></em></td>
 		  <td><%= h t.description %></td>
 		  <td><%= h t.wiki_page_title %></td>
-      <td><%= t.original_date %></td>
-      <td><%= t.started_date %></td>
-      <td><%= t.effective_date %></td>
+	      <td><%= t.original_date %></td>
+	      <td><%= t.started_date %></td>
+	      <td><%= t.effective_date %></td>
 		  <th>
 			    <%= link_to_remote image_tag('edit.png'), {:url => { :controller => 'milestone_plans' , 
 			                                  :action => 'update', :project_id => @project, :version_id => t}, 
