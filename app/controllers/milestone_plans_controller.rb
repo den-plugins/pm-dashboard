@@ -1,6 +1,7 @@
 class MilestonePlansController < ApplicationController
 
   helper :assumptions
+  helper :milestone_plans
   helper :risks
   helper :project_info
   helper :pm_dashboard_issues
@@ -9,7 +10,7 @@ class MilestonePlansController < ApplicationController
 	helper :scrums
 
 	before_filter :get_project, :only => [:add, :update, :destroy]
-  before_filter :get_version, :only => [ :update, :destroy]
+  before_filter :get_version, :only => [:update, :destroy]
 
   def index
 
@@ -42,7 +43,7 @@ class MilestonePlansController < ApplicationController
         flash[:notice] = l(:notice_successful_update)
         redirect_to_milestone_plans
       else
-        render_milestone_plans('_edit')
+        render :template => "pm_dashboards/milestone_plans/edit_with_error"
       end
     end
   end

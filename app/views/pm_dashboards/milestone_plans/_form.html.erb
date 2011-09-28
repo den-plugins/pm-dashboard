@@ -5,7 +5,7 @@
 	</tr>
 	<tr>
 		<th>Description:</th>
-		<td><%= f.text_area :description, :rows => 10 %></td>
+		<td><%= f.text_area :description, :rows => 3 %></td>
 	</tr>
 	<tr>
 		<th><b>Wiki Page:</b></th>
@@ -20,17 +20,16 @@
     <td><%= f.text_field :started_date, :size => 10 %><%= calendar_for('version_started_date') %></td>
   </tr>
   <tr>
-  	<th>Effective Date:</th>
+  	<th>End Date:</th>
     <td><%= f.text_field :effective_date, :size => 10 %><%= calendar_for('version_effective_date') %></td>
-    </tr>
   </tr>
   <tr>
   	<th>Choose Version Type:</th>
   	<td>
   		<div>
-  			<%= f.radio_button :version_type, "0", :checked => "checked" %>None<br>
-  			<%= f.radio_button :version_type, "1" %>Development Iteration<br>
-  			<%= f.radio_button :version_type, "2" %>Build Release<br>
+  		  <% Milestone::VERSIONS.each do |k,v| %>
+  		    <%= f.radio_button :version_type, v %><%= k %><br>
+  			<% end %>
   		</div>
   	</td>
   </tr>
@@ -41,6 +40,10 @@
   			<%= select("version", "state", Milestone::STATES) %>
   		</div>
   	</td>
+  </tr>
+  <tr>
+    <th>Remarks:</th>
+    <td><%= f.text_area :remarks, :rows => 3 %></td>
   </tr>
 </table>
 	<div>
