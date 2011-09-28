@@ -2,7 +2,9 @@
 <%= error_messages_for 'resource_allocation' %>
 <% remote_form_for(:resource_allocation, ResourceAllocation.new,
                                        :url => {:action => 'add', :member_id => @member },
-                                       :html => { :name => 'new_resource_allocation'}) do |f| %>
+                                       :html => { :name => 'new_resource_allocation'},
+                                       :loading => "jQuery('#ajax-indicator').show().attr('style', 'z-index: 9999;');",
+                                       :complete => "jQuery('#ajax-indicator').attr('style', 'z-index: 100;').hide();") do |f| %>
   
   <%= image_submit_tag('true.png', :class => 'contextual') %>
 

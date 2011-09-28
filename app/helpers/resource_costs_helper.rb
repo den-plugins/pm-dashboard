@@ -22,5 +22,11 @@ module ResourceCostsHelper
   def daily_rate(rate)
     rate.to_f * 8
   end
+  
+  def display_week(range)
+    from, to = range.first, range.last
+    s = "%s/" % from.mon + "%s" % from.day + " - " +
+           "%s/" % to.mon + "%s" % to.day
+  end
 
 end
