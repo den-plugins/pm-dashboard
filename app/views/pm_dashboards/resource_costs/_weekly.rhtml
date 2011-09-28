@@ -5,36 +5,19 @@
 %>
 
 <% unless weeks.nil? %>
-  <div id='resource_cost_weekly' class='resource_cost_table_container' style="width: <%= (weeks + 1) * 323 %>px">
+  <div id='resource_cost_weekly' class='resource_cost_table_container' style="width: <%= (weeks + 1) * 210 %>px">
     <% for i in 0 .. weeks %>
-      <div class='floating_table' style=" width: 150px">
+      <div class='floating_table' style=" width: 210px">
       <table class='list'>
         <tr>
-          <%# action = 'new' %>
           <% week_start = week_start.monday %>
           <% week_end = (i.eql?(weeks)? @project.planned_end_date : (week_start + 4.days))  %>
           <% actual_week_start = (i.zero? ? @project.planned_start_date : week_start) %>
           <th height="40px">
-            week <%= i+1 %>
-            <%# @week = @project.weeks.select {|w| w.from.cweek.eql?(actual_week_start.cweek) and w.to.cweek.eql?(week_end.cweek)}.first %>
-            <%# if @week %>
-              <%# action = 'edit' %>
-              <%# actual_week_start, week_end = @week.from, @week.to %>
-            <%# end %>
             <% days << (actual_week_start .. week_end) %>
+            <%= display_week days.last %><br/>
+            week <%= i+1 %>
             <% current_week = actual_week_start.cweek %>
-            <!-- <span>
-              <%# form_for :week, @week,
-                           :url => { :controller => 'weeks', :action => action , :project_id => @project.id, :id => @week, :inclosed_week => current_week },
-                           :html => {:id => "week_#{i}_form"} do |f| %>
-                <%# f.text_field :from, :size => 8, :id => "week_#{i}_from", :value => actual_week_start %>
-                <%# calendar_for("week_#{i}_from") %>
-                <%# "&raquo;" %>
-                <%# f.text_field :to, :size => 8, :id => "week_#{i}_to", :value => week_end %>
-                <%# calendar_for("week_#{i}_to") %>
-                <%# link_to image_tag('true.png'), "#", :onclick => "$('week_#{i}_form').submit()" %>
-              <%# end %>
-            </span> -->
           </th>
           <% week_start += 1.week %>
           <th class='cost'>Cost</th>
@@ -43,13 +26,13 @@
         <% total_days, total_cost = 0, 0 %>
         <% @proj_team.each do |member| %>
         <tr class="<%= cycle('even', 'odd', :name => 'members') %>">
-          <%  rate = (params[:rate] && params[:rate].eql?('internal_rate')) ? member.internal_rate : member.sow_rate
+          <%  rate = (params[:rate] && params[:rate].eql?('internal_rate')) ? daily_rate(member.internal_rate) : daily_rate(member.sow_rate)
                   actual_days, cost = member.days_and_cost(days[i], rate).collect
                   total_days += actual_days
                   total_cost += cost
           %>
           <td><%= actual_days %></td>
-          <td class='cost'><%= cost.to_f %></td>
+          <td class='cost'><%= number_to_currency cost.to_f %></td>
         <% end %>
         </tr>
         <%  reset_cycle('members')
@@ -63,7 +46,7 @@
           
         <tr>
           <th style='text-align: left'><%= total_days %></th>
-          <th class='cost'><%= total_cost.to_f %></th>
+          <th class='cost'><%= number_to_currency total_cost.to_f %></th>
         </tr>
         
        <tr></tr>

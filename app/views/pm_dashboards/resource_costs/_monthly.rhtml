@@ -3,7 +3,7 @@
 <% per_column, @bac_hours, @bac_amount = {}, 0, 0 %>
 
 <% unless months.nil? %>
-  <div id='resource_cost_monthly' class='resource_cost_table_container' style="width: <%= months.count * 150 %>px">
+  <div id='resource_cost_monthly' class='resource_cost_table_container' style="width: <%= months.count * 210 %>px">
     <% months.each do |m| %>
       <% start_range = (start_date.month.eql?(m) ? start_date : (start_date + (m - start_date.month).month).beginning_of_month ) %>
       <% end_range = (end_date.month.eql?(m) ? end_date : start_range.end_of_month ) %>
@@ -33,14 +33,14 @@
               <% days << (actual_week_start .. week_end) %>
             <% week_start += 1.week %>
             
-            <%  rate = (params[:rate] && params[:rate].eql?('internal_rate')) ? member.internal_rate : member.sow_rate
+            <%  rate = (params[:rate] && params[:rate].eql?('internal_rate')) ? daily_rate(member.internal_rate) : daily_rate(member.sow_rate)
                     actual_days_cost = member.days_and_cost(days[i], rate)
                     actual_days += actual_days_cost.first
                     cost += actual_days_cost.last
             %>
           <% end %>
           <td><%= actual_days %></td>
-          <td class='cost'><%= cost.to_f %></td>
+          <td class='cost'><%=number_to_currency cost.to_f %></td>
           <% total_days += actual_days %>
           <% total_cost += cost %>
         <% end %>
@@ -56,7 +56,7 @@
         
         <tr>
           <th style='text-align: left'><%= total_days %></th>
-          <th class='cost'><%= total_cost.to_f %></th>
+          <th class='cost'><%= number_to_currency total_cost.to_f %></th>
         </tr>
         <tr></tr>
         <tr></tr>
