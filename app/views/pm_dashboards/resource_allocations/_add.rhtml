@@ -3,8 +3,8 @@
 <% remote_form_for(:resource_allocation, ResourceAllocation.new,
                                        :url => {:action => 'add', :member_id => @member },
                                        :html => { :name => 'new_resource_allocation'},
-                                       :loading => "jQuery('#ajax-indicator').show().attr('style', 'z-index: 9999;');",
-                                       :complete => "jQuery('#ajax-indicator').attr('style', 'z-index: 100;').hide();") do |f| %>
+                                       :loading => "show_ajax_popup();",
+                                       :complete => "hide_ajax_popup();") do |f| %>
   
   <%= image_submit_tag('true.png', :class => 'contextual') %>
 

@@ -4,8 +4,8 @@ class ResourceAllocationsController < ApplicationController
   helper :pm_dashboards
   helper :resource_costs
   
-  before_filter :get_member, :only => [:index, :add, :edit]
-  before_filter :get_project, :only => [:index, :add, :edit]
+  before_filter :get_member
+  before_filter :get_project
   
   def index
     @resource_allocations = @member.resource_allocations
@@ -61,6 +61,20 @@ class ResourceAllocationsController < ApplicationController
       render :update do |page|
         page.replace_html :allocation_edit, :partial => 'pm_dashboards/resource_allocations/edit'
       end
+    end
+  end
+  
+  def destroy
+    resource_allocation = @member.resource_allocations.find(params[:id])
+    resource_allocation.destroy
+    @proj_team = @project.members.project_team
+    @resource_allocations = @member.resource_allocations
+    render :update do |page|
+      page.remove "date_range_#{resource_allocation.id}"
+      page.replace_html :allocation_actions, :partial => 'pm_dashboards/resource_allocations/actions'
+      page.replace_html :allocation_edit, :partial => 'pm_dashboards/resource_allocations/edit'
+      page.replace_html :resource_costs_header , :partial => 'pm_dashboards/resource_costs/header'
+      page.replace_html :resource_members_content, :partial => 'pm_dashboards/resource_costs/list'
     end
   end
   

@@ -3,8 +3,8 @@
 <% remote_form_for(:resource_allocation,
                                        :url => {:action => 'edit', :member_id => @member },
                                        :html => { :name => 'edit_resource_allocations'},
-                                       :loading => "jQuery('#ajax-indicator').show().attr('style', 'z-index: 9999;');",
-                                       :complete => "jQuery('#ajax-indicator').attr('style', 'z-index: 100;').hide();") do |f| %>
+                                       :loading => "show_ajax_popup();",
+                                       :complete => "hide_ajax_popup();") do |f| %>
 
   <% @resource_allocations.each do |r| %>
     <% fields_for "resource_allocations[#{r.id}]", r do |f| %>

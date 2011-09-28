@@ -1,7 +1,7 @@
 <div id='resource_costs_header'>
   <%= error_messages_for 'project' %>
   
-  <%  @contingency_amount = @bac_amount.to_f * (@project.contingency.to_f)
+  <%  @contingency_amount = @bac_amount.to_f * (@project.contingency.to_f/100)
           @total_budget = @bac_amount.to_f + @contingency_amount  %>
 
   <table id='pm_dashboard_header'>
