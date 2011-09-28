@@ -106,6 +106,14 @@ span.button-like {
   width: 100%;
 }
 
+table.list {
+  border: 1px solid #E4E4E4;
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 4px;
+  table-layout: fixed;
+}
+
 table#resource_costs {
   table-layout: fixed;
 }
@@ -127,7 +135,7 @@ table#resource_costs tr td {
 }
 
 .list.with_width {
-  width: 150px;
+  width: 210px;
 }
 
 #undef_weeks{
@@ -146,6 +154,7 @@ th.cost, td.cost {
   padding-right: 10px;
   border-right: 2px solid #BBBBBB;
   text-align: right;
+  width: 80%;
 }
 
 .singleCol {

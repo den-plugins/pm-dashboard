@@ -18,5 +18,9 @@ module ResourceCostsHelper
     end
     total
   end
+  
+  def daily_rate(rate)
+    rate.to_f * 8
+  end
 
 end
