@@ -24,10 +24,11 @@
 	      <td><%= t.original_date %></td>
 	      <td><%= t.started_date %></td>
 	      <td><%= t.effective_date %></td>
-	      <td>
-	        <% form_for :version, :url => {:action => :index, :version_id => t} do |f| %>
+	      <td align="center">
+	        <% form_for :version, :url => {:action => :index, :version_id => t, :project_id => @project, :tab => :milestone_plans} do |f| %>
 	        <div id="<%= t.id %>">
-  	         <%= select_tag(:state, options_for_select(Milestone::STATES, t.state), {:onchange => "this.form.submit();new Effect.Highlight('#{t.id}');" }) %>
+  	         <%= select_tag(:state, options_for_select(Milestone::STATES, t.state), 
+  	         				{:onchange => "this.form.submit();new Effect.Highlight('#{t.id}');" }) %>
 	        </div>
           <% end %>
 	      </td>
