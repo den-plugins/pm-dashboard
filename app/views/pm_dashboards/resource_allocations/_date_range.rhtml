@@ -5,5 +5,10 @@
                                                      :end => content_tag('input', '', :value => "#{allocation.end_date}", :readonly => 'readonly', :size => 10) + 
                                                                      content_tag('span', 'calendar', :style => "width: 17px; text-indent: -9999px; display: inline-block;")) %>
   <span class='button-like'><%= allocation.resource_allocation %> %</span>
+  <%= link_to_remote image_tag('delete.png', :size => "13x13"),
+                                        :url => { :controller => 'resource_allocations' , :action => 'destroy', :member_id => @member, :id => allocation },
+                                        :confirm => l(:text_are_you_sure),
+                                        :loading => "show_ajax_popup();",
+                                        :complete => "hide_ajax_popup();" %>
 </p>
 <% end %>
