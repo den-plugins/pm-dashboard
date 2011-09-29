@@ -27,3 +27,11 @@ function add_allocations() {
   jQuery('#show_actions').hide();
   jQuery('#edit_actions').show();
 }
+
+function show_ajax_popup() {
+  jQuery('#ajax-indicator').show().attr('style', 'z-index: 9999;');
+}
+
+function hide_ajax_popup() {
+  jQuery('#ajax-indicator').attr('style', 'z-index: 100;').hide();
+}
