@@ -106,11 +106,7 @@ span.button-like {
   width: 100%;
 }
 
-table.list {
-  border: 1px solid #E4E4E4;
-  border-collapse: collapse;
-  width: 100%;
-  margin-bottom: 4px;
+table.rcf {
   table-layout: fixed;
 }
 
@@ -132,6 +128,7 @@ table#resource_costs tr td {
   float: left;
   display: inline-block;
   table-layout: fixed;
+  width: 210px;
 }
 
 .list.with_width {

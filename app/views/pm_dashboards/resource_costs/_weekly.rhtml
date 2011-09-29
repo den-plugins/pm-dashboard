@@ -8,7 +8,7 @@
   <div id='resource_cost_weekly' class='resource_cost_table_container' style="width: <%= (weeks + 1) * 210 %>px">
     <% for i in 0 .. weeks %>
       <div class='floating_table' style=" width: 210px">
-      <table class='list'>
+      <table class='list rcf'>
         <tr>
           <% week_start = week_start.monday %>
           <% week_end = (i.eql?(weeks)? @project.planned_end_date : (week_start + 4.days))  %>
