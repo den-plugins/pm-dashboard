@@ -20,8 +20,7 @@ Redmine::Plugin.register :pm_dashboard do
   menu  :project_menu, 
         :pm_dashboards, 
         { :controller => 'pm_dashboards', :action => 'index' }, 
-        :caption=> 'PM Dashboard', 
-        :after => :activity, 
+        :caption=> 'PM Dashboard',  
         :param => :project_id
 end
 
