@@ -8,7 +8,7 @@ module ResourceCostsHelper
 
   def get_months(start_date, end_date)
     unless start_date.nil? or end_date.nil?
-      (start_date .. end_date).map {|m| m.month}.uniq
+      (start_date .. end_date).map {|m| m.beginning_of_month }.uniq
     end
   end
   

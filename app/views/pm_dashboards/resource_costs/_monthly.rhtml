@@ -5,7 +5,7 @@
 <% unless months.nil? %>
   <div id='resource_cost_monthly' class='resource_cost_table_container' style="width: <%= months.count * 210 %>px">
     <% months.each do |m| %>
-      <% start_range = (start_date.month.eql?(m) ? start_date : (start_date + (m - start_date.month).month).beginning_of_month ) %>
+      <% start_range = (start_date.month.eql?(m.month) ? start_date : m ) %>
       <% end_range = (end_date.month.eql?(m) ? end_date : start_range.end_of_month ) %>
       <% weeks = get_weeks(start_range, end_range) %>
       <% week_start = start_range %>
@@ -14,7 +14,7 @@
       <table class="list rcf">
         <tr>
           <th height="40px">
-            <%= Date::MONTHNAMES[m] %>
+            <%= m.strftime("%B %Y") %>
           </th>
           <th class='cost'>Cost</th>
         </tr>
