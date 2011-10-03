@@ -35,7 +35,7 @@ module ProjectExtn
     def pm_or_ta(id, project)
       if !id.nil?
         pm = project.members.find_by_user_id(id)
-        pm.name
+        pm.name unless pm.nil?
       end
     end
     
