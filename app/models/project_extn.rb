@@ -16,6 +16,7 @@ module ProjectExtn
       has_many :risks, :dependent => :destroy, :order => "ref_number ASC"
       has_and_belongs_to_many :stakeholders
       has_many :weeks
+      has_many :highlights
       
       validates_presence_of :description
       validates_presence_of :client, :if => :validate_client
