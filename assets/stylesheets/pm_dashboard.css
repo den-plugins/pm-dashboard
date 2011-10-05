@@ -215,3 +215,46 @@ div.indent p{
   -webkit-border-radius: 3px 3px 0px 0px;
   border-radius: 3px 3px 0px 0px;
 }
+
+.h-actions {
+  background-color: white;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  padding: 2px;
+}
+
+.new-edit-mode textarea {
+  width: 100%;
+  background-color: white;
+  padding: 0;
+  border: 0;
+  resize: vertical;
+}
+
+.new-edit-mode input[type="submit"], #highlights_container input[type="submit"]  {
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  color: #666;
+  font-size: 95%;
+  cursor: pointer;
+  margin-left: 3px;
+}
+
+.new-edit-mode input[type="submit"]:hover, #highlights_container input[type="submit"]:hover {
+  color: #470;
+  text-decoration: underline;
+}
+
+#highlights_container  textarea {
+  padding: 0;
+  font-size: 11px;
+  margin-left: 20px; 
+}
+
+.editable, .edit-mode { outline: 0; background: url('/images/bullet_black.png') left top no-repeat; border: 0; padding-bottom: 6px; }
+.editable textarea { background-color: transparent; width: 93%; border: 0; resize: none; overflow: hidden; }
+.editable input[type="submit"] { display: none; outline: 0; }
+.edit-mode textarea { background-color: white; width: 83%; border: 1px solid #000; resize: vertical; overflow: visible; }
+.edit-mode input[type="submit"] { display: inline-block; float: right; outline: 0;  z-index: 999; }

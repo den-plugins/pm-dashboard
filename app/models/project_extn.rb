@@ -55,7 +55,6 @@ module ProjectExtn
         self.planned_end_date -= 1.day if self.planned_end_date.cwday.eql? 6
       end
     end
-
   end
 end
 

@@ -1,24 +1,25 @@
-<div id="allocations_<%= @project.id %>" >
-<div id='allocation_actions'>
-  <%= render :partial => 'pm_dashboards/resource_allocations/actions' %>
-</div>
+<div id="allocations_<%= @member.id %>" >
+  <div id='allocation_actions'>
+    <%= render :partial => 'pm_dashboards/resource_allocations/actions' %>
+  </div>
 
-<p>Project Allocation of <%= @member.name %></p>
+  <p>Project Allocation of <%= @member.name %></p>
 
-<div id='allocation_show' style="width: 100%; margin-top: 20px;" >
-<% unless @resource_allocations.empty? %>
-  <% @resource_allocations.each do |allocation| %>
-    <%= render :partial => 'pm_dashboards/resource_allocations/date_range', :locals => {:allocation => allocation} %>
+  <div id='allocation_show' style="width: 100%; margin-top: 20px;" >
+  <% unless @resource_allocations.empty? %>
+    <% @resource_allocations.each do |allocation| %>
+      <%= render :partial => 'pm_dashboards/resource_allocations/date_range', :locals => {:allocation => allocation} %>
+    <% end %>
   <% end %>
-<% end %>
-</div>
+  </div>
 
-<div id='allocation_edit' style="width: 100%; margin-top: 20px; display: none;" >
-  <%= render :partial => 'pm_dashboards/resource_allocations/edit.rhtml' %>
-</div>
+  <div id='allocation_edit' style="width: 100%; margin-top: 20px; display: none;" >
+    <%= render :partial => 'pm_dashboards/resource_allocations/edit.rhtml' %>
+  </div>
 
-<div id='allocation_add' style="width: 100%; margin-top: 20px; display: none;" >
-  <%= render :partial => 'pm_dashboards/resource_allocations/add.html' %>
+  <div id='allocation_add' style="width: 100%; margin-top: 20px; display: none;" >
+    <%= render :partial => 'pm_dashboards/resource_allocations/add.html' %>
+  </div>
 </div>
 
 <% content_for :header_tags do %>

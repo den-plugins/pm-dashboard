@@ -1,0 +1,11 @@
+<div class="new-edit-mode" id="new_highlight" style="display: none;">
+<%= error_messages_for 'highlight' %>
+<% remote_form_for :highlight, @highlight,
+                     :url => { :action => 'new', :controller => 'highlights', :project_id => @project} do |f| %>
+  <p class="contextual h-actions" >
+    <%= link_to_remote l(:button_cancel), "#", :onclick => "$('new_highlight').hide(); $('highlights_container').show(); return false; ", :class => 'icon icon-cancel' %>
+    <%= f.submit 'Save', :class => 'icon icon-add' %>
+  </p>
+  <%= f.text_area :highlight, :rows => 5 %>
+<% end %>
+</div>

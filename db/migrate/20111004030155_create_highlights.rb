@@ -3,7 +3,6 @@ class CreateHighlights < ActiveRecord::Migration
     create_table :highlights do |t|
       t.column :project_id, :integer
       t.column :highlight, :text
-      t.column :created_on, :date
 
       t.timestamps
     end

@@ -52,7 +52,7 @@ class ResourceAllocationsController < ApplicationController
     
     if with_errors.empty?
       render :update do |page|
-        page.replace "allocations_#{@member.project.id}", :partial => 'pm_dashboards/resource_allocations/index'
+        page.replace "allocations_#{@member.id}", :partial => 'pm_dashboards/resource_allocations/index'
         page.replace_html :resource_costs_header , :partial => 'pm_dashboards/resource_costs/header'
         page.replace_html :resource_members_content, :partial => 'pm_dashboards/resource_costs/list'
       end

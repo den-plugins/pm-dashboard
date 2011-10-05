@@ -1,0 +1,28 @@
+<%= render :partial => "pm_dashboards/highlights/form" %>
+<%= error_messages_for 'highlight' %>
+<div id="highlights_container">
+  <p class="contextual h-actions">
+    <%= link_to_remote l(:label_highlight_new), "#",  :class => "icon icon-add", :onclick => "$('highlights_container').hide(); $('new_highlight').show(); return false;" %>
+  </p>
+  <div style="clear: both"></div>
+  
+  <% if @highlights.empty? %>
+    <p class="nodata">No Highlights for this Week.</p>
+  <% else %>
+    <% @highlights.each do |highlight| %>
+    <div class="editable" id="highlight_<%= highlight.id %>" tabindex="1">
+      <% remote_form_for :highlight, highlight,
+                           :url => { :action => 'update', :controller => 'highlights', :project_id => @project, :id => highlight.id },
+                           :html => {:id => "highlight_#{highlight.id}" } do |f| %>
+          <%= f.text_area :highlight, :rows => 4 %>
+          <%= f.submit '', :class => 'icon icon-save', :disabled => true %>
+          <div style="clear: both"></div>
+      <% end %>
+    </div>
+    <% end %>
+  <% end %>
+</div>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
+<% end %>
