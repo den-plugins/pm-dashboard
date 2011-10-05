@@ -261,3 +261,7 @@ div.week_highlight p {
   text-align: justify;
   padding: 5px;
 }
+#highlights_container {
+  border: 1px solid #e4e4e4;
+  background-color: #eee;
+}

@@ -6,11 +6,11 @@
                                             :class => "icon icon-add" %>
     </p>
     <div style="clear: both"></div>
-    
     <% if @highlight.nil? %>
       <p class="nodata">No Highlights for this Week.</p>
     <% else %>
-        <div class="week_highlight"><p><%= @highlight.highlight %></p></div>
+        <div class="week_highlight"><%= textilizable @highlight.highlight %></div>
+
     <% end %>
     <div style="clear: both"></div>
   </div>

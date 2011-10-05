@@ -11,7 +11,7 @@ class HighlightsController < ApplicationController
     else
       render :update do |page|
         page.replace :highlight_form, :partial => 'pm_dashboards/highlights/form'
-        page.hide :highlights_container
+        page.hide :highlight_wrapper
         page.show :highlight_form
       end
     end
@@ -21,12 +21,14 @@ class HighlightsController < ApplicationController
     @highlight = Highlight.find(params[:id])
     if @highlight.update_attributes(params[:highlight])
       render :update do |page|
-        page.replace_html :highlights_container, :partial => 'pm_dashboards/highlights/list'
+        page.replace :highlights_container, :partial => 'pm_dashboards/highlights/list'
       end
     else
-      page.replace :highlight_form, :partial => 'pm_dashboards/highlights/form'
-      page.hide :highlights_container
-      page.show :highlight_form
+      render :update do |page|
+        page.replace :highlight_form, :partial => 'pm_dashboards/highlights/form'
+        page.hide :highlight_wrapper
+        page.show :highlight_form
+      end
     end
   end
   
