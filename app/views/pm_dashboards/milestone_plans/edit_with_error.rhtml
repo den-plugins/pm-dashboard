@@ -12,5 +12,8 @@
   pm_dashboard_header { width: 75% }
 
 </style>
+<%= javascript_include_tag 'prototype' %>
+<%= javascript_include_tag 'jquery', :plugin => 'pm_dashboard' %>
+<%= javascript_include_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
 <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
 <%= render :partial => 'pm_dashboards/milestone_plans/edit' %>

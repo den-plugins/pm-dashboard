@@ -10,4 +10,5 @@ class Milestone < ActiveRecord::Base
 	def self.milestones(release)
 		self.find_all_by_release_id(release, :order => "id")
 	end
+
 end

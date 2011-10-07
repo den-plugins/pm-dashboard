@@ -35,3 +35,21 @@ function show_ajax_popup() {
 function hide_ajax_popup() {
   jQuery('#ajax-indicator').attr('style', 'z-index: 100;').hide();
 }
+
+function validatedatesinput(start_date, versionType){
+  if(versionType == 0 || versionType == 2){
+    jQuery("#version_started_date").attr("readonly", "readonly");
+    jQuery("#version_started_date").val(jQuery("#version_effective_date").val());
+    jQuery("#version_started_date_trigger").hide();
+  }else{
+    jQuery("#version_started_date").removeAttr("readonly");
+    jQuery("#version_started_date").val(start_date);
+    jQuery("#version_started_date_trigger").show();
+  }
+}
+
+function validatedatesonchange(versionType){
+  if(versionType == 0 || versionType == 2){
+    jQuery("#version_started_date").val(jQuery("#version_effective_date").val());
+  }
+}

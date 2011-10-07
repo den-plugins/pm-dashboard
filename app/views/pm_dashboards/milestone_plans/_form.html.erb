@@ -1,3 +1,8 @@
+<script type="text/javascript">
+  jQuery("document").ready(function(){
+    if(<%= @version.version_type.to_json %> != null) validatedatesinput('<%= @version.started_date %>', <%= @version.version_type.to_json %>);
+  });
+</script>
 <table class="box" align="center" style="width:500px">
 	<tr>
 		<th>Version Name:</th>
@@ -21,14 +26,15 @@
   </tr>
   <tr>
   	<th>End Date:</th>
-    <td><%= f.text_field :effective_date, :size => 10 %><%= calendar_for('version_effective_date') %></td>
+    <td><%= f.text_field :effective_date, :size => 10, :onchange => "validatedatesonchange(jQuery('input:checked').val())" %>
+    <%= calendar_for('version_effective_date') %></td>
   </tr>
   <tr>
   	<th>Choose Version Type:</th>
   	<td>
   		<div>
   		  <% Milestone::VERSIONS.each do |k,v| %>
-  		    <%= f.radio_button :version_type, v %><%= k %><br>
+  		    <%= f.radio_button :version_type, v, :onchange => "validatedatesinput('#{@version.started_date}', #{v});" %><%= k %><br>
   			<% end %>
   		</div>
   	</td>

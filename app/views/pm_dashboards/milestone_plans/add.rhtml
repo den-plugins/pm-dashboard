@@ -1,3 +1,8 @@
+<% content_for :header_tags do %>
+  <%= javascript_include_tag 'prototype' %>
+  <%= javascript_include_tag 'jquery', :plugin => 'pm_dashboard' %>
+  <%= javascript_include_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
+<% end %>
 <h2>Milestone Entry</h2>
 <%= error_messages_for 'version' %>
 
