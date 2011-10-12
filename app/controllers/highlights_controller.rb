@@ -44,6 +44,7 @@ class HighlightsController < ApplicationController
   def replace_highlights
     @highlights = @project.weekly_highlights
     render :update do |page|
+      page.replace_html :highlights_summary, :partial => "pm_dashboards/highlights/dashboard"
       page.replace_html :recently_posted, :partial => "pm_dashboards/highlights/recently_posted"
       page.replace_html :this_period, :partial => "pm_dashboards/highlights/current"
       page.replace_html :next_period, :partial => "pm_dashboards/highlights/nextp"
@@ -52,7 +53,6 @@ class HighlightsController < ApplicationController
   
   def render_error_messages
     @highlight_errors = @highlight.errors.full_messages
-    puts @highlight_errors
     render :update do |page|
       page.replace :error_messages, :partial => "pm_dashboards/highlights/errors"
     end

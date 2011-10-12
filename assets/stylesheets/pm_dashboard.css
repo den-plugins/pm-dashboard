@@ -225,6 +225,7 @@ div.indent p{
   position: relative;
   top: 0;
   right: 0;
+  margin-bottom: 5px;
 }
 
 div.week_highlight {
@@ -238,14 +239,14 @@ div.week_highlight {
 .highlighttext {
   background-color: #F6F6F6;
   border: 1px solid #E4E4E4;
-  height: 370px;
+  height: 420px;
   overflow: auto;
   padding: 5px;
 }
 
 div#period {
   position: relative;
-  top: -398px;
+  top: -448px;
   z-index: 999;
 }
 
@@ -276,3 +277,7 @@ div#period span.selected {
 }
 
 .icon-unpost {background-image: url(/images/false.png) }
+.dashboard_highlight {
+  overflow: auto;
+  height: 200px;
+}

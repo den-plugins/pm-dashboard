@@ -26,7 +26,7 @@
 
 <span id='current_highlight_wrapper'>
   <div class="contextual h-actions">
-    <%= image_tag 'edit.png', :onclick => "$('current_highlights_container').show(); $('current_highlight_wrapper').hide();" %>
+    <%= image_tag 'edit.png', :onclick => "$('current_highlights_container').show(); $('current_highlight_wrapper').hide();", :id => "current_edit" %>
   </div>
   <p><%= textilizable (@highlights[:current] ? @highlights[:current].highlight : 'No highlight for this week yet.') %></p>
 </span>

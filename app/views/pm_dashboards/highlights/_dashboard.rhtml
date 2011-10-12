@@ -1,0 +1,41 @@
+<% if @highlights[:current]  %>
+<div class='contextual h-actions'>
+  <%= link_to 'Edit', "#", :onclick => "showTab('highlights'); this.blur(); jQuery('#current').trigger('click'); jQuery('#current_edit').trigger('click'); return false; ",
+                                             :class => "icon icon-edit" %>
+</div>
+
+<strong>Progress This Period</strong>
+<div style="clear: both"></div>
+<%= content_tag 'div', textilizable(@highlights[:current].highlight), :class => "dashboard_highlight" %>
+<hr/>
+<% end %>
+
+<% if @highlights[:after_current]  %>
+<div class='contextual h-actions'>
+  <%= link_to 'Edit', "#", :onclick => "showTab('highlights'); this.blur(); jQuery('#nextp').trigger('click'); jQuery('#nextp_edit').trigger('click'); return false; ",
+                                             :class => "icon icon-edit" %>
+</div>
+<strong>Progress Planned for Next Period</strong>
+<div style="clear: both"></div>
+<%= content_tag 'div', textilizable(@highlights[:after_current].highlight), :class => "dashboard_highlight" %>
+<hr/>
+<% end %>
+
+<%  if @highlights[:current].nil? && @highlights[:after_current].nil? && @highlights[:recently_posted] %>
+<div class='contextual h-actions'>
+  <%= link_to 'Edit', "#", :onclick => "showTab('highlights'); this.blur(); $('recently_posted').highlight({startColor : '#FF9999'}); return false; ",
+                                             :class => "icon icon-edit" %>
+</div>
+<div style="clear: both"></div>
+<%= content_tag 'div', textilizable(@highlights[:recently_posted].highlight), :class => "dashboard_highlight" %>
+<hr/>
+<% end %>
+
+<% if @highlights.delete_if {|k,v| v.nil? }.empty? %>
+<div class='contextual h-actions'>
+  <%= link_to 'Edit', "#", :onclick => "showTab('highlights'); this.blur(); jQuery('#current_edit').trigger('click'); return false; ",
+                                             :class => "icon icon-edit" %>
+</div>
+<div style="clear: both"></div>
+<%= content_tag 'div', 'No Highlights for this project', :class => 'nodata' %>
+<% end %>
