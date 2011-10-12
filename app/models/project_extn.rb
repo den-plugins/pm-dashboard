@@ -55,6 +55,10 @@ module ProjectExtn
         self.planned_end_date -= 1.day if self.planned_end_date.cwday.eql? 6
       end
     end
+    
+    def highlight
+      Highlight.first(:conditions => ["created_at between ? and ? and project_id = ? ", Date.today.beginning_of_week, Date.today.end_of_week, id])
+    end
   end
 end
 

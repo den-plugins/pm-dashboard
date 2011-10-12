@@ -7,19 +7,6 @@ function handleSelect(elm, project, tab) {
 
 j=jQuery.noConflict();
 
-jQuery('.editable').live('focus', function(){
-  var id = jQuery(this).attr('id');
-  //value = jQuery("#" + id + " #highlight_highlight").val();
-  jQuery(this).removeClass('editable').addClass('edit-mode');
-  jQuery("#" + id + " :submit").removeAttr("disabled");
-});
-
-jQuery('.edit-mode').live('blur', function(){
-  var id = jQuery(this).attr('id');
-  jQuery(this).removeClass('edit-mode').addClass('editable');
-  jQuery("#" + id + " :submit").attr("disabled", true);
-});
-
 function edit_allocations() {
   jQuery('#allocation_edit').show();
   jQuery('#allocation_show').hide();

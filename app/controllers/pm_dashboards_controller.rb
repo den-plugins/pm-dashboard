@@ -20,7 +20,7 @@ class PmDashboardsController < ApplicationController
     @issues ||= @project.pm_dashboard_issues.find(:all, :order => 'ref_number DESC')
     @risks ||= @project.risks.find(:all, :order => 'ref_number DESC')
 
-    @highlights = @project.highlights.this_week
+    @highlight = @project.highlight
     @key_risks ||= @project.risks.key
     @key_issues ||= @project.pm_dashboard_issues.key
 

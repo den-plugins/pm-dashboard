@@ -93,6 +93,7 @@ en:
   label_daily_rate: Daily Rate
   
   label_highlight_new: New Highlight
+  label_highlight_edit: Edit Highlight
   
   field_ref_number: "Ref #"
   field_description: Description
