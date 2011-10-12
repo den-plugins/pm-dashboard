@@ -1,48 +1,38 @@
-PM Dashboard Plugin
-              
-August 9, 2011
+Features/Behaviors PM Dashboard Plugin
 
-  Features/Fixes:
-    = autocalculation of days_overdue (risks)
-    = risks summary in index page
-    = fixed view for 'related risks' in add/update of assumption
-    = color code for risk rating columns (risks index page)
-
-August 10, 2011
+## Info
+  - view project details: definition, scope, client, duration, project manager, technical arch.
+  - add project stakeholders/sponsors
+  - add members of project to project team
   
-  Features/Fixes:
-    = assumption status set to 'closed' if assumption has related risk/s
-    = risk associated with pm_dashboard_issues and assumptions (relations)
-    = autocalculation of assumption's days_overdue
-
-September 8, 2011
+## Assumptions
+  - view list of assumptions associated with the project
+  - add, edit, delete assumptions
   
-  Fixes/Enhancements:
-    = prevented email notifications during update of days_overdue (in index/view) of issues, risks, & assumptions in PM Dashboard
-    = added protection to attributes
-    
-September 14, 2011
-  
-  Fixes/Enhancements:
-    = the manager has the option to view the resource cost forecast either Weekly or Monthly (partial stage)
-    = the manager can also view the resource cost forecast using SOW rate or internal rate
-    
-  Dependencies:
-    = install the facebox_render plugin:
-        = run from den core: script/plugin install git://github.com/ihower/facebox_render.git
-    
-September 15, 2011
-  
-  Fixes/Enhancements:
-    = each resource name is clickable so that PM can determine resource's project allocation. Once clicked, a pop-up will appear to enable user to add/edit resource's project allocation
-    
-Septermber 16, 2011
+## Project Issues
+  - view list of project issues associated with the project
+  - add, edit, delete project issues
+  - note: project issues is different from the issues in the project main tab
 
-  Todo:
-    = investigate on this error: The :dependent option expects either :destroy, :delete_all, or :nullify (:destroy_all)
-        = temp. sol'n, replaced 'destroy_all' with 'nullify' (rails v=2.3.5)
-        
-Septermber 19, 2011
-
-  Todo:
-    = make sure that you have facebox_render javascripts and images in your public folder in your DEN core.
+## Risks
+  - view list of risks associated with the project
+  - add, edit, delete project risks
+  
+## Resource Cost Forecast
+  - view weekly/monthly view of cost per member according to their rate (internal/SOW)
+  - view cost summaries per week, per month, overall (total)
+  - defaults: weekly view, SOW rate
+  - edit contingency percentage for the project
+  
+## Milestone Plans
+  - view list of versions for the project
+  - edit/delete project versions
+  - edit/set state of the project version: planning, active, accepted
+  
+## Weekly Highlights
+  - view the recently posted highlights(i.e. latest posted hightlight from the past weeks)
+  - view highlight for this period (progress this period): 
+    - highlight created in present week, saved but not yet posted
+  - view highlight for next period:
+    - highlight created for next period, saved but not posted
+  - assumption: 1 highlight only per category: recently posted, progress this period, progress planned for next period

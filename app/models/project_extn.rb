@@ -56,8 +56,12 @@ module ProjectExtn
       end
     end
     
-    def highlight
-      Highlight.first(:conditions => ["created_at between ? and ? and project_id = ? ", Date.today.beginning_of_week, Date.today.end_of_week, id])
+    def weekly_highlights
+      h = {}
+      h[:recently_posted] = highlights.first(:conditions => ["posted_date is not null and is_for_next_period is false and posted_date <= ?", 7.days.ago.end_of_week], :order => 'posted_date DESC')
+      h[:current] = highlights.first(:conditions => ["created_at between ? and ? and posted_date is null and is_for_next_period is false", Date.today.beginning_of_week, Date.today.end_of_week])
+      h[:after_current] = highlights.first(:conditions => ["is_for_next_period is true"], :order => "posted_date ASC")
+      h
     end
   end
 end

@@ -222,31 +222,9 @@ div.indent p{
   -webkit-border-radius: 2px;
   border-radius: 2px;
   padding: 2px;
-}
-
-.new-edit-mode textarea {
-  width: 100%;
-  height: 400px;
-  min-height: 400px;
-  background-color: white;
-  padding: 0;
-  border: 0;
-  resize: vertical;
-}
-
-.new-edit-mode input[type="submit"] {
-  border: 0;
-  outline: 0;
-  background-color: transparent;
-  color: #666;
-  font-size: 95%;
-  cursor: pointer;
-  margin-left: 3px;
-}
-
-.new-edit-mode input[type="submit"]:hover {
-  color: #470;
-  text-decoration: underline;
+  position: relative;
+  top: 0;
+  right: 0;
 }
 
 div.week_highlight {
@@ -257,11 +235,44 @@ div.week_highlight {
   overflow: auto;
 }
 
-div.week_highlight p {
-  text-align: justify;
+.highlighttext {
+  background-color: #F6F6F6;
+  border: 1px solid #E4E4E4;
+  height: 370px;
+  overflow: auto;
   padding: 5px;
 }
-#highlights_container {
-  border: 1px solid #e4e4e4;
-  background-color: #eee;
+
+div#period {
+  position: relative;
+  top: -398px;
+  z-index: 999;
 }
+
+div#period span {
+  background-color: #F6F6F6;
+  color: #999;
+  border: 1px solid #E4E4E4;
+  padding: 3px;
+  border-bottom: 0;
+  -webkit-border-radius: 3px 3px 0 0;
+  -moz-border-radius: 3px 3px 0 0;
+  border-radius: 3px 3px 0 0;
+  cursor: pointer;
+}
+
+div#period span.selected {
+  background-color: #fff;
+  font-weight: bold;
+  color: #000;
+}
+
+#highlight_form { margin-top: 20px; }
+#highlight_form textarea {
+  width: 99%;
+  height: 250px;
+  resize: none;
+  margin-top: 5px;
+}
+
+.icon-unpost {background-image: url(/images/false.png) }

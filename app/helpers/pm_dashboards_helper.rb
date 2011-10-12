@@ -8,7 +8,8 @@ module PmDashboardsHelper
             {:label => 'Risks', :name => 'risks', :partial => 'risk'},
             {:label => 'Change Control', :name => 'change_control', :partial => 'change_control'},
             {:label => 'Resource Cost Forecast', :name => 'resource_costs', :partial => 'resource_costs'},
-            {:label => 'Milestone Plans', :name => 'milestone_plans', :partial => 'milestone_plans'}
+            {:label => 'Milestone Plans', :name => 'milestone_plans', :partial => 'milestone_plans'},
+            {:label => 'Weekly Highlights', :name => 'highlights', :partial => 'highlights'}
             ]
     tabs
   end

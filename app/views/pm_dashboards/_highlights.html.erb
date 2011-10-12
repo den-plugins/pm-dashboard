@@ -1,0 +1,24 @@
+<div id="weekly_highlights">
+<h2><%= l(:label_weekly_highlight_plural) %></h2>
+
+<div class="splitcontentleft">
+  <div class="highlighttext " id='recently_posted'>
+    <%= render :partial => 'pm_dashboards/highlights/recently_posted' %>
+  </div>
+</div>
+
+<div class="splitcontentright">
+  <div class="highlighttext" id='this_period'>
+    <%= render :partial => 'pm_dashboards/highlights/current' %>
+  </div>
+  
+  <div class="highlighttext" id='next_period' style="display: none">
+    <%= render :partial => 'pm_dashboards/highlights/nextp' %>
+  </div>
+  
+  <div id='period'>
+    <span class='selected' id='current' onclick="$('nextp').removeClassName('selected'); $(this).addClassName('selected'); $('next_period').hide(); $('this_period').show();">Progress This Period</span>
+    <span id='nextp' onclick="$('current').removeClassName('selected'); $(this).addClassName('selected'); $('this_period').hide(); $('next_period').show(); ">Progress Planned for Next Period</span>
+  </div>
+</div>
+</div>

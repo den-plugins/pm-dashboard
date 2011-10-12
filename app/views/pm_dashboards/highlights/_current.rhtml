@@ -1,0 +1,32 @@
+<div id="current_highlights_container" style="display: none;">
+  <div class="contextual h-actions">
+    <%= link_to_remote "Save", {:url => {:action => 'save', :controller => 'highlights', :id => @highlights[:current], :project_id => @project},
+                                                          :with => "Form.serialize('current_highlight_form')"},
+                                                          :class => 'icon icon-save' %>
+    <%= link_to_remote "Post", {:url => {:action => 'post', :controller => 'highlights', :id => @highlights[:current], :project_id => @project},
+                                                          :with => "Form.serialize('current_highlight_form')"},
+                                                          :class => 'icon icon-checked' %>
+    <%= link_to_remote "Cancel", "#", :class => 'icon icon-cancel',
+                                                                    :onclick => "$('current_highlight_form').reset(); $('current_highlight_wrapper').show(); $('current_highlights_container').hide();" %>
+  </div>
+  <div style="clear: both"></div>
+  
+  <div id='error_messages'>
+  </div>
+  
+  <div id="highlight_form">
+    <% form_for :highlight, @highlights[:current],
+                           :html => {:id => 'current_highlight_form'} do |f| %>
+      <%= f.hidden_field :is_for_next_period, :value => 'false' %>
+      <%= f.text_area :highlight, :id => 'current_highlight' %>
+      <%= wikitoolbar_for 'current_highlight' %>
+     <% end %>
+  </div>
+</div>
+
+<span id='current_highlight_wrapper'>
+  <div class="contextual h-actions">
+    <%= image_tag 'edit.png', :onclick => "$('current_highlights_container').show(); $('current_highlight_wrapper').hide();" %>
+  </div>
+  <p><%= textilizable (@highlights[:current] ? @highlights[:current].highlight : 'No highlight for this week yet.') %></p>
+</span>

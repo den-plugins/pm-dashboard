@@ -1,0 +1,7 @@
+<span id='recent_highlight_wrapper'>
+  <div class="contextual h-actions">
+    <%= link_to_remote "Unpost", {:url => {:action => 'unpost', :controller => 'highlights', :id => @highlights[:recently_posted], :project_id => @project}},
+                                                         :class => 'icon icon-unpost' if @highlights[:recently_posted] %>
+  </div>
+  <p><%= textilizable (@highlights[:recently_posted] ? @highlights[:recently_posted].highlight : 'No highlight recently posted.') %></p>
+</span>

@@ -92,6 +92,8 @@ en:
   label_direct_labor: Direct Labor
   label_daily_rate: Daily Rate
   
+  label_weekly_highlight: Weekly Highlight
+  label_weekly_highlight_plural: Weekly Highlights
   label_highlight_new: New Highlight
   label_highlight_edit: Edit Highlight
   
