@@ -19,7 +19,7 @@ fix view for 'related risks' in add/update of assumption
               
 ### August 9, 2011
 
-##### Features/Fixes:
+#### Features/Fixes:
 autocalculation of days_overdue (risks)
 risks summary in index page
 fixed view for 'related risks' in add/update of assumption
