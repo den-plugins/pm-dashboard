@@ -20,7 +20,9 @@
         <%# end %>
       <%# end %>
       <td>
-        <%= link_to_remote image_tag('edit.png'), {:url => { :controller => 'project_info' , :action => 'pm_member_edit', :id => member, :project_id => @project, :classification => classification}, :update => "tr_#{classification.to_s}_#{member.id}", :complete => "new Effect.Highlight('tr_#{classification.to_s}_#{member.id}')"} %>
+        <%= link_to_remote image_tag('edit.png'), {:url => { :controller => 'project_info' , :action => 'pm_member_edit', :id => member, :project_id => @project, 
+             :classification => classification}, :update => "tr_#{classification.to_s}_#{member.id}", :loading => "Element.show('ajax-indicator');",
+             :complete => "Element.hide('ajax-indicator'); new Effect.Highlight('tr_#{classification.to_s}_#{member.id}')"} %>
 
         <%= link_to image_tag('delete.png'), {:controller => 'project_info', :action => 'pm_member_remove', :id => member, :member => {classification => false}},
                                                :confirm => l(:text_are_you_sure),
@@ -29,7 +31,9 @@
       </td>
     <% else %>
       <td>
-        <%= link_to_remote image_tag('edit.png'), {:url => { :controller => 'stakeholders' , :action => 'edit', :id => member, :project_id => @project}, :update => "tr_#{classification.to_s}_#{member.id}", :complete => "new Effect.Highlight('tr_#{classification.to_s}_#{member.id}')"} %>
+        <%= link_to_remote image_tag('edit.png'), {:url => { :controller => 'stakeholders' , :action => 'edit', :id => member, :project_id => @project}, 
+              :update => "tr_#{classification.to_s}_#{member.id}", :loading => "Element.show('ajax-indicator');",
+              :complete => "Element.hide('ajax-indicator'); new Effect.Highlight('tr_#{classification.to_s}_#{member.id}')"} %>
         <%= link_to image_tag('delete.png'), {:controller => 'stakeholders', :action => 'remove', :id => member, :project_id => @project},
                                                :confirm => l(:text_are_you_sure),
                                                :method => :post,
