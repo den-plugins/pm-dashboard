@@ -9,12 +9,12 @@ class PmDashboardsController < ApplicationController
   helper :resource_costs
 
   before_filter :get_id, :only => [:index]
+  before_filter :get_project, :only => [:index, :edit_project]
+  before_filter :authorize, :only => [:index]
     
   def index
     @version = Version.find(params[:version_id]) if params[:version_id]
     @version.update_attribute(:state, params[:state]) if @version
-
-    @project = Project.find(params[:project_id]) if params[:project_id]
     @project.update_days_overdue
     @assumptions ||= @project.assumptions.find(:all, :order => 'ref_number DESC')
     @issues ||= @project.pm_dashboard_issues.find(:all, :order => 'ref_number DESC')
@@ -58,7 +58,6 @@ class PmDashboardsController < ApplicationController
   # Edit @project
   def edit_project
     if request.post?
-      @project = Project.find(params[:project_id])
       @project.attributes = params[:project]
       @proj_team = @project.members.project_team
       if @project.save
@@ -96,6 +95,10 @@ class PmDashboardsController < ApplicationController
       render_404
   end
 
+  def get_project
+    @project = Project.find(params[:project_id]) if params[:project_id]
+  end
+  
   def set_roles_pos(stakeholder_roles, proj_team_roles, proj_team_positions)
 
     stakeholder_roles.each do |r|

@@ -41,6 +41,7 @@ class PmDashboardIssuesController < ApplicationController
     end
   end
 
+  private
   def get_project
     @project = Project.find(params[:project_id])
   end

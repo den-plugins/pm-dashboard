@@ -12,15 +12,27 @@ Redmine::Plugin.register :pm_dashboard do
   author 'Author name'
   description 'This is a plugin for Redmine'
   version '0.0.1'
-
+  
   project_module :pm_dashboards do
-    permission :list_dashboards, :pm_dashboards => :index
+    permission :list_dashboards,
+                      {   :pm_dashboards => [:index, :update_resource_list, :edit_project],
+                            :assumptions => [:add, :update, :destroy],
+                            :highlights   => [:save, :post, :unpost],
+                            :milestone_plans => [:add, :update, :destroy],
+                            :pm_dashboard_issues    => [:add, :edit, :delete],
+                            :project_info    => [:update, :pm_member_edit, :pm_member_update, :pm_member_add, :pm_member_remove,
+                                                               :update_role_pos, :add_pm_position, :add_pm_role],
+                            :resource_allocations => [:index, :add, :edit, :destroy],
+                            :risks => [:add, :update, :destroy],
+                            :stakeholders => [:new, :create, :edit, :update, :remove],
+                            :weeks => [:new, :edit]
+                        }, :public => false
   end
   
-  menu  :project_menu, 
-        :pm_dashboards, 
-        { :controller => 'pm_dashboards', :action => 'index' }, 
-        :caption=> 'PM Dashboard',  
+  menu  :project_menu,
+        :pm_dashboards,
+        { :controller => 'pm_dashboards', :action => 'index' },
+        :caption=> 'PM Dashboard',
         :param => :project_id
 end
 
