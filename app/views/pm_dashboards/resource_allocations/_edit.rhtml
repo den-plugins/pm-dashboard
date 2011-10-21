@@ -1,7 +1,7 @@
 <%= error_messages_for 'resource_allocation' %>
 
 <% remote_form_for(:resource_allocation,
-                                       :url => {:action => 'edit', :member_id => @member },
+                                       :url => {:action => 'bulk_edit', :member_id => @member },
                                        :html => { :name => 'edit_resource_allocations'},
                                        :loading => "show_ajax_popup();",
                                        :complete => "hide_ajax_popup();") do |f| %>

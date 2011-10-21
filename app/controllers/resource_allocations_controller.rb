@@ -8,27 +8,22 @@ class ResourceAllocationsController < ApplicationController
   before_filter :get_project
   
   def index
-    @resource_allocations = @member.resource_allocations
-    respond_to do |format|
-      format.html
-      format.js { render_to_facebox :partial => "pm_dashboards/resource_allocations/index" }
+    if params[:cancel]
+      render_updates
+    else
+      @resource_allocations = @member.resource_allocations
+      respond_to do |format|
+        format.html
+        format.js { render_to_facebox :partial => "pm_dashboards/resource_allocations/index" }
       end
+    end
   end
   
   # POST
   def add
     @resource_allocation = @member.resource_allocations.create(params[:resource_allocation])
-    @proj_team = @project.members.project_team
     if @resource_allocation.errors.empty?
-      @resource_allocations = @member.resource_allocations
-      render :update do |page|
-        page.insert_html :bottom, :allocation_show, :partial => 'pm_dashboards/resource_allocations/date_range', :locals => {:allocation => @resource_allocation}
-        page.replace_html :allocation_add, :partial => 'pm_dashboards/resource_allocations/add'
-        page.replace_html :allocation_actions, :partial => 'pm_dashboards/resource_allocations/actions'
-        page.replace_html :allocation_edit, :partial => 'pm_dashboards/resource_allocations/edit'
-        page.replace_html :resource_costs_header , :partial => 'pm_dashboards/resource_costs/header'
-        page.replace_html :resource_members_content, :partial => 'pm_dashboards/resource_costs/list'
-      end
+      render_updates
     else
        render :update do |page|
         page.insert_html :bottom, :allocation_show, :partial => 'pm_dashboards/resource_allocations/date_range', :locals => {:allocation => nil}
@@ -39,23 +34,29 @@ class ResourceAllocationsController < ApplicationController
   
   # POST
   def edit
+    @resource_allocation = @member.resource_allocations.find(params[:id])
+    if @resource_allocation.update_attributes(params[:allocation])
+      render_updates
+    else
+      render :update do |page|
+        page.replace "date_range_#{@resource_allocation.id}_edit", :partial => "pm_dashboards/resource_allocations/edit_form",
+                                           :locals => {:allocation => @resource_allocation}
+        page["date_range_#{@resource_allocation.id}_edit"].show
+      end
+    end
+  end
+  
+  # POST
+  def bulk_edit
     with_errors = []
     params[:resource_allocations].collect do |k,v|
       @resource_allocation = @member.resource_allocations.find(k)
       with_errors << @resource_allocation.errors.full_messages unless @resource_allocation.update_attributes(v)
     end
-    
-    @project = @member.project
-    @proj_team = @project.members.project_team
-    @resource_allocations = @member.resource_allocations
     @resource_allocation.errors.clear()
     
     if with_errors.empty?
-      render :update do |page|
-        page.replace "allocations_#{@member.id}", :partial => 'pm_dashboards/resource_allocations/index'
-        page.replace_html :resource_costs_header , :partial => 'pm_dashboards/resource_costs/header'
-        page.replace_html :resource_members_content, :partial => 'pm_dashboards/resource_costs/list'
-      end
+      render_updates
     else
       with_errors.uniq.each {|e| @resource_allocation.errors.add_to_base e }
       render :update do |page|
@@ -67,15 +68,7 @@ class ResourceAllocationsController < ApplicationController
   def destroy
     resource_allocation = @member.resource_allocations.find(params[:id])
     resource_allocation.destroy
-    @proj_team = @project.members.project_team
-    @resource_allocations = @member.resource_allocations
-    render :update do |page|
-      page.remove "date_range_#{resource_allocation.id}"
-      page.replace_html :allocation_actions, :partial => 'pm_dashboards/resource_allocations/actions'
-      page.replace_html :allocation_edit, :partial => 'pm_dashboards/resource_allocations/edit'
-      page.replace_html :resource_costs_header , :partial => 'pm_dashboards/resource_costs/header'
-      page.replace_html :resource_members_content, :partial => 'pm_dashboards/resource_costs/list'
-    end
+    render_updates
   end
   
   private
@@ -90,5 +83,15 @@ class ResourceAllocationsController < ApplicationController
     @member = Member.find(params[:member_id])
     rescue ActiveRecord::RecordNotFound
       render_404
+  end
+  
+  def render_updates
+    @proj_team = @project.members.project_team
+    @resource_allocations = @member.resource_allocations
+    render :update do |page|
+      page.replace "allocations_#{@member.id}", :partial => 'pm_dashboards/resource_allocations/index'
+      page.replace_html :resource_costs_header , :partial => 'pm_dashboards/resource_costs/header'
+      page.replace_html :resource_members_content, :partial => 'pm_dashboards/resource_costs/list'
+    end
   end
 end

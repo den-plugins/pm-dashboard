@@ -1,0 +1,19 @@
+<span id="date_range_<%= allocation.id %>_edit" style="display: none;">
+<%= error_messages_for 'resource_allocation' %>
+<% remote_form_for(:allocation, allocation,
+                                       :url => {:controller => 'resource_allocations', :action => 'edit', :member_id => @member, :id => allocation },
+                                       :html => { :name => 'edit_resource_allocations'},
+                                       :loading => "show_ajax_popup();",
+                                       :complete => "hide_ajax_popup();") do |f| %>
+  <p>
+    <%= l(:label_date_from_to,  :start => (f.text_field :start_date, :size => 10, :id => "allocation_#{allocation.id}_start_date") +
+                                                                          calendar_for("allocation_#{allocation.id}_start_date"),
+                                                       :end => (f.text_field :end_date, :size => 10, :id => "allocation_#{allocation.id}_end_date") +
+                                                                        calendar_for("allocation_#{allocation.id}_end_date")) %>
+    <%= f.select :resource_allocation, ((0..4).to_a.collect {|a| ["#{a*25} %", a*25] }) %>
+    <%= link_to_remote '', :url => {:controller => 'resource_allocations', :action => 'index', :member_id => @member, :cancel => true },
+                                          :html => {:class => "icon icon-cancel"} %>
+    <%= image_submit_tag('true.png') %>
+  </p>
+<% end %>
+</span>

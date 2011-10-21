@@ -7,11 +7,18 @@ function handleSelect(elm, project, tab) {
 
 j=jQuery.noConflict();
 
-function edit_allocations() {
+
+
+function bulk_edit_allocations() {
   jQuery('#allocation_edit').show();
   jQuery('#allocation_show').hide();
   jQuery('#show_actions').hide();
   jQuery('#edit_actions').show();
+}
+
+function edit_allocations(id) {
+  jQuery("#date_range_" + id ).hide();
+  jQuery("#date_range_" + id + "_edit").show();
 }
 
 function show_allocations() {

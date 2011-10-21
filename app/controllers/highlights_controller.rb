@@ -3,26 +3,62 @@ class HighlightsController < ApplicationController
   before_filter :get_project, :get_highlight
   
   def save
-    if @highlight.update_attributes(params[:highlight])
-      replace_highlights
+    if params[:cancel]
+      @highlights = @project.weekly_highlights
+      render :update do |page|
+        page.replace_html :next_period, :partial => "pm_dashboards/highlights/nextp", :locals => {:highlight => @highlights[:after_current]}
+        page.replace_html :this_period, :partial => "pm_dashboards/highlights/current", :locals => {:highlight => @highlights[:current]}
+      end
     else
-      render_error_messages
+      @highlight.update_attributes(params[:highlight]) ? replace_highlights  : render_error_messages
     end
   end
   
   def post
     attrs = {:posted_date => Date.today}
-    if @highlight.update_attributes(params[:highlight].merge(attrs))
-      replace_highlights
-    else
-      render_error_messages
-    end
+    @highlight.update_attributes(params[:highlight].merge(attrs)) ? replace_highlights : render_error_messages
   end
   
   def unpost
     attrs = @highlight.attributes.merge({:posted_date => nil})
-    if @highlight.update_attributes(attrs)
-      replace_highlights
+    @highlight.update_attributes(attrs)
+    replace_highlights
+  end
+  
+  def select_by_week
+    date = params[:select_week].to_date
+    highlight = @project.highlights.for_the_week(date).first
+    render :update do |page|
+      page.replace_html :recently_posted, :partial => "pm_dashboards/highlights/recently_posted", :locals => {:highlight => highlight}
+    end
+  end
+  
+  def select_duplicate
+    date = params[:highlight][:created_at].to_date
+    dup = @project.highlights.for_the_week(date).reject{|d| d.id.eql?(@highlight.id)}.first
+    time_state = (params[:time_state].eql?('current') || params[:time_state].eql?('nextp')) ? params[:time_state] : (dup.is_for_next_period ? 'current' : 'nextp')
+    period = time_state.eql?('current') ? "this_period" : "next_period"
+    
+    @highlight.attributes = params[:highlight]
+    @highlight.validate
+
+    if @highlight.errors.empty?
+      if dup && dup.posted_date.nil?
+        puts "1"
+        render :update do |page|
+          page.replace_html period, :partial => "pm_dashboards/highlights/#{time_state}", :locals => {:highlight => dup}
+          page.hide "#{time_state}_highlight_wrapper"
+          page.show "#{time_state}_highlights_container"
+        end
+      else
+        @highlight = Highlight.new
+        @highlight.attributes = params[:highlight]
+        render :update do |page|
+          page.replace_html period, :partial => "pm_dashboards/highlights/#{time_state}", :locals => {:highlight => @highlight}
+          page.hide "#{time_state}_highlight_wrapper"
+          page.show "#{time_state}_highlights_container"
+        end
+      end
     else
       render_error_messages
     end
@@ -41,20 +77,25 @@ class HighlightsController < ApplicationController
       render_404
   end
   
+  def render_error_messages
+    @highlight_errors = @highlight.errors.full_messages
+    render :update do |page|
+      if @highlight.is_for_next_period
+        page.replace_html :nextp_error_messages, :partial => "pm_dashboards/highlights/errors"
+      else
+        page.replace_html :current_error_messages, :partial => "pm_dashboards/highlights/errors"
+      end
+      page["errorExplanation"].show
+    end
+  end
+  
   def replace_highlights
     @highlights = @project.weekly_highlights
     render :update do |page|
       page.replace_html :highlights_summary, :partial => "pm_dashboards/highlights/dashboard"
-      page.replace_html :recently_posted, :partial => "pm_dashboards/highlights/recently_posted"
-      page.replace_html :this_period, :partial => "pm_dashboards/highlights/current"
-      page.replace_html :next_period, :partial => "pm_dashboards/highlights/nextp"
-    end
-  end
-  
-  def render_error_messages
-    @highlight_errors = @highlight.errors.full_messages
-    render :update do |page|
-      page.replace :error_messages, :partial => "pm_dashboards/highlights/errors"
+      page.replace_html :recently_posted, :partial => "pm_dashboards/highlights/recently_posted", :locals => {:highlight => @highlights[:recently_posted]}
+      page.replace_html :next_period, :partial => "pm_dashboards/highlights/nextp", :locals => {:highlight => @highlights[:after_current]}
+      page.replace_html :this_period, :partial => "pm_dashboards/highlights/current", :locals => {:highlight => @highlights[:current]}
     end
   end
 end

@@ -13,7 +13,6 @@ class MilestonePlansController < ApplicationController
   before_filter :get_version, :only => [:update, :destroy]
 
   def index
-
   end
 
   def add

@@ -55,16 +55,17 @@ module MemberExtn
       pmrole
     end
     
-    def days_and_cost(week, rate)
+    def days_and_cost(week, rate = nil)
       days, cost = 0, 0
+      allocations = resource_allocations
       week.each do |day|
-        allocation = resource_allocations.find(:first, :conditions => ["start_date <= ? and end_date >= ?", day, day])
+        allocation = allocations.select{ |a| a.start_date <= day && a.end_date >= day}.first
         if allocation and !allocation.resource_allocation.eql? 0
           days += (1 * (allocation.resource_allocation.to_f/100).to_f)
         end
       end
       cost = days * (rate.to_f)
-      [days, cost]
+      rate ? [days, cost] : days
     end
   end
 end

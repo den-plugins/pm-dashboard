@@ -95,7 +95,7 @@ span.button-like {
 }
 
 #facebox .popup {
-  width: 420px;
+  width: 430px;
 }
 
 #facebox .tl, #facebox .tr, #facebox .bl, #facebox .br {
@@ -221,7 +221,7 @@ div.indent p{
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
-  padding: 2px;
+  padding: 1px;
   position: relative;
   top: 0;
   right: 0;
@@ -243,6 +243,7 @@ div.week_highlight {
   overflow: auto;
   padding: 5px;
 }
+.highlighttext span.content_text { margin-top: 40px; display: block; }
 
 div#period {
   position: relative;
@@ -268,7 +269,7 @@ div#period span.selected {
   color: #000;
 }
 
-#highlight_form { margin-top: 20px; }
+#highlight_form { margin-top: 10px; }
 #highlight_form textarea {
   width: 99%;
   height: 250px;

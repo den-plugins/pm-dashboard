@@ -7,6 +7,7 @@ class PmDashboardsController < ApplicationController
   helper :project_info
   helper :pm_dashboard_issues
   helper :resource_costs
+  helper :highlights
 
   before_filter :get_id, :only => [:index]
   before_filter :get_project, :only => [:index, :edit_project]

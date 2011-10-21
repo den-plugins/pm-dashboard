@@ -3,17 +3,17 @@
 
 <div class="splitcontentleft">
   <div class="highlighttext " id='recently_posted'>
-    <%= render :partial => 'pm_dashboards/highlights/recently_posted' %>
+    <%= render :partial => 'pm_dashboards/highlights/recently_posted', :locals => {:highlight => @highlights[:recently_posted]} %>
   </div>
 </div>
 
 <div class="splitcontentright">
   <div class="highlighttext" id='this_period'>
-    <%= render :partial => 'pm_dashboards/highlights/current' %>
+    <%= render :partial => 'pm_dashboards/highlights/current', :locals => {:highlight => @highlights[:current]} %>
   </div>
   
   <div class="highlighttext" id='next_period' style="display: none">
-    <%= render :partial => 'pm_dashboards/highlights/nextp' %>
+    <%= render :partial => 'pm_dashboards/highlights/nextp', :locals => {:highlight => @highlights[:after_current]} %>
   </div>
   
   <div id='period'>

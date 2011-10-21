@@ -4,7 +4,6 @@
                                              :class => "icon icon-edit" %>
 </div>
 
-<strong>Progress This Period</strong>
 <div style="clear: both"></div>
 <%= content_tag 'div', textilizable(@highlights[:current].highlight), :class => "dashboard_highlight" %>
 <hr/>
@@ -15,7 +14,7 @@
   <%= link_to 'Edit', "#", :onclick => "showTab('highlights'); this.blur(); jQuery('#nextp').trigger('click'); jQuery('#nextp_edit').trigger('click'); return false; ",
                                              :class => "icon icon-edit" %>
 </div>
-<strong>Progress Planned for Next Period</strong>
+
 <div style="clear: both"></div>
 <%= content_tag 'div', textilizable(@highlights[:after_current].highlight), :class => "dashboard_highlight" %>
 <hr/>

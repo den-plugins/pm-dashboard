@@ -1,25 +1,38 @@
 <div id="nextp_highlights_container" style="display: none;">
   <div class="contextual h-actions">
-    <%= link_to_remote "Save", {:url => {:action => 'save', :controller => 'highlights', :id => @highlights[:after_current], :project_id => @project},
+    <%= link_to_remote "Save", {:url => {:action => 'save', :controller => 'highlights', :id => highlight.id, :project_id => @project},
                                                           :with => "Form.serialize('nextp_highlight_form')"},
-                                                          :class => 'icon icon-save' %>
-    <%= link_to_remote "Post", {:url => {:action => 'post', :controller => 'highlights', :id => @highlights[:after_current], :project_id => @project},
+                                                          :class => 'icon icon-save', :id => 'nextp_save_button' %>
+    <% if highlight && highlight.posted_date %>
+      <%= link_to_remote "Unpost", {:url => {:action => 'unpost', :controller => 'highlights', :id => highlight.id, :project_id => @project},
                                                           :with => "Form.serialize('nextp_highlight_form')"},
-                                                          :class => 'icon icon-checked' %>
-    <%= link_to_remote "Cancel", "#", :class => 'icon icon-cancel',
-                                                                    :onclick => "$('nextp_highlight_form').reset(); $('nextp_highlight_wrapper').show(); $('nextp_highlights_container').hide();" %>
+                                                          :class => 'icon icon-unpost' %>
+    <% else %>
+      <%= link_to_remote "Post", {:url => {:action => 'post', :controller => 'highlights', :id => highlight.id, :project_id => @project},
+                                                            :with => "Form.serialize('nextp_highlight_form')"},
+                                                            :class => 'icon icon-checked' %>
+    <% end %>
+    <%= link_to_remote "Cancel", {:url => {:action => 'save', :controller => 'highlights', :project_id => @project, :cancel => true}},
+                                                              :class => "icon icon-cancel" %>
   </div>
   <div style="clear: both"></div>
 
-  <div id='error_messages'>
+  <div id='nextp_error_messages'>
   </div>
   
   <div id="highlight_form">
-    <% form_for :highlight, @highlights[:after_current],
+    <% remote_form_for :highlight, highlight, :url => {:controller => 'highlights', :action => 'select_duplicate', :id => highlight, :project_id => @project, :time_state => 'nextp'},
                             :html => {:id => 'nextp_highlight_form'} do |f| %>
       <%= f.hidden_field :is_for_next_period, :value => 'true' %>
+      <span style="float: right; margin-bottom: 8px;">
+        <%= f.text_field :created_at, :value => (highlight.new_record? ? (highlight.created_at ? highlight.created_at.to_date : Date.today.end_of_week + 5.days) : highlight.created_at.to_date), 
+                                      :size => 13, :id => "nextp_highlight_created_at", :onchange =>  "jQuery('#nextp_form_submit').trigger('click');" %>
+        <%= calendar_for('nextp_highlight_created_at') %>
+      </span>
+      <%= content_tag 'div', '', :style => "clear: both;" %>
       <%= f.text_area :highlight, :id => "nextp_highlight" %>
       <%= wikitoolbar_for 'nextp_highlight' %>
+      <%= f.submit 'Save', :id => 'nextp_form_submit', :hidden => true %>
     <% end %>
   </div>
 </div>
@@ -28,5 +41,5 @@
   <div class="contextual h-actions">
     <%= image_tag 'edit.png', :onclick => "$('nextp_highlights_container').show(); $('nextp_highlight_wrapper').hide();", :id => "nextp_edit" %>
   </div>
-  <p><%= textilizable (@highlights[:after_current] ? @highlights[:after_current].highlight : 'No highlight for next week yet.') %></p>
+  <span class="content_text"><%= render_highlight_message highlight, "No highlight for next week yet." %></span>
 </span>
