@@ -30,9 +30,24 @@ Features/Behaviors PM Dashboard Plugin
   - edit/set state of the project version: planning, active, accepted
   
 ## Weekly Highlights
-  - view the recently posted highlights(i.e. latest posted hightlight from the past weeks)
-  - view highlight for this period (progress this period): 
-    - highlight created in present week, saved but not yet posted
-  - view highlight for next period:
-    - highlight created for next period, saved but not posted
-  - assumption: 1 highlight only per category: recently posted, progress this period, progress planned for next period
+  >> in PM Dashboard (Weekly Highlights box)
+     - view, edit the progress for this period (this week) and the progress planned for next period (next week)
+     - view recently posted (latest posted highlight for the past weeks) only if current week & next week's highlights are not yet created
+   
+   >> in Weekly Highlights tab
+   (left side)
+    - display and unpost (once highlight is unposted, it will not be displayed in the left box, however, it can be edited & posted from the right box) recently posted highlight
+    - search for past posted highlights (choose date and the highlight for that week will be displayed in the left box)
+    
+  (right side)
+    - display, add/edit progress for this period, and for next period
+    -  edit behaviors:
+      - on click (edit button), either edit highlight (if week's highlight exists) or add a new highlight for a week
+      - if week's highlight does not exist, empty form except for date (default date: date today (for progress this period), friday next week (for next period))
+      - you can change date to edit previous weeks' highlight
+        - if a saved report exists, the form is filled up with data of report for the chosen date
+        - if a posted report exists, error message will tell ya that a post has already been created for that week (unpost the report from left side to edit)
+        - if no report exists, you can add a new report for that date/week
+      - can save, post/unpost, or cancel edit
+      - can't add report for future weeks (in progress this period)
+      - can't add report for past weeks or current week (for progress planned for next period)

@@ -1,14 +1,14 @@
 <div id="current_highlights_container" style="display: none;">
   <div class="contextual h-actions">
-    <%= link_to_remote "Save", {:url => {:action => 'save', :controller => 'highlights', :id => highlight.id, :project_id => @project},
+    <%= link_to_remote "Save", {:url => {:action => 'save', :controller => 'highlights', :id => highlight, :project_id => @project},
                                                           :with => "Form.serialize('current_highlight_form')"},
                                                           :class => 'icon icon-save', :id => 'current_save_button' %>
     <% if highlight && highlight.posted_date %>
-      <%= link_to_remote "Unpost", {:url => {:action => 'unpost', :controller => 'highlights', :id => highlight.id, :project_id => @project},
+      <%= link_to_remote "Unpost", {:url => {:action => 'unpost', :controller => 'highlights', :id => highlight, :project_id => @project},
                                                           :with => "Form.serialize('current_highlight_form')"},
                                                           :class => 'icon icon-unpost' %>
     <% else %>
-      <%= link_to_remote "Post", {:url => {:action => 'post', :controller => 'highlights', :id => highlight.id, :project_id => @project},
+      <%= link_to_remote "Post", {:url => {:action => 'post', :controller => 'highlights', :id => highlight, :project_id => @project},
                                                             :with => "Form.serialize('current_highlight_form')"},
                                                             :class => 'icon icon-checked' %>
     <% end %>
@@ -21,11 +21,12 @@
   </div>
   
   <div id="highlight_form">
+    <% highlight =highlight ? highlight : Highlight.new %>
     <% remote_form_for :highlight, highlight, :url => {:controller => 'highlights', :action => 'select_duplicate', :id => highlight, :project_id => @project, :time_state => 'current'},
                            :html => {:id => 'current_highlight_form'} do |f| %>
       <%= f.hidden_field :is_for_next_period, :value => 'false' %>
       <span style="float: right; margin-bottom: 8px;">
-        <%= f.text_field :created_at, :value => (highlight.new_record? ? (highlight.created_at ? highlight.created_at.to_date : Date.today): highlight.created_at.to_date), 
+        <%= f.text_field :created_at, :value => highlight.new_record? ? (highlight.created_at ? highlight.created_at.to_date : Date.today): highlight.created_at.to_date, 
                                       :size => 13, :id => "current_highlight_created_at", :onchange => "jQuery('#current_form_submit').trigger('click');" %>
         <%= calendar_for('current_highlight_created_at') %>
       </span>

@@ -60,9 +60,9 @@ module ProjectExtn
       h = {}
       h[:recently_posted] = highlights.first(:conditions => ["posted_date is not null and is_for_next_period is false and created_at <= ?", 7.days.ago.end_of_week], :order => 'posted_date DESC')
       this_week = Date.today.monday
-      h[:current] = highlights.first(:conditions => ["created_at between ? and ?", this_week, (this_week + 6.days)]) || Highlight.new
+      h[:current] = highlights.first(:conditions => ["created_at between ? and ?", this_week, (this_week + 6.days)])
       next_week = (Date.today + 1.week).monday
-      h[:after_current] = highlights.first(:conditions => ["is_for_next_period is true and created_at between ? and ?", next_week, (next_week + 6.days)], :order => "posted_date ASC") || Highlight.new
+      h[:after_current] = highlights.first(:conditions => ["is_for_next_period is true and created_at between ? and ?", next_week, (next_week + 6.days)], :order => "posted_date ASC")
       h
     end
   end

@@ -44,15 +44,13 @@ class HighlightsController < ApplicationController
 
     if @highlight.errors.empty?
       if dup && dup.posted_date.nil?
-        puts "1"
         render :update do |page|
           page.replace_html period, :partial => "pm_dashboards/highlights/#{time_state}", :locals => {:highlight => dup}
           page.hide "#{time_state}_highlight_wrapper"
           page.show "#{time_state}_highlights_container"
         end
       else
-        @highlight = Highlight.new
-        @highlight.attributes = params[:highlight]
+        @highlight = Highlight.new({:created_at => date})
         render :update do |page|
           page.replace_html period, :partial => "pm_dashboards/highlights/#{time_state}", :locals => {:highlight => @highlight}
           page.hide "#{time_state}_highlight_wrapper"
