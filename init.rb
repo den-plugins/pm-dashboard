@@ -1,12 +1,21 @@
 require 'redmine'
 require 's3_attachment/s3_send_file'
+require 'dispatcher'
+
+require 'pm_member_patch'
+require 'pm_project_patch'
+
+Dispatcher.to_prepare do
+  Member.send(:include, Pm::MemberPatch)
+  Project.send(:include, Pm::ProjectPatch)
+end
 
 config.after_initialize do 
   ActiveRecord::Base.observers << :assumption_observer
   ActiveRecord::Base.observers << :pm_dashboard_issue_observer
   ActiveRecord::Base.observers << :risk_observer
 end
-  
+
 Redmine::Plugin.register :pm_dashboard do
   name 'Redmine Pm Dashboards plugin'
   author 'Author name'
@@ -37,6 +46,6 @@ Redmine::Plugin.register :pm_dashboard do
 end
 
 require File.dirname(__FILE__) + '/app/models/mailer_extn.rb'
-require File.dirname(__FILE__) + '/app/models/project_extn.rb'
-require File.dirname(__FILE__) + '/app/models/member_extn.rb'
+#require File.dirname(__FILE__) + '/app/models/project_extn.rb'
+#require File.dirname(__FILE__) + '/app/models/member_extn.rb'
 require File.dirname(__FILE__) + '/app/models/user_extn.rb'
