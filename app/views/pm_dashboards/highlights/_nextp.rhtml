@@ -1,15 +1,21 @@
 <div id="nextp_highlights_container" style="display: none;">
   <div class="contextual h-actions">
     <%= link_to_remote "Save", {:url => {:action => 'save', :controller => 'highlights', :id => highlight, :project_id => @project},
-                                                          :with => "Form.serialize('nextp_highlight_form')"},
+                                                          :with => "Form.serialize('nextp_highlight_form')",
+                                                          :loading => "$('ajax-indicator').show()",
+                                                          :complete => "$('ajax-indicator').hide()" },
                                                           :class => 'icon icon-save', :id => 'nextp_save_button' %>
     <% if highlight && highlight.posted_date %>
       <%= link_to_remote "Unpost", {:url => {:action => 'unpost', :controller => 'highlights', :id => highlight, :project_id => @project},
-                                                          :with => "Form.serialize('nextp_highlight_form')"},
-                                                          :class => 'icon icon-unpost' %>
+                                                                :with => "Form.serialize('nextp_highlight_form')",
+                                                                :loading => "$('ajax-indicator').show()",
+                                                                :complete => "$('ajax-indicator').hide()" },
+                                                                :class => 'icon icon-unpost' %>
     <% else %>
       <%= link_to_remote "Post", {:url => {:action => 'post', :controller => 'highlights', :id => highlight, :project_id => @project},
-                                                            :with => "Form.serialize('nextp_highlight_form')"},
+                                                            :with => "Form.serialize('nextp_highlight_form')",
+                                                            :loading => "$('ajax-indicator').show()",
+                                                            :complete => "$('ajax-indicator').hide()" },
                                                             :class => 'icon icon-checked' %>
     <% end %>
     <%= link_to_remote "Cancel", {:url => {:action => 'save', :controller => 'highlights', :project_id => @project, :cancel => true}},
@@ -23,7 +29,9 @@
   <div id="highlight_form">
     <% highlight =highlight ? highlight : Highlight.new %>
     <% remote_form_for :highlight, highlight, :url => {:controller => 'highlights', :action => 'select_duplicate', :id => highlight, :project_id => @project, :time_state => 'nextp'},
-                            :html => {:id => 'nextp_highlight_form'} do |f| %>
+                            :html => {:id => 'nextp_highlight_form'},
+                            :loading => "Element.show('ajax-indicator')",
+                            :complete => "Element.hide('ajax-indicator')" do |f| %>
       <%= f.hidden_field :is_for_next_period, :value => 'true' %>
       <span style="float: right; margin-bottom: 8px;">
         <%= f.text_field :created_at, :value => highlight.new_record? ? (highlight.created_at ? highlight.created_at.to_date : Date.today.end_of_week + 5.days) : highlight.created_at.to_date, 
