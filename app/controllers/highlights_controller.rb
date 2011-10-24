@@ -21,8 +21,7 @@ class HighlightsController < ApplicationController
   
   def unpost
     attrs = @highlight.attributes.merge({:posted_date => nil})
-    @highlight.update_attributes(attrs)
-    replace_highlights
+    @highlight.update_attributes(attrs) ? replace_highlights : render_error_messages
   end
   
   def select_by_week
@@ -35,15 +34,15 @@ class HighlightsController < ApplicationController
   
   def select_duplicate
     date = params[:highlight][:created_at].to_date
-    dup = @project.highlights.for_the_week(date).reject{|d| d.id.eql?(@highlight.id)}.first
+    dup = @project.highlights.for_the_week(date).first
     time_state = (params[:time_state].eql?('current') || params[:time_state].eql?('nextp')) ? params[:time_state] : (dup.is_for_next_period ? 'current' : 'nextp')
     period = time_state.eql?('current') ? "this_period" : "next_period"
     
     @highlight.attributes = params[:highlight]
     @highlight.validate
-
+    
     if @highlight.errors.empty?
-      if dup && dup.posted_date.nil?
+      if dup && (dup.posted_date.nil? || (dup.posted_date && in_period(dup)))
         render :update do |page|
           page.replace_html period, :partial => "pm_dashboards/highlights/#{time_state}", :locals => {:highlight => dup}
           page.hide "#{time_state}_highlight_wrapper"
@@ -73,6 +72,14 @@ class HighlightsController < ApplicationController
     @highlight = params[:id] ? @project.highlights.find(params[:id]) : @project.highlights.new
     rescue ActiveRecord::RecordNotFound
       render_404
+  end
+  
+  def in_period(dup)
+    if dup.is_for_next_period
+      dup.created_at.to_date.monday.eql? (Date.today.monday + 1.week)
+    else
+      dup.created_at.to_date.monday.eql? Date.today.monday
+    end
   end
   
   def render_error_messages

@@ -241,7 +241,7 @@ div.week_highlight {
 .highlighttext {
   background-color: #F6F6F6;
   border: 1px solid #E4E4E4;
-  height: 420px;
+  height: 470px;
   overflow: auto;
   padding: 5px;
 }
@@ -249,7 +249,7 @@ div.week_highlight {
 
 div#period {
   position: relative;
-  top: -448px;
+  top: -498px;
   z-index: 999;
 }
 
