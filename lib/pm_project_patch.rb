@@ -67,11 +67,18 @@ module Pm
         type = custom_values.find(:first, :conditions => ["custom_field_id = ?", custom_field_id])
         type.nil? ? nil : type.value
       end
+      
+      def category
+        custom_field_id = CustomField.find(:first, :select => "id", :conditions => "name = 'Category'")
+        type = custom_values.find(:first, :conditions => ["custom_field_id = ?", custom_field_id])
+        type.nil? ? nil : type.value
+      end
    
       def accounting_type
         return nil if acctg_type.nil?
         Enumeration.accounting_types.find(:first, :conditions => ["id = ?", acctg_type]).name
       end
+
     end
   end
 end
