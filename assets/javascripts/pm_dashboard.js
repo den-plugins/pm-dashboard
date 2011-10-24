@@ -7,7 +7,13 @@ function handleSelect(elm, project, tab) {
 
 j=jQuery.noConflict();
 
+jQuery("#tab-content-resource_costs").ready(function(){
+  jQuery("#undef_weeks").height(jQuery("#resource_costs").innerHeight());
+});
 
+jQuery("#tab-resource_costs").live("click", function(){
+  jQuery("#undef_weeks").height(jQuery("#resource_costs").innerHeight());
+});
 
 function bulk_edit_allocations() {
   jQuery('#allocation_edit').show();

@@ -1,7 +1,8 @@
 <fieldset>
   <legend><%= l(:label_filter_plural) %></legend>
   <% form_remote_tag(:url => {:tab => 'resource_costs', :project_id => @project },
-        :loading => "Element.show('ajax-indicator')", :complete => "Element.hide('ajax-indicator')") do %>
+        :loading => "Element.show('ajax-indicator')", 
+        :complete => "Element.hide('ajax-indicator'); jQuery('#undef_weeks').height(jQuery('#resource_costs').innerHeight());") do %>
     <p>
       <%= l(:label_details) %>: 
       <%= select_tag 'view', options_for_select([[l(:label_week), 'week'], [l(:label_month), 'month']]),

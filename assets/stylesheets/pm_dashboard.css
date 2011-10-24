@@ -138,7 +138,9 @@ table#resource_costs tr td {
 #undef_weeks{
   height: 2px;
   text-align: center;
-  padding: 10px;
+  padding: 0;
+  background-color: #FCFCFC;
+  border: 1px solid #F0F0F0;
 }
 
 td.daily_rate, th.daily_rate {
