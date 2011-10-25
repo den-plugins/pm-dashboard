@@ -63,14 +63,12 @@ module Pm
       end
       
       def project_type
-        custom_field_id = CustomField.find(:first, :select => "id", :conditions => "name = 'Project Type'")
-        type = custom_values.find(:first, :conditions => ["custom_field_id = ?", custom_field_id])
+        type = custom_values.find(:first, :include => [:custom_field], :conditions => ["custom_fields.name = 'Project Type'"])
         type.nil? ? nil : type.value
       end
       
       def category
-        custom_field_id = CustomField.find(:first, :select => "id", :conditions => "name = 'Category'")
-        type = custom_values.find(:first, :conditions => ["custom_field_id = ?", custom_field_id])
+        type = custom_values.find(:first, :include => [:custom_field] :conditions => ["custom_fields.name = 'Category'"])
         type.nil? ? nil : type.value
       end
    

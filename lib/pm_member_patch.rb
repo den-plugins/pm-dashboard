@@ -15,8 +15,8 @@ module Pm
         validates_format_of :phone_no, :office_no, :with => /^[0-9]*$/i, :allow_nil => true
         validates_length_of :phone_no, :office_no, :maximum => 15, :allow_nil => true
         
-        named_scope :stakeholders, :conditions => "stakeholder = true", :order => "users.firstname"
-        named_scope :project_team, :conditions => "proj_team = true", :order => "users.firstname"
+        named_scope :stakeholders, :include => [:user], :conditions => "stakeholder = true", :order => "users.firstname"
+        named_scope :project_team, :include => [:user], :conditions => "proj_team = true", :order => "users.firstname"
       end
     end
     
