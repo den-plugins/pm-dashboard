@@ -68,7 +68,7 @@ module Pm
       end
       
       def category
-        type = custom_values.find(:first, :include => [:custom_field] :conditions => ["custom_fields.name = 'Category'"])
+        type = custom_values.find(:first, :include => [:custom_field], :conditions => ["custom_fields.name = 'Category'"])
         type.nil? ? nil : type.value
       end
    
