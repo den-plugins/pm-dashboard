@@ -61,22 +61,6 @@ module Pm
         h[:after_current] = highlights.first(:conditions => ["is_for_next_period is true and created_at between ? and ?", next_week, (next_week + 6.days)], :order => "created_at ASC")
         h
       end
-      
-      def project_type
-        type = custom_values.find(:first, :include => [:custom_field], :conditions => ["custom_fields.name = 'Project Type'"])
-        type.nil? ? nil : type.value
-      end
-      
-      def category
-        type = custom_values.find(:first, :include => [:custom_field], :conditions => ["custom_fields.name = 'Category'"])
-        type.nil? ? nil : type.value
-      end
-   
-      def accounting_type
-        return nil if acctg_type.nil?
-        Enumeration.accounting_types.find(:first, :conditions => ["id = ?", acctg_type]).name
-      end
-
     end
   end
 end

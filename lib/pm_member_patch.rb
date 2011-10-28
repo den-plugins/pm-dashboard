@@ -51,10 +51,12 @@ module Pm
       def days_and_cost(week, rate = nil)
         days, cost = 0, 0
         allocations = resource_allocations
-        week.each do |day|
-          allocation = allocations.select{ |a| a.start_date <= day && a.end_date >= day}.first
-          if allocation and !allocation.resource_allocation.eql? 0
-            days += (1 * (allocation.resource_allocation.to_f/100).to_f)
+        unless allocations.empty?
+          week.each do |day|
+            allocation = allocations.select{ |a| a.start_date <= day && a.end_date >= day}.first
+            if allocation and !allocation.resource_allocation.eql? 0
+              days += (1 * (allocation.resource_allocation.to_f/100).to_f)
+            end
           end
         end
         cost = days * (rate.to_f)
