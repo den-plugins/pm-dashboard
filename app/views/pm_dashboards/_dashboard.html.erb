@@ -17,19 +17,14 @@
     <td><span>Efficiency</span><%= %></td>
     <td><span>Billability</span><%= %></td>
   </tr>
-</table>  
-
-  <div class="singleCol">
-    <div class="box">
-      <h3><%=l(:label_dashboard_highlights)%></h3>
-      <div id='highlights_summary'><%= render :partial => 'pm_dashboards/highlights/dashboard' %></div>
-    </div>
-    
-    <div class="box">
-      <h3><%=l(:label_dashboard_events)%></h3>
-    </div>
-  </div>   
+</table>
   
+  <div class="singleCol">
+    <div id='highlights_summary'>
+      <%= render :partial => 'pm_dashboards/highlights/dashboard' %>
+    </div>
+  </div>
+    
   <div class="singleCol">
     <div class="box">
       <h3><%=l(:label_dashboard_status_as_of)%></h3>

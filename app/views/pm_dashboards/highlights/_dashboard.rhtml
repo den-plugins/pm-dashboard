@@ -1,40 +1,47 @@
-<% if @highlights[:current]  %>
-<div class='contextual h-actions'>
-  <%= link_to 'Edit', "#", :onclick => "showTab('highlights'); this.blur(); jQuery('#current').trigger('click'); jQuery('#current_edit').trigger('click'); return false; ",
-                                             :class => "icon icon-edit" %>
+<div class="box">
+  <h3><%=l(:label_dashboard_highlights)%></h3>
+  <% if @highlights[:current]  %>
+    <div class='contextual h-actions'>
+      <%= link_to 'Edit', "#", :onclick => "showTab('highlights'); this.blur(); jQuery('#current').trigger('click'); jQuery('#current_edit').trigger('click'); return false; ",
+                                                 :class => "icon icon-edit" %>
+    </div>
+    <div style="clear: both"></div>
+    <p><em><%= @highlights[:current].created_at.strftime("%B %e, %Y") %></em></p>
+    <%= content_tag 'div', textilizable(@highlights[:current].highlight), :class => "dashboard_highlight" %>
+  <%  elsif @highlights[:current].nil? && @highlights[:after_current].nil? && @highlights[:recently_posted] %>
+    <div class='contextual h-actions'>
+      <%= link_to 'Edit', "#", :onclick => "showTab('highlights'); this.blur(); $('recently_posted').highlight({startColor : '#FF9999'}); return false; ",
+                                                 :class => "icon icon-edit" %>
+    </div>
+    <div style="clear: both"></div>
+    <p><em><%= @highlights[:recently_posted].created_at.strftime("%B %e, %Y") %></em></p>
+    <%= content_tag 'div', textilizable(@highlights[:recently_posted].highlight), :class => "dashboard_highlight" %>
+  <% else %>
+    <div class='contextual h-actions'>
+      <%= link_to 'Edit', "#", :onclick => "showTab('highlights'); this.blur();  jQuery('#current').trigger('click'); jQuery('#current_edit').trigger('click'); return false; ",
+                                                 :class => "icon icon-edit" %>
+    </div>
+    <div style="clear: both"></div>
+    <%= content_tag 'div', 'No Highlights for this project', :class => 'nodata' %>
+  <% end %>
 </div>
 
-<div style="clear: both"></div>
-<%= content_tag 'div', textilizable(@highlights[:current].highlight), :class => "dashboard_highlight" %>
-<hr/>
-<% end %>
-
-<% if @highlights[:after_current]  %>
-<div class='contextual h-actions'>
-  <%= link_to 'Edit', "#", :onclick => "showTab('highlights'); this.blur(); jQuery('#nextp').trigger('click'); jQuery('#nextp_edit').trigger('click'); return false; ",
-                                             :class => "icon icon-edit" %>
+<div class="box">
+  <h3><%=l(:label_dashboard_events)%></h3>
+  <% if @highlights[:after_current]  %>
+    <div class='contextual h-actions'>
+      <%= link_to 'Edit', "#", :onclick => "showTab('highlights'); this.blur(); jQuery('#nextp').trigger('click'); jQuery('#nextp_edit').trigger('click'); return false; ",
+                                                 :class => "icon icon-edit" %>
+    </div>
+    <div style="clear: both"></div>
+    <p><em><%= @highlights[:after_current].created_at.strftime("%B %e, %Y") %></em></p>
+    <%= content_tag 'div', textilizable(@highlights[:after_current].highlight), :class => "dashboard_highlight" %>
+  <% else %>
+    <div class='contextual h-actions'>
+      <%= link_to 'Edit', "#", :onclick => "showTab('highlights'); this.blur(); jQuery('#nextp').trigger('click'); jQuery('#nextp_edit').trigger('click');return false; ",
+                                                 :class => "icon icon-edit" %>
+    </div>
+    <div style="clear: both"></div>
+    <%= content_tag 'div', 'No Highlights for this project', :class => 'nodata' %>
+  <% end %>
 </div>
-
-<div style="clear: both"></div>
-<%= content_tag 'div', textilizable(@highlights[:after_current].highlight), :class => "dashboard_highlight" %>
-<hr/>
-<% end %>
-
-<%  if @highlights[:current].nil? && @highlights[:after_current].nil? && @highlights[:recently_posted] %>
-<div class='contextual h-actions'>
-  <%= link_to 'Edit', "#", :onclick => "showTab('highlights'); this.blur(); $('recently_posted').highlight({startColor : '#FF9999'}); return false; ",
-                                             :class => "icon icon-edit" %>
-</div>
-<div style="clear: both"></div>
-<%= content_tag 'div', textilizable(@highlights[:recently_posted].highlight), :class => "dashboard_highlight" %>
-<hr/>
-<% end %>
-
-<% if @highlights.delete_if {|k,v| v.nil? }.empty? %>
-<div class='contextual h-actions'>
-  <%= link_to 'Edit', "#", :onclick => "showTab('highlights'); this.blur(); jQuery('#current_edit').trigger('click'); return false; ",
-                                             :class => "icon icon-edit" %>
-</div>
-<div style="clear: both"></div>
-<%= content_tag 'div', 'No Highlights for this project', :class => 'nodata' %>
-<% end %>
