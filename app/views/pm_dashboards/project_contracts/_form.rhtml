@@ -4,7 +4,7 @@
  <p><%= f.hidden_field :project_id, :value => @project.id,:class=> 'wiki-edit' %></p>
 <p><%= f.select :status, ProjectContract::STATUSES %></p>
 <hr/>
-
+<p><label><%=l(:label_attachment_plural)%></label><%= render :partial => 'attachments/form' %></p>
 <div style="clear: both;"></div>
 
 <% content_for :header_tags do %>
