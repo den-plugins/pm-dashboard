@@ -48,12 +48,12 @@ class ProjectContractsController < ApplicationController
   end
   
   def get_project_contract
-    @risk = ProjectContract.find(params[:id])
+    @project_contract = ProjectContract.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       render_404
   end
   
-  def redirect_to_risks
-    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :risks
+  def redirect_to_project_contracts
+    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :project_contracts
   end
 end
