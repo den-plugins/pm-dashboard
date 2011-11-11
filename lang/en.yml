@@ -82,6 +82,8 @@ en:
   field_date_closed: Date Closed
   field_days_overdue: Days Overdue
   field_status: Status
+  field_pc_type: Type
+  field_amount: Amount
 
   field_issue_description: Description
   field_env: Env
@@ -113,3 +115,8 @@ en:
   text_update: An update has been made to {{feature}} {{ref_number}}
   text_new: You are the owner of {{feature}} {{ref_number}}
   text_view_details: To view the details, click here {{url}}
+  
+  label_pc_type: Type
+  label_amount: Amount
+  label_description: Description
+  label_status: Status

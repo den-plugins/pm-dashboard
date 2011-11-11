@@ -1,19 +1,19 @@
 <table id="risks" class="list" style='text-align: center; '>
   <thead>
     <tr class='risks_header'>
-	<th><%= l(:pc_type) %></th>
-	<th><%= l(:amount)%></th>
-	<th><%= l(:description)%></th>
-	<th><%= l(:status)%></th>
+	<th><%= l(:label_pc_type) %></th>
+	<th><%= l(:label_amount)%></th>
+	<th><%= l(:label_description)%></th>
+	<th><%= l(:label_status)%></th>
       <th></th>
     </tr>
   </thead>
   <% @project_contracts.each do |pc| %>
       <tr class="<%= cycle('odd', 'even') %>">
-      <td><%= pc.pc_type %></td>
+      <td><%= ProjectContract::TYPES[pc.pc_type].first %></td>
       <td><%= pc.amount %></td>
       <td><%= pc.description %></td>
-      <td><%= pc.status %></td>
+      <td><%= ProjectContract::STATUSES[pc.status].first %></td>
       <td>
         <%# if pc.editable_by?(@user) -%>
         <%= link_to image_tag('edit.png'), {:controller => 'project_contracts', :action => 'update', :id => pc, :project_id => @project},
