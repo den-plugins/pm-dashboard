@@ -10,6 +10,7 @@ module PmDashboardsHelper
             {:label => 'Resource Cost Forecast', :name => 'resource_costs', :partial => 'resource_costs'},
             {:label => 'Milestone Plans', :name => 'milestone_plans', :partial => 'milestone_plans'},
             {:label => 'Poject Contracts', :name => 'project_contracts', :partial => 'project_contracts'},
+            {:label => 'Project Billability', :name => 'billability', :partial => 'project_billability'},
             {:label => 'Weekly Highlights', :name => 'highlights', :partial => 'highlights'}
             ]
     tabs

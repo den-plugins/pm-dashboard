@@ -34,9 +34,9 @@ class PmDashboardsController < ApplicationController
     if !@project.stakeholders.empty?
       @stakeholders.concat(@project.stakeholders.all)
     end
-
-    @proj_team = @project.members.project_team
     
+    @project_resources  = @project.members.select(&:billable?)
+    @proj_team = @project.members.project_team
     update_resource_list if params[:tab].eql?('resource_costs')
     
     @user_custom_fields = CustomField.find(:all, :conditions => "type = 'UserCustomField'")

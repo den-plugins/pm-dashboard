@@ -1,0 +1,20 @@
+<h2>Project Billability/Chargeability History</h2>
+
+<% if @project_resources.any? %>
+  <table class='pmsummary'>
+	  <tr>
+	    <th># of Resources</th>
+	    <td><%= @project_resources.count %></td>
+	  </tr>
+	  <tr>
+	    <th>Billability % to date</th>
+	    <td>%</td>
+	  </tr>
+  </table>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
+<% end %>

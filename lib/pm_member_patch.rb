@@ -53,7 +53,7 @@ module Pm
         allocations = resource_allocations
         unless allocations.empty?
           week.each do |day|
-            allocation = allocations.select{ |a| a.start_date <= day && a.end_date >= day}.first
+            allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
             if allocation and !allocation.resource_allocation.eql? 0
               days += (1 * (allocation.resource_allocation.to_f/100).to_f)
             end
@@ -61,6 +61,14 @@ module Pm
         end
         cost = days * (rate.to_f)
         rate ? [days, cost] : days
+      end
+      
+      def billable?
+        if resource_allocations.empty?
+          false
+        else
+          resource_allocations.reject {|r| r.resource_allocation.eql? 0 }.empty? ? false : true
+        end
       end
     end
   end
