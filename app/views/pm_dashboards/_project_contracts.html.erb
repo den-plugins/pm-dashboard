@@ -1,5 +1,8 @@
 <div class="contextual">
-  <%= link_to "New Project Contract", { :controller => 'project_contracts' , :action => 'add', :project_id => @project}, :class => 'icon icon-add' %>
+  <%= link_to_remote "New Project Contract", {:url => { :controller => 'project_contracts' , :action => 'add', :project_id => @project},
+                                                        :update => "tab-content-project_contracts", 
+                                                        :complete => "new Effect.Highlight('tab-content-project_contracts')"},
+                                                        :class => 'icon icon-add' %>
 </div>
 <h2><%= "Project Contracts" %></h2>
 

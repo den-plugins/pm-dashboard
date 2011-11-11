@@ -11,13 +11,15 @@
   </thead>
   <% @project_contracts.each do |pc| %>
       <tr class="<%= cycle('odd', 'even') %>">
-      <td><%= ProjectContract::TYPES[pc.pc_type].first %></td>
+      <td><%= ProjectContract::TYPES[pc.pc_type].first unless pc.pc_type.nil? %></td>
       <td><%= pc.amount %></td>
       <td><%= pc.description %></td>
       <td><%= ProjectContract::STATUSES[pc.status].first %></td>
-      <td><%= textilizable pc, :description, :attachments => pc.attachments %><%= link_to_attachments pc %></td>
+      <td><%= link_to_attachments pc %></td>
       <td>
-        <%= link_to image_tag('edit.png'), {:controller => 'project_contracts', :action => 'update', :id => pc, :project_id => @project},
+        <%= link_to_remote image_tag('edit.png'), {:url => {:controller => 'project_contracts', :action => 'update', :id => pc, :project_id => @project},
+                                             :update => "tab-content-project_contracts", 
+                                             :complete => "new Effect.Highlight('tab-content-project_contracts')"},
                                              :title => l(:button_edit) %>
         <%= link_to image_tag('delete.png'), {:controller => 'project_contracts', :action => 'destroy', :id => pc, :project_id => @project},
                                              :confirm => l(:text_are_you_sure),
