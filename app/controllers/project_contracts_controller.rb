@@ -12,6 +12,9 @@ class ProjectContractsController < ApplicationController
     if request.get?
       @project_contract = ProjectContract.new
       render :template => "pm_dashboards/project_contracts/add" 
+    elsif request.xhr?
+      @project_contract = ProjectContract.new
+      render :partial => "pm_dashboards/project_contracts/add" 
     else
       @project_contract = @project.project_contracts.create(params[:project_contract])
       if @project_contract.save
@@ -19,7 +22,7 @@ class ProjectContractsController < ApplicationController
         flash[:notice] = l(:notice_successful_create)
         redirect_to_project_contracts
       else
-        render :template => "pm_dashboards/project_contracts/add"
+        render :partial => "pm_dashboards/project_contracts/add"
       end
     end
   end
@@ -27,12 +30,14 @@ class ProjectContractsController < ApplicationController
   def update
     if request.get?
       render :template => "pm_dashboards/project_contracts/edit"
+    elsif request.xhr?
+      render :partial => "pm_dashboards/project_contracts/edit" 
     else
       if @project_contract.update_attributes(params[:project_contract])
         flash[:notice] = l(:notice_successful_update)
         redirect_to_project_contracts
       else
-        render :template => "pm_dashboards/project_contracts/edit"
+        render :partial => "pm_dashboards/project_contracts/edit"
       end
     end
   end
