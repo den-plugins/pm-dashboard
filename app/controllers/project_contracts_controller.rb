@@ -1,6 +1,8 @@
 class ProjectContractsController < ApplicationController
 
   helper :pm_dashboards
+  helper :attachments
+  include AttachmentsHelper
   
   before_filter :require_login
   before_filter :get_project, :only => [:add, :update, :destroy]
@@ -13,8 +15,8 @@ class ProjectContractsController < ApplicationController
     else
       @project_contract = @project.project_contracts.create(params[:project_contract])
       if @project_contract.save
-        flash[:notice] = l(:notice_successful_create)
 	attach_files(@project_contract, params[:attachments])
+        flash[:notice] = l(:notice_successful_create)
         redirect_to_project_contracts
       else
         render :template => "pm_dashboards/project_contracts/add"
