@@ -1,22 +1,14 @@
 <table class='pmsummary'>
 	<tr>
-	  <th><%= l(:label_mean) %></th>
-	  <td><%= "%0.3f" % (@risks ? Risk.average(:final_risk_rating, :conditions => ["project_id = ?", @project]) : 0) %></td>
+	  <th><%= l(:pc_type) %></th>
+	  <th><%= l(:amount)%></th>
+	  <th><%= l(:description)%></th>
+	  <th><%= l(:status)%></th>
 	</tr>
 	<tr>
-	  <th class='red'></th>
-	  <td><%= (@risks.select{|a| (15 .. 25) === a.final_risk_rating }).count %></td>
-	</tr>
-	<tr>
-	  <th class='yellow'></th>
-	  <td><%= (@risks.select{|a| (5 ... 15) === a.final_risk_rating }).count %></td>
-	</tr>
-	<tr>
-	  <th class='green'></th>
-	  <td><%= (@risks.select{|a| (0 ... 5) === a.final_risk_rating }).count %></td>
-	</tr>
-	<tr>
-	  <th><%= l(:label_total) %></th>
-	  <td><%= @risks.count %></td>
+	  <td>test</td>
+	  <td>test</td>
+	  <td>test</td>
+	  <td>test</td>
 	</tr>
 </table>

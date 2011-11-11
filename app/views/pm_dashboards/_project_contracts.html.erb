@@ -3,9 +3,9 @@
 </div>
 <h2><%= "Project Contracts" %></h2>
 
-<% if @risks.any? %>
+<% if @project_contracts.any? %>
   <%= render :partial => 'pm_dashboards/project_contracts/summary' unless params[:q] %>
-  <p><%= link_to l(:label_view_all_risks), :controller => 'pm_dashboards', :project_id => @project, :tab => 'project_contracts'  if params[:q]  %></p>
+  <p><%= link_to l(:label_view_all_project_contracts), :controller => 'pm_dashboards', :project_id => @project, :tab => 'project_contracts'  if params[:q]  %></p>
   <%= render :partial => 'pm_dashboards/project_contracts/list' %>
 <% else %>
   <p class="nodata"><%= l(:label_no_data) %></p>

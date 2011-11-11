@@ -20,6 +20,7 @@ class PmDashboardsController < ApplicationController
     @assumptions ||= @project.assumptions.find(:all, :order => 'ref_number DESC')
     @issues ||= @project.pm_dashboard_issues.find(:all, :order => 'ref_number DESC')
     @risks ||= @project.risks.find(:all, :order => 'ref_number DESC')
+    @project_contracts ||= @project.project_contracts.find(:all, :order => 'id DESC')
 
     @highlights = @project.weekly_highlights
     @key_risks ||= @project.risks.key
@@ -90,6 +91,9 @@ class PmDashboardsController < ApplicationController
         when 'risks'
           @project = Risk.find(params[:q]).project
           @risks = @project.risks.find(params[:q]).to_a
+        when 'project_contracts'
+          @project = ProjectContract.find(params[:q]).project
+          @project_contracts = @project.project_contracts.find(params[:q]).to_a
       end
     end
     rescue ActiveRecord::RecordNotFound

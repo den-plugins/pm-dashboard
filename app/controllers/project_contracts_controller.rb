@@ -4,17 +4,17 @@ class ProjectContractsController < ApplicationController
   
   before_filter :require_login
   before_filter :get_project, :only => [:add, :update, :destroy]
-  #before_filter :get_project_contract, :only => [:update, :destroy]
+  before_filter :get_project_contract, :only => [:update, :destroy]
   
   def add
     if request.get?
-      @risk = Risk.new
+      @project_contract = ProjectContract.new
       render :template => "pm_dashboards/project_contracts/add" 
     else
-      @risk = @project.risks.create(params[:project_contract])
-      if @risk.save
+      @project_contract = @project.project_contracts.create(params[:project_contract])
+      if @project_contract.save
         flash[:notice] = l(:notice_successful_create)
-        redirect_to_risks
+        redirect_to_project_contracts
       else
         render :template => "pm_dashboards/project_contracts/add"
       end
@@ -23,20 +23,20 @@ class ProjectContractsController < ApplicationController
   
   def update
     if request.get?
-      render :template => "pm_dashboards/risks/edit"
+      render :template => "pm_dashboards/project_contracts/edit"
     else
-      if @risk.update_attributes(params[:risk])
+      if @project_contract.update_attributes(params[:project_contract])
         flash[:notice] = l(:notice_successful_update)
-        redirect_to_risks
+        redirect_to_project_contracts
       else
-        render :template => "pm_dashboards/risks/edit"
+        render :template => "pm_dashboards/project_contracts/edit"
       end
     end
   end
     
   def destroy
-    if @risk.destroy
-      redirect_to_risks
+    if @project_contract.destroy
+      redirect_to_project_contracts
     end
   end
     

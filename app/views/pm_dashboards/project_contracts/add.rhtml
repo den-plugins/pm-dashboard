@@ -5,7 +5,7 @@
                                                        :html => {:id => 'project_contract-form'} do |f| %>
   <%= error_messages_for 'project_contract' %>
   <div class="box"> <%= render :partial => 'pm_dashboards/project_contracts/form', :locals => {:f => f} %></div>
-  <%= submit_tag l(:button_save), :onclick => "selectAllOptions('selected_assumptions');selectAllOptions('selected_issues');" %>
+  <%= submit_tag l(:button_save) %>
   <%= link_to 'Cancel', :controller => 'pm_dashboards', :tab => 'project_contracts', :project_id => @project %>
 <% end %>
 
