@@ -14,6 +14,7 @@ class ProjectContractsController < ApplicationController
       @project_contract = @project.project_contracts.create(params[:project_contract])
       if @project_contract.save
         flash[:notice] = l(:notice_successful_create)
+	attach_files(@project_contract, params[:attachments])
         redirect_to_project_contracts
       else
         render :template => "pm_dashboards/project_contracts/add"
