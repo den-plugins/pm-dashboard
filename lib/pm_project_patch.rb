@@ -15,6 +15,7 @@ module Pm
         has_and_belongs_to_many :stakeholders
         has_many :weeks
         has_many :highlights
+        has_many :project_contracts
         
         validates_presence_of :description
         validates_presence_of :client, :if => :validate_client

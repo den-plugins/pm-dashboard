@@ -1,0 +1,16 @@
+<div class="contextual">
+  <%= link_to "New Project Contract", { :controller => 'project_contracts' , :action => 'add', :project_id => @project}, :class => 'icon icon-add' %>
+</div>
+<h2><%= "Project Contracts" %></h2>
+
+<% if @risks.any? %>
+  <%= render :partial => 'pm_dashboards/project_contracts/summary' unless params[:q] %>
+  <p><%= link_to l(:label_view_all_risks), :controller => 'pm_dashboards', :project_id => @project, :tab => 'project_contracts'  if params[:q]  %></p>
+  <%= render :partial => 'pm_dashboards/project_contracts/list' %>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
+
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
+<% end %>

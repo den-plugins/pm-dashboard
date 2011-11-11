@@ -1,0 +1,68 @@
+<table id="risks" class="list" style='text-align: center; '>
+  <thead>
+    <tr class='risks_header'>
+      <th><%= l(:field_key_risk) %></th>
+      <th><%= l(:field_ref_number) %></th>
+      <th><%= l(:field_env) %></th>
+      <th><%= l(:field_date_recorded) %></th>
+      <th><%= l(:field_risk_type) %></th>
+      <th><%= l(:field_risk_description) %></th>
+      <th><%= l(:field_potential_effect) %></th>
+      <th class='narrow'><%= l(:field_probability) %></th>
+      <th class='narrow'><%= l(:field_impact) %></th>
+      <th class='narrow'><%= l(:field_initial_risk_rating) %></th>
+      <th><%= l(:field_owner) %></th>
+      <th><%= l(:field_mitigating_action) %></th>
+      <th class='narrow'><%= l(:field_probability_final) %></th>
+      <th class='narrow'><%= l(:field_impact_final) %></th>
+      <th class='narrow'><%= l(:field_final_risk_rating) %></th>
+      <th><%= l(:field_target_resolution_date) %></th>
+      <th class='narrow'><%= l(:field_days_overdue) %></th>
+      <th><%= l(:field_status) %></th>
+      <th><%= l(:field_related_pm_issues) + "/ <br/>" + l(:field_related_assumptions)%></th>
+      <th></th>
+    </tr>
+  </thead>
+  <% @risks.each do |risk| %>
+      <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= image_tag('true.png') if risk.key_risk %></td>
+      <td><%= risk.ref_number %></td>
+      <td><%= risk.env %></td>
+      <td><%= risk.created_on.to_date %></td>
+      <td><%= risk.risk_type %></td>
+      <td style='text-align: left;'><%= risk.risk_description %></td>
+      <td><%= risk.potential_effect %></td>
+      <td><%= risk.probability %></td>
+      <td><%= risk.impact %></td>
+      <td class="<%= risk_rating_color_code(risk.initial_risk_rating)%>"><%= risk.initial_risk_rating %></td>
+      <td><%= risk.user.name  %></td>
+      <td><%= risk.mitigating_action %></td>
+      <td><%= risk.probability_final %></td>
+      <td><%= risk.impact_final %></td>
+      <td class="<%= risk_rating_color_code(risk.final_risk_rating)%>"><%= risk.final_risk_rating %></td>
+      <td><%= risk.target_resolution_date %></td>
+      <td><%= risk.days_overdue %></td>
+      <td><%= risk.status %></td>
+      <td>
+        <% risk.assumptions.each do |assumption|%>
+          <%= link_to assumption.ref_number, :tab => 'assumptions', :q=> assumption %>
+          <br/>
+        <% end %>
+        <% risk.pm_dashboard_issues.each do |issue|%>
+          <%= link_to issue.ref_number, :tab => 'issues', :q => issue %>
+          <br/>
+        <% end %>
+      </td>
+      <td align="center">
+      <%# if risk.editable_by?(@user) -%>
+        <%= link_to image_tag('edit.png'), {:controller => 'risks', :action => 'update', :id => risk, :project_id => @project},
+                                             :title => l(:button_edit) %>
+        <%= link_to image_tag('delete.png'), {:controller => 'risks', :action => 'destroy', :id => risk, :project_id => @project},
+                                             :confirm => l(:text_are_you_sure),
+                                             :method => :post,
+                                             :title => l(:button_delete) %>
+      <%# end -%>
+    </td>
+    </tr>
+  <% end %>
+</table>

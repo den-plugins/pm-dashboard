@@ -33,6 +33,7 @@ Redmine::Plugin.register :pm_dashboard do
                                                                :update_role_pos, :add_pm_position, :add_pm_role],
                             :resource_allocations => [:index, :add, :edit, :destroy],
                             :risks => [:add, :update, :destroy],
+                            :project_contracts => [:add, :update, :destroy],
                             :stakeholders => [:new, :create, :edit, :update, :remove],
                             :weeks => [:new, :edit]
                         }, :public => false

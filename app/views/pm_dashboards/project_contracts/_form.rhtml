@@ -1,0 +1,14 @@
+<p><%= f.select :type, { "CO" => "1", "SoW" => "2"} %></p>
+ <p><%= f.text_area :description, :rows => 3, :cols => 30, :class=> 'wiki-edit' %></p>
+ <p><%= f.text_field :amount, :class=> 'wiki-edit' %></p>
+ <p><%= f.text_field :project_id, :class=> 'wiki-edit' %></p>
+<p><%= f.select :status, { "CO" => "1", "SoW" => "2"} %></p>
+<hr/>
+
+<div style="clear: both;"></div>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
+  <%= javascript_include_tag 'select_list_move' %>
+  <%= javascript_include_tag 'pm_dashboard', :plugin => 'pm_dashboard'  %>
+<% end %>

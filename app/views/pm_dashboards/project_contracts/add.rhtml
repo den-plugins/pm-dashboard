@@ -1,0 +1,11 @@
+<h2>New Project Contract</h2>
+
+<% labelled_tabular_form_for  :project_contract, @project_contract,
+                                                       :url => {:controller =>  'project_contracts', :action => 'add', :project_id => @project}, 
+                                                       :html => {:id => 'project_contract-form'} do |f| %>
+  <%= error_messages_for 'project_contract' %>
+  <div class="box"> <%= render :partial => 'pm_dashboards/project_contracts/form', :locals => {:f => f} %></div>
+  <%= submit_tag l(:button_save), :onclick => "selectAllOptions('selected_assumptions');selectAllOptions('selected_issues');" %>
+  <%= link_to 'Cancel', :controller => 'pm_dashboards', :tab => 'project_contracts', :project_id => @project %>
+<% end %>
+
