@@ -5,6 +5,7 @@
 	<th><%= l(:label_amount)%></th>
 	<th><%= l(:label_description)%></th>
 	<th><%= l(:label_status)%></th>
+	<th><%= l(:attachment)%></th>
       <th></th>
     </tr>
   </thead>
@@ -14,17 +15,14 @@
       <td><%= pc.amount %></td>
       <td><%= pc.description %></td>
       <td><%= ProjectContract::STATUSES[pc.status].first %></td>
+      <td><%= textilizable pc, :description, :attachments => pc.attachments %><%= link_to_attachments pc %></td>
       <td>
-        <%# if pc.editable_by?(@user) -%>
         <%= link_to image_tag('edit.png'), {:controller => 'project_contracts', :action => 'update', :id => pc, :project_id => @project},
                                              :title => l(:button_edit) %>
         <%= link_to image_tag('delete.png'), {:controller => 'project_contracts', :action => 'destroy', :id => pc, :project_id => @project},
                                              :confirm => l(:text_are_you_sure),
                                              :method => :post,
                                              :title => l(:button_delete) %>
-      <%# end -%>
-<%= textilizable pc, :description, :attachments => pc.attachments %>
-<%#= link_to_attachments @project_contracts %>
       </td>
     </tr>
   <% end %>

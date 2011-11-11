@@ -1,8 +1,6 @@
 class ProjectContractsController < ApplicationController
 
   helper :pm_dashboards
-  helper :attachments
-  include AttachmentsHelper
   
   before_filter :require_login
   before_filter :get_project, :only => [:add, :update, :destroy]
@@ -30,6 +28,7 @@ class ProjectContractsController < ApplicationController
     else
       if @project_contract.update_attributes(params[:project_contract])
         flash[:notice] = l(:notice_successful_update)
+        attachments = attach_files(@project_contract, params[:attachments])
         redirect_to_project_contracts
       else
         render :template => "pm_dashboards/project_contracts/edit"

@@ -8,6 +8,9 @@ class PmDashboardsController < ApplicationController
   helper :pm_dashboard_issues
   helper :resource_costs
   helper :highlights
+  helper :attachments
+  include AttachmentsHelper
+  include Redmine::Export::PDF
 
   before_filter :get_id, :only => [:index]
   before_filter :get_project, :only => [:index, :edit_project]
