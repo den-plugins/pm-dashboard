@@ -1,7 +1,7 @@
 <p><%= f.select :pc_type, ProjectContract::TYPES %></p>
  <p><%= f.text_area :description, :rows => 3, :cols => 30, :class=> 'wiki-edit' %></p>
  <p><%= f.text_field :amount, :class=> 'wiki-edit' %></p>
- <p><%= f.text_hidden :project_id, :value => @project.id,:class=> 'wiki-edit' %></p>
+ <p><%= f.hidden_field :project_id, :value => @project.id,:class=> 'wiki-edit' %></p>
 <p><%= f.select :status, ProjectContract::STATUSES %></p>
 <hr/>
 
