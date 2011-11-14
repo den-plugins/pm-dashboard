@@ -18,7 +18,7 @@ module Pm
       def validate_file_format
         if self.container_type == 'ProjectContract'
           unless self.is_pdf?
-             errors.add(:base, :file_not_pdf)
+             errors.add(:content_type, :file_not_pdf)
           end
         end
       end

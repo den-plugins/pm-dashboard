@@ -16,8 +16,9 @@ class ProjectContractsController < ApplicationController
     else
       @project_contract = @project.project_contracts.create(params[:project_contract])
       if @project_contract.save
-	attach_files(@project_contract, params[:attachments])
+	      attach_files(@project_contract, params[:attachments])
         flash[:notice] = l(:notice_successful_create)
+        flash[:warning] += " File format invalid. Must be PDF." if flash[:warning] && flash[:warning].include?("could not be saved")
         redirect_to_project_contracts
       else
         render :template => "pm_dashboards/project_contracts/add"
@@ -34,6 +35,7 @@ class ProjectContractsController < ApplicationController
       if @project_contract.update_attributes(params[:project_contract])
         attachments = attach_files(@project_contract, params[:attachments])
         flash[:notice] = l(:notice_successful_update)
+        flash[:warning] += " File format invalid. Must be PDF." if flash[:warning] && flash[:warning].include?("could not be saved")
         redirect_to_project_contracts
       else
         render :template => "pm_dashboards/project_contracts/edit"
