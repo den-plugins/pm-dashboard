@@ -1,6 +1,6 @@
 require_dependency 'attachment'
 
-module Custom
+module Pm
   module AttachmentPatch
     def self.included(base)
       base.extend(ClassMethods)

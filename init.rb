@@ -9,6 +9,7 @@ require 'attachment_patch'
 Dispatcher.to_prepare do
   Member.send(:include, Pm::MemberPatch)
   Project.send(:include, Pm::ProjectPatch)
+  Attachment.send(:include, Pm::AttachmentPatch)
 end
 
 config.after_initialize do 
