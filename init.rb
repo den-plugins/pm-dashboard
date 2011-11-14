@@ -4,6 +4,7 @@ require 'dispatcher'
 
 require 'pm_member_patch'
 require 'pm_project_patch'
+require 'attachment_patch'
 
 Dispatcher.to_prepare do
   Member.send(:include, Pm::MemberPatch)

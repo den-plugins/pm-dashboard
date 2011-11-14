@@ -164,3 +164,7 @@ en:
   label_status: Status
   label_attachments: Attachments
 
+activerecord:
+  errors:
+    messages:
+      file_not_pdf: "File uploaded must be only be in PDF format."
