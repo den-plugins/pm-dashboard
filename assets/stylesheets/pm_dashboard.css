@@ -124,6 +124,12 @@ table#resource_costs tr td {
   margin-left: 1px;
 }
 
+div.movable_table_container {
+  float: left;
+  position: relative;
+  overflow-x: auto;
+}
+
 .floating_table {
   float: left;
   display: inline-block;
@@ -284,3 +290,6 @@ div#period span.selected {
   overflow: auto;
   height: 200px;
 }
+
+#billability_table table tr th {white-space: normal; }
+#billability_table table tr td {text-align: center;  }

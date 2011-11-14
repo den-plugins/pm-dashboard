@@ -5,6 +5,23 @@ module ResourceCostsHelper
       start_date.weeks_ago end_date
     end
   end
+  
+  def get_weeks_range(from, to)
+    if from && to
+      weeks = [(from .. (from.monday + 4.days))]
+      from = from.monday + 1.week
+      for i in 0 .. (from.weeks_ago(to)) do
+        if (from.weeks_ago(to)).eql?(0)
+          mon, fri = from.monday, to
+        else
+          mon, fri = from.monday, (from.monday + 4.days)
+        end
+        weeks << (mon .. fri)
+        from = mon + 1.week
+      end
+      weeks
+    end
+  end
 
   def get_months(start_date, end_date)
     unless start_date.nil? or end_date.nil?
