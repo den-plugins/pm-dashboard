@@ -20,7 +20,7 @@ class ProjectContractsController < ApplicationController
         flash[:notice] = l(:notice_successful_create)
         redirect_to_project_contracts
       else
-        render :partial => "pm_dashboards/project_contracts/add"
+        render :template => "pm_dashboards/project_contracts/add"
       end
     end
   end
@@ -36,7 +36,7 @@ class ProjectContractsController < ApplicationController
         flash[:notice] = l(:notice_successful_update)
         redirect_to_project_contracts
       else
-        render :partial => "pm_dashboards/project_contracts/edit"
+        render :template => "pm_dashboards/project_contracts/edit"
       end
     end
   end

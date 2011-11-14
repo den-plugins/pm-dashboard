@@ -5,4 +5,8 @@ class ProjectContract < ActiveRecord::Base
   STATUSES =  [['Please Select',0],['For Sign Off',1],['With Provisional Approval',2],['Signed off',3]]
 
   acts_as_attachable 
+
+  validates_presence_of :amount, :description
+  validates_inclusion_of :pc_type, :in => 1..2
+  validates_inclusion_of :status, :in => 1..3
 end
