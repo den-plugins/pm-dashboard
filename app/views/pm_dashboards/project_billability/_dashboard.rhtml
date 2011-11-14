@@ -1,0 +1,20 @@
+<div style="width: 100%; margin: 0; padding: 0">
+<table class="list">
+  <tr>
+    <th>Billing Model</th>
+    <td><%= @project.billing_model %></td>
+  </tr>
+  <tr>
+    <th>Forecasted Hours</th>
+    <td><%= forecast = @project_resources.sum{|a| a.days_and_cost(@project.planned_start_date .. @project.planned_end_date) * 8 } %></td>
+  </tr>
+  <tr>
+    <th>Total Billable Hours</th>
+    <td><%= actual = @project_resources.sum {|a| a.spent_time(@project.planned_start_date, @project.planned_end_date)} %></td>
+  </tr>
+  <tr>
+    <th>Billability to date %</th>
+    <td><%= "%0.2f" % ((actual/forecast) * 100) unless forecast.eql?(0) %>%</td>
+  </tr>
+</table>  
+</div>

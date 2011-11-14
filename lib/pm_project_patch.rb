@@ -62,6 +62,11 @@ module Pm
         h[:after_current] = highlights.first(:conditions => ["is_for_next_period is true and created_at between ? and ?", next_week, (next_week + 6.days)], :order => "created_at ASC")
         h
       end
+      
+      def billing_model
+        c = custom_values.detect {|v| v.mgt_custom "Billing Model"}
+        c ? c.value : nil
+      end
     end
   end
 end

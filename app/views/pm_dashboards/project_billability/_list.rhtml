@@ -1,6 +1,7 @@
 <% weeks = get_weeks_range(@project.planned_start_date, @project.planned_end_date) %>
 <% temp_billability_per_week = [] %>
 <% bill_total = 0%>
+
 <div class='tables_container'>
   <div class="movable_table_container" style="width: 100%">
     <div style="width: <%= weeks.count * 190 %>px; position: relative;">
@@ -27,10 +28,9 @@
             <th colspan='3'><%= format_date week.last %></th>
           </tr>
           <tr>
-            <% bill = (actual.to_f / forecast.to_f)*100 %>
-            <% temp_billability_per_week << [week.last, bill] %>
-            <% bill_total += bill %>
-            <td colspan='3'><%= "%0.2f" % bill %>%</td>
+            <td colspan='3'><%= bill = "%0.2f" % ((actual.to_f / forecast.to_f)*100) %>%</td>
+            <% temp_billability_per_week << [week.last, bill.to_f] %>
+            <% bill_total += bill.to_f %>
           </tr>
         </table>
       </div>
