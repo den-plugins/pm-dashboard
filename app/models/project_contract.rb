@@ -1,5 +1,6 @@
 class ProjectContract < ActiveRecord::Base
   belongs_to :project
+#  before_save :check_pdf
 
   TYPES =  [['Please Select',0],['SOW',1],['CO',2]]
   STATUSES =  [['Please Select',0],['For Sign Off',1],['With Provisional Approval',2],['Signed off',3]]
@@ -10,4 +11,10 @@ class ProjectContract < ActiveRecord::Base
   validates_presence_of :amount, :description
   validates_inclusion_of :pc_type, :in => 1..2
   validates_inclusion_of :status, :in => 1..3
+
+
+  def check_pdf
+    self.attachments.file.content_type.is_pdf?
+  end
+
 end
