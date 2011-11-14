@@ -6,9 +6,10 @@ module Pm
       base.extend(ClassMethods)
       base.send(:include, InstanceMethods)
       base.class_eval do
-        unloadable 
+        unloadable
 
         has_many :resource_allocations, :dependent => :destroy, :order => "start_date ASC"
+        has_many :time_entries, :through => :user
         belongs_to :pm_role
         belongs_to :pm_position
 
@@ -64,12 +65,21 @@ module Pm
       end
       
       def billable?
-        if resource_allocations.empty?
+        from, to = project.planned_start_date, project.planned_end_date
+        allocations = resource_allocations.select {|a| (a.start_date .. a.end_date).include?(from) || (a.start_date .. a.end_date).include?(to) }
+        if allocations.empty?
           false
         else
-          resource_allocations.reject {|r| r.resource_allocation.eql? 0 }.empty? ? false : true
+          allocations.reject {|r| r.resource_allocation.eql? 0 }.empty? ? false : true
         end
       end
+      
+      def spent_time(from, to)
+        if from && to
+          user.time_entries.sum(:hours, :conditions => ["project_id = ? and spent_on between ? and ?", project_id, from, to])
+        end
+      end
+    
     end
   end
 end

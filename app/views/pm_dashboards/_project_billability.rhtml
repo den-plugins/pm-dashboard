@@ -1,16 +1,8 @@
 <h2>Project Billability/Chargeability History</h2>
 
 <% if @project_resources.any? %>
-  <table class='pmsummary'>
-	  <tr>
-	    <th># of Resources</th>
-	    <td><%= @project_resources.count %></td>
-	  </tr>
-	  <tr>
-	    <th>Billability % to date</th>
-	    <td>%</td>
-	  </tr>
-  </table>
+  <%= render :partial => "pm_dashboards/project_billability/summary" %>
+  <%= render :partial => "pm_dashboards/project_billability/list" %>
 <% else %>
   <p class="nodata"><%= l(:label_no_data) %></p>
 <% end %>
