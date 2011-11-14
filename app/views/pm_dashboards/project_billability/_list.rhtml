@@ -1,4 +1,5 @@
 <% weeks = get_weeks_range(@project.planned_start_date, @project.planned_end_date) %>
+<% temp_billability_per_week = [] %>
 <% bill_total = 0%>
 <div class='tables_container'>
   <div class="movable_table_container" style="width: 100%">
@@ -27,22 +28,30 @@
           </tr>
           <tr>
             <% bill = (actual.to_f / forecast.to_f)*100 %>
+            <% temp_billability_per_week << [week.last, bill] %>
             <% bill_total += bill %>
             <td colspan='3'><%= "%0.2f" % bill %>%</td>
           </tr>
         </table>
       </div>
       <% end %>
+      <% PmDashboard.billability_percent_per_week = temp_billability_per_week.to_json %>
     </div>
   </div>
+</div>
+<div class="clear"></div>
+<hr />
+<div id="chart_content" style="height: 500px; width: 700px; margin: auto;" >
+  <div id="jchart" style="height: 300px; width: 600px;"></div>
 </div>
 
 <% content_for :header_tags do %>
   <%= javascript_include_tag 'jquery_tools', :plugin => 'management' %>
 <% end %>
 
-<script>
+<script type="text/javascript">
   j = jQuery.noConflict();
   jQuery(".movable_table_container").scrollable({circular: false, mousewheel: true});
   jQuery('#billability_percent_to_date').text("<%= h('%0.2f' % (bill_total/weeks.count)) %>%");
 </script>
+
