@@ -168,3 +168,4 @@ en:
     errors:
       messages:
         file_not_pdf: "File uploaded must be only be in PDF format."
+        field_attachments: "File uploaded must be only be in PDF format."
