@@ -4,9 +4,8 @@
   <tr>
     <td><span>Reporting Period</span><%=  %></td>
     <td><span>Overall Status</span><%=  %></td>
-    <td><span>Overall % Complete</span><%=  %></td>  
+    <td><span>Overall % Complete</span><%=  %></td>
   </tr>
-  
   
   <tr>
     <td><span>Schedule</span><%= %></td>
@@ -85,8 +84,10 @@
       
     <div class="box">
       <h3><%=l(:label_dashboard_billability)%></h3>
+      <%= render :partial => "pm_dashboards/project_billability/dashboard" %>
+      <div id="bchart2"></div>
     </div>
-  </div>   
+  </div>
   
   <div class="singleCol">
     <div class="box">

@@ -2,6 +2,7 @@
   <%= javascript_include_tag 'prototype' %>
   <%= javascript_include_tag 'jquery', :plugin => 'pm_dashboard' %>
   <%= javascript_include_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
+  <%= stylesheet_link_tag 'jquery.jqplot.css', :plugin => 'redmine_burndown' %>
 <% end %>
 
 <%= include_calendar_headers_tags %>
@@ -48,3 +49,24 @@
                        :style => (tab[:name] != selected_tab ? 'display:none' : nil),
                        :class => 'tab-content') %>
 <% end -%>
+
+<%= javascript_include_tag 'jquery.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'jquery.jqplot.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.canvasAxisLabelRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.canvasTextRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.cursor.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.dateAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.highlighter.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'billability_chart.js', :plugin => 'pm_dashboard' %>
+<script type="text/javascript">
+  var isplotted = false;
+  jQuery(document).ready(function(){
+    plot_chart("bchart2", [<%= PmDashboard.billability_percent_per_week %>]);
+    jQuery("#tab-billability").click(function(){
+      if(!isplotted){
+        plot_chart("bchart1", [<%= PmDashboard.billability_percent_per_week %>]);
+        isplotted = true;
+      }
+    });
+  });
+</script>
