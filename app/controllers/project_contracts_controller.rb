@@ -15,7 +15,7 @@ class ProjectContractsController < ApplicationController
       render :partial => "pm_dashboards/project_contracts/add" 
     else
       attachments = {:attached_files => params[:attachments]}
-      @project_contract = @project.project_contracts.build(params[:project_contract].merge(attachments))
+      @project_contract = @project.project_contracts.create(params[:project_contract].merge(attachments))
       if @project_contract.save
         flash[:notice] = l(:notice_successful_create)
         redirect_to_project_contracts
