@@ -16,11 +16,10 @@ class ProjectContractsController < ApplicationController
     else
       attachments = {:attached_files => params[:attachments]}
       @project_contract = @project.project_contracts.create(params[:project_contract].merge(attachments))
-      if @project_contract.save
+      if @project_contract.errors.empty?
         flash[:notice] = l(:notice_successful_create)
         redirect_to_project_contracts
       else
-        puts "----------" + @project_contract.errors.inspect + "----------"
         render :template => "pm_dashboards/project_contracts/add"
       end
     end
@@ -32,10 +31,9 @@ class ProjectContractsController < ApplicationController
     elsif request.xhr?
       render :partial => "pm_dashboards/project_contracts/edit" 
     else
-      if @project_contract.update_attributes(params[:project_contract])
-        attachments = attach_files(@project_contract, params[:attachments])
+      attachments = {:attached_files => params[:attachments]}
+      if @project_contract.update_attributes(params[:project_contract].merge(attachments))
         flash[:notice] = l(:notice_successful_update)
-        flash[:warning] += " File format invalid. Must be PDF." if flash[:warning] && flash[:warning].include?("could not be saved")
         redirect_to_project_contracts
       else
         render :template => "pm_dashboards/project_contracts/edit"

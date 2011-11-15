@@ -7,7 +7,6 @@ module Pm
       base.send(:include, InstanceMethods)
       base.class_eval do
          unloadable # Send unloadable so it will not be unloaded in development
-         validate :validate_file_format
        end
     end
     
@@ -18,7 +17,7 @@ module Pm
       def validate_file_format
         if self.container_type == 'ProjectContract'
           unless self.is_pdf?
-             errors.add(:content_type, :file_not_pdf)
+             errors.add_to_base :file_not_pdf
           end
         end
       end
