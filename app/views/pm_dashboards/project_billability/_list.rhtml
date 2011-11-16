@@ -22,7 +22,7 @@
             <td><%= actual = @project_resources.sum {|a| a.spent_time(week.first, week.last)} %></td>
           </tr>
           <tr>
-            <td>&nbsp;</td>
+            <td colspan='3'>&nbsp;</td>
           </tr>
           <tr>
             <th colspan='3'><%= format_date week.last %></th>
@@ -39,8 +39,7 @@
     </div>
   </div>
 </div>
-<div class="clear"></div>
-<hr />
+<div class="clear" style="padding: 30px;"></div>
 <div id="chart_content" style="height: 500px; width: 700px; margin: auto;" >
   <div id="bchart1" style="height: 300px; width: 600px;"></div>
 </div>

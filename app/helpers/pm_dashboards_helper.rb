@@ -9,8 +9,9 @@ module PmDashboardsHelper
             {:label => 'Change Control', :name => 'change_control', :partial => 'change_control'},
             {:label => 'Resource Cost Forecast', :name => 'resource_costs', :partial => 'resource_costs'},
             {:label => 'Project Billability', :name => 'billability', :partial => 'project_billability'},
+            {:label => 'Project Cost Monitoring', :name => 'cost_monitoring', :partial => 'cost_monitoring'},
             {:label => 'Milestone Plans', :name => 'milestone_plans', :partial => 'milestone_plans'},
-            {:label => 'Poject Contracts', :name => 'project_contracts', :partial => 'project_contracts'},
+            {:label => 'Project Contracts', :name => 'project_contracts', :partial => 'project_contracts'},
             {:label => 'Weekly Highlights', :name => 'highlights', :partial => 'highlights'}
             ]
     tabs
