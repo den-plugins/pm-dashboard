@@ -163,6 +163,7 @@ en:
   label_description: Description
   label_status: Status
   label_attachments: Attachments
+  label_total_amount: Total Amount
 
   activerecord:
     errors:

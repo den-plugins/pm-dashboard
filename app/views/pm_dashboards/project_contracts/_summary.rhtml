@@ -1,6 +1,6 @@
 <table class='pmsummary'>
 	<tr>
-	  <th><%= l(:label_total) %></th>
-	  <td><%= @project_contracts.count %></td>
+	  <th><%= l(:label_total_amount) %></th>
+	  <td><%= @project_contracts.sum(&:amount) %></td>
 	</tr>
 </table>
