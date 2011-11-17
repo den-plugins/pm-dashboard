@@ -1,4 +1,7 @@
 class ResourceAllocation < ActiveRecord::Base
+ 
+  TYPES =  [['Billable',0],['Non-billable',1],['Project Shadow',2]]  
+
   belongs_to :member
   
   validates_presence_of :start_date, :end_date, :resource_allocation

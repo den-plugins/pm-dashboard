@@ -91,7 +91,7 @@ span.button-like {
   -moz-border-radius: 2px;
   border-radius: 3px;
   padding: 3px 5px;
-  width: 51px;
+  /*width: 51px;*/
   margin-top: 2px;
   margin-bottom: 1px;
 }
@@ -101,7 +101,7 @@ span.button-like {
 }
 
 #facebox .popup {
-  width: 430px;
+  width: 560px;
 }
 
 #facebox .tl, #facebox .tr, #facebox .bl, #facebox .br {
@@ -300,3 +300,5 @@ div#period span.selected {
 
 #billability_table table tr th {white-space: normal; }
 #billability_table table tr td {text-align: center;  }
+
+#facebox .tl, #facebox .tr, #facebox .bl, #facebox .br { width: 7px;}
