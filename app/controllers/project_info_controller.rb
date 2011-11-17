@@ -26,6 +26,9 @@ class ProjectInfoController < ApplicationController
   end
 
   def pm_member_update
+    @positions = PmPosition.find(:all) #Positions created by PM
+    bool = ((params[:classification].eql?("stakeholder"))? true : false)
+    @roles = PmRole.find(:all, :conditions => "for_stakeholder = #{bool}") #Roles created by PM
     if request.post? and !request.xhr?
       @member = Member.find(params[:id]) 
       @project = @member.project
