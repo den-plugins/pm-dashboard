@@ -27,50 +27,7 @@
   <div class="singleCol">
     <div class="box">
       <h3><%=l(:label_dashboard_status_as_of)%></h3>
-      
-      <table id="pm_dashboard_financial" class="list issues" style='text-align: center; '>
-	      <tr>
-	        <th><%= l(:label_billing_model) %></th>
-	        <th><%= l(:label_time_material) %></th>
-	      </tr>
-	      <tr>
-	        <th><%= l(:label_budget_amount) %></th>
-	        <td></td>
-	      </tr>
-	      <tr>
-	        <th><%= l(:label_contingency_amount) %></th>
-	        <td></td>
-	      </tr>
-	      <tr>
-	        <th><%= l(:label_total_budget) %></th>
-	        <td></td>
-	      </tr>
-	      <tr>
-	        <th><%= l(:label_budget_cumulative) %></th>
-	        <td></td>
-	      </tr>
-	      <tr>
-	        <th><%= l(:label_actuals_cumulative) %></th>
-	        <td></td>
-	      </tr>
-	      <tr>
-	        <th><%= l(:label_variance_amount) %></th>
-	        <td></td>
-	      </tr>
-	      <tr>
-	        <th><%= l(:label_variance_percent) %></th>
-	        <td></td>
-	      </tr>
-	      <tr>
-	        <th><%= l(:label_variance_at_complete) %></th>
-	        <td></td>
-	      </tr>
-	      <tr>
-	        <th><%= l(:label_vac) %></th>
-	        <td></td>
-	      </tr>	      
-      </table>
-      
+      <%= render :partial => "pm_dashboards/project_billability/cost_monitoring_dashboard" %>
     </div>
 
     <div class="box">
@@ -85,7 +42,6 @@
     <div class="box">
       <h3><%=l(:label_dashboard_billability)%></h3>
       <%= render :partial => "pm_dashboards/project_billability/dashboard" %>
-      <div id="bchart2"></div>
     </div>
   </div>
   

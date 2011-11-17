@@ -1,3 +1,10 @@
+.nodata {
+  text-align: center;
+  background-color: #E1E1E1;
+  border-color: #E4E4E4;
+  color: black;
+}
+
 table.pmsummary {
   float: right;
   margin: 10px 0;
@@ -57,7 +64,6 @@ div.guide p {
 .splitcontentleft table, .splitcontentright table {
   margin-left: 180px;
 }
-
 
 .resources_container {
   float: left;
@@ -251,6 +257,7 @@ div.week_highlight {
   overflow: auto;
   padding: 5px;
 }
+
 .highlighttext span.content_text { margin-top: 40px; display: block; }
 
 div#period {
