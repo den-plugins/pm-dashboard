@@ -43,14 +43,3 @@
 <div id="chart_content" style="height: 500px; width: 700px; margin: auto;" >
   <div id="bchart1" style="height: 300px; width: 600px;"></div>
 </div>
-
-<% content_for :header_tags do %>
-  <%= javascript_include_tag 'jquery_tools', :plugin => 'management' %>
-<% end %>
-
-<script type="text/javascript">
-  j = jQuery.noConflict();
-  jQuery(".movable_table_container").scrollable({circular: false, mousewheel: true});
-  jQuery('#billability_percent_to_date').text("<%= h('%0.2f' % (bill_total/weeks.count)) %>%");
-</script>
-
