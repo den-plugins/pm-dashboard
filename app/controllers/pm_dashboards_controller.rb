@@ -9,6 +9,7 @@ class PmDashboardsController < ApplicationController
   helper :resource_costs
   helper :highlights
   helper :attachments
+  helper :project_billability
   include AttachmentsHelper
   include Redmine::Export::PDF
 

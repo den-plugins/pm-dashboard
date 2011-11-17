@@ -7,7 +7,7 @@ class ResourceAllocation < ActiveRecord::Base
   before_save :validate_dates, :validate_overlapping_dates
   
   def validate_dates
-    if start_date && end_date && (start_date > end_date || start_date == end_date)
+    if start_date && end_date && (start_date > end_date)
       errors.add(:start_date, 'must be earlier than End Date')
       return false
     end

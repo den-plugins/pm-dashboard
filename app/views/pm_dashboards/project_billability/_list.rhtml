@@ -17,7 +17,7 @@
             <th>Actuals (Billable)</th>
           </tr>
           <tr>
-            <td><%= week.count * 8 * @project_resources.count %></td>
+            <td><%= compute_labor_hours week, @project_resources %></td>
             <td><%= forecast = @project_resources.sum {|a| a.days_and_cost(week) * 8} %></td>
             <td><%= actual = @project_resources.sum {|a| a.spent_time(week.first, week.last)} %></td>
           </tr>

@@ -66,8 +66,8 @@ module Pm
         rate ? [days, cost] : days
       end
       
-      def billable?
-        from, to = project.planned_start_date, project.planned_end_date
+      def billable?(from=nil, to=nil)
+        from, to = project.planned_start_date, project.planned_end_date unless from && to
         allocations = resource_allocations.select {|a| (a.start_date .. a.end_date).include?(from) || (a.start_date .. a.end_date).include?(to) }
         if allocations.empty?
           false
