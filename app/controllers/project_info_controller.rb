@@ -34,7 +34,9 @@ class ProjectInfoController < ApplicationController
       @project = @member.project
 
       if @member.update_attributes(params[:member])
-        redirect_to_info
+        render(:update) {|page| page.replace_html "tr_#{params[:classif]}_#{@member.id}",
+        {:partial => "pm_dashboards/project_info/pm_member_edit",
+         :locals => {:member => @member}}}
       end
     else 
       if params[:classification]
