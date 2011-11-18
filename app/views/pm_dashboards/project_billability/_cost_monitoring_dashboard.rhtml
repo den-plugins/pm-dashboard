@@ -6,39 +6,24 @@
       <td><%= @project.billing_model %></td>
     </tr>
     <tr>
-      <th><%= l(:label_budget_amount) %></th>
+      <th>Budget</th>
+      <td><%= number_to_currency @total_budget %></td>
+    </tr>
+    <tr>
+      <th>Forecast</th>
+      <td><%= forecast = compute_forecasted_hours((@project.planned_start_date..@project.planned_end_date), @project_resources) %></td>
+    </tr>
+    <tr>
+      <th>Actuals</th>
+      <%# weeks = get_weeks_range(@project.planned_start_date, @project.planned_end_date) %>
+      <td><%#= actual = compute_actual_hours weeks, @project_resources %></td>
+    </tr>
+    <tr>
+      <th>Variants</th>
       <td></td>
     </tr>
     <tr>
-      <th><%= l(:label_contingency_amount) %></th>
-      <td></td>
-    </tr>
-    <tr>
-      <th><%= l(:label_total_budget) %></th>
-      <td></td>
-    </tr>
-    <tr>
-      <th><%= l(:label_budget_cumulative) %></th>
-      <td></td>
-    </tr>
-    <tr>
-      <th><%= l(:label_actuals_cumulative) %></th>
-      <td></td>
-    </tr>
-    <tr>
-      <th><%= l(:label_variance_amount) %></th>
-      <td></td>
-    </tr>
-    <tr>
-      <th><%= l(:label_variance_percent) %></th>
-      <td></td>
-    </tr>
-    <tr>
-      <th><%= l(:label_variance_at_complete) %></th>
-      <td></td>
-    </tr>
-    <tr>
-      <th><%= l(:label_vac) %></th>
+      <th>Graph</th>
       <td></td>
     </tr>	      
   </table>
@@ -46,5 +31,4 @@
 <% else %>
   <p class='nodata'>Not Applicable</p>
 <% end %>
-
 
