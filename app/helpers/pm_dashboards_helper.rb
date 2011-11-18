@@ -12,7 +12,7 @@ module PmDashboardsHelper
             {:label => 'Milestone Plans', :name => 'milestone_plans', :partial => 'milestone_plans'},
             {:label => 'Project Contracts', :name => 'project_contracts', :partial => 'project_contracts'},
             {:label => 'Weekly Highlights', :name => 'highlights', :partial => 'highlights'}
-            ]
+           ]
     tabs
   end
   
@@ -61,7 +61,7 @@ module PmDashboardsHelper
   
   def display_by_billing_model
     if @project.billing_model
-      if @project.billing_model.downcase.eql?("fixed cost")
+      if @project.billing_model.scan(/^(Fixed)/).flatten.present?
         "fixed"
       elsif @project.billing_model.scan(/^(T and M)/i).flatten.present?
         "billability"
