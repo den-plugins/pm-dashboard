@@ -49,7 +49,7 @@ module Pm
         pmrole
       end
       
-      def days_and_cost(week, rate = nil)
+      def days_and_cost(week, rate = nil, count_shadow=true)
         days, cost = 0, 0
         allocations = resource_allocations
         unless allocations.empty?
@@ -57,7 +57,11 @@ module Pm
             unless day.wday.eql?(0) || day.wday.eql?(6)
               allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
               if allocation and !allocation.resource_allocation.eql? 0
-                days += (1 * (allocation.resource_allocation.to_f/100).to_f)
+                if count_shadow
+                  days += (1 * (allocation.resource_allocation.to_f/100).to_f)
+                else
+                  days += (1 * (allocation.resource_allocation.to_f/100).to_f) unless allocation.resource_type.eql?(2)
+                end
               end
             end
           end

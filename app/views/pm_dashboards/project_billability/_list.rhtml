@@ -18,8 +18,8 @@
           </tr>
           <tr>
             <td><%= compute_labor_hours week, @project_resources %></td>
-            <td><%= forecast = @project_resources.sum {|a| a.days_and_cost(week) * 8} %></td>
-            <td><%= actual = @project_resources.sum {|a| a.spent_time(week.first, week.last)} %></td>
+            <td><%= forecast = compute_forecasted_hours week, @project_resources %></td>
+            <td><%= actual = compute_actual_hours week, @project_resources %></td>
           </tr>
           <tr>
             <td colspan='3'>&nbsp;</td>
@@ -28,7 +28,7 @@
             <th colspan='3'><%= format_date week.last %></th>
           </tr>
           <tr>
-            <td colspan='3'><%= bill = "%0.2f" % ((actual.to_f / forecast.to_f)*100) %>%</td>
+            <td colspan='3'><%= bill = compute_percent_to_date forecast, actual %>%</td>
             <% temp_billability_per_week << [week.last, bill.to_f] %>
             <% bill_total += bill.to_f %>
           </tr>
@@ -43,3 +43,8 @@
 <div id="chart_content" style="height: 500px; width: 700px; margin: auto;" >
   <div id="bchart1" style="height: 300px; width: 600px;"></div>
 </div>
+
+<script type="text/javascript">
+  j = jQuery.noConflict();
+  jQuery('#billability_percent_to_date').text("<%= h('%0.2f' % (bill_total/weeks.count)) %>%");
+</script>

@@ -60,7 +60,9 @@
 <script type="text/javascript">
   var isplotted = false;
   jQuery(document).ready(function(){
-    plot_chart("bchart2", [<%= PmDashboard.billability_percent_per_week %>]);
+    if (jQuery("#bchart2").length > 0){
+      plot_chart("bchart2", [<%= PmDashboard.billability_percent_per_week %>]);
+    }
     jQuery("#tab-billability").click(function(){
       if(!isplotted){
         plot_chart("bchart1", [<%= PmDashboard.billability_percent_per_week %>]);

@@ -60,10 +60,12 @@ module PmDashboardsHelper
   end
   
   def display_by_billing_model
-    if @project.billing_model.downcase.eql?("fixed cost")
-      "fixed"
-    elsif @project.billing_model.scan(/^(T and M)/i).flatten.present?
-      "billability"
+    if @project.billing_model
+      if @project.billing_model.downcase.eql?("fixed cost")
+        "fixed"
+      elsif @project.billing_model.scan(/^(T and M)/i).flatten.present?
+        "billability"
+      end
     end
   end
 end

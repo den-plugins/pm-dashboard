@@ -4,8 +4,8 @@
                                                                        content_tag('span', 'calendar', :style => "width: 17px; text-indent: -9999px; display: inline-block;"),
                                                      :end => content_tag('input', '', :value => "#{allocation.end_date}", :readonly => 'readonly', :size => 10) + 
                                                                      content_tag('span', 'calendar', :style => "width: 17px; text-indent: -9999px; display: inline-block;")) %>
-  <span class='button-like'><%= allocation.resource_allocation %> %</span>
-  <span class='button-like'><%= ResourceAllocation::TYPES[allocation.resource_type].first unless allocation.resource_type.nil? %></span>
+  <span class='button-like' style="width: 51px;"><%= allocation.resource_allocation %> %</span>
+  <span class='button-like' style="width: 114px;"><%= allocation.resource_type.nil? ? "&nbsp;" : ResourceAllocation::TYPES[allocation.resource_type].first %></span>
   
   <%= link_to_function image_tag('edit.png'), "edit_allocations(#{allocation.id})" %>
   <%= link_to_remote image_tag('delete.png', :size => "13x13"),
