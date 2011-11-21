@@ -32,7 +32,7 @@
                   total_cost += cost
           %>
           <td><%= actual_days %></td>
-          <td class='cost'><%= number_to_currency cost.to_f %></td>
+          <td class='cost'><%= cost.to_f %></td>
         <% end %>
         </tr>
         <%  reset_cycle('members')
@@ -46,7 +46,7 @@
           
         <tr>
           <th style='text-align: left'><%= total_days %></th>
-          <th class='cost'><%= number_to_currency total_cost.to_f %></th>
+          <th class='cost'><%= total_cost.to_f %></th>
         </tr>
         
        <tr></tr>
