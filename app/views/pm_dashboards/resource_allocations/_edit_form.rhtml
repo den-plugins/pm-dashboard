@@ -12,6 +12,7 @@
                                                                         calendar_for("allocation_#{allocation.id}_end_date")) %>
     <%= f.select :resource_allocation, ((0..4).to_a.collect {|a| ["#{a*25} %", a*25] }) %>
     <%= f.select :resource_type, ResourceAllocation::TYPES %>
+    <%= f.select :location, Holiday::LOCATIONS.sort.collect {|p| [ p[1], p[0] ] } %>
     <%= link_to_remote '', :url => {:controller => 'resource_allocations', :action => 'index', :member_id => @member, :cancel => true },
                                           :html => {:class => "icon icon-cancel"} %>
     <%= image_submit_tag('true.png') %>

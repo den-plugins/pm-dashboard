@@ -13,6 +13,7 @@
                                                            :end => (f.text_field :end_date, :size => 10) + calendar_for("resource_allocations_#{r.id}_end_date")) %>
         <%= f.select :resource_allocation, ((0..4).to_a.collect {|a| ["#{a*25} %", a*25] }) %>
         <%= f.select :resource_type, ResourceAllocation::TYPES %>
+	<%= f.select :location, Holiday::LOCATIONS.sort.collect {|p| [ p[1], p[0] ] } %>
       </p>
     <% end %>
   <% end %>
