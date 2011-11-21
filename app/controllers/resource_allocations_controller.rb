@@ -3,6 +3,7 @@ class ResourceAllocationsController < ApplicationController
   
   helper :pm_dashboards
   helper :resource_costs
+  helper :project_billability
   
   before_filter :get_member
   before_filter :get_project
@@ -88,10 +89,17 @@ class ResourceAllocationsController < ApplicationController
   def render_updates
     @proj_team = @project.members.project_team
     @resource_allocations = @member.resource_allocations
+    @project_resources = @project.members.select(&:billable?)
     render :update do |page|
       page.replace "allocations_#{@member.id}", :partial => 'pm_dashboards/resource_allocations/index'
       page.replace_html :resource_costs_header , :partial => 'pm_dashboards/resource_costs/header'
       page.replace_html :resource_members_content, :partial => 'pm_dashboards/resource_costs/list'
+
+      # replace tabs affected by resource_allocation change
+      page.replace_html "dashboard_header", :partial => 'pm_dashboards/dashboard_header'
+      page.replace_html "dashboard_cost_monitoring", :partial => 'pm_dashboards/project_billability/cost_monitoring_dashboard'
+      page.replace_html "dashboard_billability", :partial => 'pm_dashboards/project_billability/billability_dashboard'
+      page.replace_html "tab-content-billability", :partial => 'pm_dashboards/project_billability'
     end
   end
 end
