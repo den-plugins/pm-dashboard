@@ -56,8 +56,8 @@ module Pm
           week.each do |day|
             unless day.wday.eql?(0) || day.wday.eql?(6)
               allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
-              if !user.nil?
-              	holiday = user.location.blank? ? 0 : Holiday.count(:all, :conditions => ["event_date=? and location=?", day, allocation.location])
+              if !allocation.nil?
+              	holiday = allocation.location.blank? ? 0 : Holiday.count(:all, :conditions => ["event_date=? and location=?", day, allocation.location])
  	      end
               if allocation and !allocation.resource_allocation.eql?(0) and holiday.eql?(0)
                 if count_shadow
