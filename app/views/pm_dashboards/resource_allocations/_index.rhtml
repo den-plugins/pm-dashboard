@@ -3,7 +3,7 @@
     <%= render :partial => 'pm_dashboards/resource_allocations/actions' %>
   </div>
 
-  <p>Project Allocation of <%= @member.name %></p>
+  <p>Project Allocation of <b><%= @member.name %></b></p>
 
   <div id='allocation_show' style="width: 100%; margin-top: 20px;" >
   <% unless @resource_allocations.empty? %>
