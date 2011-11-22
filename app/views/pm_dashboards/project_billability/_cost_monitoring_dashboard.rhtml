@@ -4,19 +4,15 @@
     <tr>
       <th><%= l(:label_billing_model) %></th>
       <td><%= @project.billing_model %></td>
+      <th>Budget</th>
+      <td><%= number_to_currency @total_budget %></td>
     </tr>
 
   <%  @contingency_amount = @bac_amount.to_f * (@project.contingency.to_f/100)
           @total_budget = @bac_amount.to_f + @contingency_amount  %>
     <tr>
-      <th>Budget</th>
-      <td><%= number_to_currency @total_budget %></td>
-    </tr>
-    <tr>
       <th>Forecast</th>
       <td><%= forecast = compute_forecasted_hours((@project.planned_start_date..@project.planned_end_date), @project_resources) %></td>
-    </tr>
-    <tr>
       <th>Actuals</th>
       <td><%= actual = compute_actual_hours((@project.planned_start_date..@project.planned_end_date), @project_resources) %></td>
     </tr>
