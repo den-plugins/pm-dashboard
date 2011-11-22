@@ -29,7 +29,7 @@
           </tr>
           <tr>
             <td colspan='3'><%= bill = compute_percent_to_date forecast, actual %>%</td>
-            <% temp_billability_per_week << [week.last, bill.to_f] %>
+            <% temp_billability_per_week << [week.last, bill.to_f] if week.last < (Date.today.monday + 4.days) %>
             <% bill_total += bill.to_f %>
           </tr>
         </table>

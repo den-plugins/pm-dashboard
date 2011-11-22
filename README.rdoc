@@ -23,12 +23,21 @@ Features/Behaviors PM Dashboard Plugin
   - view cost summaries per week, per month, overall (total)
   - defaults: weekly view, SOW rate
   - edit contingency percentage for the project
+
+## Project Billability
+  - view labour, forecast, and actual hours of all billable members of project,
+    where billable_member = member with resource_allocation != 0 && resource_type = billable within project duration
+  - view graph of billability history, from project start date to recent week
   
 ## Milestone Plans
   - view list of versions for the project
   - edit/delete project versions
   - edit/set state of the project version: planning, active, accepted
-  
+
+## Project Contracts
+  - create, list, edit project contracts
+  - attach pdf file/s to a project contract
+
 ## Weekly Highlights
   >> in PM Dashboard (Weekly Highlights box)
      - view, edit the progress for this period (this week) and the progress planned for next period (next week)

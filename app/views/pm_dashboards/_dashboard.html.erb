@@ -1,4 +1,6 @@
-<%= render :partial => "dashboard_header" %>
+<div id='dashboard_header'>
+  <%= render :partial => "pm_dashboards/dashboard_header" %>
+</div>
 
 <table id="pm_dashboard_header">
   <tr>
@@ -25,8 +27,7 @@
   </div>
     
   <div class="singleCol">
-    <div class="box">
-      <h3><%=l(:label_dashboard_status_as_of)%></h3>
+    <div class="box" id="dashboard_cost_monitoring">
       <%= render :partial => "pm_dashboards/project_billability/cost_monitoring_dashboard" %>
     </div>
 
@@ -39,8 +40,7 @@
       </ul>
     </div>
       
-    <div class="box">
-      <h3><%=l(:label_dashboard_billability)%></h3>
+    <div class="box" id="dashboard_billability">
       <%= render :partial => "pm_dashboards/project_billability/billability_dashboard" %>
     </div>
   </div>
