@@ -49,14 +49,17 @@
                        :style => (tab[:name] != selected_tab ? 'display:none' : nil),
                        :class => 'tab-content') %>
 <% end -%>
-
 <%= javascript_include_tag 'jquery.jqplot.js', :plugin => 'redmine_burndown' %>
 <%= javascript_include_tag 'plugins/jqplot.canvasAxisLabelRenderer.min.js', :plugin => 'redmine_burndown' %>
 <%= javascript_include_tag 'plugins/jqplot.canvasTextRenderer.min.js', :plugin => 'redmine_burndown' %>
 <%= javascript_include_tag 'plugins/jqplot.cursor.min.js', :plugin => 'redmine_burndown' %>
 <%= javascript_include_tag 'plugins/jqplot.dateAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
 <%= javascript_include_tag 'plugins/jqplot.highlighter.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.barRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.categoryAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.pointLabels.min.js', :plugin => 'redmine_burndown' %>
 <%= javascript_include_tag 'billability_chart.js', :plugin => 'pm_dashboard' %>
+<%= javascript_include_tag 'cost_chart.js', :plugin => 'pm_dashboard' %>
 <script type="text/javascript">
   var isplotted = false;
   jQuery(document).ready(function(){
@@ -69,5 +72,7 @@
         isplotted = true;
       }
     });
+        jQuery('#bar_chart').empty();
+        plot_cost("bar_chart", [[[<%= @cost_budget %>,"Baseline"]], [[<%= @cost_forecast%>,"Forecast"]], [[<%= @cost_actual%>,"Actuals"]]]);
   });
 </script>
