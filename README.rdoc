@@ -19,7 +19,7 @@ Features/Behaviors PM Dashboard Plugin
   - add, edit, delete project risks
   
 ## Resource Cost Forecast
-  - view weekly/monthly view of cost per member according to their rate (internal/SOW)
+  - view weekly/monthly view of cost per member (in Project Team) according to their rate (internal/SOW)
   - view cost summaries per week, per month, overall (total)
   - defaults: weekly view, SOW rate
   - edit contingency percentage for the project
