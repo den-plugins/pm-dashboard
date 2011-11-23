@@ -61,7 +61,8 @@ module Pm
                 if count_shadow
                   days += (1 * (allocation.resource_allocation.to_f/100).to_f)
                 else
-                  days += (1 * (allocation.resource_allocation.to_f/100).to_f) unless allocation.resource_type.eql?(2)
+                  # count only days where member is Billable
+                  days += (1 * (allocation.resource_allocation.to_f/100).to_f) if allocation.resource_type.eql?(0)
                 end
               end
             end
