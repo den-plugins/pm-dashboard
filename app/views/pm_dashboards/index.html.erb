@@ -73,6 +73,6 @@
       }
     });
         jQuery('#bar_chart').empty();
-        plot_cost("bar_chart", [[[<%= @cost_budget %>,"Baseline"]], [[<%= @cost_forecast%>,"Forecast"]], [[<%= @cost_actual%>,"Actuals"]]]);
+        plot_cost("bar_chart", [<%= @cost_budget %>,<%= @cost_forecast%>,<%= @cost_actual%>]);
   });
 </script>
