@@ -1,59 +1,30 @@
-<% start_date, end_date = @project.planned_start_date, @project.planned_end_date %>
-<% months = get_months(start_date, end_date) %>
-<% per_column, @bac_hours, @bac_amount = {}, 0, 0 %>
+<% months = get_months_range(@project.planned_start_date, @project.planned_end_date) %>
+<% per_column = {} %>
+<% @bac_hours, @bac_amount = 0, 0 %>
 
-<% unless months.nil? %>
+<% unless months.nil? or months.empty? %>
   <div id='resource_cost_monthly' class='resource_cost_table_container' style="width: <%= months.count * 210 %>px">
-    <% months.each do |m| %>
-      <% start_range = (start_date.month.eql?(m.month) ? start_date : m ) %>
-      <% end_range = (end_date.month.eql?(m) ? end_date : start_range.end_of_month ) %>
-      <% weeks = get_weeks(start_range, end_range) %>
-      <% week_start = start_range %>
-      <% days = [] %>
-      <div class='floating_table'>
+    <% months.each_with_index do |month, m| %>
+    <div class='floating_table'>
       <table class="list rcf">
         <tr>
-          <th height="40px">
-            <%= m.strftime("%B %Y") %>
-          </th>
+          <th height="40px"><%= month.first.strftime("%B %Y") %></th>
           <th class='cost'>Cost</th>
         </tr>
         <% total_days, total_cost = 0, 0 %>
         <% @proj_team.each do |member| %>
-        <% actual_days, cost = 0, 0 %>
         <tr class="<%= cycle('even', 'odd', :name => 'members') %>">
-          <% for i in 0 .. weeks %>
-            <% week_start = week_start.monday %>
-            <% week_end = (i.eql?(weeks)? end_range : (week_start + 4.days))  %>
-            <% actual_week_start = (i.zero? ? start_range : week_start) %>
-              <%# @week = @project.weeks.select {|w| w.from.cweek.eql?(actual_week_start.cweek) and w.to.cweek.eql?(week_end.cweek)}.first %>
-              <%# if @week %>
-                <%# actual_week_start, week_end = @week.from, @week.to %>
-              <%# end %>
-              <% days << (actual_week_start .. week_end) %>
-            <% week_start += 1.week %>
-            
-            <%  rate = (params[:rate] && params[:rate].eql?('internal_rate')) ? daily_rate(member.internal_rate) : daily_rate(member.sow_rate)
-                    actual_days_cost = member.days_and_cost(days[i], rate)
-                    actual_days += actual_days_cost.first
-                    cost += actual_days_cost.last
-            %>
-          <% end %>
-          <td><%= actual_days %></td>
-          <td class='cost'><%= cost.to_f %></td>
+          <% actual_days, cost = compute_days_and_cost(member, month, params[:rate]).collect %>
           <% total_days += actual_days %>
           <% total_cost += cost %>
-        <% end %>
+          <td><%= actual_days %></td>
+          <td class='cost'><%= cost.to_f %></td>
         </tr>
-       <%  reset_cycle('members')
-                @bac_hours += (total_days * 8)
-                @bac_amount += total_cost
-                total_with_contingency = (total_cost * @project.contingency.to_f)/100
-                actual_total = total_cost + total_with_contingency
-                cumulative_total = get_cumulative_total(per_column, actual_total).to_f
-                per_column[m] = [total_cost, total_with_contingency, actual_total, cumulative_total]
-        %>
-        
+        <% end %>
+        <% reset_cycle('members') %>
+        <% @bac_hours += (total_days * 8) %>
+        <% @bac_amount += total_cost %>
+        <% per_column[m] = compute_totals_per_column(@project, per_column, total_cost) %><tr>
         <tr>
           <th style='text-align: left'><%= total_days %></th>
           <th class='cost'><%= total_cost.to_f %></th>
@@ -61,9 +32,8 @@
         <tr></tr>
         <tr></tr>
         <%= render :partial => 'pm_dashboards/resource_costs/footer', :locals => {:per_column => per_column[m]} %>
-        
       </table>
-      </div>
+    </div>
     <% end %>
   </div>
 <% else %>

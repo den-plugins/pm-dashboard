@@ -95,11 +95,12 @@ class ResourceAllocationsController < ApplicationController
       page.replace_html :resource_costs_header , :partial => 'pm_dashboards/resource_costs/header'
       page.replace_html :resource_members_content, :partial => 'pm_dashboards/resource_costs/list'
 
-      # replace tabs affected by resource_allocation change
-      page.replace_html "dashboard_header", :partial => 'pm_dashboards/dashboard_header'
-      page.replace_html "dashboard_cost_monitoring", :partial => 'pm_dashboards/project_billability/cost_monitoring_dashboard'
-      page.replace_html "dashboard_billability", :partial => 'pm_dashboards/project_billability/billability_dashboard'
-      page.replace_html "tab-content-billability", :partial => 'pm_dashboards/project_billability'
+      #replace tabs affected by resource_allocation change
+      #page.replace_html "dashboard_header", :partial => 'pm_dashboards/dashboard_header'
+      #page.replace_html "dashboard_cost_monitoring", :partial => 'pm_dashboards/project_billability/cost_monitoring_dashboard'
+      #page.replace_html "dashboard_billability", :partial => 'pm_dashboards/project_billability/billability_dashboard'
+      #page.replace_html "tab-content-billability", :partial => 'pm_dashboards/project_billability'
+      #page.replace_html "billability_charts", :partial => 'pm_dashboards/billability_charts'
     end
   end
 end
