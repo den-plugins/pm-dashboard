@@ -108,6 +108,9 @@ en:
   field_status: Status
   field_pc_type: Type
   field_amount: Amount
+  field_effective_from: Effective from
+  field_effective_to: Effective to
+  field_approval_date: Approval Date
 
   field_issue_description: Description
   field_env: Env
@@ -164,6 +167,9 @@ en:
   label_status: Status
   label_attachments: Attachments
   label_total_amount: Total Amount
+  label_effective_from: Effective from
+  label_effective_to: Effective to
+  label_approval_date: Approval Date
 
   activerecord:
     errors:

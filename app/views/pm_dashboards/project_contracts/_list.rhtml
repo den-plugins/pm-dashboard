@@ -5,6 +5,8 @@
 	<th><%= l(:label_amount)%></th>
 	<th><%= l(:label_description)%></th>
 	<th><%= l(:label_status)%></th>
+	<th><%= l(:label_approval_date)%></th>
+	<th>Effective on</th>
 	<th><%= l(:label_attachments)%></th>
       <th></th>
     </tr>
@@ -15,6 +17,8 @@
       <td><%= pc.amount %></td>
       <td><%= pc.description %></td>
       <td><%= ProjectContract::STATUSES[pc.status].first %></td>
+      <td><%= pc.approval_date %></td>
+      <td><%= pc.effective_from %> to <%= pc.effective_to %></td>
       <td><%= link_to_attachments pc %></td>
       <td>
         <%= link_to_remote image_tag('edit.png'), {:url => {:controller => 'project_contracts', :action => 'update', :id => pc, :project_id => @project},
