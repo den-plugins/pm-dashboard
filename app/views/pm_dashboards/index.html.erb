@@ -49,6 +49,7 @@
                        :style => (tab[:name] != selected_tab ? 'display:none' : nil),
                        :class => 'tab-content') %>
 <% end -%>
+
 <%= javascript_include_tag 'jquery.jqplot.js', :plugin => 'redmine_burndown' %>
 <%= javascript_include_tag 'plugins/jqplot.canvasAxisLabelRenderer.min.js', :plugin => 'redmine_burndown' %>
 <%= javascript_include_tag 'plugins/jqplot.canvasTextRenderer.min.js', :plugin => 'redmine_burndown' %>
@@ -64,6 +65,7 @@
   var isplotted = false;
   jQuery(document).ready(function(){
     if (jQuery("#bchart2").length > 0){
+      jQuery("#bchart2").empty();
       plot_chart("bchart2", [<%= PmDashboard.billability_percent_per_week %>]);
     }
     jQuery("#tab-billability").click(function(){
@@ -79,5 +81,5 @@
       jQuery('#bar_chart').empty();
      plot_cost("bar_chart", [<%= @cost_budget %>,<%= @cost_forecast%>,<%= @cost_actual%>]);
   });
-  });
+});
 </script>
