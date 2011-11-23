@@ -72,7 +72,12 @@
         isplotted = true;
       }
     });
-        jQuery('#bar_chart').empty();
-        plot_cost("bar_chart", [<%= @cost_budget %>,<%= @cost_forecast%>,<%= @cost_actual%>]);
+   if (jQuery("#bar_chart").length > 0){
+      plot_cost("bar_chart", [<%= @cost_budget %>,<%= @cost_forecast%>,<%= @cost_actual%>]);
+   }
+   jQuery("#tab-dashboard").click(function(){
+      jQuery('#bar_chart').empty();
+     plot_cost("bar_chart", [<%= @cost_budget %>,<%= @cost_forecast%>,<%= @cost_actual%>]);
+  });
   });
 </script>
