@@ -13,6 +13,7 @@ function plot_cost(id, data){
 		    ticks: ticks
 		}
 	},
+    seriesColors: [ "#f88", "#99f", "#7f8"],
 	highlighter: { show: false },
 	grid: {gridLineColor: '#f2f2f2'}  });
 }
