@@ -48,9 +48,13 @@ table#risks tr th.narrow {
   width: 150px;
 }
 
-td.red, th.red { background-color: #DD0806; color: #FFF; }
-td.yellow, th.yellow { background-color: #F4EB05; }
-td.green, th.green { background-color: #006411; color: #FFF; }
+table.list tbody tr:hover { background-color: transparent; color: #000; }
+tr.red, td.red, th.red { background-color: #DD0806; color: #FFF; }
+tr.yellow, td.yellow, th.yellow { background-color: #F4EB05; }
+tr.green, td.green, th.green { background-color: #006411; color: #FFF; }
+tr.lgreen, td.lgreen, th.lgreen { background-color: #9FC35B; color: #000; }
+tr.lblue, td.lblue, th.lblue { background-color: #99CCFF; color: #000; }
+
 
 td.left { text-align: left; }
 td.right { text-align: right; }
