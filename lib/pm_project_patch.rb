@@ -19,7 +19,7 @@ module Pm
         
         validates_presence_of :description
         validates_presence_of :client, :if => :validate_client
-        validates_numericality_of :contingency,  :only_integer => true, :allow_nil => true,
+        validates_numericality_of :contingency,  :only_float => true, :allow_nil => true,
                                                        :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, 
                                                        :message => 'should only be from 0 to 100'
         before_save :validate_dates

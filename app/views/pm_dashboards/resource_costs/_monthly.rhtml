@@ -3,9 +3,9 @@
 <% @bac_hours, @bac_amount = 0, 0 %>
 
 <% unless months.nil? or months.empty? %>
-  <div id='resource_cost_monthly' class='resource_cost_table_container' style="width: <%= months.count * 210 %>px">
+  <div id='resource_cost_monthly' class='resource_cost_table_container' style="width: <%= months.count * 140 %>px">
     <% months.each_with_index do |month, m| %>
-    <div class='floating_table'>
+    <div class='floating_table' style=" width: 140px">
       <table class="list rcf">
         <tr>
           <th height="40px"><%= month.first.strftime("%B %Y") %></th>
