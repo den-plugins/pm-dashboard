@@ -69,4 +69,8 @@ module ResourceCostsHelper
     cumulative_total = get_cumulative_total(per_column, actual_total).to_f
     [total_cost, total_with_contingency, actual_total, cumulative_total]
   end
+  
+  def allocation_color_class(total)
+    total >= 2.5 ? "lgreen" : ("lblue" if total < 2.5)
+  end
 end

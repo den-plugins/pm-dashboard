@@ -3,9 +3,9 @@
 <% @bac_hours, @bac_amount = 0, 0 %>
 
 <% unless weeks.nil? or weeks.empty? %>
-  <div id='resource_cost_weekly' class='resource_cost_table_container' style="width: <%= weeks.count * 140 %>px">
+  <div id='resource_cost_weekly' class='resource_cost_table_container' style="width: <%= weeks.count * 120 %>px">
     <% weeks.each_with_index do |week, w| %>
-    <div class='floating_table' style=" width: 140px">
+    <div class='floating_table' style=" width: 120px">
       <table class='list rcf'>
         <tr>
           <th height="40px">
@@ -16,10 +16,10 @@
         </tr>
         <% total_days, total_cost = 0, 0 %>
         <% @proj_team.each do |member| %>
-        <tr class="<%= cycle('even', 'odd', :name => 'members') %>">
           <% actual_days, cost = compute_days_and_cost(member, week, params[:rate]).collect %>
           <% total_days += actual_days %>
           <% total_cost += cost %>
+        <tr class="<%= cycle('even', 'odd', :name => 'members') %> <%= allocation_color_class(actual_days) %>">
           <td><%= actual_days %></td>
           <td class='cost'><%= cost.to_f %></td>
         </tr>
