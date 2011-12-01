@@ -34,7 +34,7 @@
                             :complete => "Element.hide('ajax-indicator')" do |f| %>
       <%= f.hidden_field :is_for_next_period, :value => 'true' %>
       <span style="float: right; margin-bottom: 8px;">
-        <%= f.text_field :created_at, :value => highlight.new_record? ? (highlight.created_at ? highlight.created_at.to_date : Date.today.end_of_week + 5.days) : highlight.created_at.to_date, 
+        <%= f.text_field :created_at, :value => highlight.new_record? ? (highlight.created_at ? highlight.created_at.to_date : Date.today) : highlight.created_at.to_date, 
                                       :size => 13, :id => "nextp_highlight_created_at", :onchange =>  "jQuery('#nextp_form_submit').trigger('click');" %>
         <%= calendar_for('nextp_highlight_created_at') %>
       </span>

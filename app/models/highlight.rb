@@ -13,15 +13,15 @@ class Highlight < ActiveRecord::Base
     cfrom, cto = changes['posted_date'].collect if posted_date_changed?
 
     if (posted_date_changed? && cto) or !posted_date_changed?
-      if dup && is_for_next_period && !date.monday.eql?(Date.today.monday + 1.week)
-        errors.add_to_base "A post has already been created for that week" unless dup.posted_date.nil?
-      elsif dup && !is_for_next_period && !date.monday.eql?(Date.today.monday)
-        errors.add_to_base "A post has already been created for that week" unless dup.posted_date.nil?
-      end
-      
-      if is_for_next_period && created_at <= Date.today.end_of_week
-        errors.add_to_base "Date must belong to future weeks."
-      elsif !is_for_next_period && created_at >= Date.today.end_of_week
+#      if dup && is_for_next_period && !date.monday.eql?(Date.today.monday + 1.week)
+#        errors.add_to_base "A post has already been created for that week" unless dup.posted_date.nil?
+#      elsif dup && !is_for_next_period && !date.monday.eql?(Date.today.monday)
+#        errors.add_to_base "A post has already been created for that week" unless dup.posted_date.nil?
+#      end
+#      
+#      if is_for_next_period && created_at <= Date.today.end_of_week
+#        errors.add_to_base "Date must belong to future weeks."
+      if !is_for_next_period && created_at >= Date.today.end_of_week
         errors.add_to_base "Date must belong to this week or the past weeks."
       end
     end
