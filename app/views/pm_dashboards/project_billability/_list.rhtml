@@ -1,6 +1,10 @@
+<% first_time_entry = @project.time_entries.find(:first, :select => "spent_on", :conditions => "hours > 0", :order => "spent_on ASC") %>
+<% actual_start = first_time_entry ? first_time_entry.spent_on : project.planned_start_date %>
+<% actual_end = (Date.today - 1.week).end_of_week %>
+
 <% weeks = get_weeks_range(@project.planned_start_date, @project.planned_end_date) %>
 <% temp_billability_per_week = [] %>
-<% bill_total = 0%>
+<% bill_total, weeks_total = 0, 0 %>
 
 <div class='tables_container'>
   <div class="movable_table_container" style="width: 100%">
@@ -30,7 +34,10 @@
           <tr>
             <td colspan='3'><%= bill = compute_percent_to_date forecast, actual %>%</td>
             <% temp_billability_per_week << [week.last, bill.to_f] if week.last < (Date.today.monday + 4.days) %>
-            <% bill_total += bill.to_f %>
+            <% unless (week.to_a & (actual_start..actual_end).to_a).empty? %>
+              <% bill_total += bill.to_f %>
+              <% weeks_total += 1 %>
+            <% end %>
           </tr>
         </table>
       </div>
@@ -46,5 +53,5 @@
 
 <script type="text/javascript">
   j = jQuery.noConflict();
-  jQuery('#billability_percent_to_date').text("<%= h('%0.2f' % (bill_total/weeks.count)) %>%");
+  jQuery('#billability_percent_to_date').text("<%= h('%0.2f' % (bill_total/weeks_total)) %>%");
 </script>
