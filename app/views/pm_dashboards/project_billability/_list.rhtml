@@ -1,4 +1,4 @@
-<% weeks = get_weeks_range(@project.planned_start_date, @project.planned_end_date) %>
+<% weeks = get_weeks_range(@project.planned_start_date, @project.planned_end_date, true) %>
 <% temp_billability_per_week = [] %>
 <% bill_total = 0%>
 

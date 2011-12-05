@@ -6,14 +6,15 @@ module ResourceCostsHelper
     end
   end
   
-  def get_weeks_range(from, to)
+  def get_weeks_range(from, to, with_weekends = false)
     if from && to
       start_date, end_date = from, to
       weeks = []
       for i in 0 .. from.weeks_ago(to) do
         mon = from.eql?(start_date) ? start_date : from.monday
         fri = from.weeks_ago(to).eql?(0) ? to : (mon.monday+4.days)
-        weeks << (mon .. fri)
+        sun = (fri == to)? to : (fri+2.days)
+        weeks << (with_weekends ? (mon .. sun) : (mon .. fri))
         from = mon + 1.week unless from.weeks_ago(to).eql?(0)
       end
       weeks
