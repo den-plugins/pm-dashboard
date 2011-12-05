@@ -13,7 +13,7 @@ module ProjectBillabilityHelper
   end
   
   def compute_actual_hours(week, resources)
-    from, to= week.first, week.last
+    from, to= week.first, (week.last.wday.eql?(5) ? (week.last+2.days) : week.last)
     allocated = resources.select {|r| r.billable?(from, to)}
     allocated.sum {|a| a.spent_time(from, to)}
   end
