@@ -71,6 +71,7 @@ module ResourceCostsHelper
   end
   
   def allocation_color_class(total)
-    total >= 2.5 ? "lgreen" : ("lblue" if total < 2.5)
+    return "" if total.eql?(0)
+    total > 2.5 ? "lgreen" : ("lblue" if total <= 2.5)
   end
 end
