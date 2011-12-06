@@ -54,7 +54,7 @@ module Pm
         allocations = resource_allocations
         unless allocations.empty?
           week.each do |day|
-            #unless day.wday.eql?(0) || day.wday.eql?(6)
+            unless day.wday.eql?(0) || day.wday.eql?(6)
               allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
               holiday = allocation.nil? ? 0 : Holiday.count(:all, :conditions => ["event_date=? and location=?", day, allocation.location])
               if allocation and !allocation.resource_allocation.eql?(0) and holiday.eql?(0)
@@ -65,7 +65,7 @@ module Pm
                   days += (1 * (allocation.resource_allocation.to_f/100).to_f) if allocation.resource_type.eql?(0)
                 end
               end
-            #end
+            end
           end
         end
         cost = days * (rate.to_f)
@@ -82,11 +82,14 @@ module Pm
         end
       end
       
-      def spent_time(from, to)
+      def spent_time(from, to, include_weekends = false)
         if from && to
           spent = user.time_entries.find(:all, :select => "hours, spent_on", :conditions => ["project_id = ? and spent_on between ? and ?", project_id, from, to])
-          spent.sum{|s| s.hours}
-#          spent.sum{|s| s.spent_on.wday.eql?(0) || s.spent_on.wday.eql?(6) ? 0 : s.hours}
+          if include_weekends
+            spent.sum{|s| s.hours}
+          else
+            spent.sum{|s| s.spent_on.wday.eql?(0) || s.spent_on.wday.eql?(6) ? 0 : s.hours}
+          end
         end
       end
     
