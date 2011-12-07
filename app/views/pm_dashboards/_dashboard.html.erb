@@ -4,7 +4,7 @@
 
 <table id="pm_dashboard_header">
   <tr>
-    <td><span>Reporting Period</span>: <%= @highlights[:current].created_at.strftime("%b/%e/%Y") %></td>
+    <td><span>Reporting Period</span>: <%= @highlights[:current].created_at.strftime("%b/%e/%Y") if @highlights[:current] %></td>
     <td><span>Overall Status</span>: <%=  %></td>
     <td><span>Overall % Complete</span>: <%=  %></td>
   </tr>
