@@ -26,7 +26,7 @@ class HighlightsController < ApplicationController
   
   def select_by_week
     date = params[:select_week].to_date
-    highlight = @project.highlights.for_the_week(date).first
+    highlight = @project.highlights.for_the_week(date).get_posted.first
     render :update do |page|
       page.replace_html :recently_posted, :partial => "pm_dashboards/highlights/recently_posted", :locals => {:highlight => highlight}
     end
@@ -40,16 +40,20 @@ class HighlightsController < ApplicationController
     
     @highlight.attributes = params[:highlight]
     @highlight.validate
-    
+
     if @highlight.errors.empty?
       if dup && (dup.posted_date.nil? || (dup.posted_date && in_period(dup)))
-        render :update do |page|
-          page.replace_html period, :partial => "pm_dashboards/highlights/#{time_state}", :locals => {:highlight => dup}
-          page.hide "#{time_state}_highlight_wrapper"
-          page.show "#{time_state}_highlights_container"
-        end
+		if session[:newhighlight]
+        	render :update do |page|
+          		page.replace_html period, :partial => "pm_dashboards/highlights/#{time_state}", :locals => {:highlight => dup}
+         	 	page.hide "#{time_state}_highlight_wrapper"
+        	 	page.show "#{time_state}_highlights_container"
+       		 end
+		end
+		session[:newhighlight] = nil
       else
         @highlight = Highlight.new({:created_at => date})
+		session[:newhighlight] = "new"
         render :update do |page|
           page.replace_html period, :partial => "pm_dashboards/highlights/#{time_state}", :locals => {:highlight => @highlight}
           page.hide "#{time_state}_highlight_wrapper"
