@@ -4,7 +4,8 @@ class Highlight < ActiveRecord::Base
   validates_length_of :highlight, :minimum => 3
   
   named_scope :for_the_week,  lambda {|date| {:conditions => ["created_at between ? and ?", date.beginning_of_week.to_date, date.end_of_week.to_date]}}
-  named_scope :get_posted,  lambda {|date| {:conditions => ["posted_date is not null"]}}
+  named_scope :post_current,  lambda {|date| {:conditions => ["posted_date is not null and is_for_next_period is false"]}}
+  named_scope :post_after_current,  lambda {|date| {:conditions => ["posted_date is not null and is_for_next_period is true"]}}
   
   def validate
     # project must only have ONE highlight report per week

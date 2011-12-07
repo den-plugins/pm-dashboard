@@ -26,7 +26,7 @@ class HighlightsController < ApplicationController
   
   def select_by_week
     date = params[:select_week].to_date
-    highlight = @project.highlights.for_the_week(date).get_posted.first
+    highlight = @project.highlights.for_the_week(date).post_current.first
     render :update do |page|
       page.replace_html :recently_posted, :partial => "pm_dashboards/highlights/recently_posted", :locals => {:highlight => highlight}
     end

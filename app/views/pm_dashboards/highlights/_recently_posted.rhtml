@@ -16,8 +16,28 @@
   </div>
   <span class="content_text">
     <% if highlight && highlight.posted_date %>
+		Progress this Period
       <%= content_tag 'p', textilizable(highlight.highlight) %>
     <% else %>
-      <%= content_tag 'p', 'No highlight(s) recently posted.', :class => 'nodata' %>
+      <%= content_tag 'p', 'No highlight(s) this period is recently posted.', :class => 'nodata' %>
     <% end %>
-</span>
+  </span>
+<% if params[:select_week]   
+		date = params[:select_week].to_date
+		highlight_next = @project.highlights.for_the_week(date).post_after_current.first %>    
+		
+  <div class="contextual h-actions">
+    <%= link_to_remote "Unpost", {:url => {:action => 'unpost', :controller => 'highlights', :id => highlight_next, :project_id => @project},
+                                                              :loading => "$('ajax-indicator').show()",
+                                                              :complete => "$('ajax-indicator').hide()" },
+                                                              :class => 'icon icon-unpost' if highlight_next && highlight_next.posted_date %>
+  </div>
+  <span class="content_text">
+	   <% if highlight_next && highlight_next.posted_date %>
+		  Progress Planned for next Period
+		  <%= content_tag 'p', textilizable(highlight_next.highlight) %>
+        <% else %>
+      	  <%= content_tag 'p', 'No highlight(s) for next period is recently posted.', :class => 'nodata' %>
+		<% end %>
+  </span>
+<% end %>
