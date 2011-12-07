@@ -73,7 +73,8 @@ module Pm
       end
       
       def detect_holidays_in_week(location, day)
-        locations = [location, 6]
+        locations = [6]
+        locations << location if location
         locations << 3 if location.eql?(1) || location.eql?(2)
         Holiday.count(:all, :conditions => ["event_date=? and location in (#{locations.join(', ')})", day])
       end
