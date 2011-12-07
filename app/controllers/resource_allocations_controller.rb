@@ -7,6 +7,7 @@ class ResourceAllocationsController < ApplicationController
   
   before_filter :get_member
   before_filter :get_project
+  before_filter :get_possible_locations
   
   def index
     if params[:cancel]
@@ -84,6 +85,16 @@ class ResourceAllocationsController < ApplicationController
     @member = Member.find(params[:member_id])
     rescue ActiveRecord::RecordNotFound
       render_404
+  end
+
+  def get_possible_locations
+    @locations = {}
+    if c = UserCustomField.find(:first, :select => [:possible_values], :conditions => "name='Location'")
+      c.possible_values.each do |location|
+        hlocation = Holiday::LOCATIONS.detect {|k,v| v.downcase.eql?(location.downcase)}
+        @locations [hlocation[0]] = hlocation[1] if hlocation
+      end
+    end
   end
   
   def render_updates

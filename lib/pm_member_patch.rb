@@ -56,7 +56,7 @@ module Pm
           week.each do |day|
             unless day.wday.eql?(0) || day.wday.eql?(6)
               allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
-              holiday = allocation.nil? ? 0 : Holiday.count(:all, :conditions => ["event_date=? and location=?", day, allocation.location])
+              holiday = allocation.nil? ? 0 : detect_holidays_in_week(allocation.location, day)
               if allocation and !allocation.resource_allocation.eql?(0) and holiday.eql?(0)
                 if count_shadow
                   days += (1 * (allocation.resource_allocation.to_f/100).to_f)
@@ -70,6 +70,12 @@ module Pm
         end
         cost = days * (rate.to_f)
         rate ? [days, cost] : days
+      end
+      
+      def detect_holidays_in_week(location, day)
+        locations = [location, 6]
+        locations << 3 if location.eql?(1) || location.eql?(2)
+        Holiday.count(:all, :conditions => ["event_date=? and location in (#{locations.join(', ')})", day])
       end
       
       def billable?(from=nil, to=nil)
