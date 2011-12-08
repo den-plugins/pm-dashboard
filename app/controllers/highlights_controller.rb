@@ -10,10 +10,19 @@ class HighlightsController < ApplicationController
         page.replace_html :this_period, :partial => "pm_dashboards/highlights/current", :locals => {:highlight => @highlights[:current]}
       end
     else
+	  update_highlight
       @highlight.update_attributes(params[:highlight]) ? replace_highlights  : render_error_messages
     end
   end
   
+  def update_highlight
+	date = params[:highlight][:created_at]
+	get_highlight = Highlight.find(:all, :conditions => ["created_at = ? and project_id = ?", @highlight.created_at, @project.id])
+	get_highlight.each do |h|
+		h.update_attributes :created_at => date
+	end
+  end
+
   def post
     attrs = {:posted_date => Date.today}
     @highlight.update_attributes(params[:highlight].merge(attrs)) ? replace_highlights : render_error_messages
