@@ -1,3 +1,9 @@
+<%= render :partial => 'common/header' %>
+
+<%= include_calendar_headers_tags %>
+<%= heads_for_wiki_formatter %>
+<%= javascript_include_tag 'select_list_move' %>
+
 <style>
   td span {
     font-weight: bold;
@@ -6,14 +12,8 @@
     text-align: right;
     padding-right: 10px
   }
-  
   td span:after { content: ":" }
-
   pm_dashboard_header { width: 75% }
-
 </style>
-<%= javascript_include_tag 'prototype' %>
-<%= javascript_include_tag 'jquery', :plugin => 'pm_dashboard' %>
-<%= javascript_include_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
-<%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
-<%= render :partial => 'pm_dashboards/milestone_plans/edit' %>
+
+<%= render :partial => 'milestone_plans/edit' %>

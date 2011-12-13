@@ -4,7 +4,7 @@
 <div class="box">
 	<% form_for :version, @version, :url => {:controller => 'milestone_plans', :action => 'update', :project_id => @project, :version_id => @version} do |f| %>
 		
-		<%= render :partial => 'pm_dashboards/milestone_plans/form', :locals => { :button_label => l(:button_update) , :project => @project, :release_id => params[:release_id], :f => f } %>
+		<%= render :partial => 'milestone_plans/form', :locals => { :button_label => l(:button_update) , :project => @project, :release_id => params[:release_id], :f => f } %>
 
 	<% end %>
 </div>

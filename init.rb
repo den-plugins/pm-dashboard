@@ -29,7 +29,7 @@ Redmine::Plugin.register :pm_dashboard do
                       {   :pm_dashboards => [:index, :forecasts],
                             :assumptions => [:index, :add, :update, :destroy],
                             :highlights   => [:save, :post, :unpost],
-                            :milestone_plans => [:add, :update, :destroy],
+                            :milestone_plans => [:index, :add, :update, :destroy],
                             :pm_dashboard_issues    => [:index, :add, :edit, :delete],
                             :project_info    => [:index, :update, :pm_member_edit, :pm_member_update, :pm_member_add, :pm_member_remove,
                                                                :update_role_pos, :add_pm_position, :add_pm_role],
@@ -56,7 +56,7 @@ Redmine::Plugin.register :pm_dashboard do
 #    menu.push :risks, {:controller => 'pm_dashboards', :action =>'risks' }
     menu.push :forecasts, {:controller => 'resource_costs', :action =>'index' }, :caption => 'Resource Cost Forecast', :param => :project_id
     menu.push :billability, {:controller => 'project_billability', :action =>'index' }, :caption => 'Project Billability', :param => :project_id
-#    menu.push :milestones, {:controller => 'pm_dashboards', :action =>'milestones' }, :caption => 'Milestone Plans'
+    menu.push :milestones, {:controller => 'milestone_plans', :action =>'index' }, :caption => 'Milestone Plans', :param => :project_id
 #    menu.push :contracts, {:controller => 'pm_dashboards', :action =>'contracts' }, :caption => 'Project Contracts'
 #    menu.push :highlights, {:controller => 'pm_dashboards', :action =>'highlights' }, :caption => 'Weekly Highlights'
   end

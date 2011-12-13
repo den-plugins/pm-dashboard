@@ -1,18 +1,14 @@
 class MilestonePlansController < ApplicationController
 
-  helper :assumptions
-  helper :milestone_plans
-  helper :risks
-  helper :project_info
-  helper :pm_dashboard_issues
-  helper :resource_costs
-	helper :pm_dashboards
-	helper :scrums
-
-	before_filter :get_project, :only => [:add, :update, :destroy]
+  menu_item :milestones
+  
+	before_filter :get_project, :only => [:index, :add, :update, :destroy]
   before_filter :get_version, :only => [:update, :destroy]
 
   def index
+    @version = Version.find(params[:version_id]) if params[:version_id]
+    @version.update_attribute(:state, params[:state]) if @version
+    @versions = Version.find(:all, :conditions => ["project_id = ?", @project], :order => 'effective_date IS NULL, effective_date DESC')
   end
 
   def add
@@ -36,13 +32,13 @@ class MilestonePlansController < ApplicationController
   	@version = Version.find(params[:version_id])
 
     if request.xhr?
-      render :partial => "pm_dashboards/milestone_plans/edit"
+      render :partial => "milestone_plans/edit"
     else
       if @version.update_attributes(params[:version])
         flash[:notice] = l(:notice_successful_update)
         redirect_to_milestone_plans
       else
-        render :template => "pm_dashboards/milestone_plans/edit_with_error"
+        render :template => "milestone_plans/edit_with_error"
       end
     end
   end
@@ -60,21 +56,21 @@ private
 	def get_project
 		@project = Project.find(params[:project_id])
 		rescue ActiveRecord::RecordNotFound
-			render 404
+			render_404
 	end
 
 	def get_version
 		@version = Version.find(params[:version_id])
 		rescue ActiveRecord::RecordNotFound
-			render 404
-	end	
+			render_404
+	end
 
 	def redirect_to_milestone_plans
-		redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :milestone_plans
+		redirect_to :controller => 'milestone_plans', :project_id => @project
 	end
 
 	def render_milestone_plans(target)
-		render :template => "pm_dashboards/milestone_plans/#{target}"
+		render :template => "milestone_plans/#{target}"
 	end
 end
     

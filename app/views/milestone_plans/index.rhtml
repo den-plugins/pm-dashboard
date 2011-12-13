@@ -1,0 +1,53 @@
+<%= render :partial => 'common/header' %>
+
+<%= include_calendar_headers_tags %>
+<%= heads_for_wiki_formatter %>
+<%= javascript_include_tag 'select_list_move' %>
+
+<div id="info_1">
+<table class="list" border=1>
+	<tr>
+		<td align = "right" colspan="20">
+			<%= link_to l(:label_milestone_new), {:controller => :milestone_plans, :action => :add, :project_id => @project }, :class => 'icon icon-add' %>
+		</td>
+	</tr>
+  <tr>
+    <th><%= l(:field_version_name) %></th>
+    <th><%= l(:field_version_description) %></th>
+    <th><%= l(:field_version_wiki) %></th>
+    <th><%= l(:field_version_original_date) %></th>
+    <th><%= l(:field_version_start_date) %></th>
+    <th><%= l(:field_version_end_date) %></th>
+    <th><%= l(:field_version_state) %></th>
+  	<th>Actions</th>
+  </tr>
+  <% @versions.each do |t| %>
+	<tr class="<%= cycle('even', 'odd') %>">
+		  <td><em><%= h t.name %></em></td>
+		  <td><%= h t.description %></td>
+		  <td><%= h t.wiki_page_title %></td>
+	      <td><%= t.original_date %></td>
+	      <td><%= t.started_date %></td>
+	      <td><%= t.effective_date %></td>
+	      <td align="center">
+	        <% form_for :version, :url => {:action => :index, :version_id => t, :project_id => @project} do |f| %>
+	        <div id="<%= t.id %>">
+  	         <%= select_tag(:state, options_for_select(Milestone::STATES, t.state), 
+  	         				{:onchange => "this.form.submit();new Effect.Highlight('#{t.id}');" }) %>
+	        </div>
+          <% end %>
+	      </td>
+		  <th>
+			    <%= link_to_remote image_tag('edit.png'), {:url => { :controller => 'milestone_plans' , 
+			                                  :action => 'update', :project_id => @project, :version_id => t}, 
+			                                  :update => "info_1", :complete => "new Effect.Highlight('info_1')"} %>
+		  		<%= link_to image_tag('delete.png'), {:controller => 'milestone_plans', :action => 'destroy', :project_id => @project, :version_id => t}, :confirm => l(:text_are_you_sure), :method => :post  %>
+		  </th>
+    </tr>
+  <% end %>
+</table>
+
+
+</div>
+
+
