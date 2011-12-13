@@ -32,11 +32,12 @@
         <td><%= issue.date_due %></td>
         <td><%= issue.days_overdue %></td>
         <td><%= issue.date_close %></td>
-        <td><% issue.risks.each do |risk|%>
+        <td>
+          <% issue.risks.each do |risk|%>
             <%= link_to risk.ref_number, :controller => 'risks', :id => risk.id %>
             <br/>
-            <% end %>
-            <% issue.assumptions.each do |assumption|%>
+          <% end %>
+          <% issue.assumptions.each do |assumption|%>
             <%= link_to assumption.ref_number, :controller => 'assumptions', :id => assumption.id %>
             <br/>
             <% end %>

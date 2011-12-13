@@ -1,3 +1,7 @@
+<%= include_calendar_headers_tags %>
+<%= heads_for_wiki_formatter %>
+<%= javascript_include_tag 'select_list_move' %>
+
 <style>
   td span {
     font-weight: bold;
@@ -10,5 +14,4 @@
   pm_dashboard_header { width: 75% }
 </style>
 
-<%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
 <%= render :partial => 'project_info/edit' %>

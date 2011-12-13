@@ -45,7 +45,7 @@
       <td><%= risk.status %></td>
       <td>
         <% risk.assumptions.each do |assumption|%>
-          <%= link_to assumption.ref_number, :contoller => 'assumptions', :id => assumption.id %>
+          <%= link_to assumption.ref_number, :controller => 'assumptions', :id => assumption.id %>
           <br/>
         <% end %>
         <% risk.pm_dashboard_issues.each do |issue|%>

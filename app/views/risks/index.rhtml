@@ -7,8 +7,8 @@
 <h2><%= l(:label_risk_plural) %></h2>
 
 <% if @risks.any? %>
-  <%= render :partial => 'risks/summary' unless params[:q] %>
-  <p><%= link_to l(:label_view_all_risks), :controller => 'risks', :action => "index", :project_id => @project  if params[:q]  %></p>
+  <%= render :partial => 'risks/summary' unless params[:id] %>
+  <p><%= link_to l(:label_view_all_risks), :controller => 'risks', :action => "index", :project_id => @project  if params[:id]  %></p>
   <%= render :partial => 'risks/list' %>
 <% else %>
   <p class="nodata"><%= l(:label_no_data) %></p>
