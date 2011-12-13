@@ -1,0 +1,14 @@
+<%= render :partial => 'common/header' %>
+
+<h2>Project Billability/Chargeability History</h2>
+
+<% unless display_by_billing_model.eql?("fixed") %>
+  <% if @project_resources.any? %>
+    <%= render :partial => "project_billability/summary" %>
+    <%= render :partial => "project_billability/list" %>
+  <% else %>
+    <p class="nodata"><%= l(:label_no_data) %></p>
+  <% end %>
+<% else %>
+  <p class="nodata"><%= 'Not Applicable' %></p>
+<% end%>

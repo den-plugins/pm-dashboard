@@ -51,7 +51,29 @@
   <div id="bchart1" style="height: 300px; width: 600px;"></div>
 </div>
 
+
+<%= javascript_include_tag 'jquery.jqplot.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.canvasAxisLabelRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.canvasTextRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.cursor.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.dateAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.highlighter.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.barRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.categoryAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.pointLabels.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'billability_chart.js', :plugin => 'pm_dashboard' %>
+<%= javascript_include_tag 'cost_chart.js', :plugin => 'pm_dashboard' %>
+
 <script type="text/javascript">
   j = jQuery.noConflict();
+  jQuery(document).ready(function(){
+    if (jQuery("#bchart1").length > 0){
+      jQuery("#bchart1").empty();
+      plot_chart("bchart1", [<%= PmDashboard.billability_percent_per_week %>]);
+    }
+  });
+  
   jQuery('#billability_percent_to_date').text("<%= h('%0.2f' % (bill_total/weeks_total)) %>%");
 </script>
+
+
