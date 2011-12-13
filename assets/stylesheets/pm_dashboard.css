@@ -1,3 +1,14 @@
+table#pm_dashboard_header tr td span {
+  font-weight: bold;
+  display: inline-block;
+  width: 135px;
+  text-align: left;
+  padding-right: 10px
+}
+
+table#pm_dashboard_header tr td span.column1 { width: 95px; }
+pm_dashboard_header { width: 75% }
+
 .nodata {
   text-align: center;
   background-color: #E1E1E1;

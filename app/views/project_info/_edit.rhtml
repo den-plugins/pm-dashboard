@@ -1,0 +1,72 @@
+<% remote_form_for(:project, @project, :url => {:controller => 'project_info', :action => 'update', :project_id => @project}, :method => :post, :html => {:id => "proj_info_form"}) do |f| %>
+
+<%= error_messages_for 'project' %>
+
+<div class="contextual info_edit">
+  <%= link_to "Cancel", {:controller => 'project_info', :action => 'index', :project_id => @project, :tab => :info}, :class => 'icon icon-cancel' %>
+  |
+  <%= link_to "Save", "#", :onclick => "$('proj_info_form').submit({
+  success: function(){ alert('Successfully saved!') }
+})", :class => 'icon icon-save' %>
+</div>
+
+<div class="clear"> </div>
+<fieldset>
+<table id="pm_dashboard_header">
+  <tr>
+    <td><span>Client</span><%= f.text_field :client, :required  => true %></td>
+    <td><span>Planned Start Date</span>
+    <%= f.text_field :planned_start_date, :size => 10, :required  => true  %><%= calendar_for('project_planned_start_date') %>
+    </td>
+    
+    
+    <td><span>Project Manager</span>
+    <%= f.select :proj_manager, (@project.members.collect {|p| [p.name, p.user.id]}), :required => true %>
+    </td>
+  
+  </tr>
+  
+  <tr>
+   
+    <td><span>Project Name</span><%= @project.name %></td>
+    
+    <td><span>Planned End Date</span>
+    <%= f.text_field :planned_end_date, :size => 10, :required  => true  %><%= calendar_for('project_planned_end_date') %></td>
+    
+    <td><span>Technical Architect</span>
+    <%= f.select :tech_architect, (@project.members.collect {|p| [p.name, p.user.id]}), :required => true %>
+    </td>
+    
+  </tr>   
+   <tr>
+      <td></td>
+      <td><span>Maintenance End Date</span>
+      <%= f.text_field :maintenance_end, :size => 10  %><%= calendar_for('project_maintenance_end') %></td>
+   </tr>
+</table>
+
+<hr />
+<div class="main_holder">
+  <div class="content_holder">
+    <div class="content_header"><p>Project Definition </p></div>
+    <div class="main_content">
+      <p class="indent"><%= f.text_area :description, :required  => true, :style => "height:200px;",
+                                        :class => 'wiki-edit' %></p>
+      <%= wikitoolbar_for 'project_description' %>
+    </div>
+  </div>
+</div>
+<br />
+
+<div class="main_holder">
+  <div class="content_holder">
+    <div class="content_header"><p>Project Scope</p></div>
+    <div class="main_content">
+      <p class="indent"><%= f.text_area :scope, :style => "height:200px;", :class => 'wiki-edit' %></p>
+      <%= wikitoolbar_for 'project_scope' %>
+    </div>
+  </div>
+</div>
+
+<% end %>
+</fieldset>

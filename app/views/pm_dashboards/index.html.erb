@@ -1,83 +1,108 @@
+<%= render :partial => 'common/header' %>
+
 <% content_for :header_tags do %>
-  <%= javascript_include_tag 'prototype' %>
-  <%= javascript_include_tag 'jquery', :plugin => 'pm_dashboard' %>
-  <%= javascript_include_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
-  <%= stylesheet_link_tag 'jquery.jqplot.css', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'jquery.jqplot.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.canvasAxisLabelRenderer.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.canvasTextRenderer.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.cursor.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.dateAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.highlighter.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.barRenderer.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.categoryAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.pointLabels.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'billability_chart.js', :plugin => 'pm_dashboard' %>
+  <%= javascript_include_tag 'cost_chart.js', :plugin => 'pm_dashboard' %>
 <% end %>
 
-<%= include_calendar_headers_tags %>
-<%= javascript_include_tag('jstoolbar/jstoolbar') %>
-<%= javascript_include_tag('jstoolbar/textile') %>
-<%= javascript_include_tag("jstoolbar/lang/jstoolbar-#{current_language}") %>
-<%= heads_for_wiki_formatter %>
-
-<% html_title 'Project Management Dashboard' -%>
-<style>
-  table#pm_dashboard_header tr td span {
-    font-weight: bold;
-    display: inline-block;
-    text-align: left;
-    padding-right: 3px
-  }
-  table#pm_dashboard_header tr td { white-space: nowrap; }
-  table#pm_dashboard_header tr td span:after { content: ":" }
-  pm_dashboard_header { width: 75% }
-
-</style>
-
-<h2>Project Management Dashboard</h2>
-
-<% tabs = pm_dashboard_tabs %>
-<% selected_tab = params[:tab] ? params[:tab].to_s : tabs.first[:name] %>
-
-<div class="tabs">
-<ul>
-<% tabs.each do |tab| -%>
-    <li><%= link_to (tab[:label]), {:project_id => @project,  :tab => tab[:name] },
-                                    :id => "tab-#{tab[:name]}",
-                                    :class => (tab[:name] != selected_tab ? nil : 'selected'),
-                                    :onclick => "showTab('#{tab[:name]}'); this.blur(); return false;" %></li>
-<% end -%>
-</ul>
+<div id='dashboard_header'>
+  <%= render :partial => "pm_dashboards/dashboard_header" %>
 </div>
 
-<% tabs.each do |tab| -%>
-<%= content_tag('div', render(:partial => tab[:partial]),
-                       :id => "tab-content-#{tab[:name]}",
-                       :style => (tab[:name] != selected_tab ? 'display:none' : nil),
-                       :class => 'tab-content') %>
-<% end -%>
+<table id="pm_dashboard_header">
+  <tr>
+    <td><span>Reporting Period</span>: <%= @highlights[:current].created_at.strftime("%b/%e/%Y") if @highlights[:current] %></td>
+    <td><span>Overall Status</span>: <%=  %></td>
+    <td><span>Overall % Complete</span>: <%=  %></td>
+  </tr>
+  
+  <tr>
+    <td><span>Schedule</span>: <%= %></td>
+    <td><span>Cost</span>: <%= %></td>
+    <td><span>Risk</span>: <%= %></td>
+    <td><span>Issue</span>: <%= %></td>
+    <td><span>Production</span>: <%= %></td>
+    <td><span>Efficiency</span>: <%= %></td>
+    <td><span>Billability</span>: <%= %></td>
+  </tr>
+</table>
+  
+  <div class="singleCol">
+    <div id='highlights_summary'>
+      <%= render :partial => 'highlights/dashboard' %>
+    </div>
+  </div>
+    
+  <div class="singleCol">
+    <div class="box">
+      <h3><%=l(:label_dashboard_status_as_of)%></h3>
+      <span id="dashboard_cost_monitoring">
+        <%= render :partial => "project_billability/cost_monitoring_dashboard" %>
+      </span>
+    </div>
 
-<%= javascript_include_tag 'jquery.jqplot.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'plugins/jqplot.canvasAxisLabelRenderer.min.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'plugins/jqplot.canvasTextRenderer.min.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'plugins/jqplot.cursor.min.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'plugins/jqplot.dateAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'plugins/jqplot.highlighter.min.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'plugins/jqplot.barRenderer.min.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'plugins/jqplot.categoryAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'plugins/jqplot.pointLabels.min.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'billability_chart.js', :plugin => 'pm_dashboard' %>
-<%= javascript_include_tag 'cost_chart.js', :plugin => 'pm_dashboard' %>
-<script type="text/javascript">
-  var isplotted = false;
-  jQuery(document).ready(function(){
-    if (jQuery("#bchart2").length > 0){
-      jQuery("#bchart2").empty();
-      plot_chart("bchart2", [<%= PmDashboard.billability_percent_per_week %>]);
-    }
-    jQuery("#tab-billability").click(function(){
-      if(!isplotted){
-        plot_chart("bchart1", [<%= PmDashboard.billability_percent_per_week %>]);
-        isplotted = true;
-      }
-    });
-   if (jQuery("#bar_chart").length > 0){
-      plot_cost("bar_chart", [<%= @cost_budget %>,<%= @cost_forecast%>,<%= @cost_actual%>]);
-   }
-   jQuery("#tab-dashboard").click(function(){
-      jQuery('#bar_chart').empty();
-     plot_cost("bar_chart", [<%= @cost_budget %>,<%= @cost_forecast%>,<%= @cost_actual%>]);
-  });
-});
-</script>
+    <div class="box">
+      <h3><%=l(:label_dashboard_risks)%></h3> 
+      <ul>
+      <% for risk in @key_risks %>    
+        <li><%= risk.risk_description %></li>
+      <% end %>
+      </ul>
+    </div>
+      
+    <div class="box">
+      <h3><%=l(:label_dashboard_billability)%></h3>
+      <span id="dashboard_billability">
+        <%= render :partial => "project_billability/billability_dashboard" %>
+      </span>
+    </div>
+  </div>
+  
+  <div class="singleCol">
+    <div class="box">
+      <h3><%=l(:label_dashboard_milestones)%></h3>
+       <table id="pm_dashboard_milestones" class="list issues" style='text-align: center; '>
+	      <tr>
+	        <th><%= l(:label_actual_start_date) %></th>
+	        <td></td>
+	        <th>Schedule End Date</th>
+	        <td></td>
+	      </tr>
+	      <tr>
+	        <th><%= l(:label_phases_stages) %></th>
+	        <th><%= l(:label_orig_target_date) %></th>
+	        <th><%= l(:label_latest_replan_date) %></th>
+	        <th><%= l(:label_schedule_status) %></th>
+	      </tr>
+		    <tr>
+	        <td></td>
+	        <td></td>
+	        <td></td>
+	        <td></td>
+	      </tr>
+      </table>
+    </div>
+
+    <div class="box">
+      <h3><%=l(:label_dashboard_issues)%></h3>
+      <ul>
+      <% for issue in @key_issues %>    
+        <li><%= issue.issue_description %></li>
+      <% end %>
+      </ul>
+    </div>
+    
+    <div class="box">
+      <h3><%=l(:label_dashboard_sprint)%></h3>
+    </div>
+  </div>
+

@@ -1,0 +1,67 @@
+<%= render :partial => 'common/header' %>
+
+<%= javascript_include_tag 'select_list_move' %>
+
+<h2> Project Info </h2>
+<div id="info_<%= @project.id %>">
+
+<div class="contextual info_edit">
+    <%= link_to_remote "Update", {:url => { :controller => 'project_info' , 
+                                  :action => 'update', :project_id => @project}, 
+                                  :update => "info_#{@project.id}", :complete => "new Effect.Highlight('info_#{@project.id}')"}, 
+                                  :class => 'icon icon-edit' %>
+</div>
+
+<div class="clear"> </div>
+<fieldset>
+ <%= render :partial => "pm_dashboards/dashboard_header" %>
+<hr />
+<div class="main_holder">
+  <div class="content_holder">
+    <div class="content_header"><p>Project Definition </p></div>
+    <div class="main_content">
+    <% if !@project.description.nil? %>
+      <div class="indent"><%= textilizable(@project, :description) %></div>
+    <% else %>
+      <p class="nodata"><%= l(:label_no_data) %></p>
+    <% end %>
+    </div>
+  </div>
+</div>
+<br />
+<div class="main_holder">
+  <div class="content_holder">
+    <div class="content_header"><p>Project Scope</p></div>
+    <div class="main_content">
+      <% if !@project.scope.nil? and !@project.scope.empty? %>
+        <div class="indent"><%= textilizable(@project, :scope) %></div>
+      <% else %>
+        <p class="nodata"><%= l(:label_no_data) %></p>
+      <% end %>
+    </div>
+  </div>
+</div>
+</fieldset>
+</div>
+<hr />
+
+<div class="main_holder">
+  <div class="content_holder">
+    <div class="content_header"><p>Project Sponsor/Stakeholders</p></div>
+    <div class="main_content">
+      <%= render :partial => "project_info/proj_info_lists", 
+                 :locals => {:classification => "Stakeholders", :members => @stakeholders} %>
+    </div>
+  </div>
+</div>
+<br />
+<div class="main_holder" id="project_team">
+  <div class="content_holder">
+    <div class="content_header"><p>Project Team</p></div>
+    <div class="main_content">
+      <%= render :partial => "project_info/proj_info_lists", 
+                 :locals => {:classification => "Project Team", :members => @proj_team} %>
+    </div>
+  </div>
+</div>
+

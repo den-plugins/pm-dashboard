@@ -1,0 +1,14 @@
+<style>
+  td span {
+    font-weight: bold;
+    display: inline-block;
+    width: 200px;
+    text-align: left;
+    padding-right: 10px
+  }
+  td span:after { content: ":" }
+  pm_dashboard_header { width: 75% }
+</style>
+
+<%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
+<%= render :partial => 'project_info/edit' %>

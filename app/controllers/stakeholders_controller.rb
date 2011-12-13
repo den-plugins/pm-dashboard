@@ -4,7 +4,7 @@ class StakeholdersController < ApplicationController
 
   def new
     @stakeholder = Stakeholder.new
-    render :partial => "pm_dashboards/project_info/new_stakeholder"
+    render :partial => "project_info/new_stakeholder"
   end
 
   def create
@@ -23,7 +23,7 @@ class StakeholdersController < ApplicationController
     @positions = PmPosition.find(:all) #Positions created by PM
     @roles = PmRole.find(:all, :conditions => "for_stakeholder = TRUE") #Roles created by PM
     @stakeholder = @project.stakeholders.find(params[:id])
-    render :partial => "pm_dashboards/project_info/stakeholder_edit", :locals => {:member => @stakeholder}
+    render :partial => "project_info/stakeholder_edit", :locals => {:member => @stakeholder}
   end
 
   def update
@@ -31,7 +31,7 @@ class StakeholdersController < ApplicationController
 
     if @member.update_attributes(params[:member])
       render(:update) {|page| page.replace_html "tr_stakeholder_#{@member.id}", 
-      {:partial => "pm_dashboards/project_info/stakeholder_edit", 
+      {:partial => "project_info/stakeholder_edit", 
        :locals => {:member => @member}}}
     end
   end
@@ -50,7 +50,7 @@ private
   end
   
   def redirect_to_info
-    redirect_to :controller => 'pm_dashboards', :action => 'index', :project_id => @project, :tab => :info
+    redirect_to :controller => 'project_info', :action => 'index', :project_id => @project, :tab => :info
   end
   
 end

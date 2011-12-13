@@ -21,5 +21,3 @@ module UserExtn
 end
 
 User.send(:include, UserExtn)
-
-

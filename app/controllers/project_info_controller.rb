@@ -1,7 +1,17 @@
 class ProjectInfoController < ApplicationController
 
-#  helper :resource_costs
-  before_filter :get_project, :only => [:add, :update, :destroy, :add_pm_position, :add_pm_role, :pm_member_add, :pm_member_edit]
+  menu_item :info
+  
+  before_filter :get_project, :only => [:index, :add, :update, :destroy, :add_pm_position, :add_pm_role, :pm_member_add, :pm_member_edit]
+  before_filter :authorize, :only => [:index, :add, :update, :destroy, :add_pm_position, :add_pm_role, :pm_member_add, :pm_member_edit]
+  
+  def index
+    @stakeholders = @project.members.stakeholders
+    if !@project.stakeholders.empty?
+      @stakeholders.concat(@project.stakeholders.all)
+    end
+    @proj_team = @project.members.project_team
+  end
 
   def update
     if request.post? and !request.xhr?
@@ -9,10 +19,10 @@ class ProjectInfoController < ApplicationController
       if @project.update_attributes(params[:project])
         redirect_to_info
       else
-        render :template => "pm_dashboards/project_info/edit_with_error"
+        render :template => "project_info/edit_with_error"
       end
-    else 
-      render :partial => "pm_dashboards/project_info/edit"
+    else
+      render :partial => "project_info/edit"
     end
   end
 
@@ -21,7 +31,7 @@ class ProjectInfoController < ApplicationController
     @positions = PmPosition.find(:all) #Positions created by PM
     @roles = PmRole.find(:all, :conditions => "for_stakeholder = #{bool}") #Roles created by PM
     @member = Member.find(params[:id])
-    render :partial => "pm_dashboards/project_info/pm_member_edit", 
+    render :partial => "project_info/pm_member_edit", 
            :locals => {:member => @member, :classification => params[:classification].to_sym}
   end
 
@@ -35,13 +45,13 @@ class ProjectInfoController < ApplicationController
 
       if @member.update_attributes(params[:member])
         render(:update) {|page| page.replace_html "tr_#{params[:classif]}_#{@member.id}",
-        {:partial => "pm_dashboards/project_info/pm_member_edit",
+        {:partial => "project_info/pm_member_edit",
          :locals => {:member => @member}}}
       end
     else 
       if params[:classification]
         @project = Project.find(params[:project_id])
-        render :partial => "pm_dashboards/project_info/pm_member_add", 
+        render :partial => "project_info/pm_member_add", 
                       :locals => {:classification => params[:classification]}
       else
         @member = Member.find(params[:id]) 
@@ -49,7 +59,7 @@ class ProjectInfoController < ApplicationController
 
         if @member.update_attributes(params[:member])
           render(:update) {|page| page.replace_html "tr_#{params[:classif]}_#{@member.id}", 
-          {:partial => "pm_dashboards/project_info/pm_member_edit", 
+          {:partial => "project_info/pm_member_edit", 
            :locals => {:member => @member, :classification => params[:classif].to_sym}}}
         end
       end
@@ -77,8 +87,6 @@ class ProjectInfoController < ApplicationController
     redirect_to_info
   end
 
-#  "#{params[:classification].downcase.sub(' ', '_')}_#{@project.id}"
-
   def pm_member_remove
     if request.post?
       @member = Member.find(params[:id])
@@ -104,7 +112,7 @@ class ProjectInfoController < ApplicationController
     if role_or_pos.blank? or role_or_pos.eql?("Others")
       form_name = ((params[:role_or_pos].split("_")[1].eql?("role"))? "role" : "position")
       render(:update) {|page| page.replace_html "#{params[:role_or_pos].split('_')[1]}_#{params[:id]}", 
-      {:partial => 'pm_dashboards/project_info/add_role_pos', :locals => {:form_name => form_name, 
+      {:partial => 'project_info/add_role_pos', :locals => {:form_name => form_name, 
       :classification => params[:classification].to_sym}}}
     else
       if @member.update_attributes(params[:member])
@@ -128,14 +136,13 @@ class ProjectInfoController < ApplicationController
       @roles = PmRole.find(:all, :conditions => "for_stakeholder = #{bool}") #Roles created by PM
       @member.update_attributes(:pm_pos_id => @position.id)
     end
-#    redirect_to_info
     if params[:no_accnt]
       render(:update) {|page| page.replace_html "tr_stakeholder_#{@member.id}", 
-          {:partial => "pm_dashboards/project_info/stakeholder_edit", 
+          {:partial => "project_info/stakeholder_edit", 
            :locals => {:member => @member, :classification => :stakeholder}}}
     else
       render(:update) {|page| page.replace_html "tr_#{params[:classification]}_#{@member.id}", 
-          {:partial => "pm_dashboards/project_info/pm_member_edit", 
+          {:partial => "project_info/pm_member_edit", 
            :locals => {:member => @member, :classification => params[:classification].to_sym}}}
     end
   end
@@ -156,22 +163,16 @@ class ProjectInfoController < ApplicationController
     end
     if params[:no_accnt]
       render(:update) {|page| page.replace_html "tr_stakeholder_#{@member.id}", 
-          {:partial => "pm_dashboards/project_info/stakeholder_edit", 
+          {:partial => "project_info/stakeholder_edit", 
            :locals => {:member => @member, :classification => :stakeholder}}}
     else
       render(:update) {|page| page.replace_html "tr_#{params[:classification]}_#{@member.id}", 
-          {:partial => "pm_dashboards/project_info/pm_member_edit", 
+          {:partial => "project_info/pm_member_edit", 
            :locals => {:member => @member, :classification => params[:classification].to_sym}}}
     end
-#    redirect_to_info
   end
 
-#  def update_remarks
-#    @member = Member.find(params[:id])
-#    render :partial => 'pm_dashboards/project_info/edit_remarks'
-#  end
-
-private
+  private
   def get_project
     @project = Project.find(params[:project_id])
     rescue ActiveRecord::RecordNotFound
@@ -179,7 +180,7 @@ private
   end
   
   def redirect_to_info
-    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :info
+    redirect_to :controller => 'project_info', :action => 'index', :project_id => @project
   end
 
 end

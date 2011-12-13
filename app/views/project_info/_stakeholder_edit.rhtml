@@ -1,0 +1,38 @@
+<td><%= member.name %></td>
+<td id="pos_<%= member.id %>">
+  <% remote_form_for(:member, member, :url => {:controller => 'stakeholders', :action => 'update', :id => member, :project_id => @project}, :method => :post, :html => {:id => "form_position_#{member.id}"}) do |f| %>
+    <%= f.text_field :stakeholder_position, :size => 15, :onblur => "$('form_position_#{member.id}').request();" %>
+  <% end %>
+</td>
+<td id="role_<%= member.id %>">
+  <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'update_role_pos', :project_id => @project, :id => member, :role_or_pos => 'pm_role_id', :classification => :stakeholder, :no_accnt => true}, :method => :post) do |f| %>
+    <%= f.select :pm_role_id, @roles.collect{|r| [r.name, r.id]}.insert(0, "Others"), {:include_blank => true}, 
+                 :class => "small", :onchange => "$('role_#{member.id}_submit').show()" %>
+    <%= submit_tag "Ok", :class => "small", :id => "role_#{member.id}_submit", 
+                         :style => "display:none", :onclick => "$('role_#{member.id}_submit').hide()" %>
+  <% end %>
+</td>
+<td><%= member.mail %></td>
+<td>
+  <% remote_form_for(:member, member, :url => {:controller => 'stakeholders', :action => 'update', :id => member, :project_id => @project}, :method => :post, :html => {:id => "form_phone_#{member.id}"}) do |f| %>
+    <%= f.text_field :phone_no, :size => 10, :onblur => "$('form_phone_#{member.id}').request();" %>
+  <% end %>
+</td>
+<td>
+  <% remote_form_for(:member, member, :url => {:controller => 'stakeholders', :action => 'update', :id => member, :project_id => @project}, :method => :post, :html => {:id => "form_office_#{member.id}"}) do |f| %>
+    <%= f.text_field :office_no, :size => 10, :onblur => "$('form_office_#{member.id}').request();" %>
+  <% end %>
+</td>
+<td>
+  <% remote_form_for(:member, member, :url => {:controller => 'stakeholders', :action => 'update', :id => member, :project_id => @project}, :method => :post, :html => {:id => "form_im_#{member.id}"}) do |f| %>
+    <%= f.text_field :im_id, :size => 10, :onblur => "$('form_im_#{member.id}').request();" %>
+  <% end %>
+</td>
+
+<td>
+  <%= link_to "Done", {:controller => 'project_info', :action => 'index', :project_id => @project }, :class => 'icon icon-checked' %>
+</td>
+
+<script type="text/javascript">
+
+</script>

@@ -1,0 +1,15 @@
+<h2>Resource Management</h2>
+
+<div class='tabs'>
+  <%= render_menu :project_management, @project %>
+</div>
+
+<script type="text/javascript">
+  j = jQuery.noConflict();
+</script>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
+  <%= javascript_include_tag 'jquery', :plugin => 'pm_dashboard' %>
+  <%= javascript_include_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
+<% end %>

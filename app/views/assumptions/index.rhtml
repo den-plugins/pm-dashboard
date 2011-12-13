@@ -1,0 +1,15 @@
+<%= render :partial => 'common/header' %>
+
+<div class="contextual">
+  <%= link_to l(:label_assumption_new), { :controller => 'assumptions' , :action => 'add', :project_id => @project}, :class => 'icon icon-add' %>
+</div>
+
+<h2><%= l(:label_assumption_plural) %></h2>
+
+<% if @assumptions.any? %>
+  <%= render :partial => 'assumptions/summary' unless params[:q] %>
+  <p><%= link_to l(:label_view_all_assumptions), :controller => 'assumptions', :project_id => @project if params[:q]  %></p>
+  <%= render :partial => 'assumptions/list' %>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>

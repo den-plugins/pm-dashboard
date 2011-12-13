@@ -1,0 +1,51 @@
+<fieldset><legend>Add to <%= classification %></legend>
+<% if classification == "Project Team" %>
+  <% classification = :proj_team %>
+<% else %>
+  <% classification = :stakeholder %>
+<% end %>
+<div class="contextual">
+<% if classification.eql? :stakeholder %>
+  <%= link_to_remote "New Stakeholder", {:url => { :controller => 'stakeholders' , :action => 'new', :project_id => @project, :classification => classification}, :update => "add_stakeholder", :complete => "new Effect.Highlight('add_stakeholder')"}, :class => 'icon icon-add' %>
+  <br />
+<% end %>
+  <%= link_to "Cancel", {:controller => 'project_info', :action => 'index', :project_id => @project }, :class => 'icon icon-cancel' %>
+</div>
+<div style="height:300px; overflow:auto;">
+<% form_for(:project, @project, :url => {:controller => 'project_info', :action => 'pm_member_add', :project_id => @project, :classification => classification}, :method => :post) do |f| %>
+<p>
+<%= hidden_field_tag 'project[member_ids][]', '', :id => nil %>
+  <table>
+    <tr>
+      <td>Available Members</td>
+      <td></td>
+      <td>Selected Members</td>
+    </tr>
+	  <tr>
+		  <td><%= select_tag 'available_members',
+		            options_for_select(available_members(classification).collect{|m| [m.name, (m.is_a?(Stakeholder))? (m.id.to_s + "_s") : m.id]}),
+		            :multiple => true, :size => 10, :style => "width:250px",
+		            :ondblclick => "handleSelect(this, '#{@project.identifier}', 'members')" %>
+		  </td>
+		  <td align="center" valign="middle">
+			  <input type="button" value="--&gt;"
+			   onclick="moveOptions(this.form.available_members, this.form.selected_members);" /><br />
+			  <input type="button" value="&lt;--"
+			   onclick="moveOptions(this.form.selected_members, this.form.available_members);" />
+		  </td>
+		  <td><%= select_tag 'project[member_ids][]',
+		            options_for_select(selected_members(classification).collect{|m| [m.name, (m.is_a?(Stakeholder))? (m.id.to_s + "_s") : m.id]}),
+		            :id => 'selected_members', :multiple => true, :size => 10, :style => "width:250px",
+		            :ondblclick => "handleSelect(this, '#{@project.identifier}', 'members')" %>
+		  </td>
+	  </tr>
+  </table>
+</p>
+
+<%= submit_tag l(:button_save), :onclick => "selectAllOptions('selected_members');" %>
+
+<% end %>
+<div>
+</fieldset>
+
+
