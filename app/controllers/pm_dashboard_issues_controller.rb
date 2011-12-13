@@ -48,11 +48,15 @@ class PmDashboardIssuesController < ApplicationController
 
   private
   def get_project
-    @project = Project.find(params[:project_id])
+    @project = params[:project_id] ? Project.find(params[:project_id]) : nil
+    rescue ActiveRecord::RecordNotFound
+      render_404
   end
 
   def get_issue
     @issue = PmDashboardIssue.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render_404
   end
   
   def redirect_to_project_issues

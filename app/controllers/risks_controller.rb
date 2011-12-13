@@ -50,7 +50,7 @@ class RisksController < ApplicationController
     
   private
   def get_project
-    @project = Project.find(params[:project_id])
+    @project = params[:project_id] ? Project.find(params[:project_id]) : nil
     rescue ActiveRecord::RecordNotFound
       render_404
   end

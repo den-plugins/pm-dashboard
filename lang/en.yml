@@ -16,6 +16,8 @@ en:
   label_dashboard_issues: Key Issues
   label_dashboard_sprint: Sprint Burndown Chart
 
+  label_view_all_project_issues: View All Project Issues
+
   label_assumption_new: New Assumption
   label_pm_issue_new: New Project Issue
   label_risk_new: New Risk
