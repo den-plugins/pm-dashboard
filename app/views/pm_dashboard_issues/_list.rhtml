@@ -33,7 +33,7 @@
         <td><%= issue.days_overdue %></td>
         <td><%= issue.date_close %></td>
         <td><% issue.risks.each do |risk|%>
-            <%= link_to risk.ref_number, :project_id => @project, :tab => 'risks', :q => risk %>
+            <%= link_to risk.ref_number, :project_id => @project, :id => risk.id %>
             <br/>
             <% end %>
             <% issue.assumptions.each do |assumption|%>

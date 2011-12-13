@@ -12,5 +12,5 @@
                                         :url => { :controller => 'resource_allocations' , :action => 'destroy', :member_id => @member, :id => allocation },
                                         :confirm => l(:text_are_you_sure)  %>
 </p>
-<%= render :partial => "pm_dashboards/resource_allocations/edit_form", :locals => {:allocation => allocation} %>
+<%= render :partial => "resource_allocations/edit_form", :locals => {:allocation => allocation} %>
 <% end %>

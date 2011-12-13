@@ -3,7 +3,6 @@ class ResourceAllocationsController < ApplicationController
   
   helper :pm_dashboards
   helper :resource_costs
-  helper :project_billability
   
   before_filter :get_member
   before_filter :get_project
@@ -16,7 +15,7 @@ class ResourceAllocationsController < ApplicationController
       @resource_allocations = @member.resource_allocations
       respond_to do |format|
         format.html
-        format.js { render_to_facebox :partial => "pm_dashboards/resource_allocations/index" }
+        format.js { render_to_facebox :partial => "resource_allocations/index" }
       end
     end
   end
@@ -28,8 +27,8 @@ class ResourceAllocationsController < ApplicationController
       render_updates
     else
        render :update do |page|
-        page.insert_html :bottom, :allocation_show, :partial => 'pm_dashboards/resource_allocations/date_range', :locals => {:allocation => nil}
-        page.replace_html :allocation_add, :partial => 'pm_dashboards/resource_allocations/add'
+        page.insert_html :bottom, :allocation_show, :partial => 'resource_allocations/date_range', :locals => {:allocation => nil}
+        page.replace_html :allocation_add, :partial => 'resource_allocations/add'
        end
    end
   end
@@ -41,7 +40,7 @@ class ResourceAllocationsController < ApplicationController
       render_updates
     else
       render :update do |page|
-        page.replace "date_range_#{@resource_allocation.id}_edit", :partial => "pm_dashboards/resource_allocations/edit_form",
+        page.replace "date_range_#{@resource_allocation.id}_edit", :partial => "resource_allocations/edit_form",
                                            :locals => {:allocation => @resource_allocation}
         page["date_range_#{@resource_allocation.id}_edit"].show
       end
@@ -62,7 +61,7 @@ class ResourceAllocationsController < ApplicationController
     else
       with_errors.uniq.each {|e| @resource_allocation.errors.add_to_base e }
       render :update do |page|
-        page.replace_html :allocation_edit, :partial => 'pm_dashboards/resource_allocations/edit'
+        page.replace_html :allocation_edit, :partial => 'resource_allocations/edit'
       end
     end
   end
@@ -102,16 +101,9 @@ class ResourceAllocationsController < ApplicationController
     @resource_allocations = @member.resource_allocations
     @project_resources = @project.members.select(&:billable?)
     render :update do |page|
-      page.replace "allocations_#{@member.id}", :partial => 'pm_dashboards/resource_allocations/index'
-      page.replace_html :resource_costs_header , :partial => 'pm_dashboards/resource_costs/header'
-      page.replace_html :resource_members_content, :partial => 'pm_dashboards/resource_costs/list'
-
-      #replace tabs affected by resource_allocation change
-      #page.replace_html "dashboard_header", :partial => 'pm_dashboards/dashboard_header'
-      #page.replace_html "dashboard_cost_monitoring", :partial => 'pm_dashboards/project_billability/cost_monitoring_dashboard'
-      #page.replace_html "dashboard_billability", :partial => 'pm_dashboards/project_billability/billability_dashboard'
-      #page.replace_html "tab-content-billability", :partial => 'pm_dashboards/project_billability'
-      #page.replace_html "billability_charts", :partial => 'pm_dashboards/billability_charts'
+      page.replace "allocations_#{@member.id}", :partial => 'resource_allocations/index'
+      page.replace_html :resource_costs_header , :partial => 'resource_costs/header'
+      page.replace_html :resource_members_content, :partial => 'resource_costs/list'
     end
   end
 end

@@ -9,7 +9,9 @@ class PmDashboardIssuesController < ApplicationController
   before_filter :get_issue, :only => [:edit, :delete]
 
   def index
-    @issues = @project.pm_dashboard_issues.find(:all, :order => 'ref_number DESC')
+    @issue = Assumption.find(params[:id]) if params[:id]
+    @project ||= @issue.project
+    @issues = params[:id] ? [@issue] : @project.pm_dashboard_issues.find(:all, :order => 'ref_number DESC')
   end
 
   def add

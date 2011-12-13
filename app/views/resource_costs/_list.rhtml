@@ -44,14 +44,14 @@
 
 <div class='resource_cost_container' >
   <% if params[:view] && params[:view].eql?('month') %>
-    <%= render :partial => 'pm_dashboards/resource_costs/monthly' %>
+    <%= render :partial => 'resource_costs/monthly' %>
   <% else %>
-    <%= render :partial => 'pm_dashboards/resource_costs/weekly' %>
+    <%= render :partial => 'resource_costs/weekly' %>
   <% end %>
 </div>
 
 <script type='text/javascript'>
-  jQuery('#resource_costs_header').replaceWith("<%= escape_javascript(render :partial => 'pm_dashboards/resource_costs/header') %>");
+  jQuery('#resource_costs_header').replaceWith("<%= escape_javascript(render :partial => 'resource_costs/header') %>");
 </script>
 
 <% content_for :header_tags do %>

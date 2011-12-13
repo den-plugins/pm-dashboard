@@ -1,0 +1,18 @@
+<%= render :partial => 'common/header' %>
+
+<%= include_calendar_headers_tags %>
+<%= heads_for_wiki_formatter %>
+
+<h2><%= l(:label_resource_cost_forecast) %></h2>
+<% if @proj_team.any? %>
+  <%= render :partial => 'resource_costs/header' %>
+  <%= render :partial => 'resource_costs/filters' %>
+  <div style='width: 100%;' id='resource_members_content'>
+    <%= render :partial => 'resource_costs/list' %>
+  </div>
+<% else %>
+  <p class="nodata">
+    <%= l(:label_no_data) %>. 
+    Click <%= link_to 'here', :controller => 'project_info' %> to add a team for this project.
+  </p>
+<% end %>

@@ -11,7 +11,7 @@ class AssumptionsController < ApplicationController
   def index
     @assumption = Assumption.find(params[:id]) if params[:id]
     @project ||= @assumption.project
-    @assumptions = @project.assumptions.find(:all, :order => 'ref_number DESC')
+    @assumptions = params[:id] ? [@assumption] : @project.assumptions.find(:all, :order => 'ref_number DESC')
   end
   
   def add
