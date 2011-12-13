@@ -30,7 +30,7 @@ Redmine::Plugin.register :pm_dashboard do
                             :assumptions => [:index, :add, :update, :destroy],
                             :highlights   => [:save, :post, :unpost],
                             :milestone_plans => [:add, :update, :destroy],
-                            :pm_dashboard_issues    => [:add, :edit, :delete],
+                            :pm_dashboard_issues    => [:index, :add, :edit, :delete],
                             :project_info    => [:index, :update, :pm_member_edit, :pm_member_update, :pm_member_add, :pm_member_remove,
                                                                :update_role_pos, :add_pm_position, :add_pm_role],
                             :resource_allocations => [:index, :add, :edit, :destroy],
@@ -50,7 +50,7 @@ Redmine::Plugin.register :pm_dashboard do
     menu.push :dashboard, {:controller => 'pm_dashboards', :action => 'index' }, :param => :project_id
     menu.push :info, {:controller => 'project_info', :action =>'index' }, :param => :project_id
     menu.push :assumptions, {:controller => 'assumptions', :action =>'index' }, :param => :project_id
-#    menu.push :project_issues, {:controller => 'pm_dashboards', :action => 'project_issues'}
+    menu.push :project_issues, {:controller => 'pm_dashboard_issues', :action => 'index'}, :param => :project_id
 #    menu.push :risks, {:controller => 'pm_dashboards', :action =>'risks' }
 #    menu.push :forecasts, {:controller => 'pm_dashboards', :action =>'forecasts' }, :caption => 'Resource Cost Forecast'
 #    menu.push :billability, {:controller => 'pm_dashboards', :action =>'billability' }, :caption => 'Project Billability'

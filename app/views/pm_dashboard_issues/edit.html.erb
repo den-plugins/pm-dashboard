@@ -37,15 +37,15 @@
 
 <p>
   <div class="splitcontentleft">
-    <%= render :partial => 'pm_dashboards/pm_dashboard_issues/risks', :locals => {:f => f} %>
+    <%= render :partial => 'pm_dashboard_issues/risks', :locals => {:f => f} %>
   </div>
   <div class="splitcontentright">
-    <%= render :partial => 'pm_dashboards/pm_dashboard_issues/assumptions', :locals => {:f => f} %>
+    <%= render :partial => 'pm_dashboard_issues/assumptions', :locals => {:f => f} %>
   </div>
 </p>
 
   <%= submit_tag l(:button_save), :onclick => "selectAllOptions('selected_risks');selectAllOptions('selected_assumptions')" %>
-  <%= link_to 'Cancel', :controller => 'pm_dashboards', :tab => 'issues', :project_id => @project %>
+  <%= link_to 'Cancel', :controller => 'pm_dashboard_issues', :action => 'index', :project_id => @project %>
 <% end %>
 
 <% content_for :header_tags do %>

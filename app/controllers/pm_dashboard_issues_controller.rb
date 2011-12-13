@@ -1,36 +1,39 @@
 class PmDashboardIssuesController < ApplicationController
 
+  menu_item :project_issues
+  
   helper :pm_dashboards
 
   before_filter :require_login
-  before_filter :get_project, :only => [:add, :edit, :delete]
+  before_filter :get_project, :only => [:index, :add, :edit, :delete]
   before_filter :get_issue, :only => [:edit, :delete]
 
   def index
+    @issues = @project.pm_dashboard_issues.find(:all, :order => 'ref_number DESC')
   end
 
   def add
     if request.get?
       @issue = PmDashboardIssue.new
-      render :template => "pm_dashboards/pm_dashboard_issues/add"
+      render :template => "pm_dashboard_issues/add"
     else
       @issue = @project.pm_dashboard_issues.create(params[:issue])
       if @issue.save
         redirect_to_project_issues
       else
-        render :template => "pm_dashboards/pm_dashboard_issues/add"
+        render :template => "pm_dashboard_issues/add"
       end
     end
   end
 
   def edit
     if request.get?
-      render :template => "pm_dashboards/pm_dashboard_issues/edit"
+      render :template => "pm_dashboard_issues/edit"
     else
       if @issue.update_attributes(params[:issue])
         redirect_to_project_issues
       else
-        render :template => "pm_dashboards/pm_dashboard_issues/edit"
+        render :template => "pm_dashboard_issues/edit"
       end
     end
   end
@@ -51,6 +54,6 @@ class PmDashboardIssuesController < ApplicationController
   end
   
   def redirect_to_project_issues
-    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :issues
+    redirect_to :controller => 'pm_dashboard_issues', :project_id => @project
   end
 end
