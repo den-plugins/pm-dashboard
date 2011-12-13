@@ -1,6 +1,6 @@
 function handleSelect(elm, project, tab) {
   var root = location.protocol + '//' + location.host;
-  var risk_page = "/" + tab + "?project_id=" + project + "&id=" + elm.value;
+  var risk_page = "/projects/" + project + "/project_management/" + tab +"?id=" + elm.value;
   var x = window.open('', "_blank");
   x.location = root + risk_page;
 }

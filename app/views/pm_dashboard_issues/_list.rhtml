@@ -34,11 +34,11 @@
         <td><%= issue.date_close %></td>
         <td>
           <% issue.risks.each do |risk|%>
-            <%= link_to risk.ref_number, :controller => 'risks', :id => risk.id %>
+            <%= link_to risk.ref_number, :controller => 'risks', :id => risk.id, :project_id => risk.project.identifier %>
             <br/>
           <% end %>
           <% issue.assumptions.each do |assumption|%>
-            <%= link_to assumption.ref_number, :controller => 'assumptions', :id => assumption.id %>
+            <%= link_to assumption.ref_number, :controller => 'assumptions', :id => assumption.id, :project_id => assumption.project.identifier %>
             <br/>
             <% end %>
         </td>
