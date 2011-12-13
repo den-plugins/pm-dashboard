@@ -28,7 +28,7 @@ Redmine::Plugin.register :pm_dashboard do
     permission :list_dashboards,
                       {   :pm_dashboards => [:index, :forecasts],
                             :assumptions => [:index, :add, :update, :destroy],
-                            :highlights   => [:save, :post, :unpost],
+                            :highlights   => [:index, :save, :post, :unpost],
                             :milestone_plans => [:index, :add, :update, :destroy],
                             :pm_dashboard_issues    => [:index, :add, :edit, :delete],
                             :project_info    => [:index, :update, :pm_member_edit, :pm_member_update, :pm_member_add, :pm_member_remove,
@@ -58,7 +58,7 @@ Redmine::Plugin.register :pm_dashboard do
     menu.push :billability, {:controller => 'project_billability', :action =>'index' }, :caption => 'Project Billability', :param => :project_id
     menu.push :milestones, {:controller => 'milestone_plans', :action =>'index' }, :caption => 'Milestone Plans', :param => :project_id
 #    menu.push :contracts, {:controller => 'pm_dashboards', :action =>'contracts' }, :caption => 'Project Contracts'
-#    menu.push :highlights, {:controller => 'pm_dashboards', :action =>'highlights' }, :caption => 'Weekly Highlights'
+    menu.push :highlights, {:controller => 'highlights', :action =>'index' }, :caption => 'Weekly Highlights', :param => :project_id
   end
 end
 

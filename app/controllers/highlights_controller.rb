@@ -1,13 +1,26 @@
 class HighlightsController < ApplicationController
 
+  menu_item :highlights
+
   before_filter :get_project, :get_highlight
+
+  def index
+    @highlights = @project.weekly_highlights
+    if params[:edit_what] == 'current'
+      @jscmd = "jQuery('#current').trigger('click'); jQuery('#current_edit').trigger('click')"
+    elsif params[:edit_what] == 'nextp'
+      @jscmd = "jQuery('#nextp').trigger('click'); jQuery('#nextp_edit').trigger('click');"
+    elsif params[:edit_what] == 'recently_posted'
+      @jscmd = "$('recently_posted').highlight({startColor : '#FF9999'});"
+    end
+  end
   
   def save
     if params[:cancel]
       @highlights = @project.weekly_highlights
       render :update do |page|
-        page.replace_html :next_period, :partial => "pm_dashboards/highlights/nextp", :locals => {:highlight => @highlights[:after_current]}
-        page.replace_html :this_period, :partial => "pm_dashboards/highlights/current", :locals => {:highlight => @highlights[:current]}
+        page.replace_html :next_period, :partial => "highlights/nextp", :locals => {:highlight => @highlights[:after_current]}
+        page.replace_html :this_period, :partial => "highlights/current", :locals => {:highlight => @highlights[:current]}
       end
     else
 	  update_highlight
@@ -37,7 +50,7 @@ class HighlightsController < ApplicationController
     date = params[:select_week].to_date
     highlight = @project.highlights.for_the_week(date).post_current.first
     render :update do |page|
-      page.replace_html :recently_posted, :partial => "pm_dashboards/highlights/recently_posted", :locals => {:highlight => highlight}
+      page.replace_html :recently_posted, :partial => "highlights/recently_posted", :locals => {:highlight => highlight}
     end
   end
   
@@ -54,7 +67,7 @@ class HighlightsController < ApplicationController
       if dup && (dup.posted_date.nil? || (dup.posted_date && in_period(dup)))
 		if session[:newhighlight]
         	render :update do |page|
-          		page.replace_html period, :partial => "pm_dashboards/highlights/#{time_state}", :locals => {:highlight => dup}
+          		page.replace_html period, :partial => "highlights/#{time_state}", :locals => {:highlight => dup}
          	 	page.hide "#{time_state}_highlight_wrapper"
         	 	page.show "#{time_state}_highlights_container"
        		 end
@@ -64,7 +77,7 @@ class HighlightsController < ApplicationController
         @highlight = Highlight.new({:created_at => date})
 		session[:newhighlight] = "new"
         render :update do |page|
-          page.replace_html period, :partial => "pm_dashboards/highlights/#{time_state}", :locals => {:highlight => @highlight}
+          page.replace_html period, :partial => "highlights/#{time_state}", :locals => {:highlight => @highlight}
           page.hide "#{time_state}_highlight_wrapper"
           page.show "#{time_state}_highlights_container"
         end
@@ -99,9 +112,9 @@ class HighlightsController < ApplicationController
     @highlight_errors = @highlight.errors.full_messages
     render :update do |page|
       if @highlight.is_for_next_period
-        page.replace_html :nextp_error_messages, :partial => "pm_dashboards/highlights/errors"
+        page.replace_html :nextp_error_messages, :partial => "highlights/errors"
       else
-        page.replace_html :current_error_messages, :partial => "pm_dashboards/highlights/errors"
+        page.replace_html :current_error_messages, :partial => "highlights/errors"
       end
       page["errorExplanation"].show
     end
@@ -110,10 +123,10 @@ class HighlightsController < ApplicationController
   def replace_highlights
     @highlights = @project.weekly_highlights
     render :update do |page|
-      page.replace_html :highlights_summary, :partial => "pm_dashboards/highlights/dashboard"
-      page.replace_html :recently_posted, :partial => "pm_dashboards/highlights/recently_posted", :locals => {:highlight => @highlights[:recently_posted]}
-      page.replace_html :next_period, :partial => "pm_dashboards/highlights/nextp", :locals => {:highlight => @highlights[:after_current]}
-      page.replace_html :this_period, :partial => "pm_dashboards/highlights/current", :locals => {:highlight => @highlights[:current]}
+      page.replace_html :highlights_summary, :partial => "highlights/dashboard"
+      page.replace_html :recently_posted, :partial => "highlights/recently_posted", :locals => {:highlight => @highlights[:recently_posted]}
+      page.replace_html :next_period, :partial => "highlights/nextp", :locals => {:highlight => @highlights[:after_current]}
+      page.replace_html :this_period, :partial => "highlights/current", :locals => {:highlight => @highlights[:current]}
     end
   end
 end
