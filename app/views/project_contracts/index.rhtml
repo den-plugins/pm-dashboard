@@ -1,0 +1,22 @@
+<%= render :partial => 'common/header' %>
+
+<%= include_calendar_headers_tags %>
+<%= heads_for_wiki_formatter %>
+
+<div id="tab-content-project_contracts">
+  <div class="contextual">
+    <%= link_to_remote "New Project Contract", {:url => { :controller => 'project_contracts' , :action => 'add', :project_id => @project},
+                                                          :update => "tab-content-project_contracts", 
+                                                          :complete => "new Effect.Highlight('tab-content-project_contracts')"},
+                                                          :class => 'icon icon-add' %>
+  </div>
+  <h2><%= "Project Contracts" %></h2>
+
+  <% if @project_contracts.any? %>
+    <%= render :partial => 'project_contracts/summary' unless params[:q] %>
+    <p><%= link_to l(:label_view_all_project_contracts), :controller => 'project_contracts', :project_id => @project  if params[:q]  %></p>
+    <%= render :partial => 'project_contracts/list' %>
+  <% else %>
+    <p class="nodata"><%= l(:label_no_data) %></p>
+  <% end %>
+</div>
