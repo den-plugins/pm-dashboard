@@ -1,17 +1,15 @@
 <p><%= f.select :pc_type, ProjectContract::TYPES %></p>
-<p><%= f.text_area :description, :rows => 3, :cols => 30, :class=> 'wiki-edit' %></p>
-<p><%= f.text_field :amount, :class=> 'wiki-edit' %></p>
+<p><%= f.text_area :description, :rows => 3, :cols => 30, :class=> 'wiki-edit', :required => true %></p>
+<p><%= f.text_field :amount, :class=> 'wiki-edit', :required => true %></p>
 <p><%= f.hidden_field :project_id, :value => @project.id,:class=> 'wiki-edit' %></p>
 <p><%= f.select :status, ProjectContract::STATUSES %></p>
-<p><%= f.text_field :effective_from, :size => 10 %><%= calendar_for('project_contract_effective_from') %></p>
-<p><%= f.text_field :effective_to, :size => 10 %><%= calendar_for('project_contract_effective_to') %></p>
-<p><%= f.text_field :approval_date, :size => 10 %><%= calendar_for('project_contract_approval_date') %></p>
+<p><%= f.text_field :effective_from, :size => 10, :required => true %><%= calendar_for('project_contract_effective_from') %></p>
+<p><%= f.text_field :effective_to, :size => 10, :required => true %><%= calendar_for('project_contract_effective_to') %></p>
+<p><%= f.text_field :approval_date, :size => 10, :required => true %><%= calendar_for('project_contract_approval_date') %></p>
 <hr/>
 <p><label><%=l(:label_attachment_plural)%></label><%= render :partial => 'attachments/form' %></p>
 <div style="clear: both;"></div>
 
 <% content_for :header_tags do %>
-  <%= stylesheet_link_tag 'pm_dashboard', :plugin => 'pm_dashboard' %>
   <%= javascript_include_tag 'select_list_move' %>
-  <%= javascript_include_tag 'pm_dashboard', :plugin => 'pm_dashboard'  %>
 <% end %>

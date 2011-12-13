@@ -37,7 +37,7 @@ Redmine::Plugin.register :pm_dashboard do
                             :resource_allocations => [:index, :add, :edit, :destroy],
                             :risks => [:index, :add, :update, :destroy],
                             :project_billability => [:index],
-                            :project_contracts => [:add, :update, :destroy],
+                            :project_contracts => [:index, :add, :update, :destroy],
                             :stakeholders => [:new, :create, :edit, :update, :remove],
                             :weeks => [:new, :edit]
                         }, :public => false
@@ -57,7 +57,7 @@ Redmine::Plugin.register :pm_dashboard do
     menu.push :forecasts, {:controller => 'resource_costs', :action =>'index' }, :caption => 'Resource Cost Forecast', :param => :project_id
     menu.push :billability, {:controller => 'project_billability', :action =>'index' }, :caption => 'Project Billability', :param => :project_id
     menu.push :milestones, {:controller => 'milestone_plans', :action =>'index' }, :caption => 'Milestone Plans', :param => :project_id
-#    menu.push :contracts, {:controller => 'pm_dashboards', :action =>'contracts' }, :caption => 'Project Contracts'
+    menu.push :contracts, {:controller => 'project_contracts', :action =>'index' }, :caption => 'Project Contracts', :param => :project_id
 #    menu.push :highlights, {:controller => 'pm_dashboards', :action =>'highlights' }, :caption => 'Weekly Highlights'
   end
 end
