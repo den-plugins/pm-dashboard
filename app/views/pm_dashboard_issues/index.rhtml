@@ -1,15 +1,15 @@
 <%= render :partial => 'common/header' %>
 
 <div class="contextual">
-  <%= link_to l(:label_issue_new), { :controller => 'pm_dashboard_issues' , :action => 'add', :project_id => @project}, :class => 'icon icon-add' %>
+  <%= link_to l(:label_pm_issue_new), {:controller =>'pm_dashboard_issues', :action => 'add', :project_id => @project}, :class => 'icon icon-add' %>
 </div>
 
-<h2><%= l(:label_issue_plural) %></h2>
+<h2><%= l(:label_pm_issue_plural) %></h2>
 
 <% if @issues.any? %>
   <%= render :partial => 'pm_dashboard_issues/summary' unless params[:id] %>
-  <p><%= link_to l(:label_view_all_issues), :controller => 'pm_dashboard_issues', :project_id => @project if params[:id]  %></p>
+  <p><%= link_to l(:label_view_all_project_issues), :controller => 'pm_dashboard_issues', :action => 'index', :project_id => @project if params[:id] %></p>
   <%= render :partial => 'pm_dashboard_issues/list' %>
 <% else %>
-  <p class="nodata"><%= l(:label_no_data) %></p>
+  <p class="nodata" colspan='9'><%= l(:label_no_data) %></p>
 <% end %>

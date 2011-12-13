@@ -9,7 +9,7 @@ class PmDashboardIssuesController < ApplicationController
   before_filter :get_issue, :only => [:edit, :delete]
 
   def index
-    @issue = Assumption.find(params[:id]) if params[:id]
+    @issue = PmDashboardIssue.find(params[:id]) if params[:id]
     @project ||= @issue.project
     @issues = params[:id] ? [@issue] : @project.pm_dashboard_issues.find(:all, :order => 'ref_number DESC')
   end
@@ -56,6 +56,6 @@ class PmDashboardIssuesController < ApplicationController
   end
   
   def redirect_to_project_issues
-    redirect_to :controller => 'pm_dashboard_issues', :project_id => @project
+    redirect_to :controller => 'pm_dashboard_issues', :action => 'index', :project_id => @project
   end
 end

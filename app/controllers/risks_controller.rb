@@ -1,35 +1,43 @@
 class RisksController < ApplicationController
 
+  menu_item :risks
+
   helper :pm_dashboards
   
   before_filter :require_login
-  before_filter :get_project, :only => [:add, :update, :destroy]
+  before_filter :get_project, :only => [:index, :add, :update, :destroy]
   before_filter :get_risk, :only => [:update, :destroy]
+
+  def index
+    @risk = Risk.find(params[:id]) if params[:id]
+    @project ||= @risk.project
+    @risks = params[:id] ? [@risk] : @project.risks.find(:all, :order => 'ref_number DESC')
+  end
   
   def add
     if request.get?
       @risk = Risk.new
-      render :template => "pm_dashboards/risks/add" 
+      render :template => "risks/add" 
     else
       @risk = @project.risks.create(params[:risk])
       if @risk.save
         flash[:notice] = l(:notice_successful_create)
         redirect_to_risks
       else
-        render :template => "pm_dashboards/risks/add"
+        render :template => "risks/add"
       end
     end
   end
   
   def update
     if request.get?
-      render :template => "pm_dashboards/risks/edit"
+      render :template => "risks/edit"
     else
       if @risk.update_attributes(params[:risk])
         flash[:notice] = l(:notice_successful_update)
         redirect_to_risks
       else
-        render :template => "pm_dashboards/risks/edit"
+        render :template => "risks/edit"
       end
     end
   end
@@ -54,6 +62,6 @@ class RisksController < ApplicationController
   end
   
   def redirect_to_risks
-    redirect_to :controller => 'pm_dashboards', :project_id => @project, :tab => :risks
+    redirect_to :controller => 'risks', :action => 'index', :project_id => @project
   end
 end

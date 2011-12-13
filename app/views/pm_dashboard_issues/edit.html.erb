@@ -2,8 +2,8 @@
 
 <h2><%= l(:label_pm_issue_update) %></h2>
 
-<% labelled_tabular_form_for  :issue, @issue,
-                                                       :url => {:controller => 'pm_dashboard_issues', :action => 'edit', :project_id => @project},
+<% labelled_tabular_form_for :issue, @issue,
+                                                       :url => {:controller => 'pm_dashboard_issues', :action => 'edit', :project_id => @project, :id => @issue},
                                                        :html => {:id => 'issue-form'} do |f| %>
   <%= error_messages_for 'issue' %>
   <p> <%= f.text_area :issue_description,

@@ -35,7 +35,7 @@ Redmine::Plugin.register :pm_dashboard do
                                                                :update_role_pos, :add_pm_position, :add_pm_role],
                             :resource_costs => [:index, :edit_project],
                             :resource_allocations => [:index, :add, :edit, :destroy],
-                            :risks => [:add, :update, :destroy],
+                            :risks => [:index, :add, :update, :destroy],
                             :project_billability => [:index],
                             :project_contracts => [:add, :update, :destroy],
                             :stakeholders => [:new, :create, :edit, :update, :remove],
@@ -53,7 +53,7 @@ Redmine::Plugin.register :pm_dashboard do
     menu.push :info, {:controller => 'project_info', :action =>'index' }, :param => :project_id
     menu.push :assumptions, {:controller => 'assumptions', :action =>'index' }, :param => :project_id
     menu.push :project_issues, {:controller => 'pm_dashboard_issues', :action => 'index'}, :param => :project_id
-#    menu.push :risks, {:controller => 'pm_dashboards', :action =>'risks' }
+    menu.push :risks, {:controller => 'risks', :action =>'index' }, :param => :project_id
     menu.push :forecasts, {:controller => 'resource_costs', :action =>'index' }, :caption => 'Resource Cost Forecast', :param => :project_id
     menu.push :billability, {:controller => 'project_billability', :action =>'index' }, :caption => 'Project Billability', :param => :project_id
     menu.push :milestones, {:controller => 'milestone_plans', :action =>'index' }, :caption => 'Milestone Plans', :param => :project_id
