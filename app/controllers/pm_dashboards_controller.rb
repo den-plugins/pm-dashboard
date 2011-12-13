@@ -10,6 +10,9 @@ class PmDashboardsController < ApplicationController
     @highlights = @project.weekly_highlights
     @key_risks ||= @project.risks.key
     @key_issues ||= @project.pm_dashboard_issues.key
+
+    @current_sprint = @project.current_version
+    @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
     
     @project_resources  = @project.members.select(&:billable?)
   end

@@ -14,6 +14,7 @@
   <%= javascript_include_tag 'plugins/jqplot.barRenderer.min.js', :plugin => 'redmine_burndown' %>
   <%= javascript_include_tag 'plugins/jqplot.categoryAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
   <%= javascript_include_tag 'plugins/jqplot.pointLabels.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'chart.js', :plugin => 'redmine_burndown' %>
   <%= javascript_include_tag 'billability_chart.js', :plugin => 'pm_dashboard' %>
   <%= javascript_include_tag 'cost_chart.js', :plugin => 'pm_dashboard' %>
 <% end %>
@@ -107,6 +108,12 @@
     
     <div class="box">
       <h3><%=l(:label_dashboard_sprint)%></h3>
+      <div id="jchart"></div>
+      <% if @burndown_chart %>
+      <script type="text/javascript">
+        plot_chart(<%= @burndown_chart.data_and_dates %>);
+      </script>
+      <% end %>
     </div>
   </div>
 

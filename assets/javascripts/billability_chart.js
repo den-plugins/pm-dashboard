@@ -1,4 +1,4 @@
-function plot_chart(id, data){
+function plot_billability(id, data){
     var plot1 = jQuery.jqplot (id, data, {
       axes: {
         // options for each axis are specified in seperate option objects.
