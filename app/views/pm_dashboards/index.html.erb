@@ -69,6 +69,7 @@
       <span id="dashboard_billability">
         <%= render :partial => "project_billability/billability_dashboard" %>
       </span>
+      <div id="bchart"></div>
     </div>
   </div>
   
@@ -109,11 +110,14 @@
     <div class="box">
       <h3><%=l(:label_dashboard_sprint)%></h3>
       <div id="jchart"></div>
-      <% if @burndown_chart %>
-      <script type="text/javascript">
-        plot_chart(<%= @burndown_chart.data_and_dates %>);
-      </script>
-      <% end %>
     </div>
   </div>
+
+  <script type="text/javascript">
+    <% if @burndown_chart %>
+    plot_chart(<%= @burndown_chart.data_and_dates %>);
+    <% end %>
+    plot_billability("bchart", [<%= json_billability_per_week %>]);
+  </script>
+  
 

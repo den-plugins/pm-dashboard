@@ -68,4 +68,16 @@ module PmDashboardsHelper
       end
     end
   end
+
+  def json_billability_per_week
+    billability_per_week = []
+    weeks = get_weeks_range(@project.planned_start_date, @project.planned_end_date)
+    weeks.each_with_index do |week, wnum|
+      forecast = compute_forecasted_hours week, @project_resources
+      actual = compute_actual_hours week, @project_resources
+      bill = compute_percent_to_date forecast, actual
+      billability_per_week << [week.last, bill.to_f] if week.last < (Date.today.monday + 4.days)
+    end
+    billability_per_week.to_json
+  end
 end

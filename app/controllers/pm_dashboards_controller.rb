@@ -2,6 +2,8 @@ class PmDashboardsController < ApplicationController
 
   menu_item :dashboard, :only => :index
   helper :project_billability
+  helper :resource_costs
+  helper :project_billability
   
   before_filter :get_project, :only => [:index]
   before_filter :authorize, :only => [:index]
