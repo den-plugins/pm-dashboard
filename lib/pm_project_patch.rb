@@ -23,6 +23,7 @@ module Pm
                                                        :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, 
                                                        :message => 'should only be from 0 to 100'
         before_save :validate_dates
+          
       end
     end
     
@@ -67,6 +68,10 @@ module Pm
       def billing_model
         c = custom_values.detect {|v| v.mgt_custom "Billing Model"}
         c ? c.value : nil
+      end
+
+      def current_active_sprint
+        versions.find(:first, :conditions => ["state = 2 and sprint_start_date IS NOT NULL"], :order => "effective_date DESC")
       end
     end
   end

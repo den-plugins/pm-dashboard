@@ -25,7 +25,7 @@ class PmDashboardsController < ApplicationController
 
   def load_chart
     if params[:chart] == "burndown_chart"
-      @current_sprint = @project.current_version
+      @current_sprint = @project.current_active_sprint
       @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
     elsif params[:chart] == "billability_chart"
       @project_resources  = @project.members.select(&:billable?)
