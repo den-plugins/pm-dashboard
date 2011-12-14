@@ -7,6 +7,7 @@ class AssumptionsController < ApplicationController
   before_filter :require_login
   before_filter :get_project
   before_filter :get_assumption, :only => [:update, :destroy]
+  before_filter :authorize
   
   def index
     @assumption = Assumption.find(params[:id]) if params[:id]

@@ -3,7 +3,8 @@ class HighlightsController < ApplicationController
   menu_item :highlights
 
   before_filter :get_project, :get_highlight
-
+  before_filter :authorize
+  
   def index
     @highlights = @project.weekly_highlights
     if params[:edit_what] == 'current'

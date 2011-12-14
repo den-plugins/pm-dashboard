@@ -10,6 +10,7 @@ class ProjectContractsController < ApplicationController
   before_filter :require_login
   before_filter :get_project, :only => [:index, :add, :update, :destroy]
   before_filter :get_project_contract, :only => [:update, :destroy]
+  before_filter :authorize
   
   def index
     @project_contracts ||= @project.project_contracts.find(:all, :order => 'id DESC')

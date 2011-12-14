@@ -7,6 +7,7 @@ class ResourceAllocationsController < ApplicationController
   before_filter :get_member
   before_filter :get_project
   before_filter :get_possible_locations
+  before_filter :authorize
   
   def index
     if params[:cancel]

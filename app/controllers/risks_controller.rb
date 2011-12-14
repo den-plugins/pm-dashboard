@@ -7,6 +7,7 @@ class RisksController < ApplicationController
   before_filter :require_login
   before_filter :get_project, :only => [:index, :add, :update, :destroy]
   before_filter :get_risk, :only => [:update, :destroy]
+  before_filter :authorize
 
   def index
     @risk = Risk.find(params[:id]) if params[:id]

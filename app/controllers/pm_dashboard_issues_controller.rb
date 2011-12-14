@@ -7,6 +7,7 @@ class PmDashboardIssuesController < ApplicationController
   before_filter :require_login
   before_filter :get_project, :only => [:index, :add, :edit, :delete]
   before_filter :get_issue, :only => [:edit, :delete]
+  before_filter :authorize
 
   def index
     @issue = PmDashboardIssue.find(params[:id]) if params[:id]

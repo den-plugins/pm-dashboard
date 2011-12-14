@@ -25,22 +25,20 @@ Redmine::Plugin.register :pm_dashboard do
   version '0.0.1'
   
   project_module :pm_dashboards do
-    permission :list_dashboards,
-                      {   :pm_dashboards => [:index, :forecasts],
-                            :assumptions => [:index, :add, :update, :destroy],
-                            :highlights   => [:index, :save, :post, :unpost],
-                            :milestone_plans => [:index, :add, :update, :destroy],
-                            :pm_dashboard_issues    => [:index, :add, :edit, :delete],
-                            :project_info    => [:index, :update, :pm_member_edit, :pm_member_update, :pm_member_add, :pm_member_remove,
-                                                               :update_role_pos, :add_pm_position, :add_pm_role],
-                            :resource_costs => [:index, :edit_project],
-                            :resource_allocations => [:index, :add, :edit, :destroy],
-                            :risks => [:index, :add, :update, :destroy],
-                            :project_billability => [:index],
-                            :project_contracts => [:index, :add, :update, :destroy],
-                            :stakeholders => [:new, :create, :edit, :update, :remove],
-                            :weeks => [:new, :edit]
-                        }, :public => false
+    permission  :list_dashboards,
+                      {  :assumptions => [:index, :add, :update, :destroy],
+                          :highlights => [:index, :save, :update_highlight, :post, :unpost, :select_by_week, :select_duplicate],
+                          :milestone_plans => [:index, :add, :update, :destroy],
+                          :pm_dashboard_issues => [:index, :add, :edit, :delete],
+                          :pm_dashboards => [:index],
+                          :project_billability => [:index],
+                          :project_contracts => [:index, :add, :update, :destroy],
+                          :project_info => [:index, :add, :update, :destroy, :add_pm_position, :add_pm_role, :pm_member_add, :pm_member_edit],
+                          :resource_allocations => [:index, :add, :edit, :bulk_edit, :destroy],
+                          :resource_costs => [:index, :edit_project],
+                          :risks => [:index, :add, :update, :destroy],
+                          :stakeholders => [:new, :create, :edit, :update, :remove]
+                      }, :public => false
   end
   
   menu  :project_menu, :pm_dashboards,

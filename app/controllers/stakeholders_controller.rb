@@ -1,6 +1,7 @@
 class StakeholdersController < ApplicationController
 
   before_filter :get_project
+  before_filter :authorize
 
   def new
     @stakeholder = Stakeholder.new

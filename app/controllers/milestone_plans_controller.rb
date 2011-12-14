@@ -4,6 +4,7 @@ class MilestonePlansController < ApplicationController
   
 	before_filter :get_project, :only => [:index, :add, :update, :destroy]
   before_filter :get_version, :only => [:update, :destroy]
+  before_filter :authorize
 
   def index
     @version = Version.find(params[:version_id]) if params[:version_id]

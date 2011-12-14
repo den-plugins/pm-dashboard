@@ -3,7 +3,7 @@ map.connect 'projects/:project_id/project_management/info/:action', :controller 
 map.connect 'projects/:project_id/project_management/assumptions/:action', :controller => 'assumptions'
 map.connect 'projects/:project_id/project_management/project_issues/:action', :controller => 'pm_dashboard_issues'
 map.connect 'projects/:project_id/project_management/risks/:action', :controller => 'risks'
-map.connect 'projects/:project_id/project_management/cost_forecasts/:action', :controller => 'resource_costs'
+map.connect 'projects/:project_id/project_management/forecasts/:action', :controller => 'resource_costs'
 map.connect 'projects/:project_id/project_management/highlights/:action/:user_id', :controller => 'resource_costs', :action => 'allocation'
 map.connect 'projects/:project_id/project_management/billability/:action', :controller => 'project_billability'
 map.connect 'projects/:project_id/project_management/milestones/:action', :controller => 'milestone_plans'
