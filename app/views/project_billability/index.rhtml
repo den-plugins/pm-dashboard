@@ -7,7 +7,11 @@
     <%= render :partial => "project_billability/summary" %>
     <%= render :partial => "project_billability/list" %>
   <% else %>
-    <p class="nodata"><%= l(:label_no_data) %></p>
+    <% if @project.planned_start_date && @project.planned_end_date %>
+      <p class="nodata"><%= l(:label_no_data) %></p>
+    <% else %>
+      <p class="nodata">Undefined date range. Please specify Planned Start Date and Planned End Date.</p>
+    <% end %>
   <% end %>
 <% else %>
   <p class="nodata"><%= 'Not Applicable' %></p>
