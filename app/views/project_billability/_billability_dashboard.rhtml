@@ -1,25 +1,34 @@
-<% if display_by_billing_model.eql?("billability") %>
-<div style="width: 100%; margin: 0; padding: 0">
-  <table class="list" style="text-align: center">
-    <tr>
-      <th>Billing Model</th>
-      <td><%= @project.billing_model %></td>
-    </tr>
-    <tr>
-      <th>Forecasted Hours</th>
-      <td><%= forecast = compute_forecasted_hours((@project.planned_start_date..@project.planned_end_date), @project_resources) %></td>
-    </tr>
-    <tr>
-      <th>Total Billable Hours</th>
-      <td><%= actual = compute_actual_hours((@project.planned_start_date..@project.planned_end_date), @project_resources) %></td>
-    </tr>
-    <tr>
-      <th>Billability to date %</th>
-      <td><%= compute_percent_to_date forecast, actual %>%</td>
-    </tr>
-  </table>
-</div>
-<div id="bchart2"></div>
+<% if @project.planned_end_date && @project.planned_start_date %>
+  <% if display_by_billing_model.eql?("billability") %>
+  <div style="width: 100%; margin: 0; padding: 0">
+    <table class="list" style="text-align: center">
+      <tr>
+        <th>Billing Model</th>
+        <td><%= @project.billing_model %></td>
+      </tr>
+      <tr>
+        <th>Forecasted Hours</th>
+        <td><%= forecast = compute_forecasted_hours((@project.planned_start_date..@project.planned_end_date), @project_resources) %></td>
+      </tr>
+      <tr>
+        <th>Total Billable Hours</th>
+        <td><%= actual = compute_actual_hours((@project.planned_start_date..@project.planned_end_date), @project_resources) %></td>
+      </tr>
+      <tr>
+        <th>Billability to date %</th>
+        <td><%= compute_percent_to_date forecast, actual %>%</td>
+      </tr>
+    </table>
+  </div>
+  <div id="bchart2"></div>
+  <script type="text/javascript">
+    <% if json_billability_per_week and !json_billability_per_week.eql?("[]") %>
+      plot_billability("bchart", [<%= json_billability_per_week %>]);
+    <% end %>
+  </script>
+  <% else %>
+    <p class='nodata'>Not Applicable</p>
+  <% end %>
 <% else %>
-  <p class='nodata'>Not Applicable</p>
+  <p class='nodata'>Undefined date range. Please specify Planned Start Date and Planned End Date.</p>
 <% end %>

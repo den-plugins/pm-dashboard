@@ -77,7 +77,7 @@ module PmDashboardsHelper
       actual = compute_actual_hours week, @project_resources
       bill = compute_percent_to_date forecast, actual
       billability_per_week << [week.last, bill.to_f] if week.last < (Date.today.monday + 4.days)
-    end
+    end unless  weeks.nil? or weeks.empty?
     billability_per_week.to_json
   end
 end
