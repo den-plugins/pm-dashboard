@@ -22,19 +22,19 @@
   <table id="pm_dashboard_header">
     <%= render :partial => "pm_dashboards/dashboard_header" %>
     <tr>
-      <td><span>Reporting Period</span>: <%= @highlights[:current].created_at.strftime("%b/%e/%Y") if @highlights[:current] %></td>
-      <td><span>Overall Status</span>: <%=  %></td>
-      <td><span>Overall % Complete</span>: <%=  %></td>
+      <td><span>Overall Status</span></td><td><%=  %></td>
+      <td><span>Reporting Period</span></td><td><%= @highlights[:current].created_at.strftime("%Y-%m-%d") if @highlights[:current] %></td>
+      <td><span>Overall % Complete</span></td><td><%=  %></td>
     </tr>
     
     <tr>
-      <td><span>Schedule</span>: <%= %></td>
-      <td><span>Cost</span>: <%= %></td>
-      <td><span>Risk</span>: <%= %></td>
-      <td><span>Issue</span>: <%= %></td>
-      <td><span>Production</span>: <%= %></td>
-      <td><span>Efficiency</span>: <%= %></td>
-      <td><span>Billability</span>: <%= %></td>
+      <td><span>Schedule</span></td><td><%= %></td>
+      <td><span>Cost</span></td><td><%= %></td>
+      <td><span>Risk</span></td><td><%= %></td>
+      <td><span>Issue</span></td><td><%= %></td>
+      <td><span>Production</span></td><td><%= %></td>
+      <td><span>Efficiency</span></td><td><%= %></td>
+      <td><span>Billability</span></td><td><%= %></td>
     </tr>
   </table>
   

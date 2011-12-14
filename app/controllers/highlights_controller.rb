@@ -24,7 +24,7 @@ class HighlightsController < ApplicationController
         page.replace_html :this_period, :partial => "highlights/current", :locals => {:highlight => @highlights[:current]}
       end
     else
-	  update_highlight
+	    update_highlight
       @highlight.update_attributes(params[:highlight]) ? replace_highlights  : render_error_messages
     end
   end
