@@ -311,3 +311,17 @@ div#period span.selected {
 #billability_table table tr td {text-align: center;  }
 
 #facebox .tl, #facebox .tr, #facebox .bl, #facebox .br { width: 5px;}
+
+.btn_show_chart{
+  width: 100%;
+  background-color: #dfdfdf;
+  border: 1px solid #cfcfcf;
+  padding: 5px;
+  color: #777;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.btn_show_chart:hover{
+  color: #34c134;
+}

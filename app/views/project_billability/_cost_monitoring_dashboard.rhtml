@@ -24,12 +24,13 @@
     </table>
   </div>
   <div id="bar_chart"></div>
-  <script type="text/javascript">
-    if (jQuery("#bar_chart").length > 0){
-      jQuery('#bar_chart').empty();
-      plot_cost("bar_chart", [<%= @cost_budget %>,<%= @cost_forecast%>,<%= @cost_actual%>]);
-    }
-  </script>
+  <div id="show_cost_monitoring_chart">
+  <% form_remote_tag(:url => {:action => 'load_chart', :chart => 'cost_monitoring_chart', 
+                      :cost_budget => @cost_budget, :cost_forecast => @cost_forecast, 
+                      :cost_actual => @cost_actual}) do %>
+    <%= submit_tag "Show Graph", :class => 'btn_show_chart', :onclick => "this.value = 'Loading...'" %>
+  <% end %>
+  </div>
   <% else %>
     <p class='nodata'>Not Applicable</p>
   <% end %>

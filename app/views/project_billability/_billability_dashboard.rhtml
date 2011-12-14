@@ -21,11 +21,11 @@
     </table>
   </div>
   <div id="bchart2"></div>
-  <script type="text/javascript">
-    <% if json_billability_per_week and !json_billability_per_week.eql?("[]") %>
-      plot_billability("bchart", [<%= json_billability_per_week %>]);
-    <% end %>
-  </script>
+  <div id="show_billability_chart">
+  <% form_remote_tag(:url => {:action => 'load_chart', :chart => 'billability_chart'}) do %>
+    <%= submit_tag "Show Graph", :class => 'btn_show_chart', :onclick => "this.value = 'Loading...'" %>
+  <% end %>
+  </div>
   <% else %>
     <p class='nodata'>Not Applicable</p>
   <% end %>

@@ -1,0 +1,7 @@
+<script type="text/javascript">
+  jQuery(function(){
+    <% if @burndown_chart %>
+      plot_chart(<%= @burndown_chart.data_and_dates %>);
+    <% end %>
+  });
+</script>

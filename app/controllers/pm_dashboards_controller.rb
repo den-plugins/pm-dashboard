@@ -5,18 +5,31 @@ class PmDashboardsController < ApplicationController
   helper :resource_costs
   helper :project_billability
   
-  before_filter :get_project, :only => [:index]
+  before_filter :get_project, :only => [:index, :load_chart]
   before_filter :authorize, :only => [:index]
   
   def index
     @highlights = @project.weekly_highlights
     @key_risks ||= @project.risks.key
     @key_issues ||= @project.pm_dashboard_issues.key
-
-    @current_sprint = @project.current_version
-    @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
     
     @project_resources  = @project.members.select(&:billable?)
+  end
+
+  def load_chart
+    if params[:chart] == "burndown_chart"
+      @current_sprint = @project.current_version
+      @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
+    elsif params[:chart] == "billability_chart"
+      @project_resources  = @project.members.select(&:billable?)
+    elsif params[:chart] == "cost_monitoring_chart"
+      @cost_budget = params[:cost_budget].to_f
+      @cost_forecast = params[:cost_forecast].to_f
+      @cost_actual = params[:cost_actual].to_f
+    end
+    render :update do |page|
+      page.replace_html "show_#{params[:chart]}".to_sym, :partial => "charts/#{params[:chart]}"
+    end
   end
   
   private
