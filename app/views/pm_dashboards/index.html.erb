@@ -19,27 +19,7 @@
   <%= javascript_include_tag 'cost_chart.js', :plugin => 'pm_dashboard' %>
 <% end %>
 
-<div id='dashboard_header'>
   <%= render :partial => "pm_dashboards/dashboard_header" %>
-</div>
-
-<table id="pm_dashboard_header">
-  <tr>
-    <td><span>Reporting Period</span>: <%= @highlights[:current].created_at.strftime("%b/%e/%Y") if @highlights[:current] %></td>
-    <td><span>Overall Status</span>: <%=  %></td>
-    <td><span>Overall % Complete</span>: <%=  %></td>
-  </tr>
-  
-  <tr>
-    <td><span>Schedule</span>: <%= %></td>
-    <td><span>Cost</span>: <%= %></td>
-    <td><span>Risk</span>: <%= %></td>
-    <td><span>Issue</span>: <%= %></td>
-    <td><span>Production</span>: <%= %></td>
-    <td><span>Efficiency</span>: <%= %></td>
-    <td><span>Billability</span>: <%= %></td>
-  </tr>
-</table>
   
   <div class="singleCol">
     <div id='highlights_summary'>
