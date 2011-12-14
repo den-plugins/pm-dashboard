@@ -1,7 +1,10 @@
-table#pm_dashboard_header tr td { white-space: nowrap; padding-right: 9px;}
-table#pm_dashboard_header tr td span {font-weight: bold; display: inline-block; text-align: left; }
+table#pm_dashboard_header tr td { white-space: nowrap; padding-right: 25px;}
+table#pm_dashboard_header tr td span {font-weight: bold; display: inline-block; text-align: left; padding-right: 7px; }
 table#pm_dashboard_header tr td span:after { content: ":" }
 pm_dashboard_header { width: 85% }
+
+.even2 { background-color: #F5FFEE }
+.odd2 { background-color: #F7EEFF }
 
 .nodata {
   text-align: center;
@@ -53,7 +56,7 @@ table#risks tr th.narrow {
   width: 150px;
 }
 
-table.list tbody tr:hover { background-color: transparent; color: #000; }
+table.list tbody tr:hover { background-color: #FFF; color: #000; }
 tr.red, td.red, th.red { background-color: #DD0806; color: #FFF; }
 tr.yellow, td.yellow, th.yellow { background-color: #F4EB05; }
 tr.green, td.green, th.green { background-color: #006411; color: #FFF; }

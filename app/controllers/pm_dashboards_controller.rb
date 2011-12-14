@@ -13,6 +13,13 @@ class PmDashboardsController < ApplicationController
     @key_risks ||= @project.risks.key
     @key_issues ||= @project.pm_dashboard_issues.key
     
+    @milestones = Version.find(:all, :conditions => ["project_id=? and effective_date < ?", @project, Date.today], :order => "effective_date DESC", :limit => 2) +
+                                  Version.find(:all, :conditions => ["project_id=? and effective_date >= ?", @project, Date.today], :order => "effective_date ASC", :limit => 4)
+    @milestones = @milestones.reverse {|v| v.effective_date}
+
+    @current_sprint = @project.current_version
+    @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
+    
     @project_resources  = @project.members.select(&:billable?)
   end
 

@@ -6,31 +6,31 @@
 
   <table id='pm_dashboard_header'>
     <tr>
-      <td><span>CLIENT</span></td><td><%= @project.client %></td>
+      <td><span>CLIENT</span><%= @project.client %></td>
     </tr>
     <tr>
-      <td><span>Active</span></td><td><%= @project.active %></td>
+      <td><span>Active</span><%= @project.active %></td>
       </tr>
     <tr><br/></tr>
     <tr>
-      <td><span>Budget Hours (BAC)</span></td><td><%= @bac_hours %> hours</td>
+      <td><span>Budget Hours (BAC)</span><%= @bac_hours %> hours</td>
       <td></td>
-      <td><span>Contingency %</span></td>
-      <td>
+      <td><span>Contingency %</span>
         <% remote_form_for(:project, @project, :url => {:controller => 'resource_costs', :action => 'edit_project', :project_id => @project }) do |f| %>
           <%= image_submit_tag('true.png', :class => 'contextual', :id => 'contingency_submit', :style => 'display: none;') %>
           <%= f.text_field :contingency, :size => 2, :value => (@project.contingency ? @project.contingency : 0.0),
+                                        :style => "text-align: center; ",
                                         :onclick => "jQuery('#contingency_submit').show();" %>%
         <% end %>
       </td>
       <td></td>
-      <td><span>Total Project Budget</span></td><td><%= @total_budget %></td>
+      <td><span>Total Project Budget</span><%= @total_budget %></td>
     </tr>
     
     <tr>
-      <td><span>Budget Amount (BAC)</span></td><td><%= @bac_amount %></td>
+      <td><span>Budget Amount (BAC)</span><%= @bac_amount %></td>
       <td></td>
-      <td><span>Contingency Amount</span></td><td><%= @contingency_amount  %></td>
+      <td><span>Contingency Amount</span><%= @contingency_amount  %></td>
     </tr>
     
   </table>

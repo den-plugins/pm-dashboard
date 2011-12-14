@@ -1,13 +1,13 @@
 <tr>
-  <td><span>Client</span></td><td><%= @project.client %></td>
-  <td><span>Planned Start Date</span></td><td><%= @project.planned_start_date.to_s %></td>
-  <td><span>Maintenance End Date</span></td><td><%= @project.maintenance_end.to_s %></td>
-  <td><span>Technical Architect</span></td><td><%= @project.pm_or_ta(@project.tech_architect, @project) %></td>
+  <td><span>Client</span><%= @project.client %></td>
+  <td><span>Planned Start Date</span><%= @project.planned_start_date.to_s %></td>
+  <td><span>Maintenance End Date</span><%= @project.maintenance_end.to_s %></td>
+  <td><span>Technical Architect</span><%= @project.pm_or_ta(@project.tech_architect, @project) %></td>
 </tr>
 
 <tr>
-  <td><span>Project Name</span></td><td><%= @project.name %></td>
-  <td><span>Planned End Date</span></td><td><%= @project.planned_end_date.to_s %></td>
-  <td><span>Project Manager</span></td><td><%= @project.pm_or_ta(@project.proj_manager, @project) %></td>
-  <td><span>Account Manager</span></td><td> </td>
+  <td><span>Project Name</span><%= @project.name %></td>
+  <td><span>Planned End Date</span><%= @project.planned_end_date.to_s %></td>
+  <td><span>Project Manager</span><%= @project.pm_or_ta(@project.proj_manager, @project) %></td>
+  <td><span>Account Manager</span></td>
 </tr>
