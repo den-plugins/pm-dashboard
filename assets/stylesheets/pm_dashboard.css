@@ -1,3 +1,8 @@
+table#pm_dashboard_header {
+  width: 95%;
+  margin: auto;
+}
+
 table#pm_dashboard_header tr td span {
   font-weight: bold;
   display: inline-block;
