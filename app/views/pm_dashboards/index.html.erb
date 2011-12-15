@@ -19,6 +19,7 @@
   <%= javascript_include_tag 'cost_chart.js', :plugin => 'pm_dashboard' %>
 <% end %>
 
+
   <table id="pm_dashboard_header">
     <%= render :partial => "pm_dashboards/dashboard_header" %>
     <tr>
@@ -31,7 +32,7 @@
       <td><span>Schedule</span><%= %></td>
       <td><span>Cost</span><%= %></td>
       <td class="<%= risk_rating_color_code(risk_rating=compute_risk_average(@project)) %>"><span>Risk</span><%= risk_rating %></td>
-      <td><span>Issue</span><%= %></td>
+      <td class="<%= issue_impact_color_coding((issues_score=display_issues_average).to_f) %>"><span>Issue</span><%= issues_score %></td>
       <td><span>Production</span><%= %></td>
       <td><span>Efficiency</span><%= %></td>
       <td><span>Billability</span><%= %></td>

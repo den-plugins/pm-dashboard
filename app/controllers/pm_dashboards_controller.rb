@@ -5,6 +5,7 @@ class PmDashboardsController < ApplicationController
   helper :project_billability
   helper :resource_costs
   helper :project_billability
+  helper :pm_dashboard_issues
   
   before_filter :get_project, :only => [:index, :load_chart]
   before_filter :authorize, :only => [:index]
@@ -13,6 +14,7 @@ class PmDashboardsController < ApplicationController
     @highlights = @project.weekly_highlights
     @key_risks ||= @project.risks.key
     @key_issues ||= @project.pm_dashboard_issues.key
+    @issues = @project.pm_dashboard_issues
     
     @milestones = Version.find(:all, :conditions => ["project_id=? and effective_date < ?", @project, Date.today], :order => "effective_date DESC", :limit => 2) +
                                   Version.find(:all, :conditions => ["project_id=? and effective_date >= ?", @project, Date.today], :order => "effective_date ASC", :limit => 4)
