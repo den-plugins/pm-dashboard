@@ -1,6 +1,7 @@
 module RisksHelper
 
   def risk_rating_color_code(rating)
+    rating = rating.to_f
     case rating
       when 0 ... 5; "green"
       when 5 ... 15; "yellow"
@@ -18,6 +19,11 @@ module RisksHelper
   
   def collection_for_risk_status_select
     Risk::STATUS.keys.collect {|r| [l(Risk::STATUS[r][:name]), r ]}
+  end
+  
+  def compute_risk_average(project, risks=nil)
+    risks = project.risks.find(:all, :order => 'ref_number DESC') unless risks
+    "%0.3f" % (risks ? Risk.average(:final_risk_rating, :conditions => ["project_id = ?", project]) : 0)
   end
   
   def render_probability_guide

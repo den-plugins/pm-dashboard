@@ -1,6 +1,7 @@
 class PmDashboardsController < ApplicationController
 
   menu_item :dashboard, :only => :index
+  helper :risks
   helper :project_billability
   helper :resource_costs
   helper :project_billability

@@ -1,4 +1,4 @@
-table#pm_dashboard_header tr td { white-space: nowrap; padding-right: 25px;}
+table#pm_dashboard_header tr td { white-space: nowrap; padding-right: 7px;}
 table#pm_dashboard_header tr td span {font-weight: bold; display: inline-block; text-align: left; padding-right: 7px; }
 table#pm_dashboard_header tr td span:after { content: ":" }
 pm_dashboard_header { width: 85% }
