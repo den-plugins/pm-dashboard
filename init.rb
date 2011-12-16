@@ -26,17 +26,17 @@ Redmine::Plugin.register :pm_dashboard do
   
   project_module :pm_dashboards do
     permission  :list_dashboards,
-                      {  :assumptions => [:index, :add, :update, :destroy],
+                      {  :assumptions => [:index, :show, :add, :update, :destroy],
                           :highlights => [:index, :save, :update_highlight, :post, :unpost, :select_by_week, :select_duplicate],
                           :milestone_plans => [:index, :add, :update, :destroy],
-                          :pm_dashboard_issues => [:index, :add, :edit, :delete],
+                          :pm_dashboard_issues => [:index, :show, :add, :edit, :delete],
                           :pm_dashboards => [:index],
                           :project_billability => [:index],
                           :project_contracts => [:index, :add, :update, :destroy],
                           :project_info => [:index, :add, :update, :destroy, :add_pm_position, :add_pm_role, :pm_member_add, :pm_member_edit],
                           :resource_allocations => [:index, :add, :edit, :bulk_edit, :destroy],
                           :resource_costs => [:index, :edit_project],
-                          :risks => [:index, :add, :update, :destroy],
+                          :risks => [:index, :show, :add, :update, :destroy],
                           :stakeholders => [:new, :create, :edit, :update, :remove]
                       }, :public => false
   end

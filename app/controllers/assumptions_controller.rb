@@ -6,13 +6,18 @@ class AssumptionsController < ApplicationController
   
   before_filter :require_login
   before_filter :get_project
-  before_filter :get_assumption, :only => [:update, :destroy]
+  before_filter :get_assumption, :only => [:index, :show, :update, :destroy]
   before_filter :authorize
   
   def index
-    @assumption = Assumption.find(params[:id]) if params[:id]
     @project ||= @assumption.project
     @assumptions = params[:id] ? [@assumption] : @project.assumptions.find(:all, :order => 'ref_number DESC')
+  end
+  
+  def show
+    @project ||= @assumption.project
+    @assumptions = [@assumption]
+    render :template => 'assumptions/index'
   end
   
   def add
@@ -57,7 +62,7 @@ class AssumptionsController < ApplicationController
   end
   
   def get_assumption
-    @assumption = Assumption.find(params[:id])
+    @assumption = Assumption.find(params[:id]) if params[:id]
     rescue ActiveRecord::RecordNotFound
       render_404
   end

@@ -5,16 +5,21 @@ class PmDashboardIssuesController < ApplicationController
   helper :pm_dashboards
 
   before_filter :require_login
-  before_filter :get_project, :only => [:index, :add, :edit, :delete]
-  before_filter :get_issue, :only => [:edit, :delete]
+  before_filter :get_project, :only => [:index, :show, :add, :edit, :delete]
+  before_filter :get_issue, :only => [:index, :show, :edit, :delete]
   before_filter :authorize
 
   def index
-    @issue = PmDashboardIssue.find(params[:id]) if params[:id]
     @project ||= @issue.project
     @issues = params[:id] ? [@issue] : @project.pm_dashboard_issues.find(:all, :order => 'ref_number DESC')
   end
-
+  
+  def show
+    @project ||= @issue.project
+    @issues = [@issue]
+    render :template => 'pm_dashboard_issues/index'
+  end
+  
   def add
     if request.get?
       @issue = PmDashboardIssue.new
@@ -55,7 +60,7 @@ class PmDashboardIssuesController < ApplicationController
   end
 
   def get_issue
-    @issue = PmDashboardIssue.find(params[:id])
+    @issue = PmDashboardIssue.find(params[:id]) if params[:id]
     rescue ActiveRecord::RecordNotFound
       render_404
   end

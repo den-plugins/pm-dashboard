@@ -5,14 +5,19 @@ class RisksController < ApplicationController
   helper :pm_dashboards
   
   before_filter :require_login
-  before_filter :get_project, :only => [:index, :add, :update, :destroy]
-  before_filter :get_risk, :only => [:update, :destroy]
+  before_filter :get_project, :only => [:index, :show, :add, :update, :destroy]
+  before_filter :get_risk, :only => [:index, :show, :update, :destroy]
   before_filter :authorize
 
   def index
-    @risk = Risk.find(params[:id]) if params[:id]
     @project ||= @risk.project
     @risks = params[:id] ? [@risk] : @project.risks.find(:all, :order => 'ref_number DESC')
+  end
+  
+  def show
+    @project ||= @risk.project
+    @risks = [@risk]
+    render :template => "risks/index"
   end
   
   def add
@@ -57,7 +62,7 @@ class RisksController < ApplicationController
   end
   
   def get_risk
-    @risk = Risk.find(params[:id])
+    @risk = Risk.find(params[:id]) if params[:id]
     rescue ActiveRecord::RecordNotFound
       render_404
   end

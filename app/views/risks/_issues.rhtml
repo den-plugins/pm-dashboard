@@ -11,7 +11,7 @@
 		  <td><%= select_tag 'available_issues',
 		            options_for_select(collection_for_issues_select(@risk).collect{|r| [ r.ref_number, r.id]}),
 		            :multiple => true, :size => 10, :style => "width:150px",
-		            :ondblclick => "handleSelect(this, '#{@project.identifier}', 'issues')" %>
+		            :ondblclick => "handleSelect(this, '#{@project.identifier}', 'project_issues')" %>
 		  </td>
 		  <td align="center" valign="middle">
 			  <input type="button" value="--&gt;"
@@ -22,7 +22,7 @@
 		  <td><%= select_tag 'risk[pm_dashboard_issue_ids][]',
 		            options_for_select(@risk.pm_dashboard_issues.collect{|r| [r.ref_number, r.id]}),
 		            :id => 'selected_issues', :multiple => true, :size => 10, :style => "width:150px",
-		            :ondblclick => "handleSelect(this, '#{@project.identifier}', 'issues')" %>
+		            :ondblclick => "handleSelect(this, '#{@project.identifier}', 'project_issues')" %>
 		  </td>
 	  </tr>
   </table>
