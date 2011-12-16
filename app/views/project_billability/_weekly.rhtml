@@ -1,0 +1,67 @@
+<% first_time_entry = @project.time_entries.find(:first, :select => "spent_on", :conditions => "hours > 0", :order => "spent_on ASC") %>
+<% actual_start = first_time_entry ? first_time_entry.spent_on : project.planned_start_date %>
+<% actual_end = (Date.today - 1.week).end_of_week %>
+
+<% weeks = get_weeks_range(@project.planned_start_date, @project.planned_end_date) %>
+<% billability_per_week = [] %>
+<% bill_total, weeks_total = 0, 0 %>
+
+<div class='tables_container'>
+  <div class="movable_table_container" style="width: 100%">
+    <div style="width: <%= weeks.count * 190 %>px; position: relative;">
+      <% weeks.each_with_index do |week, wnum| %>
+      <div class="floating_table" id="billability_table" style="width: 190px">
+        <table class="list rcf">
+          <tr>
+            <th colspan='3'>W<%= wnum+1 %>&nbsp;<%= display_week(week) %></th>
+          </tr>
+          <tr>
+            <th>Labor Hours</th>
+            <th>Forecast</th>
+            <th>Actuals (Billable)</th>
+          </tr>
+          <tr>
+            <td><%= "%0.1f" % compute_labor_hours(week, @project_resources) %></td>
+            <td><%= "%0.1f" % forecast = compute_forecasted_hours(week, @project_resources) %></td>
+            <td><%= "%0.1f" % (actual = compute_actual_hours(week, @project_resources)) %></td>
+          </tr>
+          <tr>
+            <td colspan='3'>&nbsp;</td>
+          </tr>
+          <tr>
+            <th colspan='3'><%= format_date week.last %></th>
+          </tr>
+          <tr>
+            <td colspan='3'><%= bill = compute_percent_to_date forecast, actual %>%</td>
+            <% billability_per_week << [week.last, bill.to_f] if week.last < (Date.today.monday + 4.days) %>
+            <% unless (week.to_a & (actual_start..actual_end).to_a).empty? %>
+              <% bill_total += bill.to_f %>
+              <% weeks_total += 1 %>
+            <% end %>
+          </tr>
+        </table>
+      </div>
+      <% end %>
+      <%# PmDashboard.billability_percent_per_week = temp_billability_per_week.to_json %>
+    </div>
+  </div>
+</div>
+
+<div class="clear" style="padding: 30px;"></div>
+<div id="chart_content" style="height: 500px; width: 700px; margin: auto;" >
+  <div id="bchart1" style="height: 300px; width: 600px;"></div>
+</div>
+
+<script type="text/javascript">
+  j = jQuery.noConflict();
+  jQuery(document).ready(function(){
+    if (jQuery("#bchart1").length > 0){
+      jQuery("#bchart1").empty();
+      plot_billability("bchart1", [<%= billability_per_week.to_json %>]);
+    }
+  });
+  
+  jQuery('#billability_percent_to_date').text("<%= h('%0.2f' % (bill_total/weeks_total)) %>%");
+</script>
+
+

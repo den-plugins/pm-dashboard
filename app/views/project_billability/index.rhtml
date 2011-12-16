@@ -5,7 +5,13 @@
 <% unless display_by_billing_model.eql?("fixed") %>
   <% if @project_resources.any? %>
     <%= render :partial => "project_billability/summary" %>
-    <%= render :partial => "project_billability/list" %>
+    <div style="clear: both"></div>
+    <div id="billability_filters">
+      <%= render :partial => "project_billability/filters" %>
+    </div>
+    <div id="billability_list">
+      <%= render :partial => "project_billability/list" %>
+    </div>
   <% else %>
     <% if @project.planned_start_date && @project.planned_end_date %>
       <p class="nodata"><%= l(:label_no_data) %></p>

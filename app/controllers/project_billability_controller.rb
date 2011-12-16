@@ -10,6 +10,7 @@ class ProjectBillabilityController < ApplicationController
   
   def index
     @project_resources  = @project.members.select(&:billable?)
+    update_project_billability
   end
   
   private
@@ -18,5 +19,11 @@ class ProjectBillabilityController < ApplicationController
     @project = Project.find(params[:project_id])
     rescue ActiveRecord::RecordNotFound
       render_404
+  end
+  
+  def update_project_billability
+    render(:update) do |p|
+      p.replace_html "billability_list", :partial => 'project_billability/list'
+    end if params[:view]
   end
 end

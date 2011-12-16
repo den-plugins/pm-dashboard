@@ -1,0 +1,13 @@
+<fieldset>
+  <legend><%= l(:label_filter_plural) %></legend>
+  <% form_remote_tag(:url => {:controller => "project_billability", :project_id => @project },
+        :loading => "Element.hide('billability_filters'); Element.show('ajax-indicator')", 
+        :complete => "Element.hide('ajax-indicator'); Element.show('billability_filters')") do %>
+    <p>
+      <%= l(:label_details) %>: 
+      <%= select_tag 'view', options_for_select([["", ""], [l(:label_week), 'week'], [l(:label_month), 'month']]),
+                                                :onchange => "this.form.onsubmit();" %>
+    </p>
+  <% end %>
+</fieldset>
+
