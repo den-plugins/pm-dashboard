@@ -6,7 +6,7 @@
                                                  :class => "icon icon-edit" %>
       <%= link_to 'Edit', :controller => 'highlights', :action => 'index', :project_id => @project, :edit_what => "current" %>
     </div>
-    <div style="clear: both"></div>
+    <!--div style="clear: both"></div-->
     <p><em><%= @highlights[:current].created_at.strftime("%B %e, %Y") %></em></p>
     <%= content_tag 'div', textilizable(@highlights[:current].highlight), :class => "dashboard_highlight" %>
   <%  elsif @highlights[:current].nil? && @highlights[:after_current].nil? && @highlights[:recently_posted] %>
@@ -17,7 +17,7 @@
                            :edit_what => "recently_posted"},
                            :class => "icon icon-edit" %>
     </div>
-    <div style="clear: both"></div>
+    <!--div style="clear: both"></div-->
     <p><em><%= @highlights[:recently_posted].created_at.strftime("%B %e, %Y") %></em></p>
     <%= content_tag 'div', textilizable(@highlights[:recently_posted].highlight), :class => "dashboard_highlight" %>
   <% else %>
@@ -41,7 +41,7 @@
       <%= link_to 'Edit', {:controller => 'highlights', :action => 'index', :project_id => @project, :edit_what => "nextp"},
                          :class => "icon icon-edit" %>
     </div>
-    <div style="clear: both"></div>
+    <!--div style="clear: both"></div-->
     <p><em><%= @highlights[:after_current].created_at.strftime("%B %e, %Y") %></em></p>
     <%= content_tag 'div', textilizable(@highlights[:after_current].highlight), :class => "dashboard_highlight" %>
   <% else %>
@@ -51,7 +51,7 @@
       <%= link_to 'Edit', {:controller => 'highlights', :action => 'index', :project_id => @project, :edit_what => "nextp"},
                          :class => "icon icon-edit" %>
     </div>
-    <div style="clear: both"></div>
+    <!--div style="clear: both"></div-->
     <%= content_tag 'div', 'No Highlights for this project', :class => 'nodata' %>
   <% end %>
 </div>
