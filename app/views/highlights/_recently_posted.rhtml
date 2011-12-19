@@ -1,43 +1,51 @@
 <span id='recent_highlight_wrapper'>
   <% form_remote_tag(:url => {:action => 'select_by_week', :controller => 'highlights', :project_id => @project.id},
-                             :html => {:id => 'select_by_week_form', :style => "float: left;" },
+                             :html => {:id => 'select_by_week_form', :style => "float: left; margin-bottom: 9px; " },
                              :loading => "Element.show('ajax-indicator')",
                              :complete => "Element.hide('ajax-indicator')") do %>
     Search highlight by date: 
-    <%= text_field_tag 'select_week', (highlight ? highlight.created_at.to_date : Date.today), :size => 8, :onchange => "this.form.onsubmit();" %>
+    <%= text_field_tag 'select_week', (highlight ? highlight.created_at.to_date : 7.days.ago.to_date), :size => 8, :onchange => "this.form.onsubmit();" %>
     <%= calendar_for('select_week') %>
   <% end %>
   
-  <div class="contextual h-actions">
-    <%= link_to_remote "Unpost", {:url => {:action => 'unpost', :controller => 'highlights', :id => highlight, :project_id => @project},
-                                                              :loading => "$('ajax-indicator').show()",
-                                                              :complete => "$('ajax-indicator').hide()" },
-                                                              :class => 'icon icon-unpost' if highlight && highlight.posted_date %>
+  <div style="clear: both"></div>
+  <div class="box">
+    <div class="contextual h-actions">
+      <%= link_to_remote "Unpost", {:url => {:action => 'unpost', :controller => 'highlights', :id => highlight.id, :project_id => @project},
+                                                                :loading => "$('ajax-indicator').show()",
+                                                                :complete => "$('ajax-indicator').hide()" },
+                                                                :class => 'icon icon-unpost' if highlight && highlight.posted_date %>
+    </div>
+    <span class="content_text ">
+      <% if highlight && highlight.posted_date %>
+		  <b>Progress this Period</b>
+        <%= content_tag 'p', textilizable(highlight.highlight) %>
+      <% else %>
+        <%= content_tag 'p', 'No highlight(s) this period is recently posted.', :class => 'nodata' %>
+      <% end %>
+    </span>
   </div>
-  <span class="content_text">
-    <% if highlight && highlight.posted_date %>
-		Progress this Period
-      <%= content_tag 'p', textilizable(highlight.highlight) %>
-    <% else %>
-      <%= content_tag 'p', 'No highlight(s) this period is recently posted.', :class => 'nodata' %>
-    <% end %>
-  </span>
-<% if params[:select_week]   
-		date = params[:select_week].to_date
-		highlight_next = @project.highlights.for_the_week(date).post_after_current.first %>    
-		
-  <div class="contextual h-actions">
-    <%= link_to_remote "Unpost", {:url => {:action => 'unpost', :controller => 'highlights', :id => highlight_next, :project_id => @project},
-                                                              :loading => "$('ajax-indicator').show()",
-                                                              :complete => "$('ajax-indicator').hide()" },
-                                                              :class => 'icon icon-unpost' if highlight_next && highlight_next.posted_date %>
+  
+    <% if params[:select_week] %>
+      <% date = params[:select_week].to_date %>
+	  	<% highlight_next = @project.highlights.for_the_week(date).post_after_current.first %>
+  	<% elsif !params[:select_week] && highlight && highlight.posted_date %>
+  	  <% highlight_next = @project.highlights.for_the_week(highlight.created_at).post_after_current.first %>
+  	<% end %>
+  
+	<div class="box">
+    <div class="contextual h-actions">
+      <%= link_to_remote "Unpost", {:url => {:action => 'unpost', :controller => 'highlights', :id => highlight_next.id, :project_id => @project},
+                                                                :loading => "$('ajax-indicator').show()",
+                                                                :complete => "$('ajax-indicator').hide()" },
+                                                                :class => 'icon icon-unpost' if highlight_next && highlight_next.posted_date %>
+    </div>
+    <span class="content_text">
+	     <% if highlight_next && highlight_next.posted_date %>
+		    <b>Progress Planned for Next Period</b>
+		    <%= content_tag 'p', textilizable(highlight_next.highlight) %>
+          <% else %>
+        	  <%= content_tag 'p', 'No highlight(s) for next period is recently posted.', :class => 'nodata' %>
+		  <% end %>
+    </span>
   </div>
-  <span class="content_text">
-	   <% if highlight_next && highlight_next.posted_date %>
-		  Progress Planned for next Period
-		  <%= content_tag 'p', textilizable(highlight_next.highlight) %>
-        <% else %>
-      	  <%= content_tag 'p', 'No highlight(s) for next period is recently posted.', :class => 'nodata' %>
-		<% end %>
-  </span>
-<% end %>

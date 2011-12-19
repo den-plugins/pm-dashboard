@@ -24,17 +24,17 @@ class HighlightsController < ApplicationController
         page.replace_html :this_period, :partial => "highlights/current", :locals => {:highlight => @highlights[:current]}
       end
     else
-	    update_highlight
+	    #update_highlight
       @highlight.update_attributes(params[:highlight]) ? replace_highlights  : render_error_messages
     end
   end
   
   def update_highlight
-	date = params[:highlight][:created_at]
-	get_highlight = Highlight.find(:all, :conditions => ["created_at = ? and project_id = ?", @highlight.created_at, @project.id])
-	get_highlight.each do |h|
-		h.update_attributes :created_at => date
-	end
+	  date = params[:highlight][:created_at]
+	  get_highlight = Highlight.find(:all, :conditions => ["created_at = ? and project_id = ?", @highlight.created_at, @project.id])
+	  get_highlight.each do |h|
+		  h.update_attributes :created_at => date
+	  end
   end
 
   def post
@@ -57,7 +57,7 @@ class HighlightsController < ApplicationController
   
   def select_duplicate
     date = params[:highlight][:created_at].to_date
-    dup = @project.highlights.for_the_week(date).first
+    dup = @project.highlights.for_the_week(date).detect {|d|  d.is_for_next_period.to_s == params[:highlight][:is_for_next_period].to_s}
     time_state = (params[:time_state].eql?('current') || params[:time_state].eql?('nextp')) ? params[:time_state] : (dup.is_for_next_period ? 'current' : 'nextp')
     period = time_state.eql?('current') ? "this_period" : "next_period"
     
@@ -65,18 +65,14 @@ class HighlightsController < ApplicationController
     @highlight.validate
 
     if @highlight.errors.empty?
-      if dup && (dup.posted_date.nil? || (dup.posted_date && in_period(dup)))
-		if session[:newhighlight]
-        	render :update do |page|
-          		page.replace_html period, :partial => "highlights/#{time_state}", :locals => {:highlight => dup}
-         	 	page.hide "#{time_state}_highlight_wrapper"
-        	 	page.show "#{time_state}_highlights_container"
-       		 end
-		end
-		session[:newhighlight] = nil
+      if dup && (dup.posted_date.nil? || (dup.posted_date && dup.created_at.beginning_of_week.eql?(Date.today.beginning_of_week)))
+      	render :update do |page|
+      		page.replace_html period, :partial => "highlights/#{time_state}", :locals => {:highlight => dup}
+       	 	page.hide "#{time_state}_highlight_wrapper"
+      	 	page.show "#{time_state}_highlights_container"
+        end
       else
         @highlight = Highlight.new({:created_at => date})
-		session[:newhighlight] = "new"
         render :update do |page|
           page.replace_html period, :partial => "highlights/#{time_state}", :locals => {:highlight => @highlight}
           page.hide "#{time_state}_highlight_wrapper"
@@ -96,17 +92,9 @@ class HighlightsController < ApplicationController
   end
   
   def get_highlight
-    @highlight = params[:id] ? @project.highlights.find(params[:id]) : @project.highlights.new
+    @highlight = (params[:id] and !params[:id].blank?) ? @project.highlights.find(params[:id]) : @project.highlights.new
     rescue ActiveRecord::RecordNotFound
       render_404
-  end
-  
-  def in_period(dup)
-    if dup.is_for_next_period
-      dup.created_at.to_date.monday.eql? (Date.today.monday + 1.week)
-    else
-      dup.created_at.to_date.monday.eql? Date.today.monday
-    end
   end
   
   def render_error_messages
@@ -124,7 +112,6 @@ class HighlightsController < ApplicationController
   def replace_highlights
     @highlights = @project.weekly_highlights
     render :update do |page|
-      page.replace_html :highlights_summary, :partial => "highlights/dashboard"
       page.replace_html :recently_posted, :partial => "highlights/recently_posted", :locals => {:highlight => @highlights[:recently_posted]}
       page.replace_html :next_period, :partial => "highlights/nextp", :locals => {:highlight => @highlights[:after_current]}
       page.replace_html :this_period, :partial => "highlights/current", :locals => {:highlight => @highlights[:current]}
