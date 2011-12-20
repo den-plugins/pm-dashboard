@@ -12,11 +12,11 @@
         <th>Budget</th>
 	    <td> <%= @cost_budget = @project_contracts.sum(&:amount)%></td>
         <th>Forecast</th>
-        <td><%= @cost_forecast = compute_forecasted_hours((@project.planned_start_date..@project.planned_end_date), @project_resources) %></td>
+        <td><%= @cost_forecast = compute_forecasted_cost((@project.planned_start_date..@project.planned_end_date), @project_resources) %></td>
       </tr>
       <tr>
 	    <th>Actuals</th>
-        <td><%= @cost_actual = compute_actual_hours((@project.planned_start_date..@project.planned_end_date), @project_resources) %></td>
+        <td><%= @cost_actual = compute_actual_cost((@project.planned_start_date..@project.planned_end_date), @project_resources) %></td>
         <th>Variants</th>
         <td><%= variants = @cost_forecast - @cost_actual %></td>
       </tr>
