@@ -11,6 +11,12 @@ class ProjectInfoController < ApplicationController
       @stakeholders.concat(@project.stakeholders.all)
     end
     @proj_team = @project.members.project_team
+
+    @stakeholder_roles = RolesPositionsDefault::STAKEHOLDER_ROLES
+    @proj_team_roles = RolesPositionsDefault::PROJ_TEAM_ROLES
+    @proj_team_positions = RolesPositionsDefault::PROJ_TEAM_POS
+
+    set_roles_pos @stakeholder_roles, @proj_team_roles, @proj_team_positions
   end
 
   def update
@@ -181,6 +187,16 @@ class ProjectInfoController < ApplicationController
   
   def redirect_to_info
     redirect_to :controller => 'project_info', :action => 'index', :project_id => @project
+  end
+
+  def set_roles_pos(stakeholder_roles, proj_team_roles, proj_team_positions)
+    stakeholder_roles.each do |r|
+      @role = PmRole.find_by_name(r)
+      if @role.nil?
+        @role = PmRole.new(:name => r, :for_stakeholder => true)
+        @role.save
+      end
+    end
   end
 
 end
