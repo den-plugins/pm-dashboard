@@ -22,7 +22,11 @@ class ProjectInfoController < ApplicationController
   def update
     if request.post? and !request.xhr?
       @project.validate_client = true
+      psd, ped = params[:project][:planned_start_date].to_date, params[:project][:planned_end_date].to_date
       if @project.update_attributes(params[:project])
+        if (psd.cwday == 6 || psd.cwday == 7) || (ped.cwday == 6 || ped.cwday == 7)
+          flash[:warning] = "Cannot set weekends for planned start or end dates. Date is set to friday."
+        end
         redirect_to_info
       else
         render :template => "project_info/edit_with_error"
