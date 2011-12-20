@@ -25,11 +25,11 @@
     <td><%= f.text_field :original_end_date, :size => 10 %><%= calendar_for('version_original_end_date') %></td>
   </tr>
   <tr>
-  	<th>Start Date:</th>
+  	<th>Actual Start Date:</th>
     <td><%= f.text_field :started_date, :size => 10 %><%= calendar_for('version_started_date') %></td>
   </tr>
   <tr>
-  	<th>End Date:</th>
+  	<th>Latest Re-Plan Date:</th>
     <td><%= f.text_field :effective_date, :size => 10, :onchange => "validatedatesonchange(jQuery('input:checked').val())" %>
     <%= calendar_for('version_effective_date') %></td>
   </tr>

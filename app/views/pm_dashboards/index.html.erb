@@ -93,8 +93,8 @@
 	      <% @milestones.each do |milestone| %>
 		    <tr class="<%= cycle('even2', 'odd2') %>">
 	        <td><em><%= milestone.name %></em></td>
-	        <td><%= milestone.original_start_date %></td>
-	        <td><%= milestone.started_date %></td>
+	        <td><%= milestone.original_end_date %></td>
+	        <td><%= milestone.effective_date %></td>
 	        <td><%= Milestone::STATES.rassoc(milestone.state).first if milestone.state %></td>
 	      </tr>
 	      <% end %>
