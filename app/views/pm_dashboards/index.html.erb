@@ -57,7 +57,7 @@
       <h3><%=l(:label_dashboard_risks)%></h3> 
       <ul>
       <% for risk in @key_risks %>    
-        <li><%= risk.risk_description %></li>
+        <li><strong><%= risk.ref_number %></strong> - <%= risk.risk_description %></li>
       <% end %>
       </ul>
     </div>
@@ -104,8 +104,8 @@
     <div class="box">
       <h3><%=l(:label_dashboard_issues)%></h3>
       <ul>
-      <% for issue in @key_issues %>    
-        <li><%= issue.issue_description %></li>
+      <% for issue in @key_issues %>
+        <li><strong><%= issue.ref_number %></strong> - <%= issue.issue_description %></li>
       <% end %>
       </ul>
     </div>
