@@ -57,7 +57,7 @@
       <h3><%=l(:label_dashboard_risks)%></h3> 
       <ul>
       <% for risk in @key_risks %>    
-        <li><strong><%= risk.ref_number %></strong> - <%= risk.risk_description %></li>
+        <li><strong><%= link_to risk.ref_number, :controller => 'risks', :action => 'show', :id => risk.id, :project_id => risk.project.identifier %></strong> - <%= risk.risk_description %></li>
       <% end %>
       </ul>
     </div>
@@ -105,7 +105,7 @@
       <h3><%=l(:label_dashboard_issues)%></h3>
       <ul>
       <% for issue in @key_issues %>
-        <li><strong><%= issue.ref_number %></strong> - <%= issue.issue_description %></li>
+        <li><strong><%= link_to issue.ref_number, :controller => 'pm_dashboard_issues', :action => 'show', :id => issue.id, :project_id => issue.project.identifier %></strong> - <%= issue.issue_description %></li>
       <% end %>
       </ul>
     </div>
