@@ -5,15 +5,15 @@
 	</tr>
 	<tr>
 	  <th class='red'></th>
-	  <td><%= (@risks.select{|a| (15 .. 25) === a.final_risk_rating }).count %></td>
+	  <td><%= (@risks.select{|a| (15 .. 25) === a.final_risk_rating and a.status != 'C' }).count %></td>
 	</tr>
 	<tr>
 	  <th class='yellow'></th>
-	  <td><%= (@risks.select{|a| (5 ... 15) === a.final_risk_rating }).count %></td>
+	  <td><%= (@risks.select{|a| (5 ... 15) === a.final_risk_rating and a.status != 'C' }).count %></td>
 	</tr>
 	<tr>
 	  <th class='green'></th>
-	  <td><%= (@risks.select{|a| (0 ... 5) === a.final_risk_rating }).count %></td>
+	  <td><%= (@risks.select{|a| (0 ... 5) === a.final_risk_rating and a.status != 'C' }).count %></td>
 	</tr>
 	<tr>
 	  <th><%= l(:label_total) %></th>
