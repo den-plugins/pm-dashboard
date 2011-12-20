@@ -89,6 +89,8 @@ en:
   field_effective_from: Effective from
   field_effective_to: Effective to
   field_approval_date: Approval Date
+  field_version_original_start_date: Original Start Date
+  field_version_original_end_date: Original End Date
 
   field_issue_description: Description
   field_env: Env

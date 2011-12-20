@@ -17,8 +17,12 @@
 		<td><%= f.text_field :wiki_page_title %></td>
 	</tr>
 	<tr>
-		<th>Original Date:</th>
-    <td><%= f.text_field :original_date, :size => 10 %><%= calendar_for('version_original_date') %></td>
+		<th>Original Start Date:</th>
+    <td><%= f.text_field :original_start_date, :size => 10 %><%= calendar_for('version_original_start_date') %></td>
+  </tr>
+  <tr>
+		<th>Original End Date:</th>
+    <td><%= f.text_field :original_end_date, :size => 10 %><%= calendar_for('version_original_end_date') %></td>
   </tr>
   <tr>
   	<th>Start Date:</th>

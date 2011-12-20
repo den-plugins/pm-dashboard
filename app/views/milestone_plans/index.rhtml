@@ -15,7 +15,8 @@
     <th><%= l(:field_version_name) %></th>
     <th><%= l(:field_version_description) %></th>
     <th><%= l(:field_version_wiki) %></th>
-    <th><%= l(:field_version_original_date) %></th>
+    <th><%= l(:field_version_original_start_date) %></th>
+    <th><%= l(:field_version_original_end_date) %></th>
     <th><%= l(:field_version_start_date) %></th>
     <th><%= l(:field_version_end_date) %></th>
     <th><%= l(:field_version_state) %></th>
@@ -26,7 +27,8 @@
 		  <td><em><%= h t.name %></em></td>
 		  <td><%= h t.description %></td>
 		  <td><%= h t.wiki_page_title %></td>
-	      <td><%= t.original_date %></td>
+	      <td><%= t.original_start_date %></td>
+	      <td><%= t.original_end_date %></td>
 	      <td><%= t.started_date %></td>
 	      <td><%= t.effective_date %></td>
 	      <td align="center">

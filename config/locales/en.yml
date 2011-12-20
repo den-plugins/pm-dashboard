@@ -141,7 +141,8 @@ en:
   field_version_name: Version Name
   field_version_description: Description
   field_version_wiki: Wiki Page
-  field_version_original_date: Original Date
+  field_version_original_start_date: Original Start Date
+  field_version_original_end_date: Original End Date
   field_version_start_date: Start Date
   field_version_end_date: End Date
   field_version_state: State
