@@ -4,15 +4,17 @@ require 'dispatcher'
 
 require 'pm_member_patch'
 require 'pm_project_patch'
+require 'pm_version_patch'
 require 'attachment_patch'
 
 Dispatcher.to_prepare do
   Member.send(:include, Pm::MemberPatch)
   Project.send(:include, Pm::ProjectPatch)
   Attachment.send(:include, Pm::AttachmentPatch)
+  Version.send(:include, Pm::VersionPatch)
 end
 
-config.after_initialize do 
+config.after_initialize do
   ActiveRecord::Base.observers << :assumption_observer
   ActiveRecord::Base.observers << :pm_dashboard_issue_observer
   ActiveRecord::Base.observers << :risk_observer
