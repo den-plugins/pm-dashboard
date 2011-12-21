@@ -1,7 +1,9 @@
-table#pm_dashboard_header tr td { white-space: nowrap; padding-right: 7px;}
-table#pm_dashboard_header tr td span {font-weight: bold; display: inline-block; text-align: left; padding-right: 7px; }
+table#pm_dashboard_header tr td { white-space: nowrap; }
+table#pm_dashboard_header tr td span {font-weight: bold; display: inline-block; text-align: left; }
 table#pm_dashboard_header tr td span:after { content: ":" }
-pm_dashboard_header { width: 85% }
+#pm_dashboard_header { width: 95%; }
+
+table#pm_dashboard_header tr td.value {border-right: 9px solid white; }
 
 .even2 { background-color: #F5FFEE }
 .odd2 { background-color: #F7EEFF }
@@ -146,6 +148,7 @@ div.movable_table_container {
   float: left;
   position: relative;
   overflow-x: auto;
+  background-color: #FFFEF4;
 }
 
 .floating_table {
@@ -243,7 +246,7 @@ div.indent p{
 }
 
 .h-actions {
-  background-color: white;
+  background-color: transparent;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
@@ -252,6 +255,7 @@ div.indent p{
   top: 0;
   right: 0;
   margin-bottom: 5px;
+  margin-right: 5px;
 }
 
 div.week_highlight {
@@ -270,7 +274,7 @@ div.week_highlight {
   padding: 5px;
 }
 
-.highlighttext span.content_text { margin-top: 40px; display: block; }
+.highlighttext span.content_text { margin-top: 5px; display: block; }
 
 div#period {
   position: relative;
@@ -308,7 +312,9 @@ div#period span.selected {
 .dashboard_highlight {
   overflow: auto;
   height: 200px;
+  padding: 3px;
 }
+.dashboard_highlight p {margin: 0 }
 
 #billability_table table tr th {white-space: normal; }
 #billability_table table tr td {text-align: center;  }
