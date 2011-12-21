@@ -16,10 +16,17 @@
       </tr>
       <tr>
         <th>Billability to date %</th>
-        <td><%= compute_percent_to_date forecast, actual %>%</td>
+        <td><%= @percent_to_date = compute_percent_to_date forecast, actual %>%</td>
       </tr>
     </table>
   </div>
+  
+  <script type="text/javascript">
+    var cost_color = "<%= code = cost_color_code_billability(@percent_to_date.to_f) %>";
+    jQuery(".value.cost_color").text("<%= cost_color_code_label(code) %>");
+    jQuery(".cost_color").addClass(cost_color);
+  </script>
+  
   <div id="bchart2"></div>
   <div id="show_billability_chart">
   <% form_remote_tag(:url => {:action => 'load_chart', :chart => 'billability_chart'}) do %>

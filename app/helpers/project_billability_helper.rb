@@ -38,4 +38,28 @@ module ProjectBillabilityHelper
       "%0.2f" % ((actual.to_f/forecast.to_f)*100)
     end
   end
+  
+  def cost_color_code_billability(percent)
+    case
+      when percent > 85; "green"
+      when (80 ... 85) === percent; "yellow"
+      when (0 ... 80) === percent; "red"
+    end
+  end
+  
+  def cost_color_code_fixed(contracts, forecasts)
+    case contracts <=> forecasts
+      when -1; "red"
+      when 1; "green"
+      when 0: "yellow"
+    end
+  end
+  
+  def cost_color_code_label(code)
+    case code
+      when "green"; "Good"
+      when "yellow"; "Warning"
+      when "red"; "Red Flag"
+    end
+  end
 end

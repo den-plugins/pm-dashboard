@@ -1,7 +1,7 @@
+table#pm_dashboard_header {border-collapse: collapse; }
 table#pm_dashboard_header tr td { white-space: nowrap; }
 table#pm_dashboard_header tr td span {font-weight: bold; display: inline-block; text-align: left; }
 table#pm_dashboard_header tr td span:after { content: ":" }
-
 table#pm_dashboard_header tr td.value {border-right: 9px solid white; }
 
 .even2 { background-color: #F5FFEE }
