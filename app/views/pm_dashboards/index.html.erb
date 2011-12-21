@@ -23,19 +23,19 @@
   <table id="pm_dashboard_header">
     <%= render :partial => "pm_dashboards/dashboard_header" %>
     <tr>
-      <td><span>Overall Status</span><%=  %></td>
-      <td><span>Reporting Period</span><%= @highlights[:current].created_at.strftime("%Y-%m-%d") if @highlights[:current] %></td>
-      <td><span>Overall % Complete</span><%=  %></td>
+      <td><span>Overall Status</span></td><td class="value"><%=  %></td>
+      <td><span>Reporting Period</span></td><td class="value"><%= @highlights[:current].created_at.strftime("%Y-%m-%d") if @highlights[:current] %></td>
+      <td><span>Overall % Complete</span></td><td class="value"><%=  %></td>
     </tr>
     
     <tr>
-      <td><span>Schedule</span><%= %></td>
-      <td><span>Cost</span><%= %></td>
-      <td class="<%= risk_rating_color_code(risk_rating=compute_risk_average(@project)) %>"><span>Risk</span><%= risk_rating %></td>
-      <td class="<%= issue_impact_color_coding((issues_score=display_issues_average).to_f) %>"><span>Issue</span><%= issues_score %></td>
-      <td><span>Production</span><%= %></td>
-      <td><span>Efficiency</span><%= %></td>
-      <td><span>Billability</span><%= %></td>
+      <td><span>Schedule</span></td><td class="value"><%= %></td>
+      <td><span>Cost</span></td><td class="value"><%= %></td>
+      <td><span>Risk</span></td><td class="value <%= risk_rating_color_code(risk_rating=compute_risk_average(@project)) %>"><%= risk_rating %></td>
+      <td><span>Issue</span></td><td class="value <%= issue_impact_color_coding((issues_score=display_issues_average).to_f) %>"><%= issues_score %></td>
+      <td><span>Production</span></td><td class="value"><%= %></td>
+      <td><span>Efficiency</span></td><td class="value"><%= %></td>
+      <td><span>Billability</span></td><td class="value"><%= %></td>
     </tr>
   </table>
   
