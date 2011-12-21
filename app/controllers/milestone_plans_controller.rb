@@ -8,7 +8,7 @@ class MilestonePlansController < ApplicationController
 
   def index
     @version = Version.find(params[:version_id]) if params[:version_id]
-    @version.update_attribute(:state, params[:state]) if @version
+    @version.update_attributes(:state => params[:state]) if @version
     @versions = Version.find(:all, :conditions => ["project_id = ?", @project], :order => 'effective_date IS NULL, effective_date DESC')
   end
 
