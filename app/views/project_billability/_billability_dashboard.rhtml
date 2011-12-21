@@ -25,6 +25,9 @@
     var cost_color = "<%= code = cost_color_code_billability(@percent_to_date.to_f) %>";
     jQuery(".value.cost_color").text("<%= cost_color_code_label(code) %>");
     jQuery(".cost_color").addClass(cost_color);
+    var sched_color = "<%= scode = schedule_color_code %>";
+    jQuery(".value.sched_color").text("<%= cost_color_code_label(scode) %>");
+    jQuery(".sched_color").addClass(sched_color);
   </script>
   
   <div id="bchart2"></div>

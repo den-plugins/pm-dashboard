@@ -61,4 +61,5 @@ module PmDashboardsHelper
     end unless  weeks.nil? or weeks.empty?
     billability_per_week.to_json
   end
+
 end

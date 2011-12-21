@@ -28,6 +28,9 @@
     var cost_color = "<%= code = cost_color_code_fixed(@cost_budget.to_f, @cost_forecast.to_f) %>";
     jQuery(".value.cost_color").text("<%= cost_color_code_label(code) %>");
     jQuery(".cost_color").addClass(cost_color);
+    var sched_color = "<%= scode = schedule_color_code %>";
+    jQuery(".value.sched_color").text("<%= cost_color_code_label(scode) %>");
+    jQuery(".sched_color").addClass(sched_color);
   </script>
   
   <div id="bar_chart"></div>
