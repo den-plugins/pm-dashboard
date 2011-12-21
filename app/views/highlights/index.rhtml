@@ -5,7 +5,7 @@
 
 <div class="splitcontentleft">
   <div class="highlighttext " id='recently_posted'>
-    <%= render :partial => 'highlights/recently_posted', :locals => {:highlight => @highlights[:recently_posted]} %>
+    <%= render :partial => 'highlights/recently_posted', :locals => {:highlight => @highlights[:posted_current], :highlight_next => @highlights[:posted_after_current]} %>
   </div>
 </div>
 

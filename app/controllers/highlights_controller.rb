@@ -50,8 +50,9 @@ class HighlightsController < ApplicationController
   def select_by_week
     date = params[:select_week].to_date
     highlight = @project.highlights.for_the_week(date).post_current.first
+    highlight_next = @project.highlights.for_the_week(date).post_after_current.first
     render :update do |page|
-      page.replace_html :recently_posted, :partial => "highlights/recently_posted", :locals => {:highlight => highlight}
+      page.replace_html :recently_posted, :partial => "highlights/recently_posted", :locals => {:highlight => highlight, :highlight_next => highlight_next}
     end
   end
   
@@ -65,7 +66,7 @@ class HighlightsController < ApplicationController
     @highlight.validate
 
     if @highlight.errors.empty?
-      if dup && (dup.posted_date.nil? || (dup.posted_date && dup.created_at.beginning_of_week.eql?(Date.today.beginning_of_week)))
+      if dup && (dup.posted_date.nil? || (dup.posted_date && dup.created_at.monday.to_date.eql?(Date.today.monday)))
       	render :update do |page|
       		page.replace_html period, :partial => "highlights/#{time_state}", :locals => {:highlight => dup}
        	 	page.hide "#{time_state}_highlight_wrapper"
@@ -112,7 +113,7 @@ class HighlightsController < ApplicationController
   def replace_highlights
     @highlights = @project.weekly_highlights
     render :update do |page|
-      page.replace_html :recently_posted, :partial => "highlights/recently_posted", :locals => {:highlight => @highlights[:recently_posted]}
+      page.replace_html :recently_posted, :partial => "highlights/recently_posted", :locals => {:highlight => @highlights[:posted_current], :highlight_next => @highlights[:posted_after_current]}
       page.replace_html :next_period, :partial => "highlights/nextp", :locals => {:highlight => @highlights[:after_current]}
       page.replace_html :this_period, :partial => "highlights/current", :locals => {:highlight => @highlights[:current]}
     end

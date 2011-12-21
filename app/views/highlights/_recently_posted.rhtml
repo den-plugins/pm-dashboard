@@ -3,8 +3,8 @@
                              :html => {:id => 'select_by_week_form', :style => "float: left; margin-bottom: 9px; " },
                              :loading => "Element.show('ajax-indicator')",
                              :complete => "Element.hide('ajax-indicator')") do %>
-    Search highlight by date: 
-    <%= text_field_tag 'select_week', (highlight ? highlight.created_at.to_date : 7.days.ago.to_date), :size => 8, :onchange => "this.form.onsubmit();" %>
+    Search highlight by date:
+    <%= text_field_tag 'select_week', recently_posted_date(highlight, highlight_next), :size => 8, :onchange => "this.form.onsubmit();" %>
     <%= calendar_for('select_week') %>
   <% end %>
   
@@ -25,13 +25,6 @@
       <% end %>
     </span>
   </div>
-  
-    <% if params[:select_week] %>
-      <% date = params[:select_week].to_date %>
-	  	<% highlight_next = @project.highlights.for_the_week(date).post_after_current.first %>
-  	<% elsif !params[:select_week] && highlight && highlight.posted_date %>
-  	  <% highlight_next = @project.highlights.for_the_week(highlight.created_at).post_after_current.first %>
-  	<% end %>
   
 	<div class="box">
     <div class="contextual h-actions">

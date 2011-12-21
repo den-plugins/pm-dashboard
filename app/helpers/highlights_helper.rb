@@ -1,5 +1,15 @@
 module HighlightsHelper
   
+  def recently_posted_date(highlight, highlight_next)
+    if highlight
+      highlight.created_at.to_date
+    elsif highlight.nil? && highlight_next
+      highlight_next.created_at.to_date
+    elsif highlight.nil? && highlight_next.nil?
+      params[:select_week] ? params[:select_week] : 7.days.ago.to_date
+    end
+  end
+
   def render_highlight_message highlight, message
     if highlight && !highlight.new_record?
       content_tag 'p', textilizable(highlight.highlight)
