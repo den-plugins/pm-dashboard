@@ -64,7 +64,10 @@ module ProjectBillabilityHelper
   end
 
   def schedule_color_code
-    replanned_end_date = @project.latest_replanned_end_date
-    (replanned_end_date && replanned_end_date < @project.planned_end_date)? "red" : "green"
+    if @project.planned_end_date && @project.actual_end_date
+      (@project.actual_end_date < @project.planned_end_date)? "red" : "green"
+    else
+      "yellow"
+    end
   end
 end

@@ -82,12 +82,6 @@ module Pm
       def current_active_sprint
         versions.find(:first, :conditions => ["state = 2 and sprint_start_date IS NOT NULL"], :order => "effective_date DESC")
       end
-
-      def latest_replanned_end_date
-        replanned_end_date = versions.find(:first, :conditions => ["state = 2 and effective_date IS NOT NULL"], 
-                                                :order => "effective_date DESC")
-        replanned_end_date ? replanned_end_date.effective_date : nil
-      end
     end
   end
 end
