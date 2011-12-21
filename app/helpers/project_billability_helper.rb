@@ -10,11 +10,25 @@ module ProjectBillabilityHelper
     allocated = resources.select {|r| r.billable?(from, to)}
     allocated.sum {|a| a.days_and_cost((from..to), nil, false) * 8}
   end
+
+  def compute_forecasted_cost(week, resources)
+    from, to = week.first, week.last
+    allocated = resources.select {|r| r.billable?(from, to)}
+    bac_amount = allocated.sum {|a| a.days_and_cost((from..to), daily_rate(a.sow_rate), false).last}
+    contingency_amount = bac_amount.to_f * (@project.contingency.to_f/100)
+    total_budget = bac_amount.to_f + contingency_amount
+  end
   
   def compute_actual_hours(week, resources)
     from, to= week.first, (week.last.wday.eql?(5) ? (week.last+2.days) : week.last)
     allocated = resources.select {|r| r.billable?(from, to)}
     allocated.sum {|a| a.spent_time(from, to, true)}
+  end
+
+  def compute_actual_cost(week, resources)
+    from, to= week.first, (week.last.wday.eql?(5) ? (week.last+2.days) : week.last)
+    allocated = resources.select {|r| r.billable?(from, to)}
+    allocated.sum {|a| (a.spent_time(from, to, true) * a.sow_rate)}
   end
   
   def compute_percent_to_date(forecast, actual)
