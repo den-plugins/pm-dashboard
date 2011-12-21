@@ -4,7 +4,7 @@ class ResourceAllocation < ActiveRecord::Base
 
   belongs_to :member
   
-  validates_presence_of :start_date, :end_date, :resource_allocation
+  validates_presence_of :start_date, :end_date, :resource_allocation, :location
   attr_protected :member_id
   
   before_save :validate_dates, :validate_overlapping_dates
