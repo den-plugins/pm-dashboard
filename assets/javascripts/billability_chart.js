@@ -26,3 +26,21 @@ function plot_billability(id, data){
       } 
     });
 }
+
+function plot_monthly_billability(id, data) {
+  var plot2 = jQuery.jqplot(id, data, {
+    axes: {
+      xaxis: {
+        label: "Months",
+        renderer: jQuery.jqplot.DateAxisRenderer,
+        tickOptions: {showMark: false, fontSize: '8pt', formatString: '%b %Y'}
+      },
+      yaxis: {
+        label: "Billability (%)",
+        labelRenderer: jQuery.jqplot.CanvasAxisLabelRenderer
+      }
+    },
+    highlighter: { show: true, sizeAdjust: 7.5 },
+    cursor: {show: true, zoom: true }
+  });
+}
