@@ -37,7 +37,7 @@
   	<th>l(:field_version_type):</th>
   	<td>
   		<div>
-  		  <% Version::VERSIONS.each do |k,v| %>
+  		  <% Version::TYPES.each do |k,v| %>
   		    <%= f.radio_button :version_type, v, :onchange => "validatedatesinput('#{@version.started_date}', #{k});" %><%= v %><br>
   			<% end %>
   		</div>
