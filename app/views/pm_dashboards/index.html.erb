@@ -95,7 +95,7 @@
 	        <td><em><%= milestone.name %></em></td>
 	        <td><%= milestone.original_end_date %></td>
 	        <td><%= milestone.effective_date %></td>
-	        <td><%= Milestone::STATES.rassoc(milestone.state).first if milestone.state %></td>
+	        <td><%= Version::STATES.fetch(milestone.state) if milestone.state %></td>
 	      </tr>
 	      <% end %>
       </table>

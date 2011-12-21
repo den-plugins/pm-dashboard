@@ -34,7 +34,7 @@
 	      <td align="center">
 	        <% form_for :version, :url => {:action => :index, :version_id => t, :project_id => @project} do |f| %>
 	        <div id="<%= t.id %>">
-  	         <%= select_tag(:state, options_for_select(Milestone::STATES, t.state), 
+  	         <%= select_tag(:state, options_for_select(Version::STATES.collect {|k,v| [v] }, t.state), 
   	         				{:onchange => "this.form.submit();new Effect.Highlight('#{t.id}');" }) %>
 	        </div>
           <% end %>

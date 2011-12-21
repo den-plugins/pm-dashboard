@@ -40,25 +40,6 @@ module PmDashboardsHelper
     javascript_tag("Calendar.setup({inputField : '#{field_id}', ifFormat : '%Y-%m-%d', button : '#{field_id}_trigger' , cache: true});")
   end
 
-  def release_milestone_details(milestone, project)
-  	@milestone = Milestone.find(milestone)
-	  	table = []
-
-	  	table << "<tr>"
-	  	table << "<td>#{@milestone.name}</td>"
-	  	table << "<td>#{@milestone.original_target_date}</td>"
-	  	table << "<td>#{@milestone.latest_re_plan_date}</td>"
-	  	table << "<td>#{@milestone.remarks}</td>"
-	  	table << "<td>#{@milestone.status}</td>"
-	  	table << "<td align='center'>
-	  							#{link_to l(:button_edit), {:controller => 'milestone_plans', :action => 'update', :milestone_id => milestone, :project_id => project}, :class => 'icon icon-edit' } 
-	  							|| 
-	  							#{link_to l(:button_delete), {:controller => 'milestone_plans', :action => 'destroy', :milestone_id => milestone, :project_id => project}, :confirm => l(:text_are_you_sure), :method => :post, :class => 'icon icon-del' }
-	  						</td>"
-	  	table << "</tr>"
-	  	table
-  end
-  
   def display_by_billing_model
     if @project.billing_model
       if @project.billing_model.scan(/^(Fixed)/).flatten.present?

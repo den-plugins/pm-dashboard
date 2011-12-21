@@ -145,6 +145,7 @@ en:
   field_version_original_end_date: Original End Date
   field_version_start_date: Actual Start Date
   field_version_end_date: Latest Re-Plan Date
+  field_version_type: Version Type
   field_version_state: State
 
   field_phone_no: Phone No.
