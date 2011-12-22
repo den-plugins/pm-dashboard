@@ -18,7 +18,7 @@
 	    <th>Actuals</th>
         <td><%= @cost_actual = compute_actual_cost((@project.planned_start_date..@project.planned_end_date), @project_resources) %></td>
         <th>Variance</th>
-        <td><%= variants = @cost_forecast - @cost_actual %></td>
+        <td><%= variants = @cost_budget - @cost_forecast %></td>
       </tr>
   <% end %>
     </table>
