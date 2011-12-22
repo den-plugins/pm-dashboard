@@ -161,8 +161,8 @@ en:
   field_highlight: Highlight
   
   text_hello: Hello {{name}},
-  text_update: An update has been made to {{feature}} {{ref_number}}
-  text_new: You are the owner of {{feature}} {{ref_number}}
+  text_update: An update has been made to [{{project}}] {{feature}} #{{ref_number}}
+  text_new: You are the owner of [{{project}}] {{feature}} #{{ref_number}}
   text_view_details: To view the details, click here {{url}}
 
   label_pc_type: Type
