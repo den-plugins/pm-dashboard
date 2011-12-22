@@ -1,7 +1,7 @@
 <tr>
   <td><span>Client</span></td><td class="value"><%= @project.client %></td>
   <td><span>Planned Start Date</span></td><td class="value"><%= @project.planned_start_date.to_s %></td>
-  <td><span>Actual Start Date</span></td><td class="value"><%= @project.actual_start_date.to_s %></td>
+  <td><span>Re-planned Start Date</span></td><td class="value"><%= @project.actual_start_date.to_s %></td>
   <td><span>Maintenance End Date</span></td><td class="value"><%= @project.maintenance_end.to_s %></td>
   <td><span>Technical Architect</span></td><td class="value"><%= @project.pm_or_ta(@project.tech_architect, @project) %></td>
 </tr>
@@ -9,7 +9,7 @@
 <tr>
   <td><span>Project Name</span></td><td class="value"><%= @project.name %></td>
   <td><span>Planned End Date</span></td><td class="value"><%= @project.planned_end_date.to_s %></td>
-  <td><span>Actual End Date</span></td><td class="value"><%= @project.actual_end_date.to_s %></td>
+  <td><span>Re-planned End Date</span></td><td class="value"><%= @project.actual_end_date.to_s %></td>
   <td><span>Project Manager</span></td><td class="value"><%= @project.pm_or_ta(@project.proj_manager, @project) %></td>
   <td><span>Account Manager</span></td><td class="value"></td>
 </tr>
