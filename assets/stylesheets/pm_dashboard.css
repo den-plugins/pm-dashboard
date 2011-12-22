@@ -109,6 +109,9 @@ span.button-like {
   margin-bottom: 1px;
 }
 
+input[type="text"].button-like { background: transparent; border: 0; margin-left: -10px; padding-left: 9px; }
+input[type="text"].button-like:hover { background: #E2E2E2; -moz-border-radius: 2px; border-radius: 3px; }
+
 #facebox .body {
   width: 380px;
 }

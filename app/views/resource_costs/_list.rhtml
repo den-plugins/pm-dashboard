@@ -10,10 +10,10 @@
       <td>
         <%= facebox_link_to member.name, {:url => {:controller => 'resource_allocations', :action => 'index', :project_id => @project, :member_id => member }} %>
       </td>
-      <% if params[:rate] && params[:rate].eql?('internal_rate') %>
-        <td class='daily_rate'><%= daily_rate(member.internal_rate) %></td>
-      <% else %>
+      <% if params[:rate] && params[:rate].eql?('sow_rate') %>
         <td class='daily_rate'><%= daily_rate(member.sow_rate) %></td>
+      <% else %>
+        <td class='daily_rate'><%= daily_rate(member.internal_rate) %></td>
       <% end %>
     </tr>
     <% end %>

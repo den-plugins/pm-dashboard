@@ -59,7 +59,7 @@ module ResourceCostsHelper
   
   # computations
   def compute_days_and_cost(member, range, rate)
-    mrate = (rate && rate.eql?('internal_rate')) ? daily_rate(member.internal_rate) : daily_rate(member.sow_rate)
+    mrate = (rate && rate.eql?('sow_rate')) ? daily_rate(member.sow_rate) : daily_rate(member.internal_rate)
     member.days_and_cost(range, mrate)
   end
   
