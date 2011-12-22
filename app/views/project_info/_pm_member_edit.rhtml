@@ -10,7 +10,7 @@
                              :style => "display:none", :onclick => "$('pos_#{member.id}_submit').hide()" %>
       <% end %>
     <% else %>
-      <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :classif => classification}, :method => :post, :html => {:id => "form_memposition_#{member.id}"}) do |f| %>
+      <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :classification => classification}, :method => :post, :html => {:id => "form_memposition_#{member.id}"}) do |f| %>
         <%= f.text_field :stakeholder_position, :size => 15, :onblur => "$('form_memposition_#{member.id}').request();" %>
       <% end %>
     <% end %>
@@ -43,8 +43,13 @@
       <td>
         <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :classif => classification}, :method => :post, :html => {:id => "form_sowrate_#{member.id}"}) do |f| %>
           <%= f.text_field :sow_rate, :size => 5, :id => 'pteam_sow_rate_' + member.id.to_s, 
-                :onblur => "$('form_sowrate_#{member.id}').request(); return validateFloat(document.getElementById('pteam_sow_rate_#{member.id}'));" %>
-          <%# submit_tag "Ok", :class => "small", :onclick => "return validateFloat(document.getElementById('pteam_sow_rate_#{member.id}'))" %>                     
+                :onblur => "$('form_sowrate_#{member.id}').request(); return validateFloat(document.getElementById('pteam_sow_rate_#{member.id}'));" %>                   
+        <% end %>
+      </td>
+      <td>
+        <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :classif => classification}, :method => :post, :html => {:id => "form_internalrate_#{member.id}"}) do |f| %>
+          <%= f.text_field :internal_rate, :size => 5, :id => 'pteam_internal_rate_' + member.id.to_s, 
+                :onblur => "$('form_internalrate_#{member.id}').request();" %>
         <% end %>
       </td>
       <td>
@@ -55,7 +60,6 @@
       <td id="remarks_<%= member.id %>">
         <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :classif => classification}, :method => :post, :html => {:id => "form_remarks_#{member.id}"}) do |f| %>
           <%= f.text_area :remarks, :size => "20x3", :onblur => "$('form_remarks_#{member.id}').request()" %><br />
-          <%# submit_tag "Ok", :class => "small" %>
         <% end %>
       </td>
     <% end %>
