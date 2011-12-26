@@ -11,9 +11,9 @@
         <%= facebox_link_to member.name, {:url => {:controller => 'resource_allocations', :action => 'index', :project_id => @project, :member_id => member }} %>
       </td>
       <% if params[:rate] && params[:rate].eql?('sow_rate') %>
-        <td class='daily_rate'><%= daily_rate(member.sow_rate) %></td>
+        <td class='daily_rate'><%= "%0.2f" % daily_rate(member.sow_rate) %></td>
       <% else %>
-        <td class='daily_rate'><%= daily_rate(member.internal_rate) %></td>
+        <td class='daily_rate'><%= "%0.2f" % daily_rate(member.internal_rate) %></td>
       <% end %>
     </tr>
     <% end %>
@@ -31,7 +31,7 @@
     </tr>
     <tr>
       <th style='text-align: left;'>Contingency</th>
-      <th class='daily_rate'><%= @project.contingency.to_f %> %</th>
+      <th class='daily_rate'><%= "%0.2f" % @project.contingency.to_f %> %</th>
     </tr>
     <tr>
       <th colspan='2' class='daily_rate'>Total Cost</th>

@@ -20,8 +20,8 @@
           <% total_days += actual_days %>
           <% total_cost += cost %>
         <tr class="<%= cycle('even', 'odd', :name => 'members') %> <%= allocation_color_class(actual_days) %>">
-          <td><%= actual_days %></td>
-          <td class='cost'><%= cost.to_f %></td>
+          <td><%="%0.2f" %  actual_days %></td>
+          <td class='cost'><%= "%0.2f" % cost.to_f %></td>
         </tr>
         <% end %>
         <% reset_cycle('members') %>
@@ -29,8 +29,8 @@
         <% @bac_amount += total_cost %>
         <% per_column[w] = compute_totals_per_column(@project, per_column, total_cost) %>
         <tr>
-          <th style='text-align: left'><%= total_days %></th>
-          <th class='cost'><%= total_cost.to_f %></th>
+          <th style='text-align: left'><%= "%0.2f" % total_days %></th>
+          <th class='cost'><%= "%0.2f" % total_cost.to_f %></th>
         </tr>
         <tr></tr>
         <tr></tr>

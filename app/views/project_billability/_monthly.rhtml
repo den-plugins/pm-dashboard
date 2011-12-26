@@ -21,9 +21,9 @@
             <th>Actuals (Billable)</th>
           </tr>
           <tr>
-            <td><%= "%0.1f" % compute_labor_hours(month, @project_resources) %></td>
-            <td><%= "%0.1f" % forecast = compute_forecasted_hours(month, @project_resources) %></td>
-            <td><%= "%0.1f" % (actual = compute_actual_hours(month, @project_resources)) %></td>
+            <td><%= "%0.2f" % compute_labor_hours(month, @project_resources) %></td>
+            <td><%= "%0.2f" % (forecast = compute_forecasted_hours(month, @project_resources)) %></td>
+            <td><%= "%0.2f" % (actual = compute_actual_hours(month, @project_resources)) %></td>
           </tr>
           <tr>
             <td colspan='3'>&nbsp;</td>

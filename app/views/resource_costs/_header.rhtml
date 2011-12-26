@@ -16,28 +16,28 @@
     <tr><br/></tr>
     <tr>
       <td><span>Budget Hours (BAC)</span></td>
-      <td class="value"><%= @bac_hours %> hours</td>
+      <td class="value"><%= "%0.2f" % @bac_hours.to_f %> hours</td>
       <td></td>
       <td><span>Contingency %</span></td>
       <td class="value">
         <% remote_form_for(:project, @project, :url => {:controller => 'resource_costs', :action => 'edit_project', :project_id => @project }) do |f| %>
           <%= image_submit_tag('true.png', :class => 'contextual', :id => 'contingency_submit', :style => 'display: none;') %>
-          <%= f.text_field :contingency, :size => 2, :value => (@project.contingency ? @project.contingency : 0.0),
+          <%= f.text_field :contingency, :size => 2, :value => (@project.contingency ? ("%0.2f" % @project.contingency.to_f) : 0.00),
                                         :class => "button-like",
                                         :onclick => "jQuery('#contingency_submit').show();" %>%
         <% end %>
       </td>
       <td></td>
       <td><span>Total Project Budget</span></td>
-      <td class="value"><%= @total_budget %></td>
+      <td class="value"><%= "%0.2f" % @total_budget.to_f %></td>
     </tr>
     
     <tr>
       <td><span>Budget Amount (BAC)</span></td>
-      <td class="value"><%= @bac_amount %></td>
+      <td class="value"><%= "%0.2f" % @bac_amount.to_f %></td>
       <td></td>
       <td><span>Contingency Amount</span></td>
-      <td class="value"><%= @contingency_amount  %></td>
+      <td class="value"><%= "%0.2f" % @contingency_amount.to_f %></td>
     </tr>
     
   </table>

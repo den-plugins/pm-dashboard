@@ -10,15 +10,15 @@
   <% if !@project.planned_end_date.nil? && !@project.planned_start_date.nil?%>
       <tr>
         <th>Budget</th>
-	    <td> <%= @cost_budget = @project_contracts.sum(&:amount)%></td>
+	    <td> <%= "%0.2f" % (@cost_budget = @project_contracts.sum(&:amount)) %></td>
         <th>Forecast</th>
-        <td><%= @cost_forecast = compute_forecasted_cost((@project.planned_start_date..@project.planned_end_date), @project_resources) %></td>
+        <td><%= "%0.2f" % (@cost_forecast = compute_forecasted_cost((@project.planned_start_date..@project.planned_end_date), @project_resources)) %></td>
       </tr>
       <tr>
 	    <th>Actuals</th>
-        <td><%= @cost_actual = compute_actual_cost((@project.planned_start_date..@project.planned_end_date), @project_resources) %></td>
+        <td><%= "%0.2f" % (@cost_actual = compute_actual_cost((@project.planned_start_date..@project.planned_end_date), @project_resources)) %></td>
         <th>Variance</th>
-        <td><%= variants = @cost_budget - @cost_forecast %></td>
+        <td><%= "%0.2f" % (variants = @cost_budget - @cost_forecast) %></td>
       </tr>
   <% end %>
     </table>
