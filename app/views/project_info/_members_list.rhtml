@@ -9,8 +9,8 @@
     <td><%= member.office_no %></td>
     <td><%= member.im_id %></td>
     <% if classification.eql?(:proj_team) %>
-      <td> <%= "%0.2f" % member.sow_rate %> </td>
-      <td> <%= "%0.2f" % member.internal_rate %> </td>
+      <td> <%= "%0.2f" % member.sow_rate.to_f %> </td>
+      <td> <%= "%0.2f" % member.internal_rate.to_f %> </td>
       <td> <%= member.billable ? image_tag('true.png') : '' %> </td>
       <td> <%= member.remarks %> </td>
     <% end %>

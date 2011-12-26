@@ -14,11 +14,11 @@
       </tr>
       <tr>
         <th>Forecasted Hours</th>
-        <td><%= "%0.2f" % (forecast = compute_forecasted_hours((actual_start..actual_end), @project_resources)) %></td>
+        <td><%= number_with_delimiter ("%0.2f" % (forecast = compute_forecasted_hours((actual_start..actual_end), @project_resources))) %></td>
       </tr>
       <tr>
         <th>Total Billable Hours</th>
-        <td><%= "%0.2f" % (actual = compute_actual_hours((actual_start..actual_end), @project_resources)) %></td>
+        <td><%= number_with_delimiter ("%0.2f" % (actual = compute_actual_hours((actual_start..actual_end), @project_resources))) %></td>
       </tr>
       <tr>
         <th>Billability to date %</th>

@@ -1,6 +1,6 @@
 <table class='pmsummary'>
 	<tr>
 	  <th><%= l(:label_total_amount) %></th>
-	  <td><%= "%0.2f" % @project_contracts.sum(&:amount) %></td>
+	  <td><%= number_with_delimiter ("%0.2f" % @project_contracts.sum(&:amount)) %></td>
 	</tr>
 </table>
