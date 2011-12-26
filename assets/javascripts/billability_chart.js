@@ -8,8 +8,7 @@ function plot_billability(id, data){
           tickOptions: {
             showMark: false,
             fontSize: '8pt'
-          },
-          tickInterval: "14 days"
+          }
         },
         yaxis: {
           label: "Billability (%)",
