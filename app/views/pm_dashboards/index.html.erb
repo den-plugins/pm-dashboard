@@ -26,7 +26,8 @@
       <td><span>Overall Status</span></td>
       <td class="value"><%=  %></td>
       <td><span>Reporting Period</span></td>
-      <td class="value"><%= @highlights[:current].created_at.strftime("%Y-%m-%d") if @highlights[:current] %></td>
+      <% highlight =  (@highlights[:current] || @highlights[:after_current] || @highlights[:posted_current] || @highlights[:posted_after_current]) %>
+      <td class="value"><%= highlight.created_at.strftime("%Y-%m-%d") if highlight %></td>
       <td><span>Overall % Complete</span></td>
       <td class="value"><%=  %></td>
     </tr>

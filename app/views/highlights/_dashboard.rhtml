@@ -33,6 +33,15 @@
     </div>
     <p style="padding-top: 5px;"><em><%= @highlights[:after_current].created_at.strftime("%B %e, %Y") %></em></p>
     <%= content_tag 'div', textilizable(@highlights[:after_current].highlight), :class => "dashboard_highlight" %>
+  <% elsif @highlights[:current].nil? && @highlights[:after_current].nil? && @highlights[:posted_after_current] %>
+    <div class='contextual h-actions'>
+     
+      <%= link_to 'Edit', {:controller => 'highlights', :action => 'index', :project_id => @project,
+                           :edit_what => "recently_posted"},
+                           :class => "icon icon-edit" %>
+    </div>
+    <p style="padding-top: 5px;"><em><%= @highlights[:posted_after_current].created_at.strftime("%B %e, %Y") %></em></p>
+    <%= content_tag 'div', textilizable(@highlights[:posted_after_current].highlight), :class => "dashboard_highlight" %>
   <% else %>
     <div class='contextual h-actions'>
       <%= link_to 'Edit', {:controller => 'highlights', :action => 'index', :project_id => @project, :edit_what => "nextp"},
