@@ -14,13 +14,14 @@
   <%= javascript_include_tag 'plugins/jqplot.cursor.min.js', :plugin => 'redmine_burndown' %>
   <%= javascript_include_tag 'plugins/jqplot.dateAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
   <%= javascript_include_tag 'plugins/jqplot.highlighter.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.pieRenderer.min.js', :plugin => 'redmine_burndown' %>
   <%= javascript_include_tag 'plugins/jqplot.pointLabels.min.js', :plugin => 'redmine_burndown' %>
   <%= javascript_include_tag 'billability_chart.js', :plugin => 'pm_dashboard' %>
   <%= javascript_include_tag 'burndown_chart.js', :plugin => 'pm_dashboard' %>
   <%= javascript_include_tag 'cost_chart.js', :plugin => 'pm_dashboard' %>
 <% end %>
 
-
+<div class="zero_wrap">
   <table id="pm_dashboard_header">
     <%= render :partial => "pm_dashboards/dashboard_header" %>
     <tr>
@@ -50,24 +51,37 @@
       <td class="value"><%= %></td>
     </tr>
   </table>
-  
+</div>
+
+<div class="zero_wrap">
   <div class="singleCol">
     <div id='highlights_summary'>
       <%= render :partial => 'highlights/dashboard' %>
     </div>
+    <div class="box">
+      <h3><%=l(:label_dashboard_sprint)%></h3>
+      <p style="display: none" id="current_sprint_label"></p>
+      <div id="jchart" style="display: none; "></div>
+      <div id="show_burndown_chart">
+      <% form_remote_tag(:url => {:action => 'load_chart', :chart => 'burndown_chart'}) do %>
+        <%= submit_tag "Show Graph", :class => 'btn_show_chart', :onclick => "this.value = 'Loading...'; $('jchart').show();" %>
+      <% end %>
+      </div>
+    </div>
   </div>
   
   <div class="singleCol">
-    <%= render :partial => "load_fixed_cost" if display_by_billing_model.eql?("fixed") %>
+    <% if display_by_billing_model.eql?("fixed") %>
+      <%= render :partial => "load_fixed_cost"  %>
+    <% elsif display_by_billing_model.eql?("billability") %>
+      <%= render :partial => "load_billability" %>
+    <% end %>
+    
     <div class="box">
-      <h3><%=l(:label_dashboard_risks)%></h3>
-      <ul>
-      <% for risk in @key_risks %>
-        <li><strong><%= link_to risk.ref_number, :controller => 'risks', :action => 'show', :id => risk.id, :project_id => risk.project.identifier %></strong> - <%= risk.risk_description %></li>
-      <% end %>
-      </ul>
+      <h3>Resource Utilization as of Last Week</h3>
+      <div id="utilization_chart"></div>
+      <%= render :partial => "charts/resource_utilization_chart" %>
     </div>
-    <%= render :partial => "load_billability" if display_by_billing_model.eql?("billability") %>
   </div>
   
   <div class="singleCol">
@@ -92,7 +106,16 @@
       </table>
       </div>
     </div>
-
+    
+    <div class="box">
+      <h3><%=l(:label_dashboard_risks)%></h3>
+      <ul>
+      <% for risk in @key_risks %>
+        <li><strong><%= link_to risk.ref_number, :controller => 'risks', :action => 'show', :id => risk.id, :project_id => risk.project.identifier %></strong> - <%= risk.risk_description %></li>
+      <% end %>
+      </ul>
+    </div>
+    
     <div class="box">
       <h3><%=l(:label_dashboard_issues)%></h3>
       <ul>
@@ -101,23 +124,14 @@
       <% end %>
       </ul>
     </div>
-    
-    <div class="box">
-      <h3><%=l(:label_dashboard_sprint)%></h3>
-      <p style="display: none" id="current_sprint_label"></p>
-      <div id="jchart" style="height: 240px; display: none; "></div>
-      <div id="show_burndown_chart">
-      <% form_remote_tag(:url => {:action => 'load_chart', :chart => 'burndown_chart'}) do %>
-        <%= submit_tag "Show Graph", :class => 'btn_show_chart', :onclick => "this.value = 'Loading...'; $('jchart').show();" %>
-      <% end %>
-      </div>
-    </div>
   </div>
-  
-  <script type="text/javascript">
-      var sched_color = "<%= scode = schedule_color_code %>";
-      jQuery(".value.sched_color").text("<%= cost_color_code_label(scode) %>");
-      jQuery(".sched_color").addClass(sched_color);
-  </script>
-  
+
+</div>
+
+<script type="text/javascript">
+    var sched_color = "<%= scode = schedule_color_code %>";
+    jQuery(".value.sched_color").text("<%= cost_color_code_label(scode) %>");
+    jQuery(".sched_color").addClass(sched_color);
+</script>
+
 

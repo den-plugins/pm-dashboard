@@ -106,6 +106,20 @@ module Pm
           end
         end
       end
+      
+      def with_complete_logs?(range)
+        allocated = days_and_cost(range) * 8
+        actual = spent_time(range.first, range.last)
+        admin_siblings = project.admin_siblings
+        unless admin_siblings.empty?
+          admin_siblings.each do |sibling|
+            if m = sibling.members.detect {|m| m.user_id.eql?(user_id) }
+              actual += m.spent_time(range.first, range.last)
+            end
+          end
+        end
+        actual >= allocated
+      end
     
     end
   end

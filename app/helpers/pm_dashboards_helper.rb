@@ -62,4 +62,12 @@ module PmDashboardsHelper
     billability_per_week.to_json
   end
 
+  def compute_percentage_utilization(members, from=nil, to=nil)
+    return 0 unless members.count > 0
+    from, to = (mon=(Date.today-1.week).monday), mon+4.days unless from && to
+    range = from .. to
+    total = members.count
+    completed = members.select {|m| m.with_complete_logs?(range) }.count
+    (completed.to_f/total.to_f) * 100
+  end
 end

@@ -16,13 +16,13 @@ class PmDashboardsController < ApplicationController
     @key_risks ||= @project.risks.key
     @key_issues ||= @project.pm_dashboard_issues.key
     @issues = @project.pm_dashboard_issues
-    
+    @project_team = @project.members.project_team
     @milestones = Version.find(:all, :conditions => ["project_id=? and effective_date < ?", @project, Date.today], :order => "effective_date DESC", :limit => 2) +
                                   Version.find(:all, :conditions => ["project_id=? and effective_date >= ?", @project, Date.today], :order => "effective_date ASC", :limit => 4)
     @milestones = @milestones.reverse {|v| v.effective_date}
-
     @current_sprint = @project.current_version
     @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
+
     billing_model = display_by_billing_model
     if billing_model == "billability" || billing_model.nil?
       #@project_resources  = @project.members.select(&:billable?)
@@ -46,7 +46,7 @@ class PmDashboardsController < ApplicationController
       @current_sprint = @project.current_active_sprint
       @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
     elsif params[:chart] == "billability_chart"
-#      @project_resources  = @project.members.select(&:billable?)
+    #@project_resources  = @project.members.select(&:billable?)
       load_billability_file
     elsif params[:chart] == "cost_monitoring_chart"
       @cost_budget = params[:cost_budget].to_f
@@ -59,7 +59,7 @@ class PmDashboardsController < ApplicationController
   end
 
   def reload_billability
-#    @project_resources  = @project.members.select(&:billable?)
+    #@project_resources  = @project.members.select(&:billable?)
     if @project.planned_end_date && @project.planned_start_date && params[:refresh]
       Delayed::Job.enqueue ProjectBillabilityJob.new(@project.id)
     end
