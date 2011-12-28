@@ -74,4 +74,12 @@ module ResourceCostsHelper
     return "" if total.eql?(0)
     total > 2.5 ? "lgreen" : ("lblue" if total <= 2.5)
   end
+  
+  def collection_of_allocation_type(f)
+    if @project.accounting_type.nil? || @project.accounting_type.downcase == "non-billable"
+      f.select :resource_type, ResourceAllocation::TYPES.select {|t| t[0].eql?('Non-billable')}, {}, {:style => "width: 124px; margin: 0px"}
+    elsif @project.accounting_type.downcase == "billable"
+      f.select :resource_type, ResourceAllocation::TYPES, {}, {:style => "width: 124px; margin: 0px"}
+    end
+  end
 end

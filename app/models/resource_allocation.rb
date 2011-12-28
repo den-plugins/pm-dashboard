@@ -5,6 +5,7 @@ class ResourceAllocation < ActiveRecord::Base
   belongs_to :member
   
   validates_presence_of :start_date, :end_date, :resource_allocation, :location
+  validates_inclusion_of :resource_type, :in => TYPES.map {|t| t[1]}
   attr_protected :member_id
   
   before_save :validate_dates, :validate_overlapping_dates
