@@ -11,7 +11,7 @@ class ResourceAllocationsController < ApplicationController
   
   def index
     if params[:cancel]
-      render_updates
+      render_updates(true)
     else
       @resource_allocations = @member.resource_allocations
       respond_to do |format|
@@ -97,14 +97,20 @@ class ResourceAllocationsController < ApplicationController
     end
   end
   
-  def render_updates
-    @proj_team = @project.members.project_team
+  def render_updates(index_only=false)
     @resource_allocations = @member.resource_allocations
-    @project_resources = @project.members.select(&:billable?)
-    render :update do |page|
-      page.replace "allocations_#{@member.id}", :partial => 'resource_allocations/index'
-      page.replace_html :resource_costs_header , :partial => 'resource_costs/header'
-      page.replace_html :resource_members_content, :partial => 'resource_costs/list'
+    if index_only
+      render :update do |page|
+        page.replace "allocations_#{@member.id}", :partial => 'resource_allocations/index'
+      end
+    else
+      @proj_team = @project.members.project_team
+      @project_resources = @project.members.select(&:billable?)
+      render :update do |page|
+        page.replace "allocations_#{@member.id}", :partial => 'resource_allocations/index'
+        page.replace_html :resource_costs_header , :partial => 'resource_costs/header'
+        page.replace_html :resource_members_content, :partial => 'resource_costs/list'
+      end
     end
   end
 end

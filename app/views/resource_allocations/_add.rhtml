@@ -1,6 +1,6 @@
 <hr>
 <%= error_messages_for 'resource_allocation' %>
-<% remote_form_for(:resource_allocation, ResourceAllocation.new,
+<% remote_form_for(:resource_allocation, allocation=ResourceAllocation.new,
                                        :url => {:action => 'add', :member_id => @member },
                                        :html => { :name => 'new_resource_allocation'},
                                        :loading => "show_ajax_popup();",
@@ -13,7 +13,7 @@
                                                        :end => (f.text_field :end_date, :size => 10) + calendar_for("resource_allocation_end_date")) %>
     <%= f.select :resource_allocation, ((0..4).to_a.collect {|a| ["#{a*25} %", a*25] }), {}, {:style => "width: 63px; margin: 0"} %>
     <%= collection_of_allocation_type f %>
-    <%= f.select :location, @locations.sort.collect {|p| [ p[1], p[0] ] }, {}, {:style => "width: 124px; margin: 0px;"} %>
+    <%= collection_of_allocation_location f, allocation %>
   </p>
   
   <div style='clear: both'></div>

@@ -82,4 +82,14 @@ module ResourceCostsHelper
       f.select :resource_type, ResourceAllocation::TYPES, {}, {:style => "width: 124px; margin: 0px"}
     end
   end
+  
+  def collection_of_allocation_location(f, allocation)
+    loc_options = @locations.sort.collect {|p| [ p[1], p[0] ] }
+    if allocation.new_record?
+      loc_select = (loc=@member.user.location) ? loc_options.detect {|s| s[0].downcase.eql?(loc.downcase)} : nil
+    else
+      loc_select = allocation.location
+    end
+    f.select :location, loc_options, {:selected => loc_select}, {:style => "width: 124px; margin: 0px;"}
+  end
 end
