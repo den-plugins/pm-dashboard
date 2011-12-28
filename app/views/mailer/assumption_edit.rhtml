@@ -1,3 +1,3 @@
 <%= l(:text_hello, :name => @assumption.user.name) %>
-<%= l(:text_update, :feature => "assumption", :ref_number => @assumption.ref_number) %>
+<%= l(:text_update, :feature => "Assumption", :ref_number => "##{@assumption.ref_number}", :project => @assumption.project.name) %>
 <%= l(:text_view_details, :url => @assumption_url) %>

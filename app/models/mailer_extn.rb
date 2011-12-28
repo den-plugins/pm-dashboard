@@ -20,7 +20,7 @@ module MailerExtn
       recipients assumption.user.mail
       subject "Assumption ##{assumption.ref_number}"
       body :assumption => assumption,
-                :assumption_url => url_for(:controller => 'pm_dashboards', :action => 'index', :tab => 'assumptions', :q => assumption )
+                :assumption_url => url_for(:controller =>'assumptions', :action => 'show', :id => assumption, :project_id => assumption.project.identifier)
     end
     
     def assumption_add(assumption)
@@ -38,7 +38,7 @@ module MailerExtn
       recipients issue.user.mail
       subject "Issue - ##{issue.ref_number}"
       body :issue => issue,
-              :issue_url => url_for(:controller => 'pm_dashboards', :action => 'index', :tab => 'issues', :q => issue)
+              :issue_url => url_for(:controller => 'pm_dashboard_issues', :action => 'show', :id => issue, :project_id => issue.project.identifier)
     end
 
     def pm_dashboard_issue_add(issue)
@@ -56,7 +56,7 @@ module MailerExtn
       recipients risk.user.mail
       subject "Risk ##{risk.ref_number}"
       body :risk => risk,
-                :risk_url => url_for(:controller => 'pm_dashboards', :action => 'index', :tab => 'risks', :q => risk )
+                :risk_url => url_for(:controller => 'risks', :action => 'show', :id => risk, :project_id => risk.project.identifier)
     end
     
     def risk_add(risk)

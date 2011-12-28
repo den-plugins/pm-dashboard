@@ -1,3 +1,3 @@
 <%= l(:text_hello, :name => @issue.user.name ) %>
-<%= l(:text_update, :feature => "project issue", :ref_number => @issue.ref_number) %>
+<%= l(:text_update, :feature => "Project Issue", :ref_number => "##{@issue.ref_number}", :project => @issue.project.name) %>
 <%= l(:text_view_details, :url => @issue_url) %>
