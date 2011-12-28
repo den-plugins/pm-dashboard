@@ -36,6 +36,7 @@ class PmDashboardIssue < ActiveRecord::Base
 
   def update_days_overdue
     self.days_overdue = (date_due && date_due < Date.today) ? (Date.today - date_due).numerator : 0
+    self.days_overdue = 0 if date_close
     self.send(:update_without_callbacks)
   end
 

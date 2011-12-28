@@ -54,6 +54,7 @@ class Risk < ActiveRecord::Base
   
   def update_days_overdue
     self.days_overdue = (target_resolution_date < Date.today) ? (Date.today - target_resolution_date).numerator : 0
+    self.days_overdue = 0 if status.eql?('C')
     self.send(:update_without_callbacks)
   end
     
