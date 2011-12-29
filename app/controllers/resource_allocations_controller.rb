@@ -4,8 +4,9 @@ class ResourceAllocationsController < ApplicationController
   helper :pm_dashboards
   helper :resource_costs
   
-  before_filter :get_member
-  before_filter :get_project
+  before_filter :get_member, :except => [:multiple_allocations]
+  before_filter :get_members, :only => [:multiple_allocations]
+  before_filter :get_project, :except => [:multiple_allocations]
   before_filter :get_possible_locations
   before_filter :authorize
   
@@ -20,6 +21,17 @@ class ResourceAllocationsController < ApplicationController
       end
     end
   end
+
+  def multiple_allocations
+    if params[:cancel]
+      render_updates
+    else
+      respond_to do |format|
+        format.html
+        format.js { render_to_facebox :partial => "resource_allocations/multiple_allocations" }
+      end
+    end
+  end
   
   # POST
   def add
@@ -28,8 +40,8 @@ class ResourceAllocationsController < ApplicationController
       render_updates
     else
        render :update do |page|
-        page.insert_html :bottom, :allocation_show, :partial => 'resource_allocations/date_range', :locals => {:allocation => nil}
-        page.replace_html :allocation_add, :partial => 'resource_allocations/add'
+        page.insert_html :bottom, "allocation_show_#{@member.id}".to_sym, :partial => 'resource_allocations/date_range', :locals => {:allocation => nil}
+        page.replace_html "allocation_add_#{@member.id}", :partial => 'resource_allocations/add'
        end
    end
   end
@@ -62,7 +74,7 @@ class ResourceAllocationsController < ApplicationController
     else
       with_errors.uniq.each {|e| @resource_allocation.errors.add_to_base e }
       render :update do |page|
-        page.replace_html :allocation_edit, :partial => 'resource_allocations/edit'
+        page.replace_html "allocation_edit_#{@member.id}".to_sym, :partial => 'resource_allocations/edit'
       end
     end
   end
@@ -83,6 +95,13 @@ class ResourceAllocationsController < ApplicationController
   
   def get_member
     @member = Member.find(params[:member_id])
+    rescue ActiveRecord::RecordNotFound
+      render_404
+  end
+
+  def get_members
+    @project = Project.find(params[:project_id])
+    @members = Member.find_all_by_id(params[:member_ids])
     rescue ActiveRecord::RecordNotFound
       render_404
   end

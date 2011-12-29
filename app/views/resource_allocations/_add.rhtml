@@ -9,8 +9,8 @@
   <%= image_submit_tag('true.png', :class => 'contextual') %>
 
   <p id='date_range'>
-    <%= l(:label_date_from_to,  :start => (f.text_field :start_date, :size => 10) + calendar_for("resource_allocation_start_date"),
-                                                       :end => (f.text_field :end_date, :size => 10) + calendar_for("resource_allocation_end_date")) %>
+    <%= l(:label_date_from_to,  :start => (f.text_field :start_date, :size => 10, :id => "resource_allocation_#{@member.id}_start_date") + calendar_for("resource_allocation_#{@member.id}_start_date"),
+                                                       :end => (f.text_field :end_date, :size => 10, :id => "resource_allocation_#{@member.id}_end_date") + calendar_for("resource_allocation_#{@member.id}_end_date")) %>
     <%= f.select :resource_allocation, ((0..4).to_a.collect {|a| ["#{a*25} %", a*25] }), {}, {:style => "width: 63px; margin: 0"} %>
     <%= collection_of_allocation_type f %>
     <%= collection_of_allocation_location f, allocation %>

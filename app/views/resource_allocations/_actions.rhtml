@@ -1,15 +1,15 @@
-<p class='contextual' id='show_actions'>
+<p class="contextual" id="show_actions_<%= member_id %>">
   <%#= link_to_function image_tag('edit.png'), "bulk_edit_allocations();" unless @resource_allocations.empty? %>
-  <%= link_to_function image_tag('bullet_add.png'), "add_allocations();" %>
+  <%= link_to_function image_tag('bullet_add.png'), "add_allocations('#{member_id}');" %>
 </p>
 
-<p class='contextual' id='edit_actions' style='display: none;'>
-  <%= link_to_function "Cancel", 'show_allocations();', :class => 'icon icon-cancel' %>
+<p class="contextual" id="edit_actions_<%= member_id %>" style="display: none;">
+  <%= link_to_function "Cancel", "show_allocations('#{member_id}');", :class => "icon icon-cancel" %>
 </p>
 
-<script>
-  if (jQuery('#allocation_add').is(':visible')) {
-    jQuery('#show_actions').hide();
-    jQuery('#edit_actions').show();
+<script type="text/javascript">
+  if (jQuery("#allocation_add_<%= member_id %>").is(':visible')) {
+    jQuery("#show_actions_<%= member_id %>").hide();
+    jQuery("#edit_actions_<%= member_id %>").show();
   }
 </script>

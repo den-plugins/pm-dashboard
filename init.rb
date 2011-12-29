@@ -36,7 +36,7 @@ Redmine::Plugin.register :pm_dashboard do
                           :project_billability => [:index],
                           :project_contracts => [:index, :add, :update, :destroy],
                           :project_info => [:index, :add, :update, :destroy, :add_pm_position, :add_pm_role, :pm_member_add, :pm_member_edit],
-                          :resource_allocations => [:index, :add, :edit, :bulk_edit, :destroy],
+                          :resource_allocations => [:index, :add, :edit, :bulk_edit, :destroy, :multiple_allocations],
                           :resource_costs => [:index, :edit_project],
                           :risks => [:index, :show, :add, :update, :destroy],
                           :stakeholders => [:new, :create, :edit, :update, :remove]

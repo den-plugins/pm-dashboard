@@ -1,12 +1,27 @@
 <div class="resources_container">
+  <form id="allocations_form" method="POST" action="/resource_allocations/multiple_allocations">
   <table id='resource_costs' class='list'>
     <tr>
-      <th height="40px"><%= l(:label_direct_labor) %></th>
+      <th style="width:20px;">
+        <%= link_to image_tag('toggle_check.png'), "#", :onclick => "toggle_resources_selection()",
+            :id => "btn_toggle_resource_selection", :title => "select/unselect all to allocate..." %>
+      </th>
+      <th height="40px">
+        <span style="display: inline-block; width: 50px;">
+        <%= facebox_link_to "Allocate", "#", :onclick => "requestAllocation()", 
+            :style => "padding:2px; border: 1px solid #7f7f7f; background-color: #fff; display: none;",
+            :id => "btn_allocate_selected" %> 
+        </span>
+        <%= l(:label_direct_labor) %> 
+      </th>
       <th height="40px" class='daily_rate'><%= l(:label_daily_rate)%></th>
     </tr>
     
     <% @proj_team.each do |member| %>
     <tr class="<%= cycle('even', 'odd', :name => 'members') %>">
+      <td style="width:20px">
+        <%= check_box_tag("member_ids[]", member.id, false, :id => nil, :onchange => "toggle_allocation_btn()") %>
+      </td>
       <td>
         <%= facebox_link_to member.name, {:url => {:controller => 'resource_allocations', :action => 'index', :project_id => @project, :member_id => member }} %>
       </td>
@@ -20,26 +35,27 @@
     <% reset_cycle('members') %>
     
     <tr>
-      <th style='text-align: left;'>Other Direct Costs</th>
+      <th colspan='2' style='text-align: left;'>Other Direct Costs</th>
       <th class='daily_rate'>Subtotals</th>
     </tr>
     <tr></tr>
     <tr></tr>
     <tr>
-      <th style='text-align: left;'>Other Charges</th>
+      <th colspan='2' style='text-align: left;'>Other Charges</th>
       <th class='daily_rate'>Sub-totals</th>
     </tr>
     <tr>
-      <th style='text-align: left;'>Contingency</th>
+      <th colspan='2' style='text-align: left;'>Contingency</th>
       <th class='daily_rate'><%= "%0.2f" % @project.contingency.to_f %> %</th>
     </tr>
     <tr>
-      <th colspan='2' class='daily_rate'>Total Cost</th>
+      <th colspan='3' class='daily_rate'>Total Cost</th>
     </tr>
     <tr>
-      <th colspan='2' class='daily_rate'>Cumulative Cost</th>
+      <th colspan='3' class='daily_rate'>Cumulative Cost</th>
     </tr>
-  </table>
+  </table><form id="person-example" method="POST" action="/user/info">
+  </form>
 </div>
 
 <div class='resource_cost_container' >
@@ -52,6 +68,15 @@
 
 <script type='text/javascript'>
   jQuery('#resource_costs_header').replaceWith("<%= escape_javascript(render :partial => 'resource_costs/header') %>");
+  function requestAllocation(){
+    var memberids = new Array();
+    jQuery("input:checked").each(function(){
+        memberids.push('' + jQuery(this).val());
+    });
+    $('allocations_form').request({
+      parameters: { 'project_id': '<%= @project.id %>', 'member_ids[]': memberids }
+    });
+  }
 </script>
 
 <% content_for :header_tags do %>

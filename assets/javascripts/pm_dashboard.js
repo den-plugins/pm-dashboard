@@ -27,18 +27,18 @@ function edit_allocations(id) {
   jQuery("#date_range_" + id + "_edit").show();
 }
 
-function show_allocations() {
-  jQuery('#allocation_edit').hide();
-  jQuery('#allocation_add').hide();
-  jQuery('#allocation_show').show();
-  jQuery('#show_actions').show();
-  jQuery('#edit_actions').hide();
+function show_allocations(id) {
+  jQuery('#allocation_edit_' + id).hide();
+  jQuery('#allocation_add_' + id).hide();
+  jQuery('#allocation_show_' + id).show();
+  jQuery('#show_actions_' + id).show();
+  jQuery('#edit_actions_' + id).hide();
 }
 
-function add_allocations() {
-  jQuery('#allocation_add').show();
-  jQuery('#show_actions').hide();
-  jQuery('#edit_actions').show();
+function add_allocations(id) {
+  jQuery('#allocation_add_' + id).show();
+  jQuery('#show_actions_' + id).hide();
+  jQuery('#edit_actions_' + id).show();
 }
 
 function show_ajax_popup() {
@@ -65,4 +65,15 @@ function validatedatesonchange(versionType){
   if(versionType == 0 || versionType == 2){
     jQuery("#version_started_date").val(jQuery("#version_effective_date").val());
   }
+}
+
+function toggle_allocation_btn(){
+  btn = jQuery("#btn_allocate_selected");
+  (jQuery("input:checked").length > 0)? btn.show() : btn.hide();
+}
+function toggle_resources_selection(){
+  btn = jQuery("#btn_toggle_resource_selection");
+  (btn.hasClass("allChecked"))? btn.removeClass("allChecked") : btn.addClass("allChecked");
+  jQuery("INPUT[type='checkbox']").attr('checked', btn.hasClass("allChecked"));   
+  toggle_allocation_btn(); 
 }
