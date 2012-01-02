@@ -10,11 +10,11 @@ module ResourceCostsHelper
     if from && to
       start_date, end_date = from, to
       weeks = []
-      for i in 0 .. from.weeks_ago(to) do
+      until ((from..to).to_a & (start_date..end_date).to_a).empty?
         mon = from.eql?(start_date) ? start_date : from.monday
         fri = from.weeks_ago(to).eql?(0) ? to : (mon.monday+4.days)
+        from = mon + 1.week
         weeks << (mon .. fri)
-        from = mon + 1.week unless from.weeks_ago(to).eql?(0)
       end
       weeks
     end
