@@ -6,6 +6,7 @@ class PmDashboardsController < ApplicationController
   helper :resource_costs
   helper :project_billability
   helper :pm_dashboard_issues
+  include PmDashboardsHelper
   
   before_filter :get_project, :only => [:index, :load_chart]
   before_filter :authorize, :only => [:index]
@@ -22,8 +23,12 @@ class PmDashboardsController < ApplicationController
 
     @current_sprint = @project.current_version
     @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
-    
-    @project_resources  = @project.members.all
+    billing_model = display_by_billing_model
+    if billing_model == "billability" || billing_model.nil?
+      @project_resources  = @project.members.select(&:billable)
+    elsif billing_model == "fixed"
+      @project_resources  = @project.members.all
+    end
   end
 
   def load_chart
