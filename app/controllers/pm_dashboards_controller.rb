@@ -25,7 +25,7 @@ class PmDashboardsController < ApplicationController
     @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
     billing_model = display_by_billing_model
     if billing_model == "billability" || billing_model.nil?
-      @project_resources  = @project.members.select(&:billable)
+      @project_resources  = @project.members.select(&:billable?)
     elsif billing_model == "fixed"
       @project_resources  = @project.members.all
     end
