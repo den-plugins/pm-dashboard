@@ -92,7 +92,7 @@ module Pm
       
       def spent_time(from, to, include_weekends = false)
         if from && to
-          spent = user.time_entries.find(:all, :select => "hours, spent_on", :conditions => ["project_id = ? and spent_on between ? and ?", project_id, from, to])
+          spent = time_entries.find(:all, :select => "hours, spent_on", :conditions => ["project_id = ? and spent_on between ? and ?", project_id, from, to])
           if include_weekends
             spent.sum{|s| s.hours}
           else
