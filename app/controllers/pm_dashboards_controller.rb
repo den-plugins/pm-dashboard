@@ -25,7 +25,10 @@ class PmDashboardsController < ApplicationController
     @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
     billing_model = display_by_billing_model
     if billing_model == "billability" || billing_model.nil?
-      @project_resources  = @project.members.select(&:billable)
+      @project_resources  = @project.members.select(&:billable?)
+      if @project.planned_end_date && @project.planned_start_date
+        Delayed::Job.enqueue BillabilityJob.new(@project, @project_resources)
+      end
     elsif billing_model == "fixed"
       @project_resources  = @project.members.all
     end
