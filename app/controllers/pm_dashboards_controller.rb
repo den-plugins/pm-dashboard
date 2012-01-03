@@ -26,9 +26,9 @@ class PmDashboardsController < ApplicationController
     billing_model = display_by_billing_model
     if billing_model == "billability" || billing_model.nil?
       @project_resources  = @project.members.select(&:billable?)
-      if @project.planned_end_date && @project.planned_start_date
-        Delayed::Job.enqueue BillabilityJob.new(@project, @project_resources)
-      end
+#      if @project.planned_end_date && @project.planned_start_date
+#        Delayed::Job.enqueue BillabilityJob.new(@project, @project_resources)
+#      end
     elsif billing_model == "fixed"
       @project_resources  = @project.members.all
     end
