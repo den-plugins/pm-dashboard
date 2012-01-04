@@ -8,7 +8,7 @@ class PmDashboardsController < ApplicationController
   helper :pm_dashboard_issues
   include PmDashboardsHelper
   
-  before_filter :get_project, :only => [:index, :load_chart]
+  before_filter :get_project, :only => [:index, :load_chart, :reload_billability]
   before_filter :authorize, :only => [:index]
   
   def index
@@ -29,9 +29,15 @@ class PmDashboardsController < ApplicationController
       if @project.planned_end_date && @project.planned_start_date
         Delayed::Job.enqueue BillabilityJob.new(@project, @project_resources)
       end
+      @billability = FileTest.exists?("#{RAILS_ROOT}/config/billability.yml") ? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
     elsif billing_model == "fixed"
       @project_resources  = @project.members.all
     end
+#    if request.xhr?
+#      render :update do 
+#    else
+#      render :template => "pm_dashboard/index"
+#    end
   end
 
   def load_chart
@@ -47,6 +53,27 @@ class PmDashboardsController < ApplicationController
     end
     render :update do |page|
       page.replace_html "show_#{params[:chart]}".to_sym, :partial => "charts/#{params[:chart]}"
+    end
+  end
+
+  def reload_billability
+    @project_resources  = @project.members.select(&:billable?)
+    if @project.planned_end_date && @project.planned_start_date && params[:refresh]
+      Delayed::Job.enqueue BillabilityJob.new(@project, @project_resources)
+    end
+    @billability = (FileTest.exists?("#{RAILS_ROOT}/config/billability.yml"))? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
+
+    if params[:refresh] && @billability
+      temp = YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))
+      temp.delete("billability_#{@project.id}")
+      File.open( "#{RAILS_ROOT}/config/billability.yml", 'w' ) do |out|
+        YAML.dump( temp, out )
+      end
+      @billability = nil
+    end
+    
+    render :update do |page|
+      page.replace :billability_box, :partial => "pm_dashboards/load_billability"
     end
   end
   
