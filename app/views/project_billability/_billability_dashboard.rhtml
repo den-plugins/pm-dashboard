@@ -1,5 +1,4 @@
 <% if @project.planned_end_date && @project.planned_start_date %>
-  <% if display_by_billing_model.eql?("billability") %>
   <div class="box">
     <h3><%=l(:label_dashboard_billability)%></h3>
     <span id="dashboard_billability">
@@ -42,7 +41,6 @@
       </div>
     </span>
   </div>
-  <% end %>
 <% else %>
   <div class="box">
     <h3><%=l(:label_dashboard_billability)%></h3>

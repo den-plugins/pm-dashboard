@@ -11,10 +11,11 @@ class ResourceAllocation < ActiveRecord::Base
   before_save :validate_dates, :validate_overlapping_dates
   
   def validate_dates
-    if start_date && end_date && (start_date > end_date)
-      errors.add(:start_date, 'must be earlier than End Date')
-      return false
-    end
+    project = member.project
+    valid_end_date = project.maintenance_end #|| project.planned_end_date
+    errors.add(:start_date, 'must be earlier than End Date') if start_date && end_date && (start_date > end_date)
+    errors.add(:end_date, "must not be beyond Maintenance End Date (#{valid_end_date.to_s})") if end_date && valid_end_date && (end_date > valid_end_date)
+    return false unless errors.empty?
   end
   
   def validate_overlapping_dates
