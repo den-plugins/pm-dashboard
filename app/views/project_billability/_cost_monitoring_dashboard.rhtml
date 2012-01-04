@@ -1,49 +1,57 @@
 <% if @project.planned_end_date && @project.planned_start_date %>
   <% if display_by_billing_model.eql?("fixed") %>
-  <% @project_contracts ||= @project.project_contracts.find(:all, :order => 'id DESC') %>
-  <div style="width: 100%; margin: 0; padding: 0">
-    <table id="pm_dashboard_financial" class="list issues" style='text-align: center; '>
-      <tr>
-        <th colspan=2><%= l(:label_billing_model) %></th>
-        <td colspan=2><%= @project.billing_model %></td>
-      </tr>
-  <% if !@project.planned_end_date.nil? && !@project.planned_start_date.nil?%>
-      <tr>
-        <th>Budget</th>
-	    <td> <%= number_with_delimiter ("%0.2f" % (@cost_budget = @project_contracts.sum(&:amount))) %></td>
-        <th>Forecast</th>
-        <td><%= number_with_delimiter ("%0.2f" % (@cost_forecast = compute_forecasted_cost((@project.planned_start_date..@project.planned_end_date), @project_resources))) %></td>
-      </tr>
-      <tr>
-	    <th>Actuals</th>
-        <td><%= number_with_delimiter ("%0.2f" % (@cost_actual = compute_actual_cost((@project.planned_start_date..@project.planned_end_date), @project_resources))) %></td>
-        <th>Variance</th>
-        <td><%= number_with_delimiter ("%0.2f" % (variants = @cost_budget - @cost_forecast)) %></td>
-      </tr>
-  <% end %>
-    </table>
+  <div class="box">
+    <h3><%=l(:label_dashboard_status_as_of)%></h3>
+    <span id="dashboard_cost_monitoring">
+      <% @project_contracts ||= @project.project_contracts.find(:all, :order => 'id DESC') %>
+      <div style="width: 100%; margin: 0; padding: 0">
+        <table id="pm_dashboard_financial" class="list issues" style='text-align: center; '>
+          <tr>
+            <th colspan=2><%= l(:label_billing_model) %></th>
+            <td colspan=2><%= @project.billing_model %></td>
+          </tr>
+      <% if !@project.planned_end_date.nil? && !@project.planned_start_date.nil?%>
+          <tr>
+            <th>Budget</th>
+          <td> <%= number_with_delimiter ("%0.2f" % (@cost_budget = @project_contracts.sum(&:amount))) %></td>
+            <th>Forecast</th>
+            <td><%= number_with_delimiter ("%0.2f" % (@cost_forecast = compute_forecasted_cost((@project.planned_start_date..@project.planned_end_date), @project_resources))) %></td>
+          </tr>
+          <tr>
+          <th>Actuals</th>
+            <td><%= number_with_delimiter ("%0.2f" % (@cost_actual = compute_actual_cost((@project.planned_start_date..@project.planned_end_date), @project_resources))) %></td>
+            <th>Variance</th>
+            <td><%= number_with_delimiter ("%0.2f" % (variants = @cost_budget - @cost_forecast)) %></td>
+          </tr>
+      <% end %>
+        </table>
+      </div>
+      
+      <script type="text/javascript">
+        var cost_color = "<%= code = cost_color_code_fixed(@cost_budget.to_f, @cost_forecast.to_f) %>";
+        jQuery(".value.cost_color").text("<%= cost_color_code_label(code) %>");
+        jQuery(".cost_color").addClass(cost_color);
+        var sched_color = "<%= scode = schedule_color_code %>";
+        jQuery(".value.sched_color").text("<%= cost_color_code_label(scode) %>");
+        jQuery(".sched_color").addClass(sched_color);
+      </script>
+      
+      <div id="bar_chart" style="height: 240px; display: none; "></div>
+      <div id="show_cost_monitoring_chart">
+      <% form_remote_tag(:url => {:action => 'load_chart', :chart => 'cost_monitoring_chart',
+                          :cost_budget => @cost_budget, :cost_forecast => @cost_forecast,
+                          :cost_actual => @cost_actual}) do %>
+        <%= submit_tag "Show Graph", :class => 'btn_show_chart', :onclick => "this.value = 'Loading...'; $('bar_chart').show();" %>
+      <% end %>
+      </div>
+    </span>
   </div>
-  
-  <script type="text/javascript">
-    var cost_color = "<%= code = cost_color_code_fixed(@cost_budget.to_f, @cost_forecast.to_f) %>";
-    jQuery(".value.cost_color").text("<%= cost_color_code_label(code) %>");
-    jQuery(".cost_color").addClass(cost_color);
-    var sched_color = "<%= scode = schedule_color_code %>";
-    jQuery(".value.sched_color").text("<%= cost_color_code_label(scode) %>");
-    jQuery(".sched_color").addClass(sched_color);
-  </script>
-  
-  <div id="bar_chart"></div>
-  <div id="show_cost_monitoring_chart">
-  <% form_remote_tag(:url => {:action => 'load_chart', :chart => 'cost_monitoring_chart',
-                      :cost_budget => @cost_budget, :cost_forecast => @cost_forecast,
-                      :cost_actual => @cost_actual}) do %>
-    <%= submit_tag "Show Graph", :class => 'btn_show_chart', :onclick => "this.value = 'Loading...'" %>
-  <% end %>
-  </div>
-  <% else %>
-    <p class='nodata'>Not Applicable</p>
   <% end %>
 <% else %>
-  <p class='nodata'>Undefined date range. Please specify Planned Start Date and Planned End Date.</p>
+  <div class="box">
+    <h3><%=l(:label_dashboard_status_as_of)%></h3>
+    <span id="dashboard_cost_monitoring">
+      <p class='nodata'>Undefined date range. Please specify Planned Start Date and Planned End Date.</p>
+    </span>
+  </div>
 <% end %>

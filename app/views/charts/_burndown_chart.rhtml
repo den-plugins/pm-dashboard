@@ -1,6 +1,7 @@
 <script type="text/javascript">
   jQuery(function(){
     <% if @burndown_chart %>
+      jQuery("#current_sprint_label").show().text("<%= @current_sprint %>");
       plot_chart(<%= @burndown_chart.data_and_dates %>);
     <% else %>
       jQuery("#jchart").append("<p class='nodata'>No current sprint found.</p>")
