@@ -1,28 +1,22 @@
 function plot_billability(id, data){
     var plot1 = jQuery.jqplot (id, data, {
+      axesDefaults: {
+        tickRenderer: jQuery.jqplot.CanvasAxisTickRenderer,
+        tickOptions: {fontSize: '7pt'}
+      },
       axes: {
-        // options for each axis are specified in seperate option objects.
         xaxis: {
           label: "Dates",
           renderer: jQuery.jqplot.DateAxisRenderer,
-          tickOptions: {
-            showMark: false,
-            fontSize: '8pt'
-          }
+          tickOptions: { showMark: false, angle: -60 }
         },
         yaxis: {
           label: "Billability (%)",
           labelRenderer: jQuery.jqplot.CanvasAxisLabelRenderer
         }
       },
-      highlighter: {
-        show: true,
-        sizeAdjust: 7.5
-      }, 
-      cursor:{ 
-        show: true,
-        zoom: true
-      } 
+      highlighter: { show: true, sizeAdjust: 7.5 },
+      cursor:{ show: true, zoom: true }
     });
 }
 

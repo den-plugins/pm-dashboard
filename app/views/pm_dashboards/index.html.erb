@@ -6,16 +6,17 @@
   <%= javascript_include_tag('jstoolbar/textile') %>
   <%= javascript_include_tag("jstoolbar/lang/jstoolbar-#{current_language}") %>
   <%= javascript_include_tag 'jquery.jqplot.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.barRenderer.min.js', :plugin => 'redmine_burndown' %>
   <%= javascript_include_tag 'plugins/jqplot.canvasAxisLabelRenderer.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.canvasAxisTickRenderer.min.js', :plugin => 'redmine_burndown' %>
   <%= javascript_include_tag 'plugins/jqplot.canvasTextRenderer.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.categoryAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
   <%= javascript_include_tag 'plugins/jqplot.cursor.min.js', :plugin => 'redmine_burndown' %>
   <%= javascript_include_tag 'plugins/jqplot.dateAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
   <%= javascript_include_tag 'plugins/jqplot.highlighter.min.js', :plugin => 'redmine_burndown' %>
-  <%= javascript_include_tag 'plugins/jqplot.barRenderer.min.js', :plugin => 'redmine_burndown' %>
-  <%= javascript_include_tag 'plugins/jqplot.categoryAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
   <%= javascript_include_tag 'plugins/jqplot.pointLabels.min.js', :plugin => 'redmine_burndown' %>
-  <%= javascript_include_tag 'chart.js', :plugin => 'redmine_burndown' %>
   <%= javascript_include_tag 'billability_chart.js', :plugin => 'pm_dashboard' %>
+  <%= javascript_include_tag 'burndown_chart.js', :plugin => 'pm_dashboard' %>
   <%= javascript_include_tag 'cost_chart.js', :plugin => 'pm_dashboard' %>
 <% end %>
 
@@ -41,7 +42,7 @@
       <td class="value <%= risk_color %>"><%= risk_rating %></td>
       <td class="<%= issue_color = issue_impact_color_coding((issues_score=display_issues_average).to_f) %>"><span>Issue</span></td>
       <td class="value <%= issue_color %>"><%= issues_score %></td>
-      <td><span>Production</span></td>
+      <td><span>Productivity</span></td>
       <td class="value"><%= %></td>
       <td><span>Efficiency</span></td>
       <td class="value"><%= %></td>
@@ -55,31 +56,18 @@
       <%= render :partial => 'highlights/dashboard' %>
     </div>
   </div>
-    
+  
   <div class="singleCol">
+    <%= render :partial => "project_billability/cost_monitoring_dashboard" %>
     <div class="box">
-      <h3><%=l(:label_dashboard_status_as_of)%></h3>
-      <span id="dashboard_cost_monitoring">
-        <%= render :partial => "project_billability/cost_monitoring_dashboard" %>
-      </span>
-    </div>
-
-    <div class="box">
-      <h3><%=l(:label_dashboard_risks)%></h3> 
+      <h3><%=l(:label_dashboard_risks)%></h3>
       <ul>
-      <% for risk in @key_risks %>    
+      <% for risk in @key_risks %>
         <li><strong><%= link_to risk.ref_number, :controller => 'risks', :action => 'show', :id => risk.id, :project_id => risk.project.identifier %></strong> - <%= risk.risk_description %></li>
       <% end %>
       </ul>
     </div>
-      
-    <div class="box">
-      <h3><%=l(:label_dashboard_billability)%></h3>
-      <span id="dashboard_billability">
-        <%# render :partial => "project_billability/billability_dashboard" %>
-      </span>
-      <div id="bchart"></div>
-    </div>
+    <%= render :partial => "project_billability/billability_dashboard" %>
   </div>
   
   <div class="singleCol">
@@ -87,15 +75,15 @@
       <h3><%=l(:label_dashboard_milestones)%></h3>
       <table id="pm_dashboard_milestones" class="list issues" style='text-align: center; '>
 	      <tr>
-	        <th><%= l(:label_phases_stages) %></th>
-	        <th><%= l(:label_orig_target_date) %></th>
-	        <th><%= l(:label_latest_replan_date) %></th>
-	        <th><%= l(:label_schedule_status) %></th>
+	        <th style="width: 39%"><%= l(:label_phases_stages) %></th>
+	        <th style="width: 20%"><%= l(:label_orig_target_date) %></th>
+	        <th style="width: 20%"><%= l(:label_latest_replan_date) %></th>
+	        <th style="width: 20%"><%= l(:label_schedule_status) %></th>
 	      </tr>
 	      
 	      <% @milestones.each do |milestone| %>
 		    <tr class="<%= cycle('even2', 'odd2') %>">
-	        <td><em><%= milestone.name %></em></td>
+	        <td class="left"><em><%= milestone.name %></em></td>
 	        <td><%= milestone.original_end_date %></td>
 	        <td><%= milestone.effective_date %></td>
 	        <td><%= Version::STATES.fetch(milestone.state, "") if milestone.state %></td>
@@ -115,10 +103,11 @@
     
     <div class="box">
       <h3><%=l(:label_dashboard_sprint)%></h3>
-      <div id="jchart"></div>
+      <p style="display: none" id="current_sprint_label"></p>
+      <div id="jchart" style="height: 240px; display: none; "></div>
       <div id="show_burndown_chart">
       <% form_remote_tag(:url => {:action => 'load_chart', :chart => 'burndown_chart'}) do %>
-        <%= submit_tag "Show Graph", :class => 'btn_show_chart', :onclick => "this.value = 'Loading...'" %>
+        <%= submit_tag "Show Graph", :class => 'btn_show_chart', :onclick => "this.value = 'Loading...'; $('jchart').show();" %>
       <% end %>
       </div>
     </div>

@@ -4,7 +4,7 @@
     <div class='contextual h-actions'>
       <%= link_to 'Edit', {:controller => 'highlights', :action => 'index', :project_id => @project, :edit_what => "current"}, :class => "icon icon-edit" %>
     </div>
-    <p style="padding-top: 5px;"><em><%= @highlights[:current].created_at.strftime("%B %e, %Y") %></em></p>
+    <em><%= @highlights[:current].created_at.strftime("%B %e, %Y") %></em>
     <%= content_tag 'div', textilizable(@highlights[:current].highlight), :class => "dashboard_highlight" %>
   <%  elsif @highlights[:current].nil? && @highlights[:after_current].nil? && @highlights[:posted_current] %>
     <div class='contextual h-actions'>
@@ -13,7 +13,7 @@
                            :edit_what => "recently_posted"},
                            :class => "icon icon-edit" %>
     </div>
-    <p style="padding-top: 5px;"><em><%= @highlights[:posted_current].created_at.strftime("%B %e, %Y") %></em></p>
+    <em><%= @highlights[:posted_current].created_at.strftime("%B %e, %Y") %></em>
     <%= content_tag 'div', textilizable(@highlights[:posted_current].highlight), :class => "dashboard_highlight" %>
   <% else %>
     <div class='contextual h-actions'>
@@ -31,7 +31,7 @@
       <%= link_to 'Edit', {:controller => 'highlights', :action => 'index', :project_id => @project, :edit_what => "nextp"},
                          :class => "icon icon-edit" %>
     </div>
-    <p style="padding-top: 5px;"><em><%= @highlights[:after_current].created_at.strftime("%B %e, %Y") %></em></p>
+    <em><%= @highlights[:after_current].created_at.strftime("%B %e, %Y") %></em>
     <%= content_tag 'div', textilizable(@highlights[:after_current].highlight), :class => "dashboard_highlight" %>
   <% elsif @highlights[:current].nil? && @highlights[:after_current].nil? && @highlights[:posted_after_current] %>
     <div class='contextual h-actions'>
@@ -40,7 +40,7 @@
                            :edit_what => "recently_posted"},
                            :class => "icon icon-edit" %>
     </div>
-    <p style="padding-top: 5px;"><em><%= @highlights[:posted_after_current].created_at.strftime("%B %e, %Y") %></em></p>
+    <em><%= @highlights[:posted_after_current].created_at.strftime("%B %e, %Y") %></em>
     <%= content_tag 'div', textilizable(@highlights[:posted_after_current].highlight), :class => "dashboard_highlight" %>
   <% else %>
     <div class='contextual h-actions'>

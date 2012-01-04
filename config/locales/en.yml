@@ -12,7 +12,7 @@ en:
   label_dashboard_events: Planned Activities For The Week / Upcoming Events
   label_dashboard_status_as_of: Cost / Financial Status As Of
   label_dashboard_risks: Key Risks
-  label_dashboard_billability: Utilization / Billability As Of Last Month end
+  label_dashboard_billability: Utilization/Billability As Of Last Week
   label_dashboard_milestones: Project Schedule / Upcoming Milestones
   label_dashboard_issues: Key Issues
   label_dashboard_sprint: Sprint Burndown Chart
@@ -34,7 +34,7 @@ en:
   label_actual_start_date : Actual Start Date
   label_actual_finish_date : Actual Finish Date
   label_phases_stages : Phases /Stages
-  label_orig_target_date : Orig Target date
+  label_orig_target_date : Orig Target Date
   label_latest_replan_date : Latest Re-Plan Date
   label_schedule_status : Status
   
