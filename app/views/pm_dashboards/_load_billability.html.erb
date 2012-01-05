@@ -1,0 +1,8 @@
+<div class="box" id="billability_box">
+<h3><%=l(:label_dashboard_billability)%></h3>
+<span id="dashboard_billability">
+<% if !@project.identifier.eql?("exst-slmchcdev2") %>
+  <%= render :partial => "project_billability/billability_dashboard" %>
+<% end %>
+</span>
+</div>
