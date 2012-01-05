@@ -50,12 +50,12 @@ module PmDashboardsHelper
     end
   end
 
-  def json_billability_per_week
+  def json_billability_per_week(start_date, end_date, resources)
     billability_per_week = []
-    weeks = get_weeks_range(@project.planned_start_date, @project.planned_end_date)
+    weeks = get_weeks_range(start_date, end_date)
     weeks.each_with_index do |week, wnum|
-      forecast = compute_forecasted_hours week, @project_resources
-      actual = compute_actual_hours week, @project_resources
+      forecast = compute_forecasted_hours week, resources
+      actual = compute_actual_hours week, resources
       bill = compute_percent_to_date forecast, actual
       billability_per_week << [week.last, bill.to_f] if week.last < (Date.today.monday + 4.days)
     end unless  weeks.nil? or weeks.empty?

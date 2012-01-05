@@ -41,6 +41,7 @@ class PmDashboardsController < ApplicationController
       @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
     elsif params[:chart] == "billability_chart"
       @project_resources  = @project.members.select(&:billable?)
+      @billability = (FileTest.exists?("#{RAILS_ROOT}/config/billability.yml"))? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
     elsif params[:chart] == "cost_monitoring_chart"
       @cost_budget = params[:cost_budget].to_f
       @cost_forecast = params[:cost_forecast].to_f

@@ -17,7 +17,10 @@ class BillabilityJob < Struct.new(:project, :project_resources)
     forecast = compute_forecasted_hours((actual_start..actual_end), project_resources)
     actual = compute_actual_hours((actual_start..actual_end), project_resources)
     percent_sum = weeks.sum {|w| compute_percent_to_date(compute_forecasted_hours(w, project_resources), compute_actual_hours(w, project_resources)).to_f}
-    billability["billability_#{project.id}"] = {"forecast" => forecast, "actual" => actual, "percent_sum" => percent_sum}
+    billability_per_week = json_billability_per_week(project.planned_start_date, project.planned_end_date, project_resources)
+    billability["billability_#{project.id}"] = {"forecast" => forecast, "actual" => actual, 
+                                                "percent_sum" => percent_sum, 
+                                                "billability_per_week" => billability_per_week}
     File.open( "#{RAILS_ROOT}/config/billability.yml", 'w' ) do |out|
       YAML.dump( billability, out )
     end
