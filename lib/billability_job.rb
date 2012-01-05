@@ -1,10 +1,12 @@
-class BillabilityJob < Struct.new(:project, :project_resources)
+class BillabilityJob < Struct.new(:project_id)
   include ResourceCostsHelper
   include ProjectBillabilityHelper
   include ResourceCostsHelper
   include PmDashboardsHelper
   
   def perform
+    project = Project.find(project_id)
+    project_resources = project.members.select(&:billable?)
     billability = FileTest.exists?("#{RAILS_ROOT}/config/billability.yml") ? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml")) : {}
     puts billability["billability_#{project.id}"]
     first_time_entry = project.time_entries.find(:first, 

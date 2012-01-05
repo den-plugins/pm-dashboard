@@ -25,10 +25,10 @@ class PmDashboardsController < ApplicationController
     @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
     billing_model = display_by_billing_model
     if billing_model == "billability" || billing_model.nil?
-      @project_resources  = @project.members.select(&:billable?)
+#      @project_resources  = @project.members.select(&:billable?)
       @billability = File.exists?("#{RAILS_ROOT}/config/billability.yml") ? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
       if @project.planned_end_date && @project.planned_start_date
-        Delayed::Job.enqueue BillabilityJob.new(@project, @project_resources) if @billability.nil? || @billability.empty?
+        Delayed::Job.enqueue BillabilityJob.new(@project.id) if @billability.nil? || @billability.empty?
       end
     elsif billing_model == "fixed"
       @project_resources  = @project.members.all
@@ -40,7 +40,7 @@ class PmDashboardsController < ApplicationController
       @current_sprint = @project.current_active_sprint
       @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
     elsif params[:chart] == "billability_chart"
-      @project_resources  = @project.members.select(&:billable?)
+#      @project_resources  = @project.members.select(&:billable?)
       @billability = (FileTest.exists?("#{RAILS_ROOT}/config/billability.yml"))? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
     elsif params[:chart] == "cost_monitoring_chart"
       @cost_budget = params[:cost_budget].to_f
@@ -53,9 +53,9 @@ class PmDashboardsController < ApplicationController
   end
 
   def reload_billability
-    @project_resources  = @project.members.select(&:billable?)
+#    @project_resources  = @project.members.select(&:billable?)
     if @project.planned_end_date && @project.planned_start_date && params[:refresh]
-      Delayed::Job.enqueue BillabilityJob.new(@project, @project_resources)
+      Delayed::Job.enqueue BillabilityJob.new(@project.id)
     end
     @billability = (FileTest.exists?("#{RAILS_ROOT}/config/billability.yml"))? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
 
