@@ -26,10 +26,10 @@ class PmDashboardsController < ApplicationController
     billing_model = display_by_billing_model
     if billing_model == "billability" || billing_model.nil?
       @project_resources  = @project.members.select(&:billable?)
-      @billability = File.exists?("#{RAILS_ROOT}/config/billability.yml") ? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
-      if @project.planned_end_date && @project.planned_start_date
-        Delayed::Job.enqueue BillabilityJob.new(@project, @project_resources) if @billability.nil? || @billability.empty?
-      end
+#      @billability = File.exists?("#{RAILS_ROOT}/config/billability.yml") ? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
+#      if @project.planned_end_date && @project.planned_start_date
+#        Delayed::Job.enqueue BillabilityJob.new(@project, @project_resources) if @billability.nil? || @billability.empty?
+#      end
     elsif billing_model == "fixed"
       @project_resources  = @project.members.all
     end
@@ -52,26 +52,26 @@ class PmDashboardsController < ApplicationController
     end
   end
 
-  def reload_billability
-    @project_resources  = @project.members.select(&:billable?)
-    if @project.planned_end_date && @project.planned_start_date && params[:refresh]
-      Delayed::Job.enqueue BillabilityJob.new(@project, @project_resources)
-    end
-    @billability = (FileTest.exists?("#{RAILS_ROOT}/config/billability.yml"))? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
+#  def reload_billability
+#    @project_resources  = @project.members.select(&:billable?)
+#    if @project.planned_end_date && @project.planned_start_date && params[:refresh]
+#      Delayed::Job.enqueue BillabilityJob.new(@project, @project_resources)
+#    end
+#    @billability = (FileTest.exists?("#{RAILS_ROOT}/config/billability.yml"))? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
 
-    if params[:refresh] && @billability
-      temp = YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))
-      temp.delete("billability_#{@project.id}")
-      File.open( "#{RAILS_ROOT}/config/billability.yml", 'w' ) do |out|
-        YAML.dump( temp, out )
-      end
-      @billability = nil
-    end
-    
-    render :update do |page|
-      page.replace :billability_box, :partial => "pm_dashboards/load_billability"
-    end
-  end
+#    if params[:refresh] && @billability
+#      temp = YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))
+#      temp.delete("billability_#{@project.id}")
+#      File.open( "#{RAILS_ROOT}/config/billability.yml", 'w' ) do |out|
+#        YAML.dump( temp, out )
+#      end
+#      @billability = nil
+#    end
+#    
+#    render :update do |page|
+#      page.replace :billability_box, :partial => "pm_dashboards/load_billability"
+#    end
+#  end
   
   private
   

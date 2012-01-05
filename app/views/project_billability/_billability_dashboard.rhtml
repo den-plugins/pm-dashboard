@@ -10,13 +10,14 @@
             <th>Billing Model</th>
             <td><%= @project.billing_model %></td>
             <th>Forecasted Hours</th>
-            <td><%= number_with_delimiter ("%0.2f" % (@billability["forecast"])) %></td>
+            <td><%= number_with_delimiter ("%0.2f" % (forecast = compute_forecasted_hours((actual_start..actual_end), @project_resources))) %></td>
           </tr>
           <tr>
             <th>Billability to date %</th>
-            <td><%= @percent_to_date = "%0.2f" % (@billability["percent_sum"]/weeks.count) %>%</td>
+            <% percent_sum = weeks.sum {|w| compute_percent_to_date(compute_forecasted_hours(w, @project_resources), compute_actual_hours(w, @project_resources)).to_f} %>
+            <td><%= @percent_to_date = "%0.2f" % (percent_sum/weeks.count) %>%</td>
             <th>Total Billable Hours</th>
-            <td><%= number_with_delimiter ("%0.2f" % (@billability["actual"])) %></td>
+            <td><%= number_with_delimiter ("%0.2f" % (actual = compute_actual_hours((actual_start..actual_end), @project_resources))) %></td>
           </tr>
         </table>
       </div>
@@ -32,8 +33,7 @@
 
       <div id="bchart2" style="height: 240px; display: none; "></div>
       <div id="show_billability_chart">
-        <% form_remote_tag(:url => {:action => 'load_chart', :chart => 'billability_chart', 
-                                    :project_id => @project.id}) do %>
+        <% form_remote_tag(:url => {:action => 'load_chart', :chart => 'billability_chart'}) do %>
         <%= submit_tag "Show Graph", :class => 'btn_show_chart', :onclick => "this.value = 'Loading...'; $('bchart2').show();" %>
         <% end %>
       </div>
