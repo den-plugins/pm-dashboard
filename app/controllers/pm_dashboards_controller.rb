@@ -46,7 +46,7 @@ class PmDashboardsController < ApplicationController
       page.replace_html "show_#{params[:chart]}".to_sym, :partial => "charts/#{params[:chart]}"
     end
   end
-  
+
   private
   
   def get_project
