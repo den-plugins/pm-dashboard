@@ -26,18 +26,13 @@ class PmDashboardsController < ApplicationController
     billing_model = display_by_billing_model
     if billing_model == "billability" || billing_model.nil?
       @project_resources  = @project.members.select(&:billable?)
+      @billability = File.exists?("#{RAILS_ROOT}/config/billability.yml") ? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
       if @project.planned_end_date && @project.planned_start_date
-        Delayed::Job.enqueue BillabilityJob.new(@project, @project_resources)
+        Delayed::Job.enqueue BillabilityJob.new(@project, @project_resources) if @billability.nil? || @billability.empty?
       end
-      @billability = FileTest.exists?("#{RAILS_ROOT}/config/billability.yml") ? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
     elsif billing_model == "fixed"
       @project_resources  = @project.members.all
     end
-#    if request.xhr?
-#      render :update do 
-#    else
-#      render :template => "pm_dashboard/index"
-#    end
   end
 
   def load_chart
