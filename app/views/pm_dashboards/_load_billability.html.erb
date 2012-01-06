@@ -1,24 +1,25 @@
 <div class="box" id="billability_box">
 <h3 style="display:inline-block; width:85%"><%=l(:label_dashboard_billability)%></h3>
-<a href="#" onclick="$('billability_form').request({
+<a href="#" onclick="jQuery('#processing_gif').show(); $('billability_form').request({
   parameters: { 'project_id': '<%= @project.id %>', 'refresh': 'true' }
   });" style="padding:2px; border: 1px solid #7f7f7f; 
   background-color: #fff; display:none;">Refresh</a>
 <span id="dashboard_billability">
+<p id="processing_gif">Processing... <%= image_tag("loading.gif") %></p>
 <% if !@billability.nil? && !@billability.empty? %>
   <%= render :partial => "project_billability/billability_dashboard" %>
   <script type="text/javascript">
+    jQuery("#processing_gif").hide();
     jQuery("#dashboard_billability").parent().find("a").show();
   </script>
 <% else %>
-  <p>Processing... <%= image_tag("loading.gif") %></p>
   <script type="text/javascript">
     jQuery("#dashboard_billability").parent().find("a").hide();
     setTimeout(function(){
       $('billability_form').request({
         parameters: { 'project_id': '<%= @project.id %>' }
       });
-    }, 2000);
+    }, 5000);
   </script>
 <% end %>
 <form id="billability_form" method="POST" action="/pm_dashboards/reload_billability">
