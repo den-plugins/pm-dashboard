@@ -3,22 +3,10 @@
 <h2>Project Billability/Chargeability History</h2>
 
 <% unless display_by_billing_model.eql?("fixed") %>
-  <% if @project_resources.any? %>
-    <%= render :partial => "project_billability/summary" %>
-    <div style="clear: both"></div>
-    <div id="billability_filters">
-      <%= render :partial => "project_billability/filters" %>
-    </div>
-    <div id="billability_list">
-      <%= render :partial => "project_billability/list" %>
-    </div>
-  <% else %>
-    <% if @project.planned_start_date && @project.planned_end_date %>
-      <p class="nodata"><%= l(:label_no_data) %></p>
-    <% else %>
-      <p class="nodata">Undefined date range. Please specify Planned Start Date and Planned End Date.</p>
-    <% end %>
-  <% end %>
+  <p id="processing_gif">Processing... <%= image_tag("loading.gif") %></p>
+  <div id="keep_loading">
+  <%= render :partial => "keep_loading" %>
+  </div>
 <% else %>
   <p class="nodata"><%= 'Not Applicable' %></p>
 <% end%>

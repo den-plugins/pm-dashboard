@@ -1,15 +1,4 @@
-<%= stylesheet_link_tag 'jquery.jqplot.css', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'jquery.jqplot.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'plugins/jqplot.canvasAxisLabelRenderer.min.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'plugins/jqplot.canvasTextRenderer.min.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'plugins/jqplot.cursor.min.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'plugins/jqplot.dateAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'plugins/jqplot.highlighter.min.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'plugins/jqplot.barRenderer.min.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'plugins/jqplot.categoryAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'plugins/jqplot.pointLabels.min.js', :plugin => 'redmine_burndown' %>
-<%= javascript_include_tag 'billability_chart.js', :plugin => 'pm_dashboard' %>
-<%= javascript_include_tag 'cost_chart.js', :plugin => 'pm_dashboard' %>
+
 
 <% if params[:view] && params[:view].eql?('month') %>
   <%= render :partial => "project_billability/monthly" %>

@@ -22,8 +22,12 @@ class ProjectBillabilityController < ApplicationController
   end
   
   def update_project_billability
+    @billability = File.exists?("#{RAILS_ROOT}/config/billability.yml") ? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
     render(:update) do |p|
       p.replace_html "billability_list", :partial => 'project_billability/list'
     end if params[:view]
+    render(:update) do |p|
+      p.replace_html :keep_loading, :partial => 'project_billability/keep_loading'
+    end if params[:processing]
   end
 end

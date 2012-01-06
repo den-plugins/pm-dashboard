@@ -1,0 +1,46 @@
+<%= stylesheet_link_tag 'jquery.jqplot.css', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'jquery.jqplot.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.canvasAxisLabelRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.canvasTextRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.cursor.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.dateAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.highlighter.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.barRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.categoryAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.pointLabels.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'billability_chart.js', :plugin => 'pm_dashboard' %>
+<%= javascript_include_tag 'cost_chart.js', :plugin => 'pm_dashboard' %>
+
+<% if !@billability.nil? && !@billability.empty? %>
+  <% if @project_resources.any? %>
+    <%= render :partial => "project_billability/summary" %>
+    <div style="clear: both"></div>
+    <div id="billability_filters">
+      <%= render :partial => "project_billability/filters" %>
+    </div>
+    <div id="billability_list">
+      <%= render :partial => "project_billability/list" %>
+    </div>
+  <% else %>
+    <% if @project.planned_start_date && @project.planned_end_date %>
+      <p class="nodata"><%= l(:label_no_data) %></p>
+    <% else %>
+      <p class="nodata">Undefined date range. Please specify Planned Start Date and Planned End Date.</p>
+    <% end %>
+  <% end %>
+  <script type="text/javascript">
+    jQuery("#processing_gif").hide();
+  </script>
+<% else %>
+  <script type="text/javascript">
+    setTimeout(function(){
+      $('billability_form').request({
+        parameters: { 'project_id': '<%= @project.id %>', 
+                      'processing': 'true' 
+                    }
+      });
+    }, 5000);
+  </script>
+  <form id="billability_form" method="POST" action="/project_billability">
+  </form>
+<% end %>

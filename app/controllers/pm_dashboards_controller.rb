@@ -28,7 +28,7 @@ class PmDashboardsController < ApplicationController
 #      @project_resources  = @project.members.select(&:billable?)
       @billability = File.exists?("#{RAILS_ROOT}/config/billability.yml") ? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
       if @project.planned_end_date && @project.planned_start_date
-        Delayed::Job.enqueue BillabilityJob.new(@project.id) if @billability.nil? || @billability.empty?
+        Delayed::Job.enqueue ProjectBillabilityJob.new(@project.id) if @billability.nil? || @billability.empty?
       end
     elsif billing_model == "fixed"
       @project_resources  = @project.members.all
@@ -55,7 +55,7 @@ class PmDashboardsController < ApplicationController
   def reload_billability
 #    @project_resources  = @project.members.select(&:billable?)
     if @project.planned_end_date && @project.planned_start_date && params[:refresh]
-      Delayed::Job.enqueue BillabilityJob.new(@project.id)
+      Delayed::Job.enqueue ProjectBillabilityJob.new(@project.id)
     end
     @billability = (FileTest.exists?("#{RAILS_ROOT}/config/billability.yml"))? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
 
