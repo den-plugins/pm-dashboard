@@ -67,7 +67,7 @@
       <% end %>
       </ul>
     </div>
-    <%= render :partial => "project_billability/billability_dashboard" if display_by_billing_model.eql?("billability") %>
+    <%= render :partial => "pm_dashboards/load_billability" if display_by_billing_model.eql?("billability") %>
   </div>
   
   <div class="singleCol">

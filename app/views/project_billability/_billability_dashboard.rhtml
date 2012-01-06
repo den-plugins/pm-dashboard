@@ -1,7 +1,5 @@
 <% if @project.planned_end_date && @project.planned_start_date %>
-  <div class="box">
-    <h3><%=l(:label_dashboard_billability)%></h3>
-    <span id="dashboard_billability">
+  
       <% first_time_entry = @project.time_entries.find(:first, :select => "spent_on", :conditions => "hours > 0", :order => "spent_on ASC") %>
       <% actual_start = @project.actual_start_date || (first_time_entry ? first_time_entry.spent_on : @project.planned_start_date) %>
       <% actual_end = (Date.today - 1.week).end_of_week %>
@@ -39,8 +37,7 @@
         <%= submit_tag "Show Graph", :class => 'btn_show_chart', :onclick => "this.value = 'Loading...'; $('bchart2').show();" %>
         <% end %>
       </div>
-    </span>
-  </div>
+
 <% else %>
   <div class="box">
     <h3><%=l(:label_dashboard_billability)%></h3>
