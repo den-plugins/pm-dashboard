@@ -59,19 +59,19 @@ class PmDashboardsController < ApplicationController
     end
     @billability = (FileTest.exists?("#{RAILS_ROOT}/config/billability.yml"))? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
 
-#    if params[:refresh] && @billability
-#      temp = YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))
-#      temp.delete("billability_#{@project.id}")
-#      File.open( "#{RAILS_ROOT}/config/billability.yml", 'w' ) do |out|
-#        YAML.dump( temp, out )
-#      end
-#      @billability = nil
-#    end
-#    
-#    render :update do |page|
-#      page.replace :billability_box, :partial => "pm_dashboards/load_billability"
-#    end
-#  end
+    if params[:refresh] && @billability
+      temp = YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))
+      temp.delete("billability_#{@project.id}")
+      File.open( "#{RAILS_ROOT}/config/billability.yml", 'w' ) do |out|
+        YAML.dump( temp, out )
+      end
+      @billability = nil
+    end
+    
+    render :update do |page|
+      page.replace :billability_box, :partial => "pm_dashboards/load_billability"
+    end
+  end
   
   private
   

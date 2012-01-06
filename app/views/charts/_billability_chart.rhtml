@@ -1,6 +1,5 @@
 <script type="text/javascript">
-  <% start_date, end_date = @project.planned_start_date, @project.planned_end_date %>
-  <% if json_billability_per_week(start_date, end_date, @project_resources) and !json_billability_per_week(start_date, end_date, @project_resources).eql?("[]") %>
-    plot_billability("bchart2", [<%= json_billability_per_week(start_date, end_date, @project_resources) %>]);
+  <% if @billability["billability_per_week"] and !@billability["billability_per_week"].eql?("[]") %>
+    plot_billability("bchart2", [<%= @billability["billability_per_week"] %>]);
   <% end %>
 </script>
