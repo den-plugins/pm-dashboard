@@ -114,7 +114,7 @@ span.button-like {
 
 input[type="text"].button-like { background: transparent; border: 0; margin-left: -10px; padding-left: 9px; }
 input[type="text"].button-like:hover { background: #E2E2E2; -moz-border-radius: 2px; border-radius: 3px; }
-
+input.allocation_check_box {padding: 0px; 	margin: 0px; }
 #facebox .body { width: 380px;}
 #facebox .popup { width: 674px;}
 #facebox .tl, #facebox .tr, #facebox .bl, #facebox .br { background-repeat: no-repeat; width: 5px;}

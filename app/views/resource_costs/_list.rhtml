@@ -20,7 +20,7 @@
     <% @proj_team.each do |member| %>
     <tr class="<%= cycle('even', 'odd', :name => 'members') %>">
       <td style="width:20px">
-        <%= check_box_tag("member_ids[]", member.id, false, :id => nil, :onchange => "toggle_allocation_btn()") %>
+        <%= check_box_tag("member_ids[]", member.id, false, :id => nil, :onchange => "toggle_allocation_btn()", :class => "allocation_check_box") %>
       </td>
       <td>
         <%= facebox_link_to member.name, {:url => {:controller => 'resource_allocations', :action => 'index', :project_id => @project, :member_id => member }} %>
