@@ -31,7 +31,7 @@
             <th colspan='3'><%= format_date month.last %></th>
           </tr>
           <tr>
-            <td colspan='3'><%= @billability["billability_per_month"][mnum].last %>%</td>
+            <td colspan='3'><%= @billability["billability_per_month"][mnum].nil? ? 0.0 : @billability["billability_per_month"][mnum].last %>%</td>
           </tr>
         </table>
       </div>
