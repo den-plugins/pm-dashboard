@@ -70,9 +70,13 @@ module ResourceCostsHelper
     [total_cost, total_with_contingency, actual_total, cumulative_total]
   end
   
-  def allocation_color_class(total)
-    return "" if total.eql?(0)
-    total > 2.5 ? "lgreen" : ("lblue" if total <= 2.5)
+  def allocation_color_class(total, is_shadowed=false)
+    if is_shadowed
+      "lgray"
+    else
+      return "" if total.eql?(0)
+      total > 2.5 ? "lgreen" : ("lblue" if total <= 2.5)
+    end
   end
   
   def collection_of_allocation_type(f)

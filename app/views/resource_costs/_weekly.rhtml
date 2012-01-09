@@ -19,7 +19,7 @@
           <% actual_days, cost = compute_days_and_cost(member, week, params[:rate]).collect %>
           <% total_days += actual_days %>
           <% total_cost += cost %>
-        <tr class="<%= cycle('even', 'odd', :name => 'members') %> <%= allocation_color_class(actual_days) %>">
+        <tr class="<%= cycle('even', 'odd', :name => 'members') %> <%= allocation_color_class(actual_days, member.is_shadowed?(week.last)) %>">
           <td><%="%0.2f" %  actual_days %></td>
           <td class='cost'><%= "%0.2f" % cost.to_f %></td>
         </tr>

@@ -72,6 +72,12 @@ module Pm
         rate ? [days, cost] : days
       end
       
+      def is_shadowed?(day)
+        if a = resource_allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
+          a.resource_type.eql?(2)
+        end
+      end
+      
       def detect_holidays_in_week(location, day)
         locations = [6]
         locations << location if location
