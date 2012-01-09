@@ -30,9 +30,11 @@
   <% end %>
   <script type="text/javascript">
     jQuery("#processing_gif").hide();
+    jQuery("#refresh_lnk").show();
   </script>
 <% else %>
   <script type="text/javascript">
+    jQuery("#refresh_lnk").hide();
     setTimeout(function(){
       $('billability_form').request({
         parameters: { 'project_id': '<%= @project.id %>', 
@@ -41,6 +43,6 @@
       });
     }, 5000);
   </script>
-  <form id="billability_form" method="POST" action="/project_billability">
-  </form>
 <% end %>
+<form id="billability_form" method="POST" action="/project_billability">
+</form>
