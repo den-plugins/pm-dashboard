@@ -4,8 +4,7 @@
 <a href="#" id="refresh_lnk" onclick="jQuery('#view').attr('disabled', true); 
   jQuery('#processing_gif').show(); $('billability_form').request({
   parameters: { 'project_id': '<%= @project.id %>', 'refresh': 'true' }
-  });" style="padding:2px; border: 1px solid #7f7f7f; font-size:10pt;
-   font-weight:bold; background-color: #fff; display:none; float:right;">Refresh</a>
+  });" title="Refresh" style="display:none; float:right;"><%= image_tag('reload.png') %></a>
 </h2>
 
 <% unless display_by_billing_model.eql?("fixed") %>
