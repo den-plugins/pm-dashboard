@@ -1,4 +1,4 @@
-
+<% @updated_at = @billability["updated_at"] ? @billability["updated_at"] : nil %>
 
 <% if params[:view] && params[:view].eql?('month') %>
   <%= render :partial => "project_billability/monthly" %>
@@ -7,3 +7,8 @@
 <% else %>
   <p class="nodata"><%= l(:label_no_data) %></p>
 <% end %>
+
+<script type="text/javascript">
+  jQuery("#updated_at").text("");
+  jQuery("#updated_at").text("<%= "as of #{@updated_at.strftime('%b %d, %Y %I:%M %p')}" if @updated_at %>");
+</script>

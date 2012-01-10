@@ -7,6 +7,7 @@ class ProjectBillabilityJob < Struct.new(:project_id)
   def perform
     project = Project.find(project_id)
     project_resources = project.members.select(&:billable?)
+    updated_at = Time.now
     views = ["week", "month"]
     billability = FileTest.exists?("#{RAILS_ROOT}/config/billability.yml") ? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml")) : {}
     views.each do |view|
@@ -57,7 +58,8 @@ class ProjectBillabilityJob < Struct.new(:project_id)
         "billability_per_#{view}" => billability_per_date,
         "total_percent_billability_#{view}" => total_percent_billability,
         "total_forecast" => total_forecast,
-        "total_actuals" => total_actuals
+        "total_actuals" => total_actuals,
+        "updated_at" => updated_at
       }
     else
       temp = {
@@ -65,7 +67,8 @@ class ProjectBillabilityJob < Struct.new(:project_id)
         "billability_per_#{view}" => billability_per_date,
         "total_percent_billability_#{view}" => total_percent_billability,
         "total_forecast" => total_forecast,
-        "total_actuals" => total_actuals
+        "total_actuals" => total_actuals,
+        "updated_at" => updated_at
       }
       billability["billability_#{project.id}"] = billability["billability_#{project.id}"].merge(temp)
     end

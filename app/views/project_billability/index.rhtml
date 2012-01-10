@@ -1,10 +1,14 @@
 <%= render :partial => 'common/header' %>
 
 <h2>Project Billability/Chargeability History
-<a href="#" id="refresh_lnk" onclick="jQuery('#view').attr('disabled', true); 
+<div class="contextual">
+<span id="updated_at" style="font-size:8pt; padding:2px; color:#666666"></span>
+<a href="#" id="refresh_lnk" onclick="jQuery('#view').attr('disabled', true);
+  jQuery('#updated_at').text(''); 
   jQuery('#processing_gif').show(); $('billability_form').request({
   parameters: { 'project_id': '<%= @project.id %>', 'refresh': 'true' }
-  });" title="Refresh" style="display:none; float:right;"><%= image_tag('reload.png') %></a>
+  });" title="Refresh" style="display:none;"><%= image_tag('reload.png') %></a>
+</div>
 </h2>
 
 <% unless display_by_billing_model.eql?("fixed") %>

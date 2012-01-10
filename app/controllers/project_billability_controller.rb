@@ -31,7 +31,11 @@ class ProjectBillabilityController < ApplicationController
       end
       @billability = nil
     else
-      @billability = File.exists?("#{RAILS_ROOT}/config/billability.yml") ? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
+      @billability = if File.exists?("#{RAILS_ROOT}/config/billability.yml")
+        (file = YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml")))? file["billability_#{@project.id}"] : {}
+      else
+        {}
+      end
     end
     render(:update) do |p|
       p.replace_html "billability_list", :partial => 'project_billability/list'
