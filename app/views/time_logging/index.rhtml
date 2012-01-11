@@ -3,3 +3,8 @@
 <%= heads_for_wiki_formatter %>
 
 <h2>Time Logging</h2>
+<% if  @resources.any? %>
+  <%= render :partial => "list" %>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>

@@ -1,0 +1,34 @@
+<div class='tables_container' id="time_logging_table">
+  <div class='fixed_table_container' style="width: 60%;">
+    <table id='allocations_fixed_table' class="list fixed">
+    <thead>
+      <tr>
+        <th width='8%'>Location</th>
+        <%= sort_header_tag('resource', :caption => "Resource", :width => "28%") %>
+        <th width='8%'>Skill</th>
+        <th width='14%'>Total Hours (<%= get_string @th %>)</th>
+        <th width='14%'>Total Hours on Project (<%= get_string @thos %>)</th>
+        <th width='14%'>Billable Hours (<%= get_string @tbh %>)</th>
+        <th width='14%'>Non-billable Hours (<%= get_string @tnbh %>)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @summary.each do |s| %>
+      <tr class="<%= cycle('odd','even') %> <%= color_code_log_time s %>">
+        <td><%= s[:location] %></td>
+        <td><%= s[:name] %></td>
+        <td><%= s[:skill] %></td>
+        <td><%= get_string s[:total_hours] %></td>
+        <td><%= get_string s[:total_hours_on_selected] %></td>
+        <td><%= get_string s[:billable_hours] %></td>
+        <td><%= get_string s[:non_billable_hours] %></td>
+      </tr>
+      <% end %>
+      <tr class="summary_total">
+        <td colspan="7"></td>
+      </tr>
+    </tbody>
+    </table>
+  </div>
+  <%= render :partial => "dates" %>
+</div>

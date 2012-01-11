@@ -1,0 +1,30 @@
+<% dates = (@columns.eql?("week") ? get_weeks_range(@from, @to) : get_months_range(@from, @to)) %>
+<% unless dates.nil? or dates.empty? %>
+<div class="movable_table_container" style="max-width: 39%">
+  <div id='floating_tables_holder' class='utilization_table_container' style="width: <%= dates.count * 101 %>px">
+    <% dates.each_with_index do |date, dnum| %>
+    <% total_hours = 0 %>
+    <div class='floating_table' style=" width: 101px">
+      <table class="time_logging list rcf">
+      <thead>
+        <tr>
+          <th><%= date.first.year %><br/><%= display_week(date) %></th>
+        </tr>
+      </thead>
+      <% @resources.each do |resource| %>
+          <% user_hour = compute_time_logs(resource, date, params[:show_only]) %>
+          <% total_hours += user_hour %>
+        <tr class="<%= cycle('odd','even', :name => 'users') %>">
+          <td><%= get_string user_hour %></td>
+        </tr>
+      <% end %>
+        <tr class="summary_total">
+          <td><%= get_string total_hours%></td>
+        </tr>
+        <% reset_cycle('users') %>
+      </table>
+    </div>
+    <% end %>
+  </div>
+</div>
+<% end %>

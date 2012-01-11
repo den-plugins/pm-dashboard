@@ -34,7 +34,7 @@ tr.green, td.green, th.green { background-color: #006411; color: #FFF; }
 tr.lgreen, td.lgreen, th.lgreen { background-color: #9FC35B; color: #000; }
 tr.lblue, td.lblue, th.lblue { background-color: #99CCFF; color: #000; }
 tr.lgray, td.lgray, th.lgray { background-color: #9a9a9a; color: #FFF; }
-tr.lred, td.lred, th.lred { background-color: #eb605e; color: #333; }
+tr.lred, td.lred, th.lred { background-color: #E57E7C; color: #000; }
 
 td.left { text-align: left; }
 td.right { text-align: right; }
@@ -72,6 +72,20 @@ table#pm_dashboard_milestones .phase {width: 39% }
 table#pm_dashboard_milestones .orig_date, table#pm_dashboard_milestones .effect_date, table#pm_dashboard_milestones .state {width: 20% }
 
 
+div.tables_container { width: 100%; padding: 0; margin: 0; display: inline-block; }
+div.fixed_table_container { float: left; white-space: nowrap; border-right: 1px solid black;}
+div#floating_tables_holder, div#weeks_header_holder { position: relative; }
+table {font-size: 12px; }
+table.fixed { table-layout: fixed; }
+table#allocations_fixed_table tr td { text-overflow: clip; overflow: hidden; white-space: nowrap; text-align: center;}
+table#allocations_fixed_table_clone tr td { text-overflow: clip; overflow: hidden; white-space: nowrap; text-align: center; }
+table#allocation_week tr td, table#allocation_week tr th { text-align: center; text-overflow: ellipsis; overflow: hidden; }
+
+div#time_logging_table table tr td, div#time_logging_table table tr th {white-space: normal }
+div#time_logging_table table thead tr { height: 60px; }
+tr.summary_total {height: 27px; ha:;}
+tr.summary_total td { color: black; font-weight: bold; text-align: center; background-color: #eee; vertical-align: middle;}
+
 /**********************
   GENERAL CLASSES
 **********************/
@@ -84,6 +98,9 @@ table#pm_dashboard_milestones .orig_date, table#pm_dashboard_milestones .effect_
 .wrong  {border: 2px solid red; }
 .red_notice {position: absolute; color: red; font-weight: bold; margin: 2px 24px;}
 div.guide p { font-size: 9px; line-height: 0.15em;}
+
+#content.tabs ul {width: 100%; padding-left: 5px; }
+#content .tabs ul li { margin: 0 2px; }
 
 .resources_container, .cost_monitoring_container { float: left; white-space: nowrap; width: 25%;}
 .resource_cost_container, .bottomline_costs_container { float: left; width: 75%; position: relative; overflow-x: auto;}
@@ -187,7 +204,6 @@ div#period span {
   cursor: pointer;
 }
 div#period span.selected { background-color: #fff; font-weight: bold; color: #000;}
-
 
 
 /*******************
