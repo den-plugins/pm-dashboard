@@ -9,7 +9,7 @@ class Highlight < ActiveRecord::Base
   def validate
     # project must only have ONE highlight report per week
     date = created_at.to_date
-    dup = project.highlights.for_the_week(date).detect {|d| d.is_for_next_period == is_for_next_period && !d.id.eql?(id)}
+    dup = project.highlights.for_the_week(date).detect {|d| d.is_for_next_period == is_for_next_period && !d.id.eql?(id.to_i)}
 
     cfrom, cto = changes['posted_date'].collect if posted_date_changed?
 
@@ -27,4 +27,13 @@ class Highlight < ActiveRecord::Base
   def self.in_range(project, from, to)
     find(:first, :conditions => ["created_at between ? and ? and project_id = ?", from, to, project])
   end
+  
+  def posted?
+    !posted_date.nil?
+  end
+  
+  def posted_this_week?
+    posted? && created_at.monday.to_date.eql?(Date.today.monday)
+  end
+  
 end

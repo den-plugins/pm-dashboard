@@ -5,12 +5,14 @@ class HighlightsController < ApplicationController
   before_filter :get_project, :get_highlight
   before_filter :authorize
   
+  include HighlightsHelper
+  
   def index
     @highlights = @project.weekly_highlights
     if params[:edit_what] == 'current'
-      @jscmd = "jQuery('#current').trigger('click'); jQuery('#current_edit').trigger('click')"
+      @jscmd = "jQuery('#current').trigger('click'); jQuery('#highlights_edit').trigger('click')"
     elsif params[:edit_what] == 'nextp'
-      @jscmd = "jQuery('#nextp').trigger('click'); jQuery('#nextp_edit').trigger('click');"
+      @jscmd = "jQuery('#nextp').trigger('click'); jQuery('#highlights_edit').trigger('click');"
     elsif params[:edit_what] == 'recently_posted'
       @jscmd = "$('recently_posted').highlight({startColor : '#FF9999'});"
     end
@@ -58,31 +60,35 @@ class HighlightsController < ApplicationController
   
   def select_duplicate
     date = params[:highlight][:created_at].to_date
-    dup = @project.highlights.for_the_week(date).detect {|d|  d.is_for_next_period.to_s == params[:highlight][:is_for_next_period].to_s}
-    time_state = (params[:time_state].eql?('current') || params[:time_state].eql?('nextp')) ? params[:time_state] : (dup.is_for_next_period ? 'current' : 'nextp')
-    period = time_state.eql?('current') ? "this_period" : "next_period"
+    current_dup = @project.highlights.for_the_week(date).detect {|d| !d.is_for_next_period}
+    nextp_dup = @project.highlights.for_the_week(date).detect {|d| d.is_for_next_period}
     
-    @highlight.attributes = params[:highlight]
-    @highlight.validate
-
-    if @highlight.errors.empty?
-      if dup && (dup.posted_date.nil? || (dup.posted_date && dup.created_at.monday.to_date.eql?(Date.today.monday)))
-      	render :update do |page|
-      		page.replace_html period, :partial => "highlights/#{time_state}", :locals => {:highlight => dup}
-       	 	page.hide "#{time_state}_highlight_wrapper"
-      	 	page.show "#{time_state}_highlights_container"
-        end
+    current_highlight = @project.highlights.new params[:highlight].merge({'is_for_next_period' => 'false', 'highlight' => ""})
+    current_highlight.validate
+    nextp_highlight = @project.highlights.new params[:highlight].merge({'is_for_next_period' => 'true', 'highlight' => ""})
+    nextp_highlight.validate
+    
+    render :update do |page|
+      if current_highlight.errors.empty?
+        page.replace_html :this_period, :partial => "highlights/current",
+                  :locals => {:highlight => (current_dup && (!current_dup.posted? || current_dup.posted_this_week?)) ? current_dup : current_highlight}
       else
-        @highlight = Highlight.new({:created_at => date})
-        render :update do |page|
-          page.replace_html period, :partial => "highlights/#{time_state}", :locals => {:highlight => @highlight}
-          page.hide "#{time_state}_highlight_wrapper"
-          page.show "#{time_state}_highlights_container"
-        end
+        @highlight_errors = current_highlight.errors.full_messages
+        page.replace_html :current_error_messages, :partial => "highlights/errors"
       end
-    else
-      render_error_messages
+      if nextp_highlight.errors.empty?
+        page.replace_html :next_period, :partial => "highlights/nextp",
+                    :locals => {:highlight => (nextp_dup && (!nextp_dup.posted? || nextp_dup.posted_this_week?)) ? nextp_dup : nextp_highlight}
+      else
+        @highlight_errors = nextp_highlight.errors.full_messages
+        page.replace_html :nextp_error_messages, :partial => "highlights/errors"
+      end
+      page.hide :current_highlight_wrapper
+      page.show :current_highlights_container
+      page.hide :nextp_highlight_wrapper
+      page.show :nextp_highlights_container
     end
+    
   end
   
   private
@@ -100,13 +106,9 @@ class HighlightsController < ApplicationController
   
   def render_error_messages
     @highlight_errors = @highlight.errors.full_messages
+    period = @highlight.is_for_next_period ? "nextp" : "current"
     render :update do |page|
-      if @highlight.is_for_next_period
-        page.replace_html :nextp_error_messages, :partial => "highlights/errors"
-      else
-        page.replace_html :current_error_messages, :partial => "highlights/errors"
-      end
-      page["errorExplanation"].show
+      page.replace_html "#{period}_error_messages", :partial => "highlights/errors"
     end
   end
   

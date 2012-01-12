@@ -21,6 +21,10 @@
   <div id='period'>
     <span class='selected' id='current' onclick="$('nextp').removeClassName('selected'); $(this).addClassName('selected'); $('next_period').hide(); $('this_period').show();">Progress This Period</span>
     <span id='nextp' onclick="$('current').removeClassName('selected'); $(this).addClassName('selected'); $('this_period').hide(); $('next_period').show(); ">Progress Planned for Next Period</span>
+    <div class="contextual h-actions" style="margin-top: -5px">
+      <%= image_tag 'edit.png', :onclick => "$('current_highlights_container').show(); $('current_highlight_wrapper').hide(); $('nextp_highlights_container').show(); $('nextp_highlight_wrapper').hide();",
+                                     :id => "highlights_edit" %>
+    </div>
   </div>
 </div>
 </div>

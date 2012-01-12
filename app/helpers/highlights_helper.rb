@@ -29,4 +29,12 @@ module HighlightsHelper
     end
   end
   
+  def state_the_time(params)
+    if params[:time_state].eql?('current') || params[:time_state].eql?('nextp')
+      params[:time_state]
+    else
+      params[:highlight][:is_for_next_period] ? 'nextp' : 'current'
+    end
+  end
+  
 end
