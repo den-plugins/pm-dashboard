@@ -15,6 +15,14 @@ jQuery("#tab-resource_costs").live("click", function(){
   jQuery("#undef_weeks").height(jQuery("#resource_costs").innerHeight());
 });
 
+jQuery('#resource_members_content table.list tbody tr').live('mouseover', function(){
+  var row = jQuery(this).closest('tr').prevAll().length;
+  jQuery("table.list > tbody").find("tr:eq("+row+")").addClass("highlight");
+}).live('mouseout', function(){
+  var row = jQuery(this).closest('tr').prevAll().length;
+  jQuery("table.list > tbody").find("tr:eq("+row+")").removeClass("highlight");
+});
+
 function bulk_edit_allocations() {
   jQuery('#allocation_edit').show();
   jQuery('#allocation_show').hide();

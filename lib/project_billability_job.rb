@@ -42,12 +42,16 @@ class ProjectBillabilityJob < Struct.new(:project_id)
       total_actuals += per_date_totals[date.last.to_s]["ah"]
       if view == "week"
         billability_per_date << [date.last, bill.to_f] if date.last < (Date.today.monday + 4.days)
+        unless (date.to_a & (actual_start..actual_end).to_a).empty?
+          bill_total += bill.to_f
+          dates_total += 1
+        end
       elsif view == "month"
-        billability_per_date << [date.last, bill.to_f] if date.last <= (Date.today.end_of_month)
-      end
-      unless (date.to_a & (actual_start..actual_end).to_a).empty?
-        bill_total += bill.to_f
-        dates_total += 1
+        billability_per_date << [date.last, bill.to_f] if date.last <= (Date.today-1.month).end_of_month
+        unless (date.to_a & (actual_start..((Date.today-1.month).end_of_month)).to_a).empty?
+          bill_total += bill.to_f
+          dates_total += 1
+        end
       end
     end
 

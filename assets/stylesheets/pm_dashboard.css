@@ -27,7 +27,7 @@ table#risks tr th.narrow {
   filter: progid:DXImageTransform.Microsoft.Matrix(M11=-1.836909530733566e-16, M12=1, M21=-1, M22=-1.836909530733566e-16, sizingMethod='auto expand');
 }
 
-table.list tbody tr:hover { background-color: #fff1b4; color: #000; }
+table.list tbody tr.highlight { background-color: #ffffb0; color: #000; }
 tr.red, td.red, th.red { background-color: #DD0806; color: #FFF; }
 tr.yellow, td.yellow, th.yellow { background-color: #F4EB05; }
 tr.green, td.green, th.green { background-color: #006411; color: #FFF; }
