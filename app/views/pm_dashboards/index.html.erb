@@ -36,7 +36,7 @@
     <tr>
       <td class="sched_color"><span>Schedule</span></td>
       <td class="value sched_color"><%= %></td>
-      <td class="cost_color"><span>Cost</span></td>
+      <td class="cost_color"><span><%= display_by_billing_model.eql?("billability") ? "Billability" : "Cost" %></span></td>
       <td class="value cost_color"><%= %></td>
       <td class="<%= risk_color = risk_rating_color_code(risk_rating=compute_risk_average(@project)) %>"><span>Risk</span></td>
       <td class="value <%= risk_color %>"><%= risk_rating %></td>
