@@ -1,0 +1,26 @@
+<div class="box" id="fixed_cost_box">
+<h3><%=l(:label_dashboard_status_as_of)%></h3>
+<span id="dashboard_cost_monitoring">
+<p id="processing_gif">Processing... <%= image_tag("loading.gif") %></p>
+<% if !@fixed_cost.nil? && !@fixed_cost.empty? %>
+  <%= render :partial => "project_billability/cost_monitoring_dashboard" %>
+  <script type="text/javascript">
+    jQuery("#processing_gif").hide();
+  </script>
+<% else %>
+  <script type="text/javascript">
+    setTimeout(function(){
+      $('fixed_cost_form').request({
+        parameters: { 
+          'project_id': '<%= @project.id %>',
+          'job_id' : '<%= @job.id %>'
+        }
+      });
+    }, 5000);
+  </script>
+<% end %>
+<form id="fixed_cost_form" method="POST" action="/pm_dashboards/reload_fixed_cost">
+</form>
+
+</span>
+</div>

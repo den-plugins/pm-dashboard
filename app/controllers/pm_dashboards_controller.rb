@@ -8,7 +8,7 @@ class PmDashboardsController < ApplicationController
   helper :pm_dashboard_issues
   include PmDashboardsHelper
   
-  before_filter :get_project, :only => [:index, :load_chart, :reload_billability]
+  before_filter :get_project, :only => [:index, :load_chart, :reload_billability, :reload_fixed_cost]
   before_filter :authorize, :only => [:index]
   
   def index
@@ -31,7 +31,13 @@ class PmDashboardsController < ApplicationController
         Delayed::Job.enqueue ProjectBillabilityJob.new(@project.id) if @billability.nil? || @billability.empty?
       end
     elsif billing_model == "fixed"
-      @project_resources  = @project.members.all
+#      @project_resources  = @project.members.all
+      @fixed_cost = {}
+      handler = ProjectFixedCostJob.new(@project.id)
+      @job = Delayed::Job.find_by_handler(handler.to_yaml)
+      unless @job
+        @job = Delayed::Job.enqueue handler
+      end
     end
   end
 
@@ -70,6 +76,18 @@ class PmDashboardsController < ApplicationController
     
     render :update do |page|
       page.replace :billability_box, :partial => "pm_dashboards/load_billability"
+    end
+  end
+
+  def reload_fixed_cost
+    @job = Delayed::Job.find_by_id(params[:job_id])
+    if @job.nil?
+      @fixed_cost = (FileTest.exists?("#{RAILS_ROOT}/config/fixed_cost.yml"))? YAML.load(File.open("#{RAILS_ROOT}/config/fixed_cost.yml"))["fixed_cost_#{@project.id}"] : {}
+    else
+      @fixed_cost = {}
+    end
+    render :update do |page|
+      page.replace :fixed_cost_box, :partial => "pm_dashboards/load_fixed_cost"
     end
   end
   

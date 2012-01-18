@@ -11,11 +11,11 @@ module ProjectBillabilityHelper
     allocated.sum {|a| a.days_and_cost((from..to), nil, false) * 8}
   end
 
-  def compute_forecasted_cost(week, resources)
+  def compute_forecasted_cost(week, resources, project=@project)
     from, to = week.first, week.last
 #    allocated = resources.select {|r| r.billable?(from, to)}
     bac_amount = resources.sum {|a| a.days_and_cost((from..to), daily_rate(a.internal_rate), false).last}
-    contingency_amount = bac_amount.to_f * (@project.contingency.to_f/100)
+    contingency_amount = bac_amount.to_f * (project.contingency.to_f/100)
     total_budget = bac_amount.to_f + contingency_amount.to_f
   end
   

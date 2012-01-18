@@ -58,7 +58,7 @@
   </div>
   
   <div class="singleCol">
-    <%= render :partial => "project_billability/cost_monitoring_dashboard" if display_by_billing_model.eql?("fixed") %>
+    <%= render :partial => "load_fixed_cost" if display_by_billing_model.eql?("fixed") %>
     <div class="box">
       <h3><%=l(:label_dashboard_risks)%></h3>
       <ul>
