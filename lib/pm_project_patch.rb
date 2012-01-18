@@ -16,7 +16,8 @@ module Pm
         has_many :weeks
         has_many :highlights
         has_many :project_contracts
-        
+        belongs_to :manager, :class_name => 'User', :foreign_key => 'proj_manager'
+      
         validates_presence_of :description
         validates_presence_of :client, :if => :validate_client
         validates_numericality_of :contingency,  :only_float => true, :allow_nil => true,
