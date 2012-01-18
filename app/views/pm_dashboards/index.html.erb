@@ -113,4 +113,10 @@
     </div>
   </div>
   
+  <script type="text/javascript">
+      var sched_color = "<%= scode = schedule_color_code %>";
+      jQuery(".value.sched_color").text("<%= cost_color_code_label(scode) %>");
+      jQuery(".sched_color").addClass(sched_color);
+  </script>
+  
 
