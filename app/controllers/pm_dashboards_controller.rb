@@ -82,7 +82,7 @@ class PmDashboardsController < ApplicationController
   def reload_fixed_cost
     @job = Delayed::Job.find_by_id(params[:job_id])
     if @job.nil?
-      @fixed_cost = (FileTest.exists?("#{RAILS_ROOT}/config/fixed_cost.yml"))? YAML.load(File.open("#{RAILS_ROOT}/config/fixed_cost.yml"))["fixed_cost_#{@project.id}"] : {}
+      load_fixed_cost_file
     else
       @fixed_cost = {}
     end
@@ -108,6 +108,18 @@ class PmDashboardsController < ApplicationController
       end
     else
      @billability = {}
+    end
+  end
+
+  def load_fixed_cost_file
+    if File.exists?("#{RAILS_ROOT}/config/fixed_cost.yml")
+      if file = YAML.load(File.open("#{RAILS_ROOT}/config/fixed_cost.yml"))
+        @fixed_cost = file["fixed_cost_#{@project.id}"]
+      else
+        @fixed_cost = {}
+      end
+    else
+     @fixed_cost = {}
     end
   end
 end
