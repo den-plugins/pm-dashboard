@@ -26,7 +26,7 @@ class PmDashboardsController < ApplicationController
     billing_model = display_by_billing_model
     if billing_model == "billability" || billing_model.nil?
 #      @project_resources  = @project.members.select(&:billable?)
-      @billability = File.exists?("#{RAILS_ROOT}/config/billability.yml") ? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
+      load_billability_file
       if @project.planned_end_date && @project.planned_start_date
         Delayed::Job.enqueue ProjectBillabilityJob.new(@project.id) if @billability.nil? || @billability.empty?
       end
@@ -47,7 +47,7 @@ class PmDashboardsController < ApplicationController
       @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
     elsif params[:chart] == "billability_chart"
 #      @project_resources  = @project.members.select(&:billable?)
-      @billability = (FileTest.exists?("#{RAILS_ROOT}/config/billability.yml"))? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
+      load_billability_file
     elsif params[:chart] == "cost_monitoring_chart"
       @cost_budget = params[:cost_budget].to_f
       @cost_forecast = params[:cost_forecast].to_f
@@ -63,7 +63,7 @@ class PmDashboardsController < ApplicationController
     if @project.planned_end_date && @project.planned_start_date && params[:refresh]
       Delayed::Job.enqueue ProjectBillabilityJob.new(@project.id)
     end
-    @billability = (FileTest.exists?("#{RAILS_ROOT}/config/billability.yml"))? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))["billability_#{@project.id}"] : {}
+    load_billability_file
 
     if params[:refresh] && @billability
       temp = YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))
@@ -97,5 +97,17 @@ class PmDashboardsController < ApplicationController
     @project = Project.find(params[:project_id])
     rescue ActiveRecord::RecordNotFound
       render_404
+  end
+
+  def load_billability_file
+    if File.exists?("#{RAILS_ROOT}/config/billability.yml")
+      if file = YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))
+        @billability = file["billability_#{@project.id}"]
+      else
+        @billability = {}
+      end
+    else
+     @billability = {}
+    end
   end
 end
