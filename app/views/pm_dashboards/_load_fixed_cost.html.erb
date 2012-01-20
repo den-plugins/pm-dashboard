@@ -13,7 +13,7 @@
       $('fixed_cost_form').request({
         parameters: { 
           'project_id': '<%= @project.id %>',
-          'job_id' : '<%= @job.id %>'
+          'job_id' : '<%= params[:job_id] ? params[:job_id] : @job.id %>'
         }
       });
     }, 5000);

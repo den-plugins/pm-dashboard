@@ -32,11 +32,15 @@ class PmDashboardsController < ApplicationController
       end
     elsif billing_model == "fixed"
 #      @project_resources  = @project.members.all
-      @fixed_cost = {}
-      handler = ProjectFixedCostJob.new(@project.id)
-      @job = Delayed::Job.find_by_handler(handler.to_yaml)
-      unless @job
-        @job = Delayed::Job.enqueue handler
+      if @project.planned_end_date && @project.planned_start_date
+        @fixed_cost = {}
+        handler = ProjectFixedCostJob.new(@project.id)
+        @job = Delayed::Job.find_by_handler(handler.to_yaml)
+        unless @job
+          @job = Delayed::Job.enqueue handler
+        end
+      else
+        @fixed_cost = "none"
       end
     end
   end
