@@ -38,6 +38,7 @@ Redmine::Plugin.register :pm_dashboard do
                           :project_info => [:index, :add, :update, :destroy, :add_pm_position, :add_pm_role, :pm_member_add, :pm_member_edit],
                           :resource_allocations => [:index, :add, :edit, :bulk_edit, :destroy, :multiple_allocations],
                           :resource_costs => [:index, :edit_project],
+                          :cost_monitoring => [:index],
                           :risks => [:index, :show, :add, :update, :destroy],
                           :stakeholders => [:new, :create, :edit, :update, :remove]
                       }, :public => false
@@ -55,6 +56,7 @@ Redmine::Plugin.register :pm_dashboard do
     menu.push :project_issues, {:controller => 'pm_dashboard_issues', :action => 'index'}, :param => :project_id
     menu.push :risks, {:controller => 'risks', :action =>'index' }, :param => :project_id
     menu.push :forecasts, {:controller => 'resource_costs', :action =>'index' }, :caption => 'Resource Cost Forecast', :param => :project_id
+    menu.push :bottomline, {:controller => 'cost_monitoring', :action => 'index'}, :caption => 'Bottomline Cost Monitoring', :param => :project_id
     menu.push :billability, {:controller => 'project_billability', :action =>'index' }, :caption => 'Project Billability', :param => :project_id
     menu.push :milestones, {:controller => 'milestone_plans', :action =>'index' }, :caption => 'Milestone Plans', :param => :project_id
     menu.push :contracts, {:controller => 'project_contracts', :action =>'index' }, :caption => 'Project Contracts', :param => :project_id
