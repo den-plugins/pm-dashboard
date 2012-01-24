@@ -11,7 +11,7 @@
 </div>
 </h2>
 
-<% unless display_by_billing_model.eql?("fixed") %>
+<% if display_by_billing_model.eql?("billability") %>
   <p id="processing_gif">Processing... <%= image_tag("loading.gif") %></p>
   <div id="keep_loading">
   <%= render :partial => "keep_loading" %>
