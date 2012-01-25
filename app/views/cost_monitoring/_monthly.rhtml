@@ -8,14 +8,15 @@
           <tr>
           <th style="height:40px; text-align:center;"><%= month.first.strftime("%B %Y") %></th>
           </tr>
-          <tr class="odd"><td><%= hnum (mbudget = mcost[:budget_cost_with_contingency]) %></td></tr>
+          <% contingency = mcost[:budget_cost] * (@project.contingency.to_f/100) %>
+          <tr class="odd"><td><%= hnum (mbudget = mcost[:budget_cost] + contingency) %></td></tr>
           <tr class="even"><td><%= hnum (budget_cumulative += mbudget) %></td></tr>
           <tr class="odd"><td><%= hnum (mactual = mcost[:actual_cost]) %></td></tr>
           <tr class="even"><td><%= hnum (actual_cumulative += mactual) %></td></tr>
           <tr><th><%= hnum (bla_by_month = mbudget - mactual) %></th></tr>
           <tr><th><%= hnum (bla_cumulative = budget_cumulative - actual_cumulative) %></th></tr>
-          <tr><th><%= hnum ((bla_by_month/mbudget)*100) %>%</th></tr>
-          <tr><th><%= hnum ((bla_cumulative/budget_cumulative)*100) %>%</th></tr>
+          <tr><th><%= mbudget.zero? ? 0.00 : hnum ((bla_by_month/mbudget)*100) %>%</th></tr>
+          <tr><th><%= budget_cumulative.zero? ? 0.00 : hnum ((bla_cumulative/budget_cumulative)*100) %>%</th></tr>
         </table>
       </div>
     <% end %>
