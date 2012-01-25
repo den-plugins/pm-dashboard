@@ -91,10 +91,11 @@ module Pm
         months.each do |month|
           budget_hours = compute_forecasted_hours(month, members)
           budget_cost = compute_forecasted_cost_without_contingency(month, members, self)
-          #budget_cost_with_contingency = compute_forecasted_cost(month, members, self)
+          budget_cost_with_contingency = compute_forecasted_cost(month, members, self)
           actual_cost = compute_actual_cost(month, members)
           costs[month.first] = {:budget_hours => budget_hours, :budget_cost => budget_cost,
-                                                 :actual_cost => actual_cost }
+                                :actual_cost => actual_cost, 
+                                :budget_cost_with_contingency => budget_cost_with_contingency }
         end
         costs
       end

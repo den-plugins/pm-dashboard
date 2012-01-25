@@ -44,7 +44,7 @@ td.right { text-align: right; }
 table.rcf { table-layout: fixed;}
 table#resource_costs { table-layout: fixed;}
 table#resource_costs tr td { text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
-.resource_cost_table_container { margin-left: 1px;}
+.resource_cost_table_container, .bottomline_cost_table_container { margin-left: 1px;}
 
 div.movable_table_container { float: left; position: relative; overflow-x: auto; background-color: #FFFEFD;}
 .floating_table { float: left; display: inline-block; table-layout: fixed; width: 210px;}
@@ -73,10 +73,11 @@ table#pm_dashboard_milestones tr th { white-space: normal; }
 div.guide p { font-size: 9px; line-height: 0.15em;}
 
 .resources_container, .cost_monitoring_container { float: left; white-space: nowrap; width: 25%;}
-.resource_cost_container { float: left; width: 75%; position: relative; overflow-x: auto;}
+.resource_cost_container, .bottomline_costs_container { float: left; width: 75%; position: relative; overflow-x: auto;}
 
 #cost_monitoring th {text-align: left}
 #cost_monitoring { table-layout: fixed; border-right: 2px solid black; }
+#bottomline_cost_monthly td, #bottomline_cost_monthly tr th { text-align: right; }
 
 .contextual.info_edit{
   border: 1px solid #e4e4e4;

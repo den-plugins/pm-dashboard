@@ -20,11 +20,11 @@ class CostMonitoringController < ApplicationController
     from, to = @project.planned_start_date, @project.planned_end_date
     if from && to
       team = @project.members.project_team.all
-      months = get_months_range(from, to)
+      @months = get_months_range(from, to)
       forecast_range = from .. (Date.today-1.month).end_of_month
       to_complete_range = reporting_period .. to if reporting_period
 
-      @mcost = @project.monitored_cost(months, team)
+      @mcost = @project.monitored_cost(@months, team)
       @mcost.each do |k, v|
         @bac_hours += v[:budget_hours]
         @bac_amount += v[:budget_cost]
