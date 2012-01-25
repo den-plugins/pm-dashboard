@@ -5,6 +5,7 @@ map.connect 'projects/:project_id/project_management/project_issues/:action', :c
 map.connect 'projects/:project_id/project_management/risks/:action', :controller => 'risks'
 map.connect 'projects/:project_id/project_management/forecasts/:action', :controller => 'resource_costs'
 map.connect 'projects/:project_id/project_management/highlights/:action/:user_id', :controller => 'resource_costs', :action => 'allocation'
+map.connect 'projects/:project_id/project_management/bottomline/:action', :controller => 'cost_monitoring'
 map.connect 'projects/:project_id/project_management/billability/:action', :controller => 'project_billability'
 map.connect 'projects/:project_id/project_management/milestones/:action', :controller => 'milestone_plans'
 map.connect 'projects/:project_id/project_management/contracts/:action', :controller => 'project_contracts'

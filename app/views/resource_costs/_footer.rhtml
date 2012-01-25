@@ -1,4 +1,4 @@
-<tr><%= content_tag 'th', number_with_delimiter("%0.2f" % per_column[0].to_f), :class => 'cost', :colspan =>'2' %></tr>
-<tr><%= content_tag 'th', number_with_delimiter("%0.2f" % per_column[1].to_f), :class => 'cost', :colspan =>'2' %></tr>
-<tr><%= content_tag 'th', number_with_delimiter("%0.2f" % per_column[2].to_f), :class => 'cost', :colspan =>'2' %></tr>
-<tr><%= content_tag 'th', number_with_delimiter("%0.2f" % per_column[3].to_f), :class => 'cost', :colspan =>'2' %></tr>
+<tr><%= content_tag 'th', hnum(per_column[0]), :class => 'cost', :colspan =>'2' %></tr>
+<tr><%= content_tag 'th', hnum(per_column[1]), :class => 'cost', :colspan =>'2' %></tr>
+<tr><%= content_tag 'th', hnum(per_column[2]), :class => 'cost', :colspan =>'2' %></tr>
+<tr><%= content_tag 'th', hnum(per_column[3]), :class => 'cost', :colspan =>'2' %></tr>

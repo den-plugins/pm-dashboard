@@ -25,13 +25,13 @@ class PmDashboardsController < ApplicationController
     @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
     billing_model = display_by_billing_model
     if billing_model == "billability" || billing_model.nil?
-#      @project_resources  = @project.members.select(&:billable?)
+      #@project_resources  = @project.members.select(&:billable?)
       load_billability_file
       if @project.planned_end_date && @project.planned_start_date
         Delayed::Job.enqueue ProjectBillabilityJob.new(@project.id) if @billability.nil? || @billability.empty?
       end
     elsif billing_model == "fixed"
-#      @project_resources  = @project.members.all
+      #@project_resources  = @project.members.all
       if @project.planned_end_date && @project.planned_start_date
         @fixed_cost = {}
         handler = ProjectFixedCostJob.new(@project.id)

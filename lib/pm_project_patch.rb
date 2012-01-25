@@ -1,4 +1,6 @@
 require_dependency 'project'
+include ProjectBillabilityHelper
+include ResourceCostsHelper
 
 module Pm
   module ProjectPatch
@@ -82,6 +84,19 @@ module Pm
 
       def current_active_sprint
         versions.find(:first, :conditions => ["state = 2 and sprint_start_date IS NOT NULL"], :order => "effective_date DESC")
+      end
+      
+      def monitored_cost(months, members)
+        costs = {}
+        months.each do |month|
+          budget_hours = compute_forecasted_hours(month, members)
+          budget_cost = compute_forecasted_cost_without_contingency(month, members, self)
+          #budget_cost_with_contingency = compute_forecasted_cost(month, members, self)
+          actual_cost = compute_actual_cost(month, members)
+          costs[month.first] = {:budget_hours => budget_hours, :budget_cost => budget_cost,
+                                                 :actual_cost => actual_cost }
+        end
+        costs
       end
     end
   end

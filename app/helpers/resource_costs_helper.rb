@@ -57,6 +57,10 @@ module ResourceCostsHelper
            "%s/" % to.mon + "%s" % to.day
   end
   
+  def hnum(number)
+    number_with_delimiter "%0.2f" % number.to_f
+  end
+  
   # computations
   def compute_days_and_cost(member, range, rate)
     mrate = (rate && rate.eql?('sow_rate')) ? daily_rate(member.sow_rate) : daily_rate(member.internal_rate)

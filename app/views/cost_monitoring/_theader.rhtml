@@ -1,0 +1,49 @@
+<% if @project.planned_start_date && @project.planned_end_date %>
+<table id="pm_dashboard_header" style="table-layout; fixed; width: 70%">
+  <tr>
+    <td><span>Budget Hours (BAC)</span></td>
+    <td class="value"><%= hnum @bac_hours %> hours</td>
+    
+    <td><span>Budget to Date</span></td>
+    <td class="value"><%= hnum @budget_to_date %></td></td>
+    
+    <td><span>Estimate to Complete</span></td>
+    <td class="value"></td>
+  </tr>
+  
+  <tr>
+    <td><span>Budget Amount (BAC)</span></td>
+    <td class="value"><%= hnum @bac_amount %></td>
+    
+    <td><span>Actuals to Date</span></td>
+    <td class="value"><%= hnum @actuals_to_date %></td>
+    
+    <td><span>Estimate at Complete</span></td>
+    <td class="value"></td>
+  </tr>
+  
+  <tr>
+    <td><span>Contingency Amount</span></td>
+    <td class="value"><%= hnum @contingency_amount %></td>
+    
+    <td><span>Variance Amount to Date</span></td>
+    <td class="value"><%= hnum (@budget_to_date - @actuals_to_date) %></td>
+    
+    <td><span>CV at Complete</span></td>
+    <td class="value"></td>
+  </tr>
+  
+  <tr>
+    <td><span>Total Project Budget</span></td>
+    <td class="value"><%= hnum @project_budget %></td>
+    
+    <td><span>Variance % to Date</span></td>
+    <td class="value"><%= hnum (((@budget_to_date - @actuals_to_date)/@budget_to_date) * 100) %> %</td>
+    
+    <td><span>CV at Complete (with Contingency)</span></td>
+    <td class="value"></td>
+  </tr>
+</table>
+<% else %>
+  <p class="nodata">Undefined date range. Please specify Planned Start Date and Planned End Date.</p>
+<% end %>

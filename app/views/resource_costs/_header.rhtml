@@ -16,7 +16,7 @@
     <tr><br/></tr>
     <tr>
       <td><span>Budget Hours (BAC)</span></td>
-      <td class="value"><%= number_with_delimiter ("%0.2f" % @bac_hours.to_f) %> hours</td>
+      <td class="value"><%= hnum @bac_hours %> hours</td>
       <td></td>
       <td><span>Contingency %</span></td>
       <td class="value">
@@ -29,15 +29,15 @@
       </td>
       <td></td>
       <td><span>Total Project Budget</span></td>
-      <td class="value"><%= number_with_delimiter ("%0.2f" % @total_budget.to_f) %></td>
+      <td class="value"><%= hnum @total_budget %></td>
     </tr>
     
     <tr>
       <td><span>Budget Amount (BAC)</span></td>
-      <td class="value"><%= number_with_delimiter ("%0.2f" % @bac_amount.to_f) %></td>
+      <td class="value"><%= hnum @bac_amount %></td>
       <td></td>
       <td><span>Contingency Amount</span></td>
-      <td class="value"><%= number_with_delimiter ("%0.2f" % @contingency_amount.to_f) %></td>
+      <td class="value"><%= hnum @contingency_amount %></td>
     </tr>
     
   </table>
