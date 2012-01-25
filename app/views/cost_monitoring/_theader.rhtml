@@ -18,7 +18,7 @@
     <td class="value"><%= hnum @actuals_to_date %></td>
     
     <td><span>Estimate at Complete</span></td>
-    <td class="value"><%= hnum (estimate_at_complete = @actuals_to_date - @estimate_to_complete) %></td>
+    <td class="value"><%= hnum (@estimate_at_complete = @actuals_to_date - @estimate_to_complete) %></td>
   </tr>
   
   <tr>
@@ -29,7 +29,7 @@
     <td class="value"><%= hnum (@budget_to_date - @actuals_to_date) %></td>
     
     <td><span>CV at Complete</span></td>
-    <td class="value"><%= hnum (@bac_amount - estimate_at_complete) %></td>
+    <td class="value"><%= hnum (@bac_amount - @estimate_at_complete) %></td>
   </tr>
   
   <tr>
@@ -40,6 +40,6 @@
     <td class="value"><%= hnum (@budget_to_date.to_i.eql?(0) ? 0 : (((@budget_to_date - @actuals_to_date)/@budget_to_date) * 100)) %> %</td>
     
     <td><span>CV at Complete (with Contingency)</span></td>
-    <td class="value"><%= hnum (@project_budget - estimate_at_complete) %></td>
+    <td class="value"><%= hnum (@project_budget - @estimate_at_complete) %></td>
   </tr>
 </table>

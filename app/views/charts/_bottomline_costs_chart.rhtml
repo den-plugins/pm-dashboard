@@ -1,0 +1,25 @@
+<div class="clear" style="padding: 30px;"></div>
+<div id="chart_content" style="height: 500px; width: 700px; margin: auto;" >
+  <div id="bottomline_chart" style="height: 300px; width: 600px;"></div>
+</div>
+
+<script type="text/javascript">
+  j = jQuery.noConflict();
+  jQuery(document).ready(function(){
+    plot_cost("bottomline_chart", <%= [@project_budget, @estimate_at_complete, @actuals_to_date].to_json %>);
+  });
+</script>
+<% content_for :header_tags do %>
+<%= stylesheet_link_tag 'jquery.jqplot.css', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'jquery.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'jquery.jqplot.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.canvasAxisLabelRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.canvasTextRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.cursor.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.dateAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.highlighter.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.barRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.categoryAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'plugins/jqplot.pointLabels.min.js', :plugin => 'redmine_burndown' %>
+<%= javascript_include_tag 'cost_chart.js', :plugin => 'pm_dashboard' %>
+<% end %>
