@@ -73,23 +73,24 @@
   <div class="singleCol">
     <div class="box">
       <h3><%=l(:label_dashboard_milestones)%></h3>
-      <table id="pm_dashboard_milestones" class="list issues" style='text-align: center; '>
+      <div class="scrolled_table_container">
+      <table id="pm_dashboard_milestones" class="list issues" style="text-align: center;">
 	      <tr>
-	        <th style="width: 39%"><%= l(:label_phases_stages) %></th>
-	        <th style="width: 20%"><%= l(:label_orig_target_date) %></th>
-	        <th style="width: 20%"><%= l(:label_latest_replan_date) %></th>
-	        <th style="width: 20%"><%= l(:label_schedule_status) %></th>
+	        <th class="phase"><%= l(:label_phases_stages) %></th>
+	        <th class="orig_date"><%= l(:label_orig_target_date) %></th>
+	        <th class="effect_date"><%= l(:label_latest_replan_date) %></th>
+	        <th class="state"><%= l(:label_schedule_status) %></th>
 	      </tr>
-	      
 	      <% @milestones.each do |milestone| %>
 		    <tr class="<%= cycle('even2', 'odd2') %>">
-	        <td class="left"><em><%= milestone.name %></em></td>
-	        <td><%= milestone.original_end_date %></td>
-	        <td><%= milestone.effective_date %></td>
-	        <td><%= Version::STATES.fetch(milestone.state, "") if milestone.state %></td>
+	        <td class="left phase"><em><%= milestone.name %></em></td>
+	        <td class="orig_date"><%= milestone.original_end_date %></td>
+	        <td class="effect_date"><%= milestone.effective_date %></td>
+	        <td class="state"><%= Version::STATES.fetch(milestone.state, "") if milestone.state %></td>
 	      </tr>
 	      <% end %>
       </table>
+      </div>
     </div>
 
     <div class="box">

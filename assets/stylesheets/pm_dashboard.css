@@ -62,6 +62,9 @@ th.cost, td.cost { padding-right: 10px; border-right: 2px solid #BBBBBB; text-al
 
 table#pm_dashboard_milestones { table-layout: fixed; }
 table#pm_dashboard_milestones tr th { white-space: normal; }
+table#pm_dashboard_milestones .phase {width: 39% }
+table#pm_dashboard_milestones .orig_date, table#pm_dashboard_milestones .effect_date, table#pm_dashboard_milestones .state {width: 20% }
+
 
 /**********************
   GENERAL CLASSES
@@ -100,6 +103,8 @@ div.guide p { font-size: 9px; line-height: 0.15em;}
   right: 0;
   margin: 5px;
 }
+
+.scrolled_table_container {width: 100%; max-height: 200px; overflow-y: auto; }
 
 
 /**********************
