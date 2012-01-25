@@ -86,8 +86,9 @@ module Pm
         versions.find(:first, :conditions => ["state = 2 and sprint_start_date IS NOT NULL"], :order => "effective_date DESC")
       end
       
-      def monitored_cost(months, members)
+      def monitored_cost(fmonths, amonths, members)
         costs = {}
+        months = (amonths + fmonths).uniq
         months.each do |month|
           budget_hours = compute_forecasted_hours(month, members)
           budget_cost = compute_forecasted_cost_without_contingency(month, members, self)
