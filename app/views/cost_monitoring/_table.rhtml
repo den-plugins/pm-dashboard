@@ -1,0 +1,26 @@
+<% row_labels = ["Budget by Month", "Budget Cumulative", "Actuals by Month", "Actuals Cumulative"] %>
+<div class="cost_monitoring_container">
+  <table id="cost_monitoring" class="list">
+    <tr><th height="40px"></th></tr>
+    <% row_labels.each do |label| %>
+      <tr class="<%= cycle('odd', 'even') %>">
+        <td><%= label %></th>
+      </tr>
+    <% end %>
+    <tr>
+      <th>Budget Less Actuals, by Month</td>
+    </tr>
+    <tr>
+      <th>Budget Less Actuals, Cumulative</td>
+    </tr>
+    <tr>
+      <th>Percent Deviation, by Month</td>
+    </tr>
+    <tr>
+      <th>Percent Deviation, Cumulative</td>
+    </tr>
+  </table>
+</div>
+<div class="bottomline_costs_container">
+  <%= render :partial => "cost_monitoring/monthly" %>
+</div>

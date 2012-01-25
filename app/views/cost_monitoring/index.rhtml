@@ -1,7 +1,12 @@
 <%= render :partial => 'common/header' %>
-<h2> Bottomline Cost Monitoring </h2>
-
+<h2>Bottomline Cost Monitoring</h2>
+<% if @project.planned_start_date && @project.planned_end_date %>
 <div id="bottomline_header">
   <br/>
   <%= render :partial => "cost_monitoring/theader" %>
 </div>
+<br />
+<%= render :partial => "cost_monitoring/table" %>
+<% else %>
+  <p class="nodata">Undefined date range. Please specify Planned Start Date and Planned End Date.</p>
+<% end %>

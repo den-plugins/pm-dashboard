@@ -1,4 +1,3 @@
-<% if @project.planned_start_date && @project.planned_end_date %>
 <table id="pm_dashboard_header" style="table-layout; fixed; width: 70%">
   <tr>
     <td><span>Budget Hours (BAC)</span></td>
@@ -44,6 +43,3 @@
     <td class="value"></td>
   </tr>
 </table>
-<% else %>
-  <p class="nodata">Undefined date range. Please specify Planned Start Date and Planned End Date.</p>
-<% end %>
