@@ -4,12 +4,13 @@ class CostMonitoringController < ApplicationController
   before_filter :get_project
   before_filter :authorize, :only => [:index]
 
+  include PmDashboardsHelper
   helper :resource_costs
   
   def index
     view = params[:view] || "week"
     @bac_hours = 0
-    @bac_amount = @project.project_contracts.all.sum(&:amount)
+    @bac_amount = display_by_billing_model.eql?("fixed") ? @project.project_contracts.all.sum(&:amount) : 0
     @budget_to_date, @actuals_to_date = 0, 0
     @contingency_amount = 0
     @project_budget = 0
