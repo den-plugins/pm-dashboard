@@ -1,4 +1,5 @@
-<% row_labels = ["Budget by Month", "Budget Cumulative", "Actuals by Month", "Actuals Cumulative"] %>
+<% view = (params[:view] || "Week").humanize %>
+<%  row_labels = ["Budget by #{view}", "Budget Cumulative", "Actuals by #{view}", "Actuals Cumulative"] %>
 <div class="cost_monitoring_container">
   <table id="cost_monitoring" class="list">
     <tr><th height="40px"></th></tr>
@@ -8,13 +9,13 @@
       </tr>
     <% end %>
     <tr>
-      <th>Budget Less Actuals, by Month</td>
+      <th>Budget Less Actuals, by <%= view %></td>
     </tr>
     <tr>
       <th>Budget Less Actuals, Cumulative</td>
     </tr>
     <tr>
-      <th>Percent Deviation, by Month</td>
+      <th>Percent Deviation, by <%= view %></td>
     </tr>
     <tr>
       <th>Percent Deviation, Cumulative</td>

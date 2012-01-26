@@ -7,27 +7,35 @@ class CostMonitoringController < ApplicationController
   helper :resource_costs
   
   def index
+    view = params[:view] || "week"
     @bac_amount, @bac_hours = 0, 0
     @budget_to_date, @actuals_to_date = 0, 0
     @contingency_amount = 0
     @project_budget = 0
     @estimate_to_complete = 0
-    
-    reporting_period = (Date.today-1.month).end_of_month
+
     pfrom, afrom, to = @project.planned_start_date, @project.actual_start_date, @project.planned_end_date
     if pfrom && to
       team = @project.members.project_team.all
-      @months = get_months_range(pfrom, to)
-      actual_range = get_months_range((afrom || pfrom), reporting_period)
-      estimate_range = get_months_range((reporting_period+1.month).beginning_of_month, to)
-
-      @mcost = @project.monitored_cost(@months, actual_range, team)
       
-      forecast_list = @months.collect {|r| r.first }
+      if view.casecmp("month") == 0
+        reporting_period = (Date.today-1.month).end_of_month
+        forecast_range = @months = get_months_range(pfrom, to)
+        actual_range = get_months_range((afrom || pfrom), reporting_period)
+        estimate_range = get_months_range((reporting_period+1.month).beginning_of_month, to)
+      elsif view.casecmp("week") == 0
+        reporting_period = (Date.today-1.week).end_of_week
+        forecast_range = @weeks = get_weeks_range(pfrom, to)
+        actual_range = get_weeks_range((afrom || pfrom), reporting_period)
+        estimate_range = get_weeks_range((reporting_period+1.week).beginning_of_month, to)
+      end
+      
+      @cost = @project.monitored_cost(forecast_range, actual_range, team)
+      forecast_list = forecast_range.collect {|r| r.first }
       actual_list = actual_range.collect {|r| r.first }
       estimate_list = estimate_range.collect {|r| r.first }
       
-      @mcost.each do |k, v|
+      @cost.each do |k, v|
         if forecast_list.include?(k.to_date)
           @bac_hours += v[:budget_hours]
           @bac_amount += v[:budget_cost]
@@ -36,12 +44,16 @@ class CostMonitoringController < ApplicationController
           @budget_to_date += v[:budget_cost]
           @actuals_to_date += v[:actual_cost]
         end
-        puts "#{k} -- #{v.inspect}" if estimate_list.include?(k.to_date)
         @estimate_to_complete += v[:budget_cost] if estimate_list.include?(k.to_date)
       end
       @contingency_amount = @bac_amount.to_f * (@project.contingency.to_f/100)
       @project_budget = @bac_amount + @contingency_amount
     end
+    
+    render :update do |page|
+      page.replace_html :bottomline_header, :partial => "cost_monitoring/theader"
+      page.replace_html :bottomline_cost_content, :partial => "cost_monitoring/table"
+    end if params[:view]
   end
 
 private

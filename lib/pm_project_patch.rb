@@ -86,14 +86,14 @@ module Pm
         versions.find(:first, :conditions => ["state = 2 and sprint_start_date IS NOT NULL"], :order => "effective_date DESC")
       end
       
-      def monitored_cost(fmonths, amonths, members)
+      def monitored_cost(franges, aranges, members)
         costs = {}
-        months = (amonths + fmonths).uniq
-        months.each do |month|
-          budget_hours = compute_forecasted_hours(month, members)
-          budget_cost = compute_forecasted_cost_without_contingency(month, members, self)
-          actual_cost = compute_actual_cost(month, members)
-          costs[month.first] = {:budget_hours => budget_hours, :budget_cost => budget_cost,
+        ranges = (aranges + franges).uniq
+        ranges.each do |range|
+          budget_hours = compute_forecasted_hours(range, members)
+          budget_cost = compute_forecasted_cost_without_contingency(range, members, self)
+          actual_cost = compute_actual_cost(range, members)
+          costs[range.first] = {:budget_hours => budget_hours, :budget_cost => budget_cost,
                                 :actual_cost => actual_cost }
         end
         costs
