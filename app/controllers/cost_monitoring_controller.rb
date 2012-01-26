@@ -8,7 +8,8 @@ class CostMonitoringController < ApplicationController
   
   def index
     view = params[:view] || "week"
-    @bac_amount, @bac_hours = 0, 0
+    @bac_hours = 0
+    @bac_amount = @project.project_contracts.all.sum(&:amount)
     @budget_to_date, @actuals_to_date = 0, 0
     @contingency_amount = 0
     @project_budget = 0
@@ -36,17 +37,15 @@ class CostMonitoringController < ApplicationController
       estimate_list = estimate_range.collect {|r| r.first }
       
       @cost.each do |k, v|
-        if forecast_list.include?(k.to_date)
-          @bac_hours += v[:budget_hours]
-          @bac_amount += v[:budget_cost]
-        end
+        @bac_hours += v[:budget_hours] if forecast_list.include?(k.to_date)
         if actual_list.include?(k.to_date)
           @budget_to_date += v[:budget_cost]
           @actuals_to_date += v[:actual_cost]
         end
         @estimate_to_complete += v[:budget_cost] if estimate_list.include?(k.to_date)
       end
-      @contingency_amount = @bac_amount.to_f * (@project.contingency.to_f/100)
+      #@contingency_amount = @bac_amount.to_f * (@project.contingency.to_f/100)
+      @contingency_amount = 0 #for now
       @project_budget = @bac_amount + @contingency_amount
     end
     
