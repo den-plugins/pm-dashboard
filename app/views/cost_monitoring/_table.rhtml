@@ -23,6 +23,6 @@
   </table>
 </div>
 <div class="bottomline_costs_container">
-  <%= render :partial => "cost_monitoring/monthly" %>
+  <%= render :partial => "cost_monitoring/#{view.downcase}ly" %>
 </div>
 <%= render :partial => "charts/bottomline_costs_chart" %>
