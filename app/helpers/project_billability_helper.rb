@@ -52,12 +52,15 @@ module ProjectBillabilityHelper
       when (0 ... 80) === percent; "red"
     end
   end
-  
-  def cost_color_code_fixed(contracts, forecasts)
-    case contracts <=> forecasts
-      when -1; "red"
-      when 1; "green"
-      when 0: "yellow"
+
+  # Red    - Actual is greater the budget
+  # Green  - Actual and forecast are below sa budget
+  # Yellow - Forecast is greater than budget
+  def cost_color_code_fixed(contracts, forecasts, actual)
+    case
+      when actual > contracts; "red"
+      when forecasts > contracts; "yellow"
+      else "green"
     end
   end
   

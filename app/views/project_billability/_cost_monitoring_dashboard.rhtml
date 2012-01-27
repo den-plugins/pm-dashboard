@@ -25,7 +25,7 @@
       </div>
       
       <script type="text/javascript">
-        var cost_color = "<%= code = cost_color_code_fixed(@cost_budget.to_f, @cost_forecast.to_f) %>";
+        var cost_color = "<%= code = cost_color_code_fixed(@cost_budget.to_f, @cost_forecast.to_f, @cost_actual.to_f) %>";
         jQuery(".value.cost_color").text("<%= cost_color_code_label(code) %>");
         jQuery(".cost_color").addClass(cost_color);
       </script>
