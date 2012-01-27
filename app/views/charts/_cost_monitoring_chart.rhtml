@@ -1,6 +1,6 @@
 <script type="text/javascript">
   if (jQuery("#bar_chart").length > 0){
     jQuery('#bar_chart').empty();
-    plot_cost("bar_chart", [<%= @cost_budget %>,<%= @cost_forecast%>,<%= @cost_actual%>]);
+    plot_cost("bar_chart", [<%= @cost_budget %>,<%= @cost_actual%>,<%= @cost_forecast%>]);
   }
 </script>
