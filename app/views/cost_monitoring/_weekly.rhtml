@@ -18,8 +18,8 @@
           <tr class="even"><td><%= hnum (actual_cumulative += wactual) %></td></tr>
           <tr><th><%= hnum (bla_by_week = wbudget - wactual) %></th></tr>
           <tr><th><%= hnum (bla_cumulative = budget_cumulative - actual_cumulative) %></th></tr>
-          <tr><th><%= wbudget.zero? ? 0.00 : hnum ((bla_by_week/wbudget)*100) %>%</th></tr>
-          <tr><th><%= budget_cumulative.zero? ? 0.00 : hnum ((bla_cumulative/budget_cumulative)*100) %>%</th></tr>
+          <tr><th><%= wbudget.zero? ? 0.00 : hnum((bla_by_week/wbudget)*100) %>%</th></tr>
+          <tr><th><%= budget_cumulative.zero? ? 0.00 : hnum((bla_cumulative/budget_cumulative)*100) %>%</th></tr>
         </table>
       </div>
     <% end %>

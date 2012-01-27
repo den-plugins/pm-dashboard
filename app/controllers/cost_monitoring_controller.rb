@@ -29,7 +29,7 @@ class CostMonitoringController < ApplicationController
         reporting_period = (Date.today-1.week).end_of_week
         forecast_range = @weeks = get_weeks_range(pfrom, to)
         actual_range = get_weeks_range((afrom || pfrom), reporting_period)
-        estimate_range = get_weeks_range((reporting_period+1.week).beginning_of_month, to)
+        estimate_range = get_weeks_range((reporting_period+1.week).beginning_of_week, to)
       end
       
       @cost = @project.monitored_cost(forecast_range, actual_range, team)
