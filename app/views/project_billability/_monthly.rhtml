@@ -3,7 +3,7 @@
 
 <% months = get_months_range(actual_start, @project.planned_end_date) %>
 <% billability_dates = @billability["per_month_totals"] %>
-
+<% if billability_dates %>
 <div class='tables_container'>
   <div class="movable_table_container" style="width: 100%">
     <div style="width: <%= months.count * 190 %>px; position: relative;">
@@ -55,5 +55,8 @@
   
   jQuery('#billability_percent_to_date').text("<%= h('%0.2f' % (@billability['total_percent_billability_month'])) %>%");
 </script>
+<% else %>
+  <p class="nodata">Monthly totals are not computed yet. Please reload data by clicking the Refresh button at the top-right corner of this tab.</p>
+<% end %>
 
 
