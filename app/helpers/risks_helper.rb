@@ -24,7 +24,7 @@ module RisksHelper
   def compute_risk_average(project, risks=nil)
     risks = project.risks.find(:all, :order => 'ref_number DESC') unless risks
     "%0.2f" % ((risks.empty?) ? 0 : Risk.average(:final_risk_rating,
-                                                 :conditions => ["project_id = ? AND status <> 'C'", project]))
+                                                 :conditions => ["project_id = ? AND status <> 'C'", project])).to_f
   end
   
   def render_probability_guide
