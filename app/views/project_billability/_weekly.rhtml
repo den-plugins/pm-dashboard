@@ -4,7 +4,7 @@
 
 <% weeks = get_weeks_range(actual_start, @project.planned_end_date) %>
 <% billability_dates = @billability["per_week_totals"] %>
-<% if !billability_dates.nil? || !billability_dates.empty? %>
+<% if !billability_dates.nil? && !billability_dates.empty? %>
 <div class='tables_container'>
   <div class="movable_table_container" style="width: 100%">
     <div style="width: <%= weeks.count * 190 %>px; position: relative;">
