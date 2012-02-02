@@ -6,6 +6,7 @@ class ProjectFixedCostJob < Struct.new(:project_id)
 
   def perform
     project = Project.find(project_id)
+    updated_at = Time.now
     fixed_cost = load_fixed_cost_file
     bac_amount = project.project_contracts.all.sum(&:amount)
     actuals_to_date = 0
@@ -34,7 +35,8 @@ class ProjectFixedCostJob < Struct.new(:project_id)
     fixed_cost["fixed_cost_#{project_id}"] = {
       "cost_budget" => project_budget,
       "cost_forecast" => estimate_at_complete,
-      "cost_actual" => actuals_to_date
+      "cost_actual" => actuals_to_date,
+      "updated_at" => updated_at
     }
     File.open( "#{RAILS_ROOT}/config/fixed_cost.yml", 'w' ) do |out|
       YAML.dump( fixed_cost, out )
