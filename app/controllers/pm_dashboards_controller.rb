@@ -33,12 +33,8 @@ class PmDashboardsController < ApplicationController
     elsif billing_model == "fixed"
       #@project_resources  = @project.members.all
       if @project.planned_end_date && @project.planned_start_date
-        @fixed_cost = {}
-        handler = ProjectFixedCostJob.new(@project.id)
-        @job = Delayed::Job.find_by_handler(handler.to_yaml)
-        unless @job
-          @job = Delayed::Job.enqueue handler
-        end
+        load_fixed_cost_file
+        enqueue_fixed_cost_job
       else
         @fixed_cost = "none"
       end
@@ -86,7 +82,17 @@ class PmDashboardsController < ApplicationController
   def reload_fixed_cost
     @job = Delayed::Job.find_by_id(params[:job_id])
     if @job.nil?
-      load_fixed_cost_file
+      if params[:refresh]
+        temp = YAML.load(File.open("#{RAILS_ROOT}/config/fixed_cost.yml"))
+        temp.delete("fixed_cost_#{@project.id}")
+        File.open( "#{RAILS_ROOT}/config/fixed_cost.yml", 'w' ) do |out|
+          YAML.dump( temp, out )
+        end
+        @fixed_cost = nil
+        enqueue_fixed_cost_job
+      else
+        load_fixed_cost_file
+      end
     else
       @fixed_cost = {}
     end
@@ -126,4 +132,13 @@ class PmDashboardsController < ApplicationController
      @fixed_cost = {}
     end
   end
+
+  def enqueue_fixed_cost_job
+    handler = ProjectFixedCostJob.new(@project.id)
+    @job = Delayed::Job.find_by_handler(handler.to_yaml)
+    unless @job
+      @job = Delayed::Job.enqueue handler if @fixed_cost.nil? || @fixed_cost.empty?
+    end
+  end
+  
 end

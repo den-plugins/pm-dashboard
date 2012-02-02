@@ -1,14 +1,20 @@
 <div class="box" id="fixed_cost_box">
-<h3><%=l(:label_dashboard_status_as_of)%></h3>
+<h3><%=l(:label_dashboard_status_as_of)%>
+<a href="#" onclick="jQuery('#processing_gif').show(); $('fixed_cost_form').request({
+  parameters: { 'project_id': '<%= @project.id %>', 'refresh': 'true' }
+  });" title="Refresh" style="float:right; display:none;"><%= image_tag('reload.png') %></a>
+</h3>
 <span id="dashboard_cost_monitoring">
 <p id="processing_gif">Processing... <%= image_tag("loading.gif") %></p>
 <% if !@fixed_cost.nil? && !@fixed_cost.empty? %>
   <%= render :partial => "project_billability/cost_monitoring_dashboard" %>
   <script type="text/javascript">
     jQuery("#processing_gif").hide();
+    jQuery("#dashboard_cost_monitoring").parent().find("a").show();
   </script>
 <% else %>
   <script type="text/javascript">
+    jQuery("#dashboard_billability").parent().find("a").hide();
     setTimeout(function(){
       $('fixed_cost_form').request({
         parameters: { 
