@@ -98,7 +98,9 @@ en:
   label_weekly_highlight_plural: Weekly Highlights
   label_highlight_new: New Highlight
   label_highlight_edit: Edit Highlight
-  
+
+  label_resource_utilization: Resource Utilization
+
   field_ref_number: "Ref #"
   field_description: Description
   field_validation: Validation

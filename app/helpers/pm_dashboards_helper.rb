@@ -11,7 +11,8 @@ module PmDashboardsHelper
             {:label => 'Project Billability', :name => 'billability', :partial => 'project_billability'},
             {:label => 'Milestone Plans', :name => 'milestone_plans', :partial => 'milestone_plans'},
             {:label => 'Project Contracts', :name => 'project_contracts', :partial => 'project_contracts'},
-            {:label => 'Weekly Highlights', :name => 'highlights', :partial => 'highlights'}
+            {:label => 'Weekly Highlights', :name => 'highlights', :partial => 'highlights'},
+            {:label => 'Resource Utilization', :name => 'resource_utilization', :partial => 'resource_utilization'}
            ]
     tabs
   end

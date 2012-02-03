@@ -10,3 +10,4 @@ map.connect 'projects/:project_id/project_management/billability/:action', :cont
 map.connect 'projects/:project_id/project_management/milestones/:action', :controller => 'milestone_plans'
 map.connect 'projects/:project_id/project_management/contracts/:action', :controller => 'project_contracts'
 map.connect 'projects/:project_id/project_management/highlights/:action', :controller => 'highlights'
+map.connect 'projects/:project_id/project_management/utilization/:action', :controller => 'resource_utilization'

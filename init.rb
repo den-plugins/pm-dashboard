@@ -40,7 +40,8 @@ Redmine::Plugin.register :pm_dashboard do
                           :resource_costs => [:index, :edit_project],
                           :cost_monitoring => [:index],
                           :risks => [:index, :show, :add, :update, :destroy],
-                          :stakeholders => [:new, :create, :edit, :update, :remove]
+                          :stakeholders => [:new, :create, :edit, :update, :remove],
+                          :resource_utilization => [:index]
                       }, :public => false
   end
   
@@ -61,6 +62,7 @@ Redmine::Plugin.register :pm_dashboard do
     menu.push :milestones, {:controller => 'milestone_plans', :action =>'index' }, :caption => 'Milestone Plans', :param => :project_id
     menu.push :contracts, {:controller => 'project_contracts', :action =>'index' }, :caption => 'Project Contracts', :param => :project_id
     menu.push :highlights, {:controller => 'highlights', :action =>'index' }, :caption => 'Weekly Highlights', :param => :project_id
+    menu.push :utilization, {:controller => 'resource_utilization', :action =>'index' }, :caption => 'Resource Utilization', :param => :project_id
 
   end
 end
