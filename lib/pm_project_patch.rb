@@ -34,8 +34,8 @@ module Pm
     end
     
     module InstanceMethods
-      def admin_siblings
-        siblings.select {|p| p.project_type.casecmp("Admin") == 0 if p.project_type }
+      def closest_admins
+        root.descendants.active.select {|p| p.project_type.casecmp("Admin") == 0 if p.project_type }
       end
       
       def pm_or_ta(id, project)
