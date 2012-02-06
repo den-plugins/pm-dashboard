@@ -16,7 +16,6 @@ class ResourceUtilizationController < ApplicationController
   private
   def get_project
     @project = params[:project_id] ? Project.find(params[:project_id]) : nil
-    @project.update_days_overdue if @project
     rescue ActiveRecord::RecordNotFound
       render_404
   end

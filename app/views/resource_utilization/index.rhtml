@@ -5,7 +5,8 @@
 <h2>Resource Utilization</h2>
 <p>CLIENT: <%= @project.client %></p>
 
-<% form_remote_tag(:url => {}, :html => {:method => :get}, :method => :get, :update => 'content') do %>
+<% form_remote_tag(:url => {}, :loading => "$('ajax-indicator').show()", :complete => "$('ajax-indicator').hide()",
+                                       :html => {:method => :get}, :method => :get, :update => 'content') do %>
   <fieldset id="filters">
     <legend>
       <%= l(:label_filter_plural) %>

@@ -19,7 +19,7 @@
     </tbody>
   </table>
 </div>
-<% weeks = get_weeks_range(Date.today.beginning_of_month, Date.today.end_of_month) %>
+<% weeks = get_weeks_range(@from, @to) %>
 <%= render :partial => "utilization_per_date", :locals => {:weeks => weeks} %>
 <% else %>
   <p class="nodata">No data found.</p>
