@@ -96,9 +96,12 @@ module Pm
         end
       end
       
-      def spent_time(from, to, include_weekends = false)
+      def spent_time(from, to, acctg=nil, include_weekends=false)
         if from && to
-          spent = time_entries.find(:all, :select => "hours, spent_on", :conditions => ["project_id = ? and spent_on between ? and ?", project_id, from, to])
+          spent = time_entries.find(:all, :select => "hours, spent_on", :include => [:issue],
+                                                :conditions => ["#{TimeEntry.table_name}.project_id = ? and spent_on between ? and ?", project_id, from, to])
+
+          spent = spent.select {|s| s.issue.accounting.name.casecmp(acctg) == 0} if acctg
           if include_weekends
             spent.sum{|s| s.hours}
           else
