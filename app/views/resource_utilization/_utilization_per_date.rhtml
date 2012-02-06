@@ -1,0 +1,49 @@
+<% unless weeks.nil? or weeks.empty? %>
+<div class="movable_table_container" style="width: 55%">
+  <div id='utilization_per_date' class='utilization_table_container' style="width: <%= weeks.count * 190 %>px">
+    <% weeks.each_with_index do |week, wnum| %>
+    <div class='floating_table' style=" width: 190px">
+      <table class="list rcf">
+      <thead>
+        <tr>
+          <th colspan='3'>W<%= wnum+1 %>&nbsp;<%= display_week(week) %></th>
+        </tr>
+        <tr>
+          <th>Allocated Hours</th>
+          <th>Actual Hours</th>
+          <th>Total Cost</th>
+        </tr>
+        </thead>
+        <% @resources.each do |r| %>
+        <tr class="<%= cycle('odd','even') %>">
+          <td><%= "%0.2f" % 0.0 %></td>
+          <td><%= "%0.2f" % 0.0 %></td>
+          <td><%= "%0.2f" % 0.0 %></td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+    <% end %>
+  </div>
+</div>
+<div id="totals_container">
+  <table class="list rcf">
+    <thead>
+    <tr>
+      <th>Total Hours</th>
+      <th>Total Cost</th>
+    </tr>
+    </thead>
+    <% @resources.each do |r| %>
+    <tr class="<%= cycle('odd','even') %>">
+      <td><%= "%0.2f" % 0.0 %></td>
+      <td><%= "%0.2f" % 0.0 %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+<script type="text/javascript">
+  jQuery("#resources_info_table thead").height(jQuery("#utilization_per_date table thead").height());
+  jQuery("#totals_container thead").height(jQuery("#utilization_per_date table thead").height());
+</script>
+<% end %>

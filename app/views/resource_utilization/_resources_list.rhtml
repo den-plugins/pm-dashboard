@@ -1,0 +1,26 @@
+<% if @resources.any? %>
+<div class="resources_container">
+  <table id='resources_info_table' class='list'>
+    <thead>
+    <tr>
+      <th>Resource Name</th>
+      <th>Role</th>
+      <th>Rate</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @resources.each do |r| %>
+    <tr class="<%= cycle('odd','even') %>">
+      <td style="text-align:left"><%= r.name %></td>
+      <td><%= r.user.skill %></td>
+      <td><%= r.internal_rate %></td>
+    </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<% weeks = get_weeks_range(Date.today.beginning_of_month, Date.today.end_of_month) %>
+<%= render :partial => "utilization_per_date", :locals => {:weeks => weeks} %>
+<% else %>
+  <p class="nodata">No data found.</p>
+<% end %>

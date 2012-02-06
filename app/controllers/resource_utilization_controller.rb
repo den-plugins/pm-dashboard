@@ -7,6 +7,7 @@ class ResourceUtilizationController < ApplicationController
 
   def index
     retrieve_date_range
+    @resources = @project.members.project_team
     respond_to do |format|
       format.html { render :layout => !request.xhr? }
     end

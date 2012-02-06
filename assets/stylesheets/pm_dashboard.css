@@ -44,7 +44,7 @@ td.right { text-align: right; }
 table.rcf { table-layout: fixed;}
 table#resource_costs { table-layout: fixed;}
 table#resource_costs tr td { text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
-.resource_cost_table_container, .bottomline_cost_table_container { margin-left: 1px;}
+.resource_cost_table_container, .bottomline_cost_table_container, .utilization_table_container { margin-left: 1px;}
 
 div.movable_table_container { float: left; position: relative; overflow-x: auto; background-color: #FFFEFD;}
 .floating_table { float: left; display: inline-block; table-layout: fixed; width: 210px;}
@@ -57,8 +57,13 @@ th.cost, td.cost { padding-right: 10px; border-right: 2px solid #BBBBBB; text-al
 .milestone table { width: 1000px;	}
 .milestone tr th { background: gray; border: 1px solid #989898; text-align: middle; padding: 4px;}
 
-#billability_table table tr th {white-space: normal; }
-#billability_table table tr td {text-align: center;  }
+#billability_table table tr th, #utilization_per_date table tr th {white-space: normal; }
+#billability_table table tr td, #utilization_per_date table tr td {text-align: center;  }
+
+#resources_info_table {border-right: 2px solid black;}
+#resources_info_table tbody tr, #totals_container table tr td {text-align: center;}
+#totals_container {float: left; width: 20%;}
+#totals_container table {border-left: 2px solid black;}
 
 table#pm_dashboard_milestones { table-layout: fixed; }
 table#pm_dashboard_milestones tr th { white-space: normal; }
