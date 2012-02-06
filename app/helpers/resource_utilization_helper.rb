@@ -9,4 +9,8 @@ module ResourceUtilizationHelper
                     [l(:label_last_week), 'last_week']],
                     value)
   end
+
+  def compute_actual_hours(resource, range)
+    resource.spent_time(range.first, range.last) + resource.spent_time_on_admin(range.first, range.last)
+  end
 end

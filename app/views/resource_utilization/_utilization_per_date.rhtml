@@ -1,6 +1,7 @@
 <% unless weeks.nil? or weeks.empty? %>
-<div class="movable_table_container" style="width: 55%">
+<div class="movable_table_container" style="max-width: 55%">
   <div id='utilization_per_date' class='utilization_table_container' style="width: <%= weeks.count * 190 %>px">
+    <% total_hours = total_cost = {} %>
     <% weeks.each_with_index do |week, wnum| %>
     <div class='floating_table' style=" width: 190px">
       <table class="list rcf">
@@ -16,9 +17,19 @@
         </thead>
         <% @resources.each do |r| %>
         <tr class="<%= cycle('odd','even') %>">
-          <td><%= "%0.2f" % 0.0 %></td>
-          <td><%= "%0.2f" % 0.0 %></td>
-          <td><%= "%0.2f" % 0.0 %></td>
+          <td><%= "%0.2f" % (r.days_and_cost(week) * 8) %></td>
+          <td><%= "%0.2f" % (ah = compute_actual_hours(r, week)) %></td>
+          <td><%= "%0.2f" % (tc = ah * r.internal_rate) %></td>
+          <% if total_hours["ah_#{r.id}"] %>
+            <% total_hours["ah_#{r.id}"] += ah %>
+          <% else %>
+            <% total_hours["ah_#{r.id}"] = ah %>
+          <% end %>
+          <% if total_cost["tc_#{r.id}"] %>
+            <% total_cost["tc_#{r.id}"] += tc %>
+          <% else %>
+            <% total_cost["tc_#{r.id}"] = tc %>
+          <% end %>
         </tr>
         <% end %>
       </table>
@@ -36,8 +47,8 @@
     </thead>
     <% @resources.each do |r| %>
     <tr class="<%= cycle('odd','even') %>">
-      <td><%= "%0.2f" % 0.0 %></td>
-      <td><%= "%0.2f" % 0.0 %></td>
+      <td><%= "%0.2f" % total_hours["ah_#{r.id}"] %></td>
+      <td><%= "%0.2f" % total_cost["tc_#{r.id}"] %></td>
     </tr>
     <% end %>
   </table>

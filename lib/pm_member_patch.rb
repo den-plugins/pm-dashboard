@@ -120,6 +120,19 @@ module Pm
         end
         actual >= allocated
       end
+
+      def spent_time_on_admin(from, to)
+        actuals_on_admin = 0
+        closest_admins = project.closest_admins
+        unless closest_admins.empty?
+          closest_admins.each do |sibling|
+            if m = sibling.members.detect {|m| m.user_id.eql?(user_id) }
+              actuals_on_admin += m.spent_time(from, to)
+            end
+          end
+        end
+        actuals_on_admin
+      end
     
     end
   end
