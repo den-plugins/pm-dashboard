@@ -19,7 +19,7 @@
         <tr class="<%= cycle('odd','even') %>">
           <td><%= "%0.2f" % (r.days_and_cost(week) * 8) %></td>
           <td><%= "%0.2f" % (ah = compute_actual_hours(r, week)) %></td>
-          <td><%= "%0.2f" % (tc = ah * r.internal_rate) %></td>
+          <td><%= "%0.2f" % (tc = ah * r.internal_rate.to_f) %></td>
           <% if total_hours["ah_#{r.id}"] %>
             <% total_hours["ah_#{r.id}"] += ah %>
           <% else %>

@@ -10,7 +10,7 @@
     </thead>
     <tbody>
     <% @resources.each do |r| %>
-    <tr class="<%= cycle('odd','even') %>">
+    <tr class="<%= cycle('odd','even') %><%= r.with_complete_logs?(@from..@to) ? '' : ' lred' %>">
       <td style="text-align:left"><%= r.name %></td>
       <td><%= r.user.skill %></td>
       <td><%= r.internal_rate %></td>
