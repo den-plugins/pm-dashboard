@@ -3,7 +3,7 @@
 <%= heads_for_wiki_formatter %>
 
 <h2>Resource Utilization</h2>
-<p>CLIENT: <%= @project.client %></p>
+<p><strong>CLIENT:</strong> <%= @project.client %></p>
 
 <% form_remote_tag(:url => {}, :loading => "$('ajax-indicator').show()", :complete => "$('ajax-indicator').hide()",
                                        :html => {:method => :get}, :method => :get, :update => 'content') do %>
