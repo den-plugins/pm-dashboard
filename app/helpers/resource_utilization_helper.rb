@@ -10,7 +10,7 @@ module ResourceUtilizationHelper
                     value)
   end
 
-  def compute_actual_hours(resource, range)
-    resource.spent_time(range.first, range.last) + resource.spent_time_on_admin(range.first, range.last)
+  def compute_actual_hours_with_admin(resource, range)
+    resource.spent_time(range.first, range.last, "Billable", true) + resource.spent_time_on_admin(range.first, range.last, "Billable", true)
   end
 end
