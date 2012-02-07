@@ -2,10 +2,8 @@
 
 <% if params[:view] && params[:view].eql?('month') %>
   <%= render :partial => "project_billability/monthly" %>
-<% elsif params[:view] && params[:view].eql?('week') %>
-  <%= render :partial => "project_billability/weekly" %>
 <% else %>
-  <p class="nodata"><%= l(:label_no_data) %></p>
+  <%= render :partial => "project_billability/weekly" %>
 <% end %>
 
 <script type="text/javascript">
