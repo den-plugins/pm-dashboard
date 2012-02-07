@@ -1,13 +1,13 @@
 <% if @resources.any? %>
 <div class="resources_container">
   <table id='resources_info_table' class='list'>
-    <thead>
+  <thead height="64px;" >
     <tr>
-      <th>Resource Name</th>
-      <th>Role</th>
-      <th>Rate</th>
+      <th height="53px;">Resource Name</th>
+      <th height="53px;">Role</th>
+      <th height="53px;">Rate</th>
     </tr>
-    </thead>
+  </thead>
     <tbody>
     <% @resources.each do |r| %>
     <tr class="<%= cycle('odd','even') %><%= r.with_complete_logs?(@from..@to) ? '' : ' lred' %>">
