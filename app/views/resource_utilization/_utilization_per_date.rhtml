@@ -15,11 +15,19 @@
           <th>Total Cost</th>
         </tr>
         </thead>
+
+        <% total_allocated_hours = 0 %>
+        <% total_actual_hours = 0 %>
+        <% total = 0 %>
+
         <% @resources.each do |r| %>
         <tr class="<%= cycle('odd','even') %>">
           <td><%= "%0.2f" % (r.days_and_cost(week) * 8) %></td>
+            <% total_allocated_hours += (r.days_and_cost(week) * 8) %>
           <td><%= "%0.2f" % (ah = compute_actual_hours_with_admin(r, week)) %></td>
+            <% total_actual_hours += (ah = compute_actual_hours_with_admin(r, week)) %>
           <td><%= "%0.2f" % (tc = ah * r.internal_rate.to_f) %></td>
+            <% total += (tc = ah * r.internal_rate.to_f) %>
           <% if total_hours["ah_#{r.id}"] %>
             <% total_hours["ah_#{r.id}"] += ah %>
           <% else %>
@@ -32,6 +40,16 @@
           <% end %>
         </tr>
         <% end %>
+        <tr>
+          <th>Total Allocated Hours</th>
+          <th>Total Actual Hours</th>
+          <th>Total Cost</th>
+        </tr>
+        <tr>
+          <td><%= total_allocated_hours %></td>
+          <td><%= total_actual_hours %></td>
+          <td><%= total %></td>
+        </tr>
       </table>
     </div>
     <% end %>
