@@ -10,12 +10,13 @@
   </thead>
     <tbody>
     <% @resources.each do |r| %>
-    <tr class="<%= cycle('odd','even') %>">
+    <tr class="<%= cycle('odd','even', :name => 'members') %>">
       <td style="text-align:left"><%= r.name %></td>
       <td><%= r.user.skill %></td>
       <td><%= r.internal_rate %></td>
     </tr>
     <% end %>
+    <% reset_cycle('members') %>
     </tbody>
     <tr>
       <th colspan='3'>Total</th>
