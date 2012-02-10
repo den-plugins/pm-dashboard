@@ -42,7 +42,8 @@ Redmine::Plugin.register :pm_dashboard do
                           :resource_utilization => [:index],
                           :risks => [:index, :show, :add, :update, :destroy],
                           :stakeholders => [:new, :create, :edit, :update, :remove],
-                          :resource_utilization => [:index]
+                          :resource_utilization => [:index],
+                          :time_logging => [:index]
                       }, :public => false
   end
   
@@ -60,6 +61,7 @@ Redmine::Plugin.register :pm_dashboard do
     menu.push :forecasts, {:controller => 'resource_costs', :action =>'index' }, :caption => 'Resource Cost Forecast', :param => :project_id
     menu.push :bottomline, {:controller => 'cost_monitoring', :action => 'index'}, :caption => 'Bottomline Cost Monitoring', :param => :project_id
     menu.push :utilization, {:controller => 'resource_utilization', :action =>'index' }, :caption => 'Resource Utilization', :param => :project_id
+    menu.push :time_logging, {:controller => 'time_logging', :action =>'index' }, :caption => 'Time Logging', :param => :project_id
     menu.push :billability, {:controller => 'project_billability', :action =>'index' }, :caption => 'Project Billability', :param => :project_id
     menu.push :milestones, {:controller => 'milestone_plans', :action =>'index' }, :caption => 'Milestone Plans', :param => :project_id
     menu.push :contracts, {:controller => 'project_contracts', :action =>'index' }, :caption => 'Project Contracts', :param => :project_id
