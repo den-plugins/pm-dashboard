@@ -21,7 +21,7 @@
         <% total = 0 %>
 
         <% @resources.each do |r| %>
-        <tr class="<%= cycle('odd','even') %>">
+        <tr class="<%= cycle('odd','even', :name => 'members') %>">
           <td><%= "%0.2f" % (r.days_and_cost(week) * 8) %></td>
             <% total_allocated_hours += (r.days_and_cost(week) * 8) %>
           <td><%= "%0.2f" % (ah = compute_actual_hours_with_admin(r, week)) %></td>
@@ -40,7 +40,7 @@
           <% end %>
         </tr>
         <% end %>
-
+        <% reset_cycle('members') %>
         <tr>
           <th><%= total_allocated_hours %></th>
           <th><%= total_actual_hours %></th>
@@ -55,8 +55,8 @@
   <table class="list rcf">
     <thead height="64px;">
     <tr>
-      <th height="53px;">Total Hours</th>
-      <th height="53px;">Total Cost</th>
+      <th>Total Hours</th>
+      <th>Total Cost</th>
     </tr>
     </thead>
 
@@ -78,7 +78,7 @@
   </table>
 </div>
 <script type="text/javascript">
-  jQuery("#resources_info_table thead").height(jQuery("#utilization_per_date table thead").height());
-  jQuery("#totals_container thead").height(jQuery("#utilization_per_date table thead").height());
+  jQuery("#resources_info_table thead tr").height(jQuery("#utilization_per_date table thead")[0].offsetHeight);
+  jQuery("#totals_container thead tr").height(jQuery("#utilization_per_date table thead")[0].offsetHeight);
 </script>
 <% end %>

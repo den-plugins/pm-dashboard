@@ -81,6 +81,8 @@ table#pm_dashboard_milestones .orig_date, table#pm_dashboard_milestones .effect_
 .even2 { background-color: #F5FFEE }
 .odd2 { background-color: #F7EEFF }
 .nodata { text-align: center; background-color: #E1E1E1; border-color: #E4E4E4; color: black;}
+.wrong  {border: 2px solid red; }
+.red_notice {position: absolute; color: red; font-weight: bold; margin: 2px 24px;}
 div.guide p { font-size: 9px; line-height: 0.15em;}
 
 .resources_container, .cost_monitoring_container { float: left; white-space: nowrap; width: 25%;}
@@ -167,9 +169,9 @@ div.week_highlight {padding: 2px; margin-bottom: 4px; max-height: 400px; backgro
 #highlight_form textarea { width: 99%; height: 250px; resize: none; margin-top: 5px;}
 
 .icon-unpost {background-image: url(/images/false.png) }
-.dashboard_highlight { overflow: auto; max-height: 110px; margin: 2px 2px 10px 2px; padding: 2px 15px 5px 2px;
+.dashboard_highlight { overflow: auto; max-height: 110px; margin: 0 0 10px 0; padding: 2px 15px 5px 2px;
                                            border: 1px solid #E4E4E4; border-radius: 7px; -webkit-border-radius: 7px; -moz-border-radius: 7px;}
-.dashboard_highlight p { margin: 0 }
+.dashboard_highlight p { margin: 0 1px 0 2px;}
 .dashboard_highlight ul { padding: 2px 45px; margin: 2px 0; }
 
 div#period { position: relative; top: -498px; z-index: 999;}
@@ -195,3 +197,4 @@ div#period span.selected { background-color: #fff; font-weight: bold; color: #00
 .btn_show_chart{ width: 100%; background-color: #dfdfdf; border: 1px solid #cfcfcf; padding: 5px; color: #777; font-size: 1em; font-weight: bold; }
 .btn_show_chart:hover{ color: #34c134; }
 .jqplot-pie-series.jqplot-data-label {color: black; }
+

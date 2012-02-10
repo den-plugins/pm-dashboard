@@ -71,4 +71,8 @@ module PmDashboardsHelper
     completed = members.select {|m| m.with_complete_logs?(range) }.count
     (completed.to_f/total.to_f) * 100
   end
+  
+  def is_aposted?(highlight)
+    highlight && highlight.posted?
+  end
 end

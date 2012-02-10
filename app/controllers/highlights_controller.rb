@@ -74,6 +74,7 @@ class HighlightsController < ApplicationController
                   :locals => {:highlight => (current_dup && (!current_dup.posted? || current_dup.posted_this_week?)) ? current_dup : current_highlight}
       else
         @highlight_errors = current_highlight.errors.full_messages
+        page["current_highlight_created_at"].value = current_dup.created_at.strftime("%Y-%m-%d")
         page.replace_html :current_error_messages, :partial => "highlights/errors"
       end
       if nextp_highlight.errors.empty?
@@ -81,6 +82,7 @@ class HighlightsController < ApplicationController
                     :locals => {:highlight => (nextp_dup && (!nextp_dup.posted? || nextp_dup.posted_this_week?)) ? nextp_dup : nextp_highlight}
       else
         @highlight_errors = nextp_highlight.errors.full_messages
+        page["nextp_highlight_created_at"].value = nextp_dup.created_at.strftime("%Y-%m-%d")
         page.replace_html :nextp_error_messages, :partial => "highlights/errors"
       end
       page.hide :current_highlight_wrapper
