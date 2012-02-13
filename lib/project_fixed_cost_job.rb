@@ -16,10 +16,10 @@ class ProjectFixedCostJob < Struct.new(:project_id)
     pfrom, afrom, to = project.planned_start_date, project.actual_start_date, project.planned_end_date
     if pfrom && to
       team = project.members.project_team.all
-      reporting_period = (Date.today-1.month).end_of_month
-      forecast_range = get_months_range(pfrom, to)
-      actual_range = get_months_range((afrom || pfrom), reporting_period)
-      estimate_range = get_months_range((reporting_period+1.month).beginning_of_month, to)
+      reporting_period = (Date.today-1.week).end_of_week
+      forecast_range = get_weeks_range(pfrom, to)
+      actual_range = get_weeks_range((afrom || pfrom), reporting_period)
+      estimate_range = get_weeks_range((reporting_period+1.week).beginning_of_week, to)
       cost = project.monitored_cost(forecast_range, actual_range, team)
       actual_list = actual_range.collect {|r| r.first }
       estimate_list = estimate_range.collect {|r| r.first }
