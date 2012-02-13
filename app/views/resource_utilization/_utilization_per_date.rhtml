@@ -22,8 +22,8 @@
 
         <% @resources.each do |r| %>
         <tr class="<%= cycle('odd','even', :name => 'members') %>">
-          <td><%= "%0.2f" % (r.days_and_cost(week) * 8) %></td>
-            <% total_allocated_hours += (r.days_and_cost(week) * 8) %>
+          <td><%= "%0.2f" % (r.days_and_cost(week, nil, false) * 8) %></td>
+            <% total_allocated_hours += (r.days_and_cost(week, nil, false) * 8) %>
           <td><%= "%0.2f" % (ah = compute_actual_hours_with_admin(r, week)) %></td>
             <% total_actual_hours += (ah = compute_actual_hours_with_admin(r, week)) %>
           <td><%= "%0.2f" % (tc = ah * r.internal_rate.to_f) %></td>
