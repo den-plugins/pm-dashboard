@@ -33,7 +33,7 @@ class ProjectBillabilityJob < Struct.new(:project_id)
       per_date_totals[date.last.to_s] = Hash.new
       per_date_totals[date.last.to_s]["lh"] = compute_labor_hours(date, project_resources)
       per_date_totals[date.last.to_s]["fh"] = compute_forecasted_hours(date, project_resources)
-      per_date_totals[date.last.to_s]["ah"] = compute_actual_hours(date, project_resources)
+      per_date_totals[date.last.to_s]["ah"] = compute_actual_hours(date, project_resources, "Billable")
 
       bill = compute_percent_to_date per_date_totals[date.last.to_s]["fh"], 
                                                    per_date_totals[date.last.to_s]["ah"]
