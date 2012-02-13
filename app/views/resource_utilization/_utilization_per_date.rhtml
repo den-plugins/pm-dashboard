@@ -59,12 +59,22 @@
       <th>Total Cost</th>
     </tr>
     </thead>
+
+    <% overall_hours = 0 %>
+    <% overall_cost = 0 %>
+
     <% @resources.each do |r| %>
     <tr class="<%= cycle('odd','even') %>">
       <td><%= "%0.2f" % total_hours["ah_#{r.id}"] %></td>
+      <% overall_hours += (total_hours["ah_#{r.id}"]) %>
       <td><%= "%0.2f" % total_cost["tc_#{r.id}"] %></td>
+      <% overall_cost += (total_cost["tc_#{r.id}"]) %>
     </tr>
     <% end %>
+    <tr>
+          <th><%= overall_hours %></th>
+          <th><%= overall_cost %></th>
+    </tr>
   </table>
 </div>
 <script type="text/javascript">

@@ -81,6 +81,8 @@ table#pm_dashboard_milestones .orig_date, table#pm_dashboard_milestones .effect_
 .even2 { background-color: #F5FFEE }
 .odd2 { background-color: #F7EEFF }
 .nodata { text-align: center; background-color: #E1E1E1; border-color: #E4E4E4; color: black;}
+.wrong  {border: 2px solid red; }
+.red_notice {position: absolute; color: red; font-weight: bold; margin: 2px 24px;}
 div.guide p { font-size: 9px; line-height: 0.15em;}
 
 .resources_container, .cost_monitoring_container { float: left; white-space: nowrap; width: 25%;}

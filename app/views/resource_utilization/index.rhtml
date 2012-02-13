@@ -4,16 +4,12 @@
 
 <h2>Resource Utilization</h2>
 <p><strong>CLIENT:</strong> <%= @project.client %></p>
-
-<% form_remote_tag(:url => {}, :loading => "$('ajax-indicator').show()", :complete => "$('ajax-indicator').hide()",
-                                       :html => {:method => :get}, :method => :get, :update => 'content') do %>
-  <fieldset id="filters">
-    <legend>
-      <%= l(:label_filter_plural) %>
-       <%=link_to "(hide/show)", "", :onclick => "$('utilization_filters').toggle(); return false;" %>
-    </legend>
-    <%= render :partial => "filters" %>
-  </fieldset>
-<% end %>
+<fieldset id="filters">
+  <legend>
+    <%= l(:label_filter_plural) %>
+     <%=link_to "(hide/show)", "", :onclick => "$('utilization_filters').toggle(); return false;" %>
+  </legend>
+  <%= render :partial => "filters" %>
+</fieldset>
 
 <%= render :partial => "resources_list" %>

@@ -4,7 +4,7 @@
                              :loading => "Element.show('ajax-indicator')",
                              :complete => "Element.hide('ajax-indicator')") do %>
     Search highlight by date:
-    <%= text_field_tag 'select_week', recently_posted_date(highlight, highlight_next), :size => 8, :onchange => "this.form.onsubmit();" %>
+    <%= text_field_tag 'select_week', recently_posted_date(highlight, highlight_next), :size => 8, :onchange => "this.form.onsubmit();", :readonly => true %>
     <%= calendar_for('select_week') %>
   <% end %>
   
