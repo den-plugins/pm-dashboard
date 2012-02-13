@@ -5,14 +5,14 @@
 <span id="updated_at" style="font-size:8pt; padding:2px; color:#666666"></span>
 <a href="#" id="refresh_lnk" onclick="jQuery('#view').attr('disabled', true);
   jQuery('#updated_at').text(''); 
-  jQuery('#processing_gif').show(); $('billability_form').request({
+  jQuery('#processing_gif').show().text('Enqueuing job...'); $('billability_form').request({
   parameters: { 'project_id': '<%= @project.id %>', 'refresh': 'true' }
   });" title="Refresh" style="display:none;"><%= image_tag('reload.png') %></a>
 </div>
 </h2>
 
 <% if display_by_billing_model.eql?("billability") %>
-  <p id="processing_gif">Processing... <%= image_tag("loading.gif") %></p>
+  <div id="processing_gif" class="flash notice"></div>
   <div id="keep_loading">
   <%= render :partial => "keep_loading" %>
   </div>

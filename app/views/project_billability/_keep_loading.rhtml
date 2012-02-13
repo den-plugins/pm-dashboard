@@ -28,20 +28,28 @@
       <p class="nodata">Undefined date range. Please specify Planned Start Date and Planned End Date.</p>
     <% end %>
   <% end %>
+<% else %>
+  <p class="nodata"><%= image_tag('loading.gif') %> Writing new data into file...</p>
+<% end %>
+
+<% if @job.nil? %>
+  
   <script type="text/javascript">
     jQuery("#processing_gif").hide();
     jQuery("#refresh_lnk").show();
   </script>
 <% else %>
   <script type="text/javascript">
+    jQuery("#processing_gif").text("Job has been enqueued.")
     jQuery("#refresh_lnk").hide();
     setTimeout(function(){
       $('billability_form').request({
         parameters: { 'project_id': '<%= @project.id %>', 
-                      'processing': 'true' 
+                      'processing': 'true',
+                      'job_id' : '<%= params[:job_id] ? params[:job_id] : @job.id %>' 
                     }
       });
-    }, 5000);
+    }, 15000);
   </script>
 <% end %>
 <form id="billability_form" method="POST" action="/project_billability">

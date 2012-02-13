@@ -10,7 +10,14 @@ class ProjectBillabilityController < ApplicationController
   
   def index
     @project_resources  = @project.members.select(&:billable?)
-    update_project_billability
+    if request.xhr?
+      update_project_billability
+    else
+      handler = ProjectBillabilityJob.new(@project.id)
+      @job = Delayed::Job.find_by_handler(handler.to_yaml)
+      load_billability_file
+      enqueue_billability_job(handler) if @billability.nil? || @billability.empty?
+    end
   end
   
   private
@@ -22,21 +29,20 @@ class ProjectBillabilityController < ApplicationController
   end
   
   def update_project_billability
-    if @project.planned_end_date && @project.planned_start_date && params[:refresh]
-      Delayed::Job.enqueue ProjectBillabilityJob.new(@project.id)
-      temp = File.exists?("#{RAILS_ROOT}/config/billability.yml") ? YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml")) : {}
-      temp.delete("billability_#{@project.id}")
-      File.open( "#{RAILS_ROOT}/config/billability.yml", 'w' ) do |out|
-        YAML.dump( temp, out )
-      end
-      @billability = nil
-    else
-      @billability = if File.exists?("#{RAILS_ROOT}/config/billability.yml")
-        (file = YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml")))? file["billability_#{@project.id}"] : {}
+    @job = Delayed::Job.find_by_id(params[:job_id])
+    if @job.nil?
+      if params[:refresh]
+        load_billability_file
+        handler = ProjectBillabilityJob.new(@project.id)
+        @job = Delayed::Job.find_by_handler(handler.to_yaml)
+        enqueue_billability_job(handler) if @project.planned_end_date && @project.planned_start_date
       else
-        {}
+        load_billability_file
       end
+    else
+      load_billability_file
     end
+    
     render(:update) do |p|
       p.replace_html "billability_list", :partial => 'project_billability/list'
     end if params[:view]
@@ -44,4 +50,24 @@ class ProjectBillabilityController < ApplicationController
       p.replace_html :keep_loading, :partial => 'project_billability/keep_loading'
     end if params[:processing] || params[:refresh]
   end
+
+  def load_billability_file
+    if File.exists?("#{RAILS_ROOT}/config/billability.yml")
+      if file = YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))
+        @billability = file["billability_#{@project.id}"]
+      else
+        @billability = {}
+      end
+    else
+     @billability = {}
+    end
+  end
+
+  def enqueue_billability_job(handler)
+    unless @job
+      puts "enqueuing billability job..."
+      @job = Delayed::Job.enqueue handler
+    end
+  end
+
 end
