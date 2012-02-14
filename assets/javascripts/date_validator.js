@@ -1,3 +1,13 @@
+function disableEnterKey(e, input) {
+  var ele = jQuery(input);
+  if (checkDateField(ele)) {
+    return true;
+  } else {
+    var key = ((window.event) ? window.event.keyCode : e.which)
+    return (key != 13);
+  }
+}
+
 function checkDateField(ele) {
   var patt = /^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$/;
   var stringDate = ele.val();
