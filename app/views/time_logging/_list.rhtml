@@ -4,12 +4,12 @@
     <thead>
       <tr>
         <th width='8%'>Location</th>
-        <%= sort_header_tag('resource', :caption => "Resource", :width => "28%") %>
-        <th width='8%'>Skill</th>
-        <th width='14%'>Total Hours (<%= get_string @th %>)</th>
-        <th width='14%'>Total Hours on Project (<%= get_string @thos %>)</th>
-        <th width='14%'>Billable Hours (<%= get_string @tbh %>)</th>
-        <th width='14%'>Non-billable Hours (<%= get_string @tnbh %>)</th>
+        <%= sort_header_tag('resource', :caption => "Resource", :width => "25%") %>
+        <th width='15%'>Role</th>
+        <th width='13%'>Total Hours (<%= get_string @th %>)</th>
+        <th width='13%'>Total Hours on Project (<%= get_string @thos %>)</th>
+        <th width='13%'>Billable Hours (<%= get_string @tbh %>)</th>
+        <th width='13%'>Non-billable Hours (<%= get_string @tnbh %>)</th>
       </tr>
     </thead>
     <tbody>
@@ -17,7 +17,7 @@
       <tr class="<%= cycle('odd','even') %> <%= color_code_log_time s %>">
         <td class="left"><%= s[:location] %></td>
         <td class="left"><%= s[:name] %></td>
-        <td class="left"><%= s[:skill] %></td>
+        <td class="left"><%= s[:role] %></td>
         <td><%= get_string s[:total_hours] %></td>
         <td><%= get_string s[:total_hours_on_selected] %></td>
         <td><%= get_string s[:billable_hours] %></td>
