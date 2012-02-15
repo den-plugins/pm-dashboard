@@ -36,8 +36,8 @@ tr.lblue, td.lblue, th.lblue { background-color: #99CCFF; color: #000; }
 tr.lgray, td.lgray, th.lgray { background-color: #9a9a9a; color: #FFF; }
 tr.lred, td.lred, th.lred { background-color: #E57E7C; color: #000; }
 
-td.left { text-align: left; }
-td.right { text-align: right; }
+td.left { text-align: left!important; }
+td.right { text-align: right!important; }
 
 .splitcontentleft table, .splitcontentright table { margin-left: 180px;}
 .popup table { width: 100%;}
