@@ -4,16 +4,21 @@ module TimeLoggingHelper
     "lred" if user[:total_hours_on_selected].to_f < user[:forecasted_hours_on_selected].to_f
   end
 
-  def compute_time_logs(resource, range, acctg)
+  def compute_time_logs(resource, range, acctg, weekends=false)
     from, to = range.first, range.last
     acctg = get_acctg_type(acctg)
-    resource.spent_time(from, to, acctg, false) + resource.spent_time_on_admin(from, to, acctg, false)
+    # as of now, weekend logs are  included for daily view only
+    resource.spent_time(from, to, acctg, weekends) + resource.spent_time_on_admin(from, to, acctg, weekends)
   end
   
   def display_week(range)
     from, to = range.first, range.last
-    s = "%s/" % from.mon + "%s" % from.day + " - " +
-           "%s/" % to.mon + "%s" % to.day
+    if from.eql?(to)
+      s = from.to_date.strftime("%m/%d")
+    else
+      s = "%s/" % from.mon + "%s" % from.day + " - " +
+             "%s/" % to.mon + "%s" % to.day
+    end
   end
   
   def get_acctg_type(acctg)
@@ -21,6 +26,14 @@ module TimeLoggingHelper
     when "both"; nil
     when "billable"; "Billable"
     when "non_billable"; "Non-Billable"
+    end
+  end
+  
+  def get_ranges_by_column_type(col, from, to)
+    case col
+      when "month"; get_months_range(from, to)
+      when "day"; get_days(from, to)
+      else; get_weeks_range(from, to)
     end
   end
   

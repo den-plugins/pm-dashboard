@@ -1,5 +1,15 @@
 module ResourceCostsHelper
 
+  def get_days(from, to)
+    if from && to
+      days = []
+      (from..to).each do |day|
+        days << (day..day)
+      end
+      days
+    end
+  end
+
   def get_weeks(start_date, end_date)
     unless start_date.nil? or end_date.nil?
       start_date.weeks_ago end_date

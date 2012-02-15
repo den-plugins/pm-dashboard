@@ -124,6 +124,9 @@ class TimeLoggingController < ApplicationController
       when 'current_year'
         @from = Date.civil(Date.today.year, 1, 1)
         @to = Date.civil(Date.today.year, 12, 31)
+      when 'all'
+        @from ||= (TimeEntry.minimum(:spent_on, :include => :project, :conditions => Project.allowed_to_condition(User.current, :view_time_entries)) || Date.today) - 1
+        @to   ||= (TimeEntry.maximum(:spent_on, :include => :project, :conditions => Project.allowed_to_condition(User.current, :view_time_entries)) || Date.today)
       end
     elsif params[:period_type] == '2' || (params[:period_type].nil? && (!params[:from].nil? || !params[:to].nil?))
       begin; @from = params[:from].to_s.to_date unless params[:from].blank?; rescue; end

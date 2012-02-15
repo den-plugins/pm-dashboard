@@ -15,7 +15,7 @@
                                                          :end => (text_field_tag('to', @to, :size => 10, :onchange => "validateDate(this)",
                                                                            :onKeyPress => "return disableEnterKey(event, this)") + calendar_for('to'))) %>
     </span>
-    <%= l(:label_details) %>: <%= select_tag 'columns', options_for_select([[l(:label_month), 'month'], [l(:label_week), 'week']], @columns) %>
+    <%= l(:label_details) %>: <%= select_tag 'columns', options_for_select([[l(:label_month), 'month'], [l(:label_week), 'week'], [l(:label_day_plural).titleize, 'day']], @columns) %>
     <%= select_tag 'show_only', options_for_select([["Both", 'both'], ["Billable", 'billable'], ["Non-Billable", 'non_billable']], @show_only) %>
     <%= submit_tag l(:button_apply), :name => nil, :hidden => true %>
     </p>

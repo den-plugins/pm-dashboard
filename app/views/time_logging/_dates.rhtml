@@ -1,10 +1,11 @@
-<% dates = (@columns.eql?("week") ? get_weeks_range(@from, @to) : get_months_range(@from, @to)) %>
+<% dates = get_ranges_by_column_type @columns, @from, @to %>
+<% width = (@columns.eql?("day") ? 65 : 101) %>
 <% unless dates.nil? or dates.empty? %>
 <div class="movable_table_container" style="max-width: 39%">
-  <div id='floating_tables_holder' class='utilization_table_container' style="width: <%= dates.count * 101 %>px">
+  <div id='floating_tables_holder' class='utilization_table_container' style="width: <%= dates.count * width %>px">
     <% dates.each_with_index do |date, dnum| %>
     <% total_hours = 0 %>
-    <div class='floating_table' style=" width: 101px">
+    <div class='floating_table' style=" width: <%= width %>px">
       <table class="time_logging list rcf">
       <thead>
         <tr>
@@ -13,7 +14,7 @@
         </tr>
       </thead>
       <% @resources.each do |resource| %>
-          <% user_hour = compute_time_logs(resource, date, params[:show_only]) %>
+          <% user_hour = compute_time_logs(resource, date, params[:show_only], (@columns.eql?("day"))) %>
           <% total_hours += user_hour %>
         <tr class="<%= cycle('odd','even', :name => 'users') %>">
           <td><%= get_string user_hour %></td>
