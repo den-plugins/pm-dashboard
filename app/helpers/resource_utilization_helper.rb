@@ -1,6 +1,6 @@
 module ResourceUtilizationHelper
 
-  def options_for_period_select(value)
+  def options_for_period_select_limited(value)
     options_for_select(
                     [[l(:label_this_month), 'current_month'],
                     #[l(:label_last_month), 'last_month'],

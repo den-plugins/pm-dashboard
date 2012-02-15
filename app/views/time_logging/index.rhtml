@@ -4,6 +4,7 @@
 
 <h2>Time Logging</h2>
 <% if  @resources.any? %>
+  <%= render :partial => "filters" %>
   <%= render :partial => "list" %>
 <% else %>
   <p class="nodata"><%= l(:label_no_data) %></p>

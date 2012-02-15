@@ -4,13 +4,10 @@
   <div id="utilization_filters">
     <p>
       <%= radio_button_tag 'period_type', '1', !@free_period %>
-      <%= select_tag 'period', options_for_period_select_limited(params[:period]),
-                                    :onchange => 'this.form.onsubmit();',
+      <%= select_tag 'period', options_for_period_select(params[:period]),
                                     :onfocus => '$("period_type_1").checked = true;' %>
-    </p>
     <span id="from_notice" class="red_notice" style="font-color: red"></span>
     <span id="to_notice" class="red_notice" style="font-color: red"></span>
-    <p>
       <%= radio_button_tag 'period_type', '2', @free_period %>
       <span onclick="$('period_type_2').checked = true;">
       <%= l(:label_date_from_to, :start => (text_field_tag('from', @from, :size => 10, :onchange => "validateDate(this)",
@@ -18,7 +15,9 @@
                                                          :end => (text_field_tag('to', @to, :size => 10, :onchange => "validateDate(this)",
                                                                            :onKeyPress => "return disableEnterKey(event, this)") + calendar_for('to'))) %>
     </span>
-      <%= submit_tag l(:button_apply), :name => nil, :hidden => true %>
+    <%= l(:label_details) %>: <%= select_tag 'columns', options_for_select([[l(:label_month), 'month'], [l(:label_week), 'week']], @columns) %>
+    <%= select_tag 'show_only', options_for_select([["Both", 'both'], ["Billable", 'billable'], ["Non-Billable", 'non_billable']], @show_only) %>
+    <%= submit_tag l(:button_apply), :name => nil, :hidden => true %>
     </p>
   </div>
 <% end %>

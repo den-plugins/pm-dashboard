@@ -1,10 +1,14 @@
 function disableEnterKey(e, input) {
   var ele = jQuery(input);
-  if (checkDateField(ele)) {
-    return true;
+  var form = ele.closest('form');
+  var submit = form.find('input:submit');
+  
+  var key = ((window.event) ? window.event.keyCode : e.which)
+  if (key == 13) {
+    if (submit.is(":hidden") || (checkDateField(ele) == false)) {return false}
+    else {return true}
   } else {
-    var key = ((window.event) ? window.event.keyCode : e.which)
-    return (key != 13);
+    return true
   }
 }
 

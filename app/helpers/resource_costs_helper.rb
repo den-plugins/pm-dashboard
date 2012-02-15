@@ -10,10 +10,19 @@ module ResourceCostsHelper
     if from && to
       start_date, end_date = from, to
       weeks = []
+      # if from/to falls on a weekend, mon/fri is set to self (date)
       until ((from..to).to_a & (start_date..end_date).to_a).empty?
-        mon = from.eql?(start_date) ? start_date : from.monday
-        fri = from.weeks_ago(to).eql?(0) ? to : (mon.monday+4.days)
-        from = mon + 1.week
+        mon = if from.wday.eql?(0) || from.wday.eql?(6)
+                       from
+                     else
+                       from.eql?(start_date) ? start_date : from.monday
+                     end
+        fri = if from.wday.eql?(0) || from.wday.eql?(6)
+                   from
+                 else
+                   from.weeks_ago(to).eql?(0) ? to : (mon.monday+4.days)
+                 end
+        from = mon.next_week
         weeks << (mon .. fri)
       end
       weeks

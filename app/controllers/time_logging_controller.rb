@@ -3,17 +3,15 @@ class TimeLoggingController < ApplicationController
   helper :resource_costs
   helper :sort
   include SortHelper
-
+  
   before_filter :get_project
   before_filter :authorize
 
   def index
     sort_init "#{User.table_name}.lastname", "ASC"
-     sort_update({"resource" =>  "#{User.table_name}.lastname"})
-
+    sort_update({"resource" =>  "#{User.table_name}.lastname"})
     @resources = @project.members.project_team.find(:all, :order => sort_clause)
     retrieve_data
-    
     render :template => "time_logging/index", :layout => !request.xhr?
   end
 
@@ -24,16 +22,17 @@ class TimeLoggingController < ApplicationController
       render_404
   end
   
-  def retrieve_date_range
-    @from, @to = @to, @from if @from && @to && @from > @to
-    @from ||= (Date.today.monday - 3.weeks)
-    @to ||= (Date.today.monday + 4.days)
+  def current_month
+    @from = Date.civil(Date.today.year, Date.today.month, 1)
+    @to = (@from >> 1) - 1
   end
   
   def retrieve_data
     retrieve_date_range
+    @show_only = (params[:show_only].blank?)? "both" : params[:show_only]
     @columns = (params[:columns] && %w(year month week day).include?(params[:columns])) ? params[:columns] : 'week'
     @users = @resources.collect {|m| m.user }
+    # include in list of projects the related 'admin' project(s) for leaves, holidays, etc
     @projects = @project.closest_admins << @project
 
     ####################SUMMARY COMPUTATION###################
@@ -93,5 +92,49 @@ class TimeLoggingController < ApplicationController
       end
     end
     @summary = @summary.sort_by {|c| c.count }
+  end
+  
+  def retrieve_date_range
+    @free_period = false
+    @from, @to = nil, nil
+
+    if params[:period_type] == '1' || (params[:period_type].nil? && !params[:period].nil?)
+      case params[:period].to_s
+      when 'today'
+        @from = @to = Date.today
+      when 'yesterday'
+        @from = @to = Date.today - 1
+      when 'current_week'
+        @from = Date.today - (Date.today.cwday - 1)%7
+        @to = @from + 6
+      when 'last_week'
+        @from = Date.today - 7 - (Date.today.cwday - 1)%7
+        @to = @from + 6
+      when '7_days'
+        @from = Date.today - 7
+        @to = Date.today
+      when 'current_month'
+         current_month
+      when 'last_month'
+        @from = Date.civil(Date.today.year, Date.today.month, 1) << 1
+        @to = (@from >> 1) - 1
+      when '30_days'
+        @from = Date.today - 30
+        @to = Date.today
+      when 'current_year'
+        @from = Date.civil(Date.today.year, 1, 1)
+        @to = Date.civil(Date.today.year, 12, 31)
+      end
+    elsif params[:period_type] == '2' || (params[:period_type].nil? && (!params[:from].nil? || !params[:to].nil?))
+      begin; @from = params[:from].to_s.to_date unless params[:from].blank?; rescue; end
+      begin; @to = params[:to].to_s.to_date unless params[:to].blank?; rescue; end
+      @free_period = true
+    else
+      current_month
+    end
+
+    @from, @to = @to, @from if @from && @to && @from > @to
+    @from ||= (Date.today.monday - 3.weeks)
+    @to ||= (Date.today.monday + 4.days)
   end
 end
