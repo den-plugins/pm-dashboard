@@ -86,7 +86,7 @@ class TimeLoggingController < ApplicationController
         x[:total_hours] = time_entries.select{|v| v.user_id == usr.id }.collect(&:hours).compact.sum
         x[:billable_hours] = b.collect(&:hours).compact.sum
         x[:non_billable_hours] = nb.collect(&:hours).compact.sum
-        x[:forecasted_hours_on_selected] = res.days_and_cost(@from..@to) * 8
+        x[:forecasted_hours_on_selected] = res.days_and_cost(@from..@to) * 8        # shadow allocations included
         x[:total_hours_on_selected] = x[:billable_hours] + x[:non_billable_hours]
         @summary.push(x)
       end

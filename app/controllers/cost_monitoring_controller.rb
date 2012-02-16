@@ -5,6 +5,7 @@ class CostMonitoringController < ApplicationController
   before_filter :authorize, :only => [:index]
 
   include PmDashboardsHelper
+  include ResourceCostsHelper
   helper :resource_costs
   
   def index

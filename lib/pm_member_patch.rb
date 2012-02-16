@@ -49,7 +49,7 @@ module Pm
         pmrole
       end
       
-      def days_and_cost(week, rate = nil, count_shadow=true)
+      def days_and_cost(week, rate = nil, count_shadow=true, acctg='Billable')
         days, cost = 0, 0
         allocations = resource_allocations
         unless allocations.empty?
@@ -61,8 +61,17 @@ module Pm
                 if count_shadow
                   days += (1 * (allocation.resource_allocation.to_f/100).to_f)
                 else
-                  # count only days where member is Billable
-                  days += (1 * (allocation.resource_allocation.to_f/100).to_f) if allocation.resource_type.eql?(0)
+                  case acctg.downcase
+                  when 'billable'
+                    # count only days where member is Billable
+                    days += (1 * (allocation.resource_allocation.to_f/100).to_f) if allocation.resource_type.eql?(0)
+                  when 'non-billable'
+                    #count only days where member is Non-billable
+                    days += (1 * (allocation.resource_allocation.to_f/100).to_f) if allocation.resource_type.eql?(1)
+                  when 'both'
+                    # count days where member is not a shadow
+                    days += (1 * (allocation.resource_allocation.to_f/100).to_f) if allocation.resource_type.eql?(0) or allocation.resource_type.eql?(1)
+                  end
                 end
               end
             end

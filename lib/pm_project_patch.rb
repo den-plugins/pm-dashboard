@@ -1,6 +1,5 @@
 require_dependency 'project'
-include ProjectBillabilityHelper
-include ResourceCostsHelper
+include CostMonitoringHelper
 
 module Pm
   module ProjectPatch
@@ -94,9 +93,9 @@ module Pm
         costs = {}
         ranges = (aranges + franges).uniq
         ranges.each do |range|
-          budget_hours = compute_forecasted_hours(range, members)
-          budget_cost = compute_forecasted_cost_without_contingency(range, members, self)
-          actual_cost = compute_actual_cost(range, members)
+          budget_hours = cost_compute_forecasted_hours(range, members, 'both')
+          budget_cost = cost_compute_forecasted_cost_without_contingency(range, members, 'both', self)
+          actual_cost = cost_compute_actual_cost(range, members)
           costs[range.first] = {:budget_hours => budget_hours, :budget_cost => budget_cost,
                                 :actual_cost => actual_cost }
         end
