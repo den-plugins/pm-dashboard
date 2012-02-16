@@ -19,12 +19,6 @@ module ProjectBillabilityHelper
     total_budget = bac_amount.to_f + contingency_amount.to_f
   end
   
-  def compute_forecasted_cost_without_contingency(week, resources, project=@project)
-    from, to = week.first, week.last
-    bac_amount = resources.sum {|a| a.days_and_cost((from..to), daily_rate(a.internal_rate), false).last}
-    total_budget = bac_amount.to_f
-  end
-  
   def compute_actual_hours(week, resources, acctg = nil)
     from, to= week.first, (week.last.wday.eql?(5) ? (week.last+2.days) : week.last)
     allocated = resources.select {|r| r.billable?(from, to)}
