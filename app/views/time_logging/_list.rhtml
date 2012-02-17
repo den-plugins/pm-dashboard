@@ -23,6 +23,11 @@
         <td><%= get_string s[:billable_hours] %></td>
         <td><%= get_string s[:non_billable_hours] %></td>
       </tr>
+
+      <script type="text/javascript">
+        jQuery('#ajax-indicator').hide();
+      </script>
+
       <% end %>
       <tr class="summary_total">
         <td colspan="7"></td>
@@ -32,3 +37,11 @@
   </div>
   <%= render :partial => "dates" %>
 </div>
+
+<script type="text/javascript">
+  var xhr = null;
+  jQuery('.sort').live('click', function(){
+    if(xhr) xhr.abort();
+    jQuery('#ajax-indicator').show();
+  });
+</script>
