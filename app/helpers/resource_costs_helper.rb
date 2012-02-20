@@ -72,8 +72,11 @@ module ResourceCostsHelper
   
   def display_week(range)
     from, to = range.first, range.last
-    s = "%s/" % from.mon + "%s" % from.day + " - " +
-           "%s/" % to.mon + "%s" % to.day
+    if from.eql? to
+      s = from.to_date.strftime("%m/%d")
+    else
+      s = from.to_date.strftime("%m/%d") << " - " << to.to_date.strftime("%m/%d")
+    end
   end
   
   def hnum(number)

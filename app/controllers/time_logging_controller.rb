@@ -30,7 +30,7 @@ class TimeLoggingController < ApplicationController
   def retrieve_data
     retrieve_date_range
     @show_only = (params[:show_only].blank?)? "both" : params[:show_only]
-    @columns = (params[:columns] && %w(year month week day).include?(params[:columns])) ? params[:columns] : 'week'
+    @columns = (params[:columns] && %w(year month week day).include?(params[:columns])) ? params[:columns] : 'day'
     @users = @resources.collect {|m| m.user }
     # include in list of projects the related 'admin' project(s) for leaves, holidays, etc
     @projects = @project.closest_admins << @project
@@ -133,11 +133,10 @@ class TimeLoggingController < ApplicationController
       begin; @to = params[:to].to_s.to_date unless params[:to].blank?; rescue; end
       @free_period = true
     else
-      current_month
+      @from = Date.today - 7 - (Date.today.cwday - 1)%7
+      @to = @from + 4
     end
 
     @from, @to = @to, @from if @from && @to && @from > @to
-    @from ||= (Date.today.monday - 3.weeks)
-    @to ||= (Date.today.monday + 4.days)
   end
 end

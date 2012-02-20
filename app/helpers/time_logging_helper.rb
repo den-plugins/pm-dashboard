@@ -11,16 +11,6 @@ module TimeLoggingHelper
     resource.spent_time(from, to, acctg, weekends) + resource.spent_time_on_admin(from, to, acctg, weekends)
   end
   
-  def display_week(range)
-    from, to = range.first, range.last
-    if from.eql?(to)
-      s = from.to_date.strftime("%m/%d")
-    else
-      s = "%s/" % from.mon + "%s" % from.day + " - " +
-             "%s/" % to.mon + "%s" % to.day
-    end
-  end
-  
   def get_acctg_type(acctg)
     case acctg
     when "both"; nil
@@ -43,12 +33,12 @@ module TimeLoggingHelper
   
   def options_for_period_select(value)
     options_for_select([
-            [l(:label_this_month), 'current_month'],
+            [l(:label_last_week), 'last_week'],
             [l(:label_all_time), 'all'],
             [l(:label_today), 'today'],
             [l(:label_yesterday), 'yesterday'],
             [l(:label_this_week), 'current_week'],
-            [l(:label_last_week), 'last_week'],
+            [l(:label_this_month), 'current_month'],
             [l(:label_last_n_days, 7), '7_days'],
             [l(:label_last_month), 'last_month'],
             [l(:label_last_n_days, 30), '30_days'],
