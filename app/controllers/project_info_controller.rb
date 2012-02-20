@@ -102,10 +102,12 @@ class ProjectInfoController < ApplicationController
     if request.post?
       @member = Member.find(params[:id])
       @project = @member.project
+      @time_entry = @project.time_entries.find(:last, :conditions => ["user_id = ?", @member.user_id])
 
-      if @member.update_attributes(params[:member])
-        redirect_to_info
+      if @time_entry.nil?
+        @member.update_attributes(params[:member])
       end
+      redirect_to_info
     end
   end
 
