@@ -55,7 +55,7 @@ class ProjectBillabilityJob < Struct.new(:project_id)
       end
     end
 
-    total_percent_billability = bill_total/dates_total
+    total_percent_billability = bill_total/dates_total if (dates_total != 0)
     if billability["billability_#{project.id}"].nil? || billability.empty?
       billability["billability_#{project.id}"] = {
         "per_#{view}_totals" => per_date_totals,
