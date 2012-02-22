@@ -1,38 +1,45 @@
 <div class="box" id="billability_box">
-<h3><%=l(:label_dashboard_billability)%>
-<a href="#" onclick="jQuery('#processing_gif').show().text('Enqueuing job...'); $('billability_form').request({
-  parameters: { 'project_id': '<%= @project.id %>', 'refresh': 'true' }
-  });" title="Refresh" style="float:right; display:none;"><%= image_tag('reload.png') %></a>
-</h3>
-<span id="dashboard_billability">
-<div id="processing_gif" class="flash notice"></div>
-<% if !@billability.nil? && !@billability.empty? %>
-  <%= render :partial => "project_billability/billability_dashboard" %>
-<% else %>
-  <p class="nodata"><%= image_tag('loading.gif') %> Writing new data into file...</p>
-<% end %>
-<% if @job.nil? %>
-  <script type="text/javascript">
-    jQuery("#processing_gif").hide();
-    jQuery("#dashboard_billability").parent().find("a").show();
-    
-  </script>
-<% else %>
-  <script type="text/javascript">
-    jQuery("#processing_gif").text("Job has been enqueued.");
-    jQuery("#dashboard_billability").parent().find("a").hide();
-    setTimeout(function(){
-      $('billability_form').request({
-        parameters: { 
-          'project_id': '<%= @project.id %>',
-          'job_id' : '<%= params[:job_id] ? params[:job_id] : @job.id %>'
-        }
-      });
-    }, 15000);
-  </script>
-<% end %>
-<form id="billability_form" method="POST" action="/pm_dashboards/reload_billability">
-</form>
+  <h3><%=l(:label_dashboard_billability)%>
+    <span id="updated_at" style="font-size:8pt; padding:2px; color:#666666; margin-left:70px;"></span>
+    <a href="#" onclick="jQuery('#processing_gif').show().text('Enqueuing job...'); $('billability_form').request({
+      parameters: { 'project_id': '<%= @project.id %>', 'refresh': 'true' }
+      });" title="Refresh" style="float:right; display:none;"><%= image_tag('reload.png') %></a>
+  </h3>
+  <span id="dashboard_billability">
+  <div id="processing_gif" class="flash notice"></div>
+  <% @updated_at = @billability["updated_at"] %>
 
-</span>
+  <% if !@billability.nil? && !@billability.empty? %>
+    <%= render :partial => "project_billability/billability_dashboard" %>
+  <% else %>
+    <p class="nodata"><%= image_tag('loading.gif') %> Writing new data into file...</p>
+  <% end %>
+
+  <% if @job.nil? %>
+    <script type="text/javascript">
+      jQuery("#processing_gif").hide();
+      jQuery("#dashboard_billability").parent().find("a").show();
+      jQuery("#updated_at").text("");
+      jQuery("#updated_at").text("<%= "as of #{@updated_at.strftime('%b %d, %Y %I:%M %p')}" if @updated_at %>");
+    </script>
+  <% else %>
+    <script type="text/javascript">
+      jQuery("#processing_gif").text("Job has been enqueued.");
+      jQuery("#updated_at").text("");
+      jQuery("#updated_at").text("<%= "as of #{@updated_at.strftime('%b %d, %Y %I:%M %p')}" if @updated_at %>");
+      jQuery("#dashboard_billability").parent().find("a").hide();
+      setTimeout(function(){
+        $('billability_form').request({
+          parameters: {
+            'project_id': '<%= @project.id %>',
+            'job_id' : '<%= params[:job_id] ? params[:job_id] : @job.id %>'
+          }
+        });
+      }, 15000);
+    </script>
+  <% end %>
+  <form id="billability_form" method="POST" action="/pm_dashboards/reload_billability">
+  </form>
+
+  </span>
 </div>

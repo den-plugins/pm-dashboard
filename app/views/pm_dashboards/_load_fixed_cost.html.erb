@@ -1,38 +1,47 @@
 <div class="box" id="fixed_cost_box">
-<h3><%=l(:label_dashboard_status_as_of)%>
-<a href="#" onclick="jQuery('#processing_gif').show().text('Enqueuing job...'); $('fixed_cost_form').request({
-  parameters: { 'project_id': '<%= @project.id %>', 'refresh': 'true' }
-  });" style="float:right; display:none;"><%= image_tag('reload.png') %></a>
-</h3>
-<span id="dashboard_cost_monitoring">
-<div id="processing_gif" class="flash notice"></div>
-<% if !@fixed_cost.nil? && !@fixed_cost.empty? %>
-  <%= render :partial => "project_billability/cost_monitoring_dashboard" %>
-<% else %>
-  <p class="nodata"><%= image_tag('loading.gif') %> Writing new data into file...</p>
-<% end %>
-<% if @job.nil? %>
-<% updated_at = @fixed_cost["updated_at"] ? "Updated last #{@fixed_cost['updated_at'].strftime('%b %d, %Y %I:%M %p')}" : "Refresh" %>
-  <script type="text/javascript">
-    jQuery("#processing_gif").hide();
-    jQuery("#dashboard_cost_monitoring").parent().find("a").attr("title", "<%= updated_at %>").show();
-  </script>
-<% else %>
-  <script type="text/javascript">
-    jQuery("#processing_gif").text("Job has been enqueued.");
-    jQuery("#dashboard_billability").parent().find("a").hide();
-    setTimeout(function(){
-      $('fixed_cost_form').request({
-        parameters: { 
-          'project_id': '<%= @project.id %>',
-          'job_id' : '<%= params[:job_id] ? params[:job_id] : @job.id %>'
-        }
-      });
-    }, 15000);
-  </script>
-<% end %>
-<form id="fixed_cost_form" method="POST" action="/pm_dashboards/reload_fixed_cost">
-</form>
+  <h3><%=l(:label_dashboard_status)%>
+    <span id="updated_at" style="font-size:8pt; padding:2px; color:#666666; margin-left:50px;"></span>
+    <a href="#" onclick="jQuery('#processing_gif').show().text('Enqueuing job...'); $('fixed_cost_form').request({
+      parameters: { 'project_id': '<%= @project.id %>', 'refresh': 'true' }
+      });" style="float:right; display:none;"><%= image_tag('reload.png') %></a>
+  </h3>
+  <span id="dashboard_cost_monitoring">
+  <div id="processing_gif" class="flash notice"></div>
+  <% @updated_at = @fixed_cost["updated_at"] %>
 
-</span>
+  <% if !@fixed_cost.nil? && !@fixed_cost.empty? %>
+    <%= render :partial => "project_billability/cost_monitoring_dashboard" %>
+  <% else %>
+    <p class="nodata"><%= image_tag('loading.gif') %> Writing new data into file...</p>
+  <% end %>
+
+  <% if @job.nil? %>
+    <% updated_at = @fixed_cost["updated_at"] ? "Updated last #{@fixed_cost['updated_at'].strftime('%b %d, %Y %I:%M %p')}" : "Refresh" %>
+    <script type="text/javascript">
+      jQuery("#processing_gif").hide();
+      jQuery("#dashboard_cost_monitoring").parent().find("a").attr("title", "<%= updated_at %>").show();
+      jQuery("#updated_at").text("");
+      jQuery("#updated_at").text("<%= "as of #{@updated_at.strftime('%b %d, %Y %I:%M %p')}" if @updated_at %>");
+    </script>
+  <% else %>
+    <script type="text/javascript">
+      jQuery("#processing_gif").text("Job has been enqueued.");
+      jQuery("#updated_at").text("");
+      jQuery("#updated_at").text("<%= "as of #{@updated_at.strftime('%b %d, %Y %I:%M %p')}" if @updated_at %>");
+      jQuery("#dashboard_billability").parent().find("a").hide();
+      setTimeout(function(){
+        $('fixed_cost_form').request({
+          parameters: {
+            'project_id': '<%= @project.id %>',
+            'job_id' : '<%= params[:job_id] ? params[:job_id] : @job.id %>'
+          }
+        });
+      }, 15000);
+    </script>
+  <% end %>
+
+  <form id="fixed_cost_form" method="POST" action="/pm_dashboards/reload_fixed_cost">
+  </form>
+
+  </span>
 </div>
