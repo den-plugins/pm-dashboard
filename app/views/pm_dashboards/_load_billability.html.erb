@@ -7,7 +7,9 @@
   </h3>
   <span id="dashboard_billability">
   <div id="processing_gif" class="flash notice"></div>
-  <% @updated_at = @billability["updated_at"] %>
+  <% unless @billability.nil? %>
+    <% @updated_at = @billability["updated_at"] %>
+  <% end %>
 
   <% if !@billability.nil? && !@billability.empty? %>
     <%= render :partial => "project_billability/billability_dashboard" %>

@@ -7,7 +7,9 @@
   </h3>
   <span id="dashboard_cost_monitoring">
   <div id="processing_gif" class="flash notice"></div>
-  <% @updated_at = @fixed_cost["updated_at"] %>
+  <% unless @fixed_cost.nil? %>
+    <% @updated_at = @fixed_cost["updated_at"] %>
+  <% end %>
 
   <% if !@fixed_cost.nil? && !@fixed_cost.empty? %>
     <%= render :partial => "project_billability/cost_monitoring_dashboard" %>
