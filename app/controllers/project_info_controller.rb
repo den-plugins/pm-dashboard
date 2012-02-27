@@ -106,6 +106,9 @@ class ProjectInfoController < ApplicationController
 
       if @time_entry.nil?
         @member.update_attributes(params[:member])
+        flash[:notice] = "Project member successfully removed."
+      else
+        flash[:warning] = "Project member not removed, time entry exists."
       end
       redirect_to_info
     end
