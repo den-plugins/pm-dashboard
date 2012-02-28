@@ -16,3 +16,6 @@
     Click <%= link_to 'here', :controller => 'project_info' %> to add a team for this project.
   </p>
 <% end %>
+<% content_for :header_tags do %>
+  <%= javascript_include_tag 'fixed_header.js', :plugin => 'management' %>
+<% end %>

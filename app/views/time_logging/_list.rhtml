@@ -24,10 +24,6 @@
         <td><%= get_string s[:non_billable_hours] %></td>
       </tr>
 
-      <script type="text/javascript">
-        jQuery('#ajax-indicator').hide();
-      </script>
-
       <% end %>
       <tr class="summary_total">
         <td colspan="7"></td>
@@ -39,9 +35,11 @@
 </div>
 
 <script type="text/javascript">
-  var xhr = null;
+  jQuery('#ajax-indicator').hide();
   jQuery('.sort').live('click', function(){
-    if(xhr) xhr.abort();
     jQuery('#ajax-indicator').show();
+  });
+  jQuery(function(){
+    synchRowHighlights("time_logging_table");
   });
 </script>

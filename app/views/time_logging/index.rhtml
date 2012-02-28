@@ -1,6 +1,9 @@
 <%= render :partial => 'common/header' %>
 <%= include_calendar_headers_tags %>
 <%= heads_for_wiki_formatter %>
+<% content_for :header_tags do %>
+  <%= javascript_include_tag 'fixed_header.js', :plugin => 'management' %>
+<% end %>
 
 <h2>Time Logging</h2>
 <p><strong>CLIENT:</strong> <%= @project.client %></p>

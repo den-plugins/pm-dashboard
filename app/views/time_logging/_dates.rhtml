@@ -13,6 +13,7 @@
           <%= display_week(date) %></th>
         </tr>
       </thead>
+      <tbody>
       <% @resources.each do |resource| %>
           <% user_hour = compute_time_logs(resource, date, params[:show_only], (@columns.eql?("day"))) %>
           <% total_hours += user_hour %>
@@ -24,6 +25,7 @@
           <td><%= get_string total_hours%></td>
         </tr>
         <% reset_cycle('users') %>
+        </tbody>
       </table>
     </div>
     <% end %>

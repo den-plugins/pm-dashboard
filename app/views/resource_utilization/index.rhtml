@@ -13,3 +13,7 @@
 </fieldset>
 
 <%= render :partial => "resources_list" %>
+
+<% content_for :header_tags do %>
+  <%= javascript_include_tag 'fixed_header.js', :plugin => 'management' %>
+<% end %>

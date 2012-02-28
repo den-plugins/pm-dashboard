@@ -9,6 +9,12 @@
   <div id="bottomline_cost_content">
     <%= render :partial => "cost_monitoring/table" %>
   </div>
+  <script type="text/javascript">
+    synchRowHighlights("bottomline_cost_content");
+  </script>
 <% else %>
   <p class="nodata">Undefined date range. Please specify Planned Start Date and Planned End Date.</p>
+<% end %>
+<% content_for :header_tags do %>
+  <%= javascript_include_tag 'fixed_header.js', :plugin => 'management' %>
 <% end %>

@@ -19,7 +19,7 @@
         <% total_allocated_hours = 0 %>
         <% total_actual_hours = 0 %>
         <% total = 0 %>
-
+        <tbody>
         <% @resources.each do |r| %>
         <tr class="<%= cycle('odd','even', :name => 'members') %>">
           <td><%= "%0.2f" % (r.days_and_cost(week, nil, false) * 8) %></td>
@@ -46,6 +46,7 @@
           <th><%= total_actual_hours %></th>
           <th><%= total %></th>
         </tr>
+        <tbody>
       </table>
     </div>
     <% end %>
