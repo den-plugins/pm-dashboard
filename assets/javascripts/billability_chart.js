@@ -1,4 +1,5 @@
 function plot_billability(id, data){
+    console.log(JSON.stringify(data));
     var plot1 = jQuery.jqplot (id, data, {
       axesDefaults: {
         tickRenderer: jQuery.jqplot.CanvasAxisTickRenderer,
@@ -8,7 +9,8 @@ function plot_billability(id, data){
         xaxis: {
           label: "Dates",
           renderer: jQuery.jqplot.DateAxisRenderer,
-          tickOptions: { showMark: false, angle: -60 }
+          tickOptions: { showMark: false, angle: -60 }, 
+          min: ((data[0].length > 1)? null : new Date(data[0][0][0]))
         },
         yaxis: {
           label: "Billability (%)",

@@ -26,7 +26,8 @@
           jQuery(".value.cost_color").text("<%= cost_color_code_label(code) %>");
           jQuery(".cost_color").addClass(cost_color);
       </script>
-
+      
+      <% if @billability["billability_per_week"] and !@billability["billability_per_week"].empty? %>
       <div id="bchart2" style="height: 240px; display: none; "></div>
       <div id="show_billability_chart">
         <% form_remote_tag(:url => {:action => 'load_chart', :chart => 'billability_chart', 
@@ -34,6 +35,9 @@
         <%= submit_tag "Show Graph", :class => 'btn_show_chart', :onclick => "this.value = 'Loading...'; $('bchart2').show();" %>
         <% end %>
       </div>
+      <% else %>
+      <p class="nodata">Chart will be rendered not until next week.<p>
+      <% end %>
 
 <% else %>
   <p class='nodata'>Undefined date range. Please specify Planned Start Date and Planned End Date.</p>

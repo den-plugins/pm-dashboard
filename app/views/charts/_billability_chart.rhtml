@@ -1,5 +1,5 @@
+<% if @billability["billability_per_week"] and !@billability["billability_per_week"].empty? %>
 <script type="text/javascript">
-  <% if @billability["billability_per_week"] and !@billability["billability_per_week"].empty? %>
-    plot_billability("bchart2", [<%= @billability["billability_per_week"].to_json %>]);
-  <% end %>
+  plot_billability("bchart2", [<%= @billability["billability_per_week"].to_json %>]);
 </script>
+<% end %>
