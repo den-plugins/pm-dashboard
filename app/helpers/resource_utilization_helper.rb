@@ -10,7 +10,17 @@ module ResourceUtilizationHelper
                     value)
   end
 
-  def compute_actual_hours_with_admin(resource, range)
-    resource.spent_time(range.first, range.last, "Billable", true) + resource.spent_time_on_admin(range.first, range.last, "Billable", true)
+  def compute_actual_hours_with_admin(resource, range, include_weekends = false, wnum = nil, total_weeks = nil)
+    from, to = range.first, range.last
+    if include_weekends
+      if wnum == 0
+        from, to = @from, (@from.monday + 6.days)
+      elsif wnum == (total_weeks - 1)
+        to = @to
+      else
+        to = from.monday + 6.days
+      end
+    end
+    resource.spent_time(from, to, "Billable", include_weekends) + resource.spent_time_on_admin(from, to, "Billable", include_weekends)
   end
 end
