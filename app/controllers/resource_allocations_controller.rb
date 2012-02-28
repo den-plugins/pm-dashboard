@@ -108,11 +108,10 @@ class ResourceAllocationsController < ApplicationController
 
   def get_possible_locations
     @locations = {}
-    if c = UserCustomField.find(:first, :select => [:possible_values], :conditions => "name='Location'")
-      c.possible_values.each do |location|
-        hlocation = Holiday::LOCATIONS.detect {|k,v| v.downcase.eql?(location.downcase)}
-        @locations [hlocation[0]] = hlocation[1] if hlocation
-      end
+    # locations currently static atm. TODO override enumeration model
+    ["Manila", "Cebu", "US", "N/A"].each do |location|
+      hlocation = Holiday::LOCATIONS.detect {|k,v| v.downcase.eql?(location.downcase)}
+      @locations [hlocation[0]] = hlocation[1] if hlocation
     end
   end
   

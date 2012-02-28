@@ -1,4 +1,4 @@
-<% weeks = get_weeks_range(@project.planned_start_date, @project.planned_end_date) %>
+<% weeks = get_weeks_range(@project.planned_start_date, (@project.actual_end_date || @project.planned_end_date)) %>
 <% per_column = {} %>
 <% @bac_hours, @bac_amount = 0, 0 %>
 

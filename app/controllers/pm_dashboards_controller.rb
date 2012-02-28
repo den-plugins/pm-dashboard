@@ -32,7 +32,7 @@ class PmDashboardsController < ApplicationController
         enqueue_billability_job(handler) if @billability.nil? || @billability.empty?
       end
     elsif billing_model == "fixed"
-      if @project.planned_end_date && @project.planned_start_date
+      if @project.planned_start_date && (@project.actual_end_date || @project.planned_end_date)
         handler = ProjectFixedCostJob.new(@project.id)
         @job = Delayed::Job.find_by_handler(handler.to_yaml)
         load_fixed_cost_file

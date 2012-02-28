@@ -1,4 +1,4 @@
-<% if @project.planned_end_date && @project.planned_start_date %>
+<% if @project.planned_start_date && (@project.actual_end_date || @project.planned_end_date) %>
   
       <%# @project_contracts ||= @project.project_contracts.find(:all, :order => 'id DESC') %>
       <div style="width: 100%; margin: 0; padding: 0">
@@ -7,7 +7,6 @@
             <th colspan=2><%= l(:label_billing_model) %></th>
             <td colspan=2><%= @project.billing_model %></td>
           </tr>
-      <% if !@project.planned_end_date.nil? && !@project.planned_start_date.nil? %>
           <tr>
             <th>Budget</th>
           <td> <%= number_with_delimiter ("%0.2f" % (@cost_budget = @fixed_cost["cost_budget"])) %></td>
@@ -20,7 +19,6 @@
             <th>Variance</th>
             <td><%= number_with_delimiter ("%0.2f" % (variants = @cost_budget - @cost_forecast)) %></td>
           </tr>
-      <% end %>
         </table>
       </div>
       

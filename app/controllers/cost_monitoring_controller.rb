@@ -17,7 +17,8 @@ class CostMonitoringController < ApplicationController
     @project_budget = 0
     @estimate_to_complete = 0
 
-    pfrom, afrom, to = @project.planned_start_date, @project.actual_start_date, @project.planned_end_date
+    pfrom, afrom, pto, ato = @project.planned_start_date, @project.actual_start_date, @project.planned_end_date, @project.actual_end_date
+    to = (ato || pto)
     if pfrom && to
       team = @project.members.project_team.all
       

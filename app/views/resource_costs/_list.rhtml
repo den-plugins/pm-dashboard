@@ -3,7 +3,7 @@
   <table id='resource_costs' class='list'>
     <tr>
       <th style="width:20px;">
-        <%= link_to image_tag('toggle_check.png'), "#", :onclick => "toggle_resources_selection()",
+        <%= link_to image_tag('toggle_check.png'), "#", :onclick => "toggle_resources_selection(); return false;",
             :id => "btn_toggle_resource_selection", :title => "select/unselect all to allocate..." %>
       </th>
       <th height="40px">
