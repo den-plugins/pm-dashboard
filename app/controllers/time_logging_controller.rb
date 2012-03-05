@@ -134,7 +134,7 @@ class TimeLoggingController < ApplicationController
       @free_period = true
     else
       @from = Date.today - 7 - (Date.today.cwday - 1)%7
-      @to = @from + 4
+      @to = @from + 6   #until sunday
     end
 
     @from, @to = @to, @from if @from && @to && @from > @to
