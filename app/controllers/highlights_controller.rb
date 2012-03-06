@@ -22,8 +22,8 @@ class HighlightsController < ApplicationController
     if params[:cancel]
       @highlights = @project.weekly_highlights
       render :update do |page|
-        page.replace_html :next_period, :partial => "highlights/nextp", :locals => {:highlight => @highlights[:after_current]}
-        page.replace_html :this_period, :partial => "highlights/current", :locals => {:highlight => @highlights[:current]}
+        page.replace_html :next_period, :partial => "highlights/nextp", :locals => {:highlight => @highlights[:unposted_after_current]}
+        page.replace_html :this_period, :partial => "highlights/current", :locals => {:highlight => @highlights[:unposted_current]}
       end
     else
 	    #update_highlight
@@ -118,8 +118,8 @@ class HighlightsController < ApplicationController
     @highlights = @project.weekly_highlights
     render :update do |page|
       page.replace_html :recently_posted, :partial => "highlights/recently_posted", :locals => {:highlight => @highlights[:posted_current], :highlight_next => @highlights[:posted_after_current]}
-      page.replace_html :next_period, :partial => "highlights/nextp", :locals => {:highlight => @highlights[:after_current]}
-      page.replace_html :this_period, :partial => "highlights/current", :locals => {:highlight => @highlights[:current]}
+      page.replace_html :next_period, :partial => "highlights/nextp", :locals => {:highlight => @highlights[:unposted_after_current]}
+      page.replace_html :this_period, :partial => "highlights/current", :locals => {:highlight => @highlights[:unposted_current]}
     end
   end
 end

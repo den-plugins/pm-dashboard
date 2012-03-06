@@ -47,5 +47,8 @@
 </div>
 
 <span id='current_highlight_wrapper'>
+  <% if highlight and !highlight.new_record? %>
+    <p><em><%= highlight.created_at.strftime("%B %e, %Y") %></em></p>
+  <% end %>
   <span class="content_text"><%= render_highlight_message highlight, "No highlight for this week yet." %></span>
 </span>

@@ -11,11 +11,11 @@
 
 <div class="splitcontentright">
   <div class="highlighttext" id='this_period'>
-    <%= render :partial => 'highlights/current', :locals => {:highlight => @highlights[:current]} %>
+    <%= render :partial => 'highlights/current', :locals => {:highlight => @highlights[:unposted_current]} %>
   </div>
   
   <div class="highlighttext" id='next_period' style="display: none">
-    <%= render :partial => 'highlights/nextp', :locals => {:highlight => @highlights[:after_current]} %>
+    <%= render :partial => 'highlights/nextp', :locals => {:highlight => @highlights[:unposted_after_current]} %>
   </div>
   
   <div id='period'>

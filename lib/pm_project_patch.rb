@@ -74,6 +74,9 @@ module Pm
         h[:posted_current] = highlights.for_the_week(date).post_current.first
         h[:posted_after_current] = highlights.for_the_week(date).post_after_current.first
         
+        h[:unposted_current] = highlights.first(:conditions => "is_for_next_period is false and posted_date is NULL", :order => 'created_at DESC')
+        h[:unposted_after_current] = highlights.first(:conditions => "is_for_next_period is true and posted_date is NULL", :order => 'created_at DESC')
+        
         this_week = Date.today.monday
         h[:current] = highlights.first(:conditions => ["is_for_next_period is false and created_at between ? and ?", this_week, (this_week + 6.days)], :order => 'created_at DESC')
         h[:after_current] = highlights.first(:conditions => ["is_for_next_period is true and created_at between ? and ?", this_week, (this_week + 6.days)], :order => 'created_at DESC')
