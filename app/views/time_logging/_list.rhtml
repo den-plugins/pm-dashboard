@@ -15,8 +15,8 @@
     <tbody>
       <% @summary.each do |s| %>
       <tr class="<%= cycle('odd','even') %> <%= color_code_log_time s %>">
-        <td class="left"><%= s[:location] %></td>
-        <td class="left"><%= s[:name] %></td>
+        <td class="left"><%= s[:location] %></td> 
+        <td class="left"><%=link_to s[:name], "/ticker/user_timelogs?user_id=#{s[:user_id]}&from=#{@from}&to=#{@to}&type=#{@columns}", :target => "_blank" %></td>
         <td class="left"><%= s[:role] %></td>
         <td><%= get_string s[:total_hours] %></td>
         <td><%= get_string s[:total_hours_on_selected] %></td>

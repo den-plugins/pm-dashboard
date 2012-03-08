@@ -79,6 +79,7 @@ class TimeLoggingController < ApplicationController
         x = Hash.new
 
         x[:count] = icount
+        x[:user_id] = usr.id
         x[:location] = usr.location
         x[:name] = usr.display_name
         x[:role] = res.pmrole
