@@ -5,12 +5,13 @@
 <%= javascript_include_tag 'select_list_move' %>
 
 <div id="info_1">
+<p class="contextual" style="float: left;">
+  <%= link_to_if_authorized l(:label_gantt), {:controller => 'issues', :action => 'gantt', :project_id => @project}, :class => 'icon milestone' %>
+</p>
+<p class="contextual">
+  <%= link_to l(:label_milestone_new), {:controller => :milestone_plans, :action => :add, :project_id => @project }, :class => 'icon icon-add' %>
+</p>
 <table class="list" border=1>
-	<tr>
-		<td align = "right" colspan="20">
-			<%= link_to l(:label_milestone_new), {:controller => :milestone_plans, :action => :add, :project_id => @project }, :class => 'icon icon-add' %>
-		</td>
-	</tr>
   <tr>
     <th><%= l(:field_version_name) %></th>
     <th><%= l(:field_version_description) %></th>
