@@ -77,7 +77,7 @@ class TimeLoggingController < ApplicationController
         b = bounded_time_entries_billable.select{|v| v.user_id == usr.id }
         nb = bounded_time_entries_non_billable.select{|v| v.user_id == usr.id }
         x = Hash.new
-        
+
         x[:count] = icount
         x[:location] = usr.location
         x[:name] = usr.display_name
