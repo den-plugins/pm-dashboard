@@ -1,11 +1,10 @@
 <h2 style='margin: 0'>Project Management Dashboard</h2>
 
 <div class='tabs'>
-  <%= render_menu :project_management, @project %>
+  <%= render_pm_dashboard_tabs %>
 </div>
 
 <script type="text/javascript">
-  j = jQuery.noConflict();
   jQuery("li a.pm-dashboards").addClass('selected');
 </script>
 

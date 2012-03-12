@@ -1,22 +1,25 @@
-class RisksController < ApplicationController
-
+class RisksController < PmController
   menu_item :risks
 
-  helper :pm_dashboards
-  
   before_filter :require_login
   before_filter :get_project, :only => [:index, :show, :add, :update, :destroy]
   before_filter :get_risk, :only => [:index, :show, :update, :destroy]
   before_filter :authorize
+  before_filter :role_check_client
 
   def index
     @project ||= @risk.project
-    @risks = params[:id] ? [@risk] : @project.risks.find(:all, :order => 'ref_number DESC')
+    if params[:id]
+      @risks = (@client && @risk.env.eql?('E')) ? [] : [@risk]
+    else
+      condition = @client ? "env='E'" : ""
+      @risks = @project.risks.find(:all, :conditions => condition, :order => 'ref_number DESC')
+    end
   end
   
   def show
     @project ||= @risk.project
-    @risks = [@risk]
+    @risks = (@client && !@risk.env.eql?('E')) ? [] : [@risk]
     render :template => "risks/index"
   end
   

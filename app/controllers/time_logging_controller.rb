@@ -1,4 +1,4 @@
-class TimeLoggingController < ApplicationController
+class TimeLoggingController < PmController
   menu_item :time_logging
   helper :resource_costs
   helper :sort
@@ -6,6 +6,7 @@ class TimeLoggingController < ApplicationController
   
   before_filter :get_project
   before_filter :authorize
+  before_filter :role_check
 
   def index
     sort_init "#{User.table_name}.lastname", "ASC"

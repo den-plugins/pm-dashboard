@@ -1,10 +1,11 @@
-class MilestonePlansController < ApplicationController
+class MilestonePlansController < PmController
 
   menu_item :milestones
-  
+
 	before_filter :get_project, :only => [:index, :add, :update, :destroy]
   before_filter :get_version, :only => [:update, :destroy]
   before_filter :authorize
+  before_filter :role_check_client
 
   def index
     @version = Version.find(params[:version_id]) if params[:version_id]

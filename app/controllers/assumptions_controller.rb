@@ -1,13 +1,12 @@
-class AssumptionsController < ApplicationController
+class AssumptionsController < PmController
   
   menu_item :assumptions
-  
-  helper :pm_dashboards
-  
+
   before_filter :require_login
   before_filter :get_project
   before_filter :get_assumption, :only => [:index, :show, :update, :destroy]
   before_filter :authorize
+  before_filter :role_check_client
   
   def index
     @project ||= @assumption.project

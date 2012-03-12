@@ -1,12 +1,11 @@
-class ResourceCostsController < ApplicationController
-
+class ResourceCostsController < PmController
   menu_item :forecasts
-
   include FaceboxRender
     
   before_filter :get_project
   before_filter :authorize, :only => [:index, :edit_project]
-    
+  before_filter :role_check
+
   def index
     @proj_team = @project.members.project_team
     update_resource_list

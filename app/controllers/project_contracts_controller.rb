@@ -1,8 +1,6 @@
-class ProjectContractsController < ApplicationController
-  
+class ProjectContractsController < PmController
   menu_item :contracts
   
-  helper :pm_dashboards
   helper :attachments
   include AttachmentsHelper
   include Redmine::Export::PDF
@@ -11,7 +9,8 @@ class ProjectContractsController < ApplicationController
   before_filter :get_project, :only => [:index, :add, :update, :destroy]
   before_filter :get_project_contract, :only => [:update, :destroy]
   before_filter :authorize
-  
+  before_filter :role_check_client
+
   def index
     @project_contracts ||= @project.project_contracts.find(:all, :order => 'id DESC')
   end

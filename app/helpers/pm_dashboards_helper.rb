@@ -18,6 +18,15 @@ module PmDashboardsHelper
     tabs
   end
   
+  def render_pm_dashboard_tabs
+    if @client
+      #javascript_tag(" jQuery('li a.pm-dashboards').text('Client Dasboard')") +
+      render_menu(:clients_project_management, @project)
+    else
+      render_menu :project_management, @project
+    end
+  end
+
   def collection_for_risk_select(related)
     @project.risks.select { |r| !related.risks.include?(r) }
   end

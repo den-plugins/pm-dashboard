@@ -99,8 +99,9 @@ tr.summary_total td { color: black; font-weight: bold; text-align: center; backg
 .red_notice {position: absolute; color: red; font-weight: bold; margin: 2px 24px;}
 div.guide p { font-size: 9px; line-height: 0.15em;}
 
-#content.tabs ul {width: 100%; padding-left: 5px; }
-#content .tabs ul li { margin: 0 2px; }
+#content .tabs {height: inherit; width: 100%; float: left; margin-bottom: 10px; padding: 10px 0 1px 6px}
+#content .tabs ul {position: relative; padding: 0; margin: 0; }
+#content .tabs ul li { margin: -1px 2px;}
 
 .resources_container, .cost_monitoring_container { float: left; white-space: nowrap; width: 25%;}
 .resource_cost_container, .bottomline_costs_container { float: left; width: 75%; position: relative; overflow-x: auto;}
@@ -213,4 +214,3 @@ div#period span.selected { background-color: #fff; font-weight: bold; color: #00
 .btn_show_chart{ width: 100%; background-color: #dfdfdf; border: 1px solid #cfcfcf; padding: 5px; color: #777; font-size: 1em; font-weight: bold; }
 .btn_show_chart:hover{ color: #34c134; }
 .jqplot-pie-series.jqplot-data-label {color: black; }
-

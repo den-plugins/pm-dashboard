@@ -1,13 +1,11 @@
-class ProjectBillabilityController < ApplicationController
-  
+class ProjectBillabilityController < PmController
   menu_item :billability
-  
-  helper :pm_dashboards
   helper :resource_costs
   
   before_filter :get_project
   before_filter :authorize
-  
+  before_filter :role_check
+
   def index
     @project_resources  = @project.members.select(&:billable?)
     if request.xhr?
@@ -69,5 +67,4 @@ class ProjectBillabilityController < ApplicationController
       @job = Delayed::Job.enqueue handler
     end
   end
-
 end

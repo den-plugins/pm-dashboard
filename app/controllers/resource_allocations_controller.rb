@@ -1,7 +1,5 @@
-class ResourceAllocationsController < ApplicationController
+class ResourceAllocationsController < PmController
   include FaceboxRender
-  
-  helper :pm_dashboards
   helper :resource_costs
   
   before_filter :get_member, :except => [:multiple_allocations]
@@ -9,6 +7,7 @@ class ResourceAllocationsController < ApplicationController
   before_filter :get_project, :except => [:multiple_allocations]
   before_filter :get_possible_locations
   before_filter :authorize
+  before_filter :role_check
   
   def index
     if params[:cancel]

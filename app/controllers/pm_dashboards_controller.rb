@@ -1,4 +1,4 @@
-class PmDashboardsController < ApplicationController
+class PmDashboardsController < PmController
 
   menu_item :dashboard, :only => :index
   helper :risks
@@ -10,6 +10,7 @@ class PmDashboardsController < ApplicationController
   
   before_filter :get_project, :only => [:index, :load_chart, :reload_billability, :reload_fixed_cost]
   before_filter :authorize, :only => [:index]
+  before_filter :role_check_client, :only => [:index]
   
   def index
     @highlights = @project.weekly_highlights
@@ -22,7 +23,7 @@ class PmDashboardsController < ApplicationController
     @milestones = @milestones.reverse {|v| v.effective_date}
     @current_sprint = @project.current_version
     @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
-
+    
     billing_model = display_by_billing_model
     if billing_model == "billability" || billing_model.nil?
       if @project.planned_end_date && @project.planned_start_date
@@ -143,6 +144,11 @@ class PmDashboardsController < ApplicationController
       puts "enqueuing fixed cost job..."
       @job = Delayed::Job.enqueue handler
     end
+  end
+  
+  def role_check
+    member = @project.members.find(:first, :conditions => ["user_id=?", User.current.id])
+    @client = member if !User.current.admin? and (role=member.role) and role.name.downcase.include?('clients')
   end
   
 end

@@ -70,6 +70,7 @@
     </div>
   </div>
   
+  <% unless @client %>
   <div class="singleCol">
     <% if display_by_billing_model.eql?("fixed") %>
       <%= render :partial => "load_fixed_cost"  %>
@@ -83,6 +84,7 @@
       <%= render :partial => "charts/resource_utilization_chart" %>
     </div>
   </div>
+  <% end %>
   
   <div class="singleCol">
     <div class="box">

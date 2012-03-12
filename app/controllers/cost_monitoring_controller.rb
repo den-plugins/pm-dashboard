@@ -1,8 +1,9 @@
-class CostMonitoringController < ApplicationController
-
+class CostMonitoringController < PmController
   menu_item :bottomline
+
   before_filter :get_project
   before_filter :authorize, :only => [:index]
+  before_filter :role_check
 
   include PmDashboardsHelper
   include ResourceCostsHelper

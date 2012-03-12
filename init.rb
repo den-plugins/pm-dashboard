@@ -66,7 +66,17 @@ Redmine::Plugin.register :pm_dashboard do
     menu.push :milestones, {:controller => 'milestone_plans', :action =>'index' }, :caption => 'Milestone Plans', :param => :project_id
     menu.push :contracts, {:controller => 'project_contracts', :action =>'index' }, :caption => 'Project Contracts', :param => :project_id
     menu.push :highlights, {:controller => 'highlights', :action =>'index' }, :caption => 'Weekly Highlights', :param => :project_id
-
+  end
+  
+    Redmine::MenuManager.map :clients_project_management do |menu|
+    menu.push :dashboard, {:controller => 'pm_dashboards', :action => 'index' }, :param => :project_id
+    menu.push :info, {:controller => 'project_info', :action =>'index' }, :param => :project_id
+    menu.push :assumptions, {:controller => 'assumptions', :action =>'index' }, :param => :project_id
+    menu.push :project_issues, {:controller => 'pm_dashboard_issues', :action => 'index'}, :param => :project_id
+    menu.push :risks, {:controller => 'risks', :action =>'index' }, :param => :project_id
+    menu.push :milestones, {:controller => 'milestone_plans', :action =>'index' }, :caption => 'Milestone Plans', :param => :project_id
+    menu.push :contracts, {:controller => 'project_contracts', :action =>'index' }, :caption => 'Project Contracts', :param => :project_id
+    menu.push :highlights, {:controller => 'highlights', :action =>'index' }, :caption => 'Weekly Highlights', :param => :project_id
   end
 end
 

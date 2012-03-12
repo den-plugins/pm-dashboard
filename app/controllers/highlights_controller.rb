@@ -1,9 +1,10 @@
-class HighlightsController < ApplicationController
+class HighlightsController < PmController
 
   menu_item :highlights
-
+  
   before_filter :get_project, :get_highlight
   before_filter :authorize
+  before_filter :role_check_client
   
   include HighlightsHelper
   

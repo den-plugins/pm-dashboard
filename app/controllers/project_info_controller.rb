@@ -1,9 +1,10 @@
-class ProjectInfoController < ApplicationController
+class ProjectInfoController < PmController
 
   menu_item :info
-  
+
   before_filter :get_project, :only => [:index, :add, :update, :destroy, :add_pm_position, :add_pm_role, :pm_member_add, :pm_member_edit]
   before_filter :authorize, :only => [:index, :add, :update, :destroy, :add_pm_position, :add_pm_role, :pm_member_add, :pm_member_edit]
+  before_filter :role_check_client
   
   def index
     @stakeholders = @project.members.stakeholders
@@ -208,5 +209,4 @@ class ProjectInfoController < ApplicationController
       end
     end
   end
-
 end

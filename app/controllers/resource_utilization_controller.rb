@@ -1,9 +1,10 @@
-class ResourceUtilizationController < ApplicationController
+class ResourceUtilizationController < PmController
   menu_item :utilization
 
   before_filter :require_login
   before_filter :get_project
   before_filter :authorize
+  before_filter :role_check
 
   def index
     retrieve_date_range

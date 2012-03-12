@@ -1,7 +1,7 @@
-class StakeholdersController < ApplicationController
-
+class StakeholdersController < PmController
   before_filter :get_project
   before_filter :authorize
+  before_filter :role_check_client
 
   def new
     @stakeholder = Stakeholder.new
@@ -53,5 +53,4 @@ private
   def redirect_to_info
     redirect_to :controller => 'project_info', :action => 'index', :project_id => @project, :tab => :info
   end
-  
 end

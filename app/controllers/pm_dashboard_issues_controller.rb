@@ -1,22 +1,26 @@
-class PmDashboardIssuesController < ApplicationController
-
+class PmDashboardIssuesController < PmController
   menu_item :project_issues
-  
-  helper :pm_dashboards
 
   before_filter :require_login
   before_filter :get_project, :only => [:index, :show, :add, :edit, :delete]
   before_filter :get_issue, :only => [:index, :show, :edit, :delete]
   before_filter :authorize
+  before_filter :role_check_client
 
   def index
     @project ||= @issue.project
-    @issues = params[:id] ? [@issue] : @project.pm_dashboard_issues.find(:all, :order => 'ref_number DESC')
+    if params[:id]
+      @issues = (@client && @issue.env.eql?('E')) ? [] : [@issue]
+    else
+      condition = @client ? "env='E'" : ""
+      @issues = @project.pm_dashboard_issues.find(:all, :conditions => condition, :order => 'ref_number DESC')
+    end
   end
   
   def show
     @project ||= @issue.project
-    @issues = [@issue]
+    @issues = (@client && !@issue.env.eql?('E')) ? [] : [@issue]
+    p @issues
     render :template => 'pm_dashboard_issues/index'
   end
   
@@ -68,5 +72,10 @@ class PmDashboardIssuesController < ApplicationController
   
   def redirect_to_project_issues
     redirect_to :controller => 'pm_dashboard_issues', :action => 'index', :project_id => @project
+  end
+  
+  def role_check
+    member = @project.members.find(:first, :conditions => ["user_id=?", User.current.id])
+    @client = member if !User.current.admin? and (role=member.role) and role.name.downcase.include?('clients')
   end
 end
