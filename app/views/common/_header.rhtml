@@ -1,11 +1,13 @@
-<h2 style='margin: 0'>Project Management Dashboard</h2>
+<h2 style='margin: 0'>
+  <%= @client ? l(:header_pm_client_dashboard) : l(:header_pm_dashboard) %>
+</h2>
 
 <div class='tabs'>
   <%= render_pm_dashboard_tabs %>
 </div>
 
 <script type="text/javascript">
-  jQuery("li a.pm-dashboards").addClass('selected');
+  jQuery(".pm-dashboards").addClass('selected');
 </script>
 
 <% content_for :header_tags do %>

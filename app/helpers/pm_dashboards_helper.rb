@@ -20,7 +20,6 @@ module PmDashboardsHelper
   
   def render_pm_dashboard_tabs
     if @client
-      #javascript_tag(" jQuery('li a.pm-dashboards').text('Client Dasboard')") +
       render_menu(:clients_project_management, @project)
     else
       render_menu :project_management, @project

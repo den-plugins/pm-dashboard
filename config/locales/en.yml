@@ -1,4 +1,7 @@
 en:
+  menu_pm_client_dashboard: Client Dashboard
+  header_pm_client_dashboard: Client Project Dashboard
+  header_pm_dashboard: Project Management Dashboard
   label_pm_dashboard: Dashboard
   label_info: Info
   label_assumption_plural: Assumptions
