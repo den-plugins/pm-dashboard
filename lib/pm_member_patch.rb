@@ -18,6 +18,8 @@ module Pm
         
         named_scope :stakeholders, :include => [:user], :conditions => "stakeholder = true", :order => "users.firstname"
         named_scope :project_team, :include => [:user], :conditions => "proj_team = true", :order => "users.firstname"
+        
+        before_update :remove_if_no_timelogs, :if => "proj_team_changed?"
       end
     end
     
@@ -25,6 +27,14 @@ module Pm
     end
     
     module InstanceMethods
+    
+      def remove_if_no_timelogs
+        from, to = changes["proj_team"]
+        if from && !to
+          return false if time_entries.find(:first, :conditions => ["#{TimeEntry.table_name}.project_id=?", project_id])
+        end
+      end
+      
       def mail
         self.user.mail
       end

@@ -4,7 +4,7 @@ class ProjectInfoController < PmController
 
   before_filter :get_project, :only => [:index, :add, :update, :destroy, :add_pm_position, :add_pm_role, :pm_member_add, :pm_member_edit]
   before_filter :authorize, :only => [:index, :add, :update, :destroy, :add_pm_position, :add_pm_role, :pm_member_add, :pm_member_edit]
-  before_filter :role_check_client
+  before_filter :role_check_client, :only => [:index, :add, :update, :destroy, :add_pm_position, :add_pm_role, :pm_member_add, :pm_member_edit]
   
   def index
     @stakeholders = @project.members.stakeholders
@@ -52,9 +52,8 @@ class ProjectInfoController < PmController
     bool = ((params[:classification].eql?("stakeholder"))? true : false)
     @roles = PmRole.find(:all, :conditions => "for_stakeholder = #{bool}") #Roles created by PM
     if request.post? and !request.xhr?
-      @member = Member.find(params[:id]) 
+      @member = Member.find(params[:id])
       @project = @member.project
-
       if @member.update_attributes(params[:member])
         render(:update) {|page| page.replace_html "tr_#{params[:classif]}_#{@member.id}",
         {:partial => "project_info/pm_member_edit",

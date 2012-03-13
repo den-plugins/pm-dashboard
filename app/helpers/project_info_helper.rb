@@ -9,7 +9,22 @@ module ProjectInfoHelper
     end
     str
   end
-
+  
+  def options_for_select_pm_members_collection(classification)
+    members = selected_members(classification)
+    options = ""
+    members.each do |m|
+      options += "<option value=#{m.is_a?(Stakeholder) ? (m.id.to_s + "_s") : m.id} "
+      options += "#{disable_if_has_logs(m)} " unless classification.eql?(:stakeholder)
+      options += ">#{m.name}</option>"
+    end
+    options
+  end
+  
+  def disable_if_has_logs(member)
+    member.time_entries.find(:first, :conditions => ["project_id=?", member.project_id]) ? "disabled" : ""
+  end
+  
   def selected_members(classification)
     members = Array.new
     @project.members.all(:order => "users.firstname").each do |m|

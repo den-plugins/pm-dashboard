@@ -4,7 +4,7 @@ class ResourceCostsController < PmController
     
   before_filter :get_project
   before_filter :authorize, :only => [:index, :edit_project]
-  before_filter :role_check
+  before_filter :role_check, :only => [:index, :edit_project]
 
   def index
     @proj_team = @project.members.project_team

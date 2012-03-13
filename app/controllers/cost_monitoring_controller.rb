@@ -3,7 +3,7 @@ class CostMonitoringController < PmController
 
   before_filter :get_project
   before_filter :authorize, :only => [:index]
-  before_filter :role_check
+  before_filter :role_check, :only => [:index]
 
   include PmDashboardsHelper
   include ResourceCostsHelper
