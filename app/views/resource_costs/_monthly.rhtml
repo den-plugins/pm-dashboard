@@ -17,8 +17,8 @@
           <% actual_days, cost = compute_days_and_cost(member, month, params[:rate]).collect %>
           <% total_days += actual_days %>
           <% total_cost += cost %>
-          <td><%= "%0.2f" % actual_days %></td>
-          <td class='cost'><%= "%0.2f" % cost.to_f %></td>
+          <td><%= hnum actual_days %></td>
+          <td class='cost'><%= hnum cost.to_f %></td>
         </tr>
         <% end %>
         <% reset_cycle('members') %>

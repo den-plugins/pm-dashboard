@@ -53,7 +53,8 @@ div.movable_table_container { float: left; position: relative; overflow-x: auto;
 
 #undef_weeks{ height: 2px; text-align: center; padding: 0; background-color: #FCFCFC; border: 1px solid #F0F0F0;}
 td.daily_rate, th.daily_rate { padding-right: 10px; border-right: 2px solid black; text-align: right;}
-th.cost, td.cost { padding-right: 10px; border-right: 2px solid #BBBBBB; text-align: right; width: 80%;}
+div.resource_cost_container th.cost, div.resource_cost_container td.cost { padding-right: 5px; border-right: 2px solid #BBBBBB; text-align: right; width: 80%; vertical-align: bottom;}
+div.resource_cost_container th {vertical-align: bottom;}
 
 .milestone table { width: 1000px;	}
 .milestone tr th { background: gray; border: 1px solid #989898; text-align: middle; padding: 4px;}

@@ -2,9 +2,8 @@
   <%= @client ? l(:header_pm_client_dashboard) : l(:header_pm_dashboard) %>
 </h2>
 
-<div class='tabs'>
-  <%= render_pm_dashboard_tabs %>
-</div>
+<div class='tabs'><%= render_pm_dashboard_tabs %></div>
+<div style="clear: both"></div>
 
 <script type="text/javascript">
   jQuery(".pm-dashboards").addClass('selected');
