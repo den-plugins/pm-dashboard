@@ -12,7 +12,7 @@
   </h3>
   <span id="dashboard_billability">
   <div id="processing_gif" class="flash notice"></div>
-  <% unless @billability.nil? && @billability.empty?%>
+  <% if !@billability.nil? && !@billability.empty?%>
     <% @updated_at = @billability["updated_at"] ? @billability["updated_at"] : Time.now %>
   <% end %>
 

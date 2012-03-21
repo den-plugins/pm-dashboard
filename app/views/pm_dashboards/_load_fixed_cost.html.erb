@@ -12,7 +12,7 @@
   </h3>
   <span id="dashboard_cost_monitoring">
   <div id="processing_gif" class="flash notice"></div>
-  <% unless @fixed_cost.nil? && @fixed_cost.empty? %>
+  <% if !@fixed_cost.nil? && !@fixed_cost.empty? %>
     <% @updated_at = @fixed_cost["updated_at"] ? @fixed_cost["updated_at"] : Time.now %>
   <% end %>
 
