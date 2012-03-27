@@ -113,7 +113,6 @@ module Pm
           budget_hours = cost_compute_forecasted_hours(range, members, 'both')
           budget_cost = cost_compute_forecasted_cost_without_contingency(range, members, 'both', self)
           actual_cost = cost_compute_actual_cost(range, members)
-          puts actual_cost
           if !eval_date.empty? && project_id
             actual_cost += future_dates(eval_date, range, project_id)
           end
