@@ -92,13 +92,31 @@ module Pm
         versions.find(:first, :conditions => ["state = 2 and sprint_start_date IS NOT NULL"], :order => "effective_date DESC")
       end
       
-      def monitored_cost(franges, aranges, members)
+      def future_dates(eval_date, range, project_id)
+        total = 0
+        project = Project.find(project_id)
+        member = project.members.find(:all, :conditions=>["members.user_id=?", User.current.id]).first
+        member ? rate = member.internal_rate.to_f : rate = 0.0
+        range.each do |date|
+          parsed = "#{date.month}/#{date.day}/#{date.year}"
+          if eval_date[parsed] && eval_date[parsed]["hours"]
+            total += eval_date[parsed]["hours"].to_f * rate
+          end
+        end
+        total
+      end
+
+      def monitored_cost(franges, aranges, members, eval_date=[], project_id=nil)
         costs = {}
         ranges = (aranges + franges).uniq
         ranges.each do |range|
           budget_hours = cost_compute_forecasted_hours(range, members, 'both')
           budget_cost = cost_compute_forecasted_cost_without_contingency(range, members, 'both', self)
           actual_cost = cost_compute_actual_cost(range, members)
+          puts actual_cost
+          if !eval_date.empty? && project_id
+            actual_cost += future_dates(eval_date, range, project_id)
+          end
           costs[range.first] = {:budget_hours => budget_hours, :budget_cost => budget_cost,
                                 :actual_cost => actual_cost }
         end
