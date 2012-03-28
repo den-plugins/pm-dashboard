@@ -51,7 +51,9 @@ class ResourceAllocationsController < PmController
   # POST
   def edit
     @resource_allocation = @member.resource_allocations.find(params[:id])
-    if @resource_allocation.update_attributes(params[:allocation])
+    status = employee_status(@member)
+    @resource_allocation.errors.add_to_base "Cannot allocate. Member is already resigned." if status == "Resigned"
+    if @resource_allocation.errors.empty? && @resource_allocation.update_attributes(params[:allocation])
       render_updates
     else
       render :update do |page|
