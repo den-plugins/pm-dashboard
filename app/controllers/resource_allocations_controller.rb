@@ -35,9 +35,12 @@ class ResourceAllocationsController < PmController
   # POST
   def add
     @resource_allocation = @member.resource_allocations.create(params[:resource_allocation])
+    status = employee_status(@member)
+    @resource_allocation.errors.add_to_base "Cannot allocate. Member is already resigned." if status == "Resigned"
     if @resource_allocation.errors.empty?
       render_updates
     else
+       @resource_allocation.destroy if status == "Resigned"
        render :update do |page|
         page.insert_html :bottom, "allocation_show_#{@member.id}".to_sym, :partial => 'resource_allocations/date_range', :locals => {:allocation => nil}
         page.replace_html "allocation_add_#{@member.id}", :partial => 'resource_allocations/add'
@@ -48,7 +51,9 @@ class ResourceAllocationsController < PmController
   # POST
   def edit
     @resource_allocation = @member.resource_allocations.find(params[:id])
-    if @resource_allocation.update_attributes(params[:allocation])
+    status = employee_status(@member)
+    @resource_allocation.errors.add_to_base "Cannot allocate. Member is already resigned." if status == "Resigned"
+    if @resource_allocation.errors.empty? && @resource_allocation.update_attributes(params[:allocation])
       render_updates
     else
       render :update do |page|
@@ -129,5 +134,10 @@ class ResourceAllocationsController < PmController
         page.replace_html :resource_members_content, :partial => 'resource_costs/list'
       end
     end
+  end
+
+  def employee_status(member)
+    r = User.find(member.user_id).custom_values.detect {|v| v.mgt_custom "Employee Status"}
+    status = r ? r.value : ""
   end
 end
