@@ -150,15 +150,15 @@ class ProjectInfoController < PmController
       bool = ((params[:classification].eql?("stakeholder") || @member.is_a?(Stakeholder))? true : false)
       @positions = PmPosition.find(:all) #Positions created by PM
       @roles = PmRole.find(:all, :conditions => "for_stakeholder = #{bool}") #Roles created by PM
-      @member.update_attributes(:pm_pos_id => @position.id)
+      @member.update_attributes(:pm_position_id => @position.id)
     end
     if params[:no_accnt]
-      render(:update) {|page| page.replace_html "tr_stakeholder_#{@member.id}", 
-          {:partial => "project_info/stakeholder_edit", 
+      render(:update) {|page| page.replace_html "tr_stakeholder_#{@member.id}",
+          {:partial => "project_info/stakeholder_edit",
            :locals => {:member => @member, :classification => :stakeholder}}}
     else
-      render(:update) {|page| page.replace_html "tr_#{params[:classification]}_#{@member.id}", 
-          {:partial => "project_info/pm_member_edit", 
+      render(:update) {|page| page.replace_html "tr_#{params[:classification]}_#{@member.id}",
+          {:partial => "project_info/pm_member_edit",
            :locals => {:member => @member, :classification => params[:classification].to_sym}}}
     end
   end
