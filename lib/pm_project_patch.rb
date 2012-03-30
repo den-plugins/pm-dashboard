@@ -92,35 +92,13 @@ module Pm
         versions.find(:first, :conditions => ["state = 2 and sprint_start_date IS NOT NULL"], :order => "effective_date DESC")
       end
 
-      def future_dates(hash, range, project_id, issue)
-        total = 0
-        project = Project.find project_id
-        member = project.members.find(:all, :conditions=>["members.user_id=?", User.current.id]).first
-        member ? rate = member.internal_rate.to_f : rate = 0.0
-        range.each do |date|
-          parsed = "#{date.month}/#{date.day}/#{date.year}" 
-          if hash[parsed] && hash[parsed]["hours"]
-            time_entry = TimeEntry.find(:all, :conditions => ["user_id=? AND issue_id=? AND spent_on=?", User.current.id, issue, date])  
-            if time_entry.empty?
-              total += hash[parsed]["hours"].to_f * rate
-            else
-              total += -time_entry.map(&:hours).sum * rate + hash[parsed]["hours"].to_f * rate             
-            end
-          end
-        end
-        total
-      end
-      
-      def monitored_cost(franges, aranges, members, project_id=nil, hash=[], issue=nil)
+      def monitored_cost(franges, aranges, members)
         costs = {}
         ranges = (aranges + franges).uniq
         ranges.each do |range|
           budget_hours = cost_compute_forecasted_hours(range, members, 'both')
           budget_cost = cost_compute_forecasted_cost_without_contingency(range, members, 'both', self)
           actual_cost = cost_compute_actual_cost(range, members)
-          if !hash.empty?&&project_id&&issue
-            actual_cost += future_dates(hash, range, project_id, issue)
-          end
           costs[range.first] = {:budget_hours => budget_hours, :budget_cost => budget_cost,
                                 :actual_cost => actual_cost }
         end
