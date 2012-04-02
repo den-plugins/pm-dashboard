@@ -91,17 +91,10 @@ module Pm
         Holiday.count(:all, :conditions => ["event_date=? and location in (#{locations.join(', ')})", day])
       end
       
-      def billable?(from=nil, to=nil, inters=true)
-        puts from
-        puts to
+      def billable?(from=nil, to=nil)
         from, to = project.planned_start_date, project.planned_end_date unless from && to
         return false if from.nil? or to.nil?
-        if inters
-          allocations = resource_allocations.select {|a| (from..to).to_a & (a.start_date..a.end_date).to_a}
-        else
-          allocations = resource_allocations.find(:all, :conditions=>["? BETWEEN start_date and end_date OR ? BETWEEN start_date AND end_date", from, to])
-        end
-        puts allocations.inspect
+        allocations = resource_allocations.select {|a| (from..to).to_a & (a.start_date..a.end_date).to_a}
         if allocations.empty?
           false
         else
@@ -109,6 +102,16 @@ module Pm
         end
       end
       
+      def billable?(date=nil)
+        return false if date.nil?
+        allocations = resource_allocations.find(:all, :conditions=>["? BETWEEN start_date and end_date", date])
+        if allocations.empty?
+          false
+        else
+          allocations.reject {|r| !r.resource_type.eql?(0) || r.resource_allocation.eql?(0)}.empty? ? false : true
+        end       
+      end
+
       def spent_time(from, to, acctg=nil, include_weekends=false)
         if from && to
           spent = time_entries.find(:all, :select => "hours, spent_on", :include => [:issue],
