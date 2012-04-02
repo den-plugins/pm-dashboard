@@ -97,9 +97,8 @@ module Pm
         if inters
           allocations = resource_allocations.select {|a| (from..to).to_a & (a.start_date..a.end_date).to_a}
         else
-          allocations =resource_allocations.find(:all, :conditions=>["? BETWEEN start_date and end_date AND ? BETWEEN start_date AND end_date", from, to])
+          allocations = resource_allocations.find(:all, :conditions=>["? BETWEEN start_date and end_date AND ? BETWEEN start_date AND end_date", from, to])
         end
-        puts "#{from} : #{to}"
         if allocations.empty?
           false
         else
