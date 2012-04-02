@@ -102,6 +102,16 @@ module Pm
         end
       end
       
+      def billable?(date=nil)
+        return false if date.nil?
+        allocations = resource_allocations.find(:all, :conditions=>["? BETWEEN start_date and end_date", date])
+        if allocations.empty?
+          false
+        else
+          allocations.reject {|r| !r.resource_type.eql?(0) || r.resource_allocation.eql?(0)}.empty? ? false : true
+        end       
+      end
+
       def spent_time(from, to, acctg=nil, include_weekends=false)
         if from && to
           spent = time_entries.find(:all, :select => "hours, spent_on", :include => [:issue],
