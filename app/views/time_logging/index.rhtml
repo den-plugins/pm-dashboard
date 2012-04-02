@@ -3,6 +3,8 @@
 <%= heads_for_wiki_formatter %>
 <% content_for :header_tags do %>
   <%= javascript_include_tag 'fixed_header.js', :plugin => 'management' %>
+  <%= stylesheet_link_tag 'facebox', :plugin => 'facebox_render' %>
+  <%= javascript_include_tag 'facebox.js', :plugin => 'facebox_render' %>
 <% end %>
 
 <h2>Time Logging</h2>

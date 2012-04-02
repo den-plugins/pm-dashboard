@@ -82,4 +82,9 @@
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag 'facebox', :plugin => 'facebox_render' %>
   <%= javascript_include_tag 'facebox.js', :plugin => 'facebox_render' %>
+  <style type="text/css" rel="stylesheet" media="screen">
+    #facebox .body { width: 380px;}
+    #facebox .popup { width: 674px;}
+    #facebox .tl, #facebox .tr, #facebox .bl, #facebox .br { background-repeat: no-repeat; width: 5px;}
+  </style>
 <% end %>
