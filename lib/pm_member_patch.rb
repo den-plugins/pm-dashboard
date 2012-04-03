@@ -102,7 +102,7 @@ module Pm
         end
       end
       
-      def billable?(date=nil)
+      def allocated?(date=nil)
         return false if date.nil?
         allocations = resource_allocations.find(:all, :conditions=>["? BETWEEN start_date and end_date", date])
         if allocations.empty?
