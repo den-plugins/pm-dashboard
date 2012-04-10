@@ -101,6 +101,12 @@ module Pm
           allocations.reject {|r| !r.resource_type.eql?(0) || r.resource_allocation.eql?(0)}.empty? ? false : true
         end
       end
+
+      def non_billable?(date)
+        if member = resource_allocations.detect{ |a| a.start_date <= date && a.end_date >= date }
+          !member.resource_type.eql?(0) || member.resource_type.eql?(1)
+        end
+      end
       
       def allocated?(date=nil)
         return false if date.nil?
