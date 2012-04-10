@@ -77,7 +77,7 @@ module PmDashboardsHelper
     from, to = (mon=(Date.today-1.week).monday), mon+4.days unless from && to
     range = from .. to
     total = members.count
-    completed = members.select {|m| m.with_complete_logs?(range) }.count
+    completed = members.select {|m| m.with_complete_logs_for_all?(range) }.count
     (completed.to_f/total.to_f) * 100
   end
   

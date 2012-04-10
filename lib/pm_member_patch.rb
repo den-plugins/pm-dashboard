@@ -131,7 +131,8 @@ module Pm
           end
         end
       end
-      
+
+      # check time logs only on specific project and its admin project.
       def with_complete_logs?(range)
         allocated = days_and_cost(range) * 8
         actual = spent_time(range.first, range.last)
@@ -143,6 +144,15 @@ module Pm
             end
           end
         end
+        actual >= allocated
+      end
+
+      # check time logs on all projects of the user
+      def with_complete_logs_for_all?(range)
+        allocated = days_and_cost(range) * 8
+        actual = TimeEntry.find(:all,
+                                :conditions => ["time_entries.user_id = #{user_id} and spent_on between ? and ?",
+                                range.first, range.last] ).collect(&:hours).compact.sum
         actual >= allocated
       end
 
