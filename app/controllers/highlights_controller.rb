@@ -23,8 +23,8 @@ class HighlightsController < PmController
     if params[:cancel]
       @highlights = @project.weekly_highlights
       render :update do |page|
-        page.replace_html :next_period, :partial => "highlights/nextp", :locals => {:highlight => @highlights[:unposted_after_current]}
-        page.replace_html :this_period, :partial => "highlights/current", :locals => {:highlight => @highlights[:unposted_current]}
+        page.replace_html :next_period, :partial => "highlights/nextp", :locals => {:highlight => @highlights[:after_current]}
+        page.replace_html :this_period, :partial => "highlights/current", :locals => {:highlight => @highlights[:current]}
       end
     else
 	    #update_highlight
@@ -33,7 +33,7 @@ class HighlightsController < PmController
   end
   
   def update_highlight
-	  date = params[:highlight][:created_at]
+	  begin; date = params[:highlight][:created_at].to_date unless params[:highlight][:created_at].blank?; rescue; end
 	  get_highlight = Highlight.find(:all, :conditions => ["created_at = ? and project_id = ?", @highlight.created_at, @project.id])
 	  get_highlight.each do |h|
 		  h.update_attributes :created_at => date
@@ -51,7 +51,7 @@ class HighlightsController < PmController
   end
   
   def select_by_week
-    date = params[:select_week].to_date
+    begin; date = params[:select_week].to_date unless params[:select_week].blank?; rescue; end
     highlight = @project.highlights.for_the_week(date).post_current.first
     highlight_next = @project.highlights.for_the_week(date).post_after_current.first
     render :update do |page|
@@ -60,7 +60,7 @@ class HighlightsController < PmController
   end
   
   def select_duplicate
-    date = params[:highlight][:created_at].to_date
+    begin; date = params[:highlight][:created_at].to_date unless params[:highlight][:created_at].blank?; rescue; end
     current_dup = @project.highlights.for_the_week(date).detect {|d| !d.is_for_next_period}
     nextp_dup = @project.highlights.for_the_week(date).detect {|d| d.is_for_next_period}
     
@@ -119,8 +119,8 @@ class HighlightsController < PmController
     @highlights = @project.weekly_highlights
     render :update do |page|
       page.replace_html :recently_posted, :partial => "highlights/recently_posted", :locals => {:highlight => @highlights[:posted_current], :highlight_next => @highlights[:posted_after_current]}
-      page.replace_html :next_period, :partial => "highlights/nextp", :locals => {:highlight => @highlights[:unposted_after_current]}
-      page.replace_html :this_period, :partial => "highlights/current", :locals => {:highlight => @highlights[:unposted_current]}
+      page.replace_html :next_period, :partial => "highlights/nextp", :locals => {:highlight => @highlights[:after_current]}
+      page.replace_html :this_period, :partial => "highlights/current", :locals => {:highlight => @highlights[:current]}
     end
   end
 end
