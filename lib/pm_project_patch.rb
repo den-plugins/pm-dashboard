@@ -18,6 +18,8 @@ module Pm
         has_many :highlights
         has_many :project_contracts
         belongs_to :manager, :class_name => 'User', :foreign_key => 'proj_manager'
+        belongs_to :account_manager, :class_name => 'User', :foreign_key => 'acct_mngr'
+        belongs_to :technical_architect, :class_name => 'User', :foreign_key => 'tech_architect'
       
         validates_presence_of :description
         validates_presence_of :client, :if => :validate_client
@@ -35,13 +37,6 @@ module Pm
     module InstanceMethods
       def closest_admins
         root.descendants.active.select {|p| p.project_type.casecmp("Admin") == 0 if p.project_type }
-      end
-      
-      def pm_or_ta(id, project)
-        if !id.nil?
-          pm = project.members.find_by_user_id(id)
-          pm.name unless pm.nil?
-        end
       end
       
       def update_days_overdue
