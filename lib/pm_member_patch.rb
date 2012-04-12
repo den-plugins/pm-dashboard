@@ -94,7 +94,7 @@ module Pm
       def billable?(from=nil, to=nil)
         from, to = project.planned_start_date, project.planned_end_date unless from && to
         return false if from.nil? or to.nil?
-        allocations = resource_allocations.select {|a| (from..to).to_a & (a.start_date..a.end_date).to_a}
+        allocations = resource_allocations.select {|a| a.start_date <= from && a.end_date >= to}
         if allocations.empty?
           false
         else
