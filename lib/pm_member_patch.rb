@@ -114,7 +114,7 @@ module Pm
         if allocations.empty?
           false
         else
-          allocations.reject {|r| !r.resource_type.eql?(0) || r.resource_allocation.eql?(0)}.empty? ? false : true
+          true
         end       
       end
 
