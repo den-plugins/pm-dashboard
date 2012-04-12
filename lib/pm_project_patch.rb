@@ -18,6 +18,8 @@ module Pm
         has_many :highlights
         has_many :project_contracts
         belongs_to :manager, :class_name => 'User', :foreign_key => 'proj_manager'
+        belongs_to :account_manager, :class_name => 'User', :foreign_key => 'acct_mngr'
+        belongs_to :technical_architect, :class_name => 'User', :foreign_key => 'tech_architect'
       
         validates_presence_of :description
         validates_presence_of :client, :if => :validate_client
@@ -37,13 +39,6 @@ module Pm
         root.descendants.active.select {|p| p.project_type.casecmp("Admin") == 0 if p.project_type }
       end
       
-      def pm_or_ta(id, project)
-        if !id.nil?
-          pm = project.members.find_by_user_id(id)
-          pm.name unless pm.nil?
-        end
-      end
-      
       def update_days_overdue
         assumptions.each { |a| a.update_days_overdue }
         risks.each { |r| r.update_days_overdue }
@@ -61,8 +56,8 @@ module Pm
       
       def weekly_highlights
         h = {}
-        pbc= highlights.first(:conditions => ["posted_date is not null and is_for_next_period is false and created_at <= ?", 7.days.ago.end_of_week], :order => 'created_at DESC')
-        pac = highlights.first(:conditions => ["posted_date is not null and is_for_next_period is true and created_at <= ?", 7.days.ago.end_of_week], :order => 'created_at DESC')
+        pbc= highlights.first(:conditions => ["posted_date is not null and is_for_next_period is false and created_at <= ?", Date.today.end_of_week], :order => 'created_at DESC, updated_at DESC')
+        pac = highlights.first(:conditions => ["posted_date is not null and is_for_next_period is true and created_at <= ?", Date.today.end_of_week], :order => 'created_at DESC, updated_at DESC')
         
         posted = pbc || pac
         if pbc && pac
@@ -74,12 +69,12 @@ module Pm
         h[:posted_current] = highlights.for_the_week(date).post_current.first
         h[:posted_after_current] = highlights.for_the_week(date).post_after_current.first
         
-        h[:unposted_current] = highlights.first(:conditions => "is_for_next_period is false and posted_date is NULL", :order => 'created_at DESC')
-        h[:unposted_after_current] = highlights.first(:conditions => "is_for_next_period is true and posted_date is NULL", :order => 'created_at DESC')
+        h[:unposted_current] = highlights.first(:conditions => "is_for_next_period is false and posted_date is NULL", :order => 'created_at DESC, updated_at DESC')
+        h[:unposted_after_current] = highlights.first(:conditions => "is_for_next_period is true and posted_date is NULL", :order => 'created_at DESC, updated_at DESC')
         
         this_week = Date.today.monday
-        h[:current] = highlights.first(:conditions => ["is_for_next_period is false and created_at between ? and ?", this_week, (this_week + 6.days)], :order => 'created_at DESC')
-        h[:after_current] = highlights.first(:conditions => ["is_for_next_period is true and created_at between ? and ?", this_week, (this_week + 6.days)], :order => 'created_at DESC')
+        h[:current] = highlights.first(:conditions => ["is_for_next_period is false and created_at between ? and ?", this_week, (this_week + 6.days)], :order => 'created_at DESC, updated_at DESC')
+        h[:after_current] = highlights.first(:conditions => ["is_for_next_period is true and created_at between ? and ?", this_week, (this_week + 6.days)], :order => 'created_at DESC, updated_at DESC')
         h
       end
       

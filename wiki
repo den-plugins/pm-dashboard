@@ -1,0 +1,39 @@
+PM DASHBOARD WIKI
+
+Dashboard
+Info
+Assumptions
+  > CRUD
+  > add/remove risks
+  > Required fields: description, owner, date due
+  > Defaults: status (open)
+    
+Project Issues
+  > CRUD
+  > add/remove assumptions and risks
+  > Required fields: description, env, impact, raised by, owner, date raised
+  > Defaults: date raised (current date)
+
+Risks
+  > CRUD
+  > add/remove assumptions and project issues
+  > Required fields: description, owner, env, risk type, status, target resolution date, probability, impact
+  > Defaults: owner (current user)
+
+Resouce Cost Forecast
+Bottomline Cost Monitoring
+Resouce Utilization
+Time Logging
+Project Billability
+Milestone Plans
+Project Contracts
+Weekly Highlights
+  > Left Box
+    --  view recently posted highlights (i.e. posted highlight created on current week or earlier)
+    -- view posted highlight for selected week
+    -- unpost highlights
+  > RIght Box
+    -- view highlight for current week (show date created and 'posted' if posted)
+    -- add highlight for the week unless highlight has already been added for that week (one highlight per week only)
+    -- edit, post/unpost highlight for current week
+    -- edit, post highlights that are saved but not posted

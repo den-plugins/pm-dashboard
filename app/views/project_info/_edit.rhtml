@@ -24,7 +24,7 @@
     </td>
     
     <td><span>Project Manager</span>
-    <%= f.select :proj_manager, (@project.members.collect {|p| [p.name, p.user.id]}), :required => true %>
+    <%= f.select :proj_manager, (sorted_members(@project).collect {|p| [p.name, p.user.id]}), :required => true %>
     </td>
   
   </tr>
@@ -41,7 +41,7 @@
     </td>
     
     <td><span>Technical Architect</span>
-    <%= f.select :tech_architect, (@project.members.collect {|p| [p.name, p.user.id]}), :required => true %>
+    <%= f.select :tech_architect, (sorted_members(@project).collect {|p| [p.name, p.user.id]}), :required => true %>
     </td>
     
   </tr>   
@@ -49,6 +49,10 @@
       <td></td>
       <td><span>Maintenance End Date</span>
       <%= f.text_field :maintenance_end, :size => 10  %><%= calendar_for('project_maintenance_end') %></td>
+      <td></td>
+      <td><span>Account Manager</span>
+      <%= f.select :acct_mngr,  [["", nil]] + (sorted_members(@project).collect {|p|[p.name, p.user.id]}) %>
+      </td>
    </tr>
 </table>
 

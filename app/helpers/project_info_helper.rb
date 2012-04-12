@@ -1,5 +1,9 @@
 module ProjectInfoHelper
 
+  def sorted_members(project)
+    project.members.sort_by {|m| m.user.name.strip}
+  end
+
   def custom_field_headers
     str = ""
     if !@user_custom_fields.nil?
