@@ -118,14 +118,14 @@ module Pm
         end       
       end
       
-      def shadow?(date=nil)
+      def b_alloc?(date=nil)
         return false if date.nil?
-        allocations = resource_allocations.find(:all, :conditions=>["? BETWEEN start_date and end_date AND resource_type=2", date])
+        allocations = resource_allocations.find(:all, :conditions=>["? BETWEEN start_date and end_date AND resource_type=0", date])
         if allocations.empty?
           false
         else
           true
-        end 
+        end       
       end
 
       def spent_time(from, to, acctg=nil, include_weekends=false)
