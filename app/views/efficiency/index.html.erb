@@ -8,7 +8,16 @@
 <% end %>
 
 <h2>Efficiency</h2>
-<p><strong>CLIENT:</strong> <%= @project.client %></p>
+<table id="efficiency_header">
+  <tr>
+    <td><span>Client</span></td>
+    <td class="value"><%= @project.client %></td>
+    <td><span>Current Test Code Coverage</span></td>
+    <td class="value"><%= text_field_tag 'test_code_coverage', number_with_precision(test_code_coverage, :precision => 2), :size => 3 %>%</td>
+    <td id="status-label" class="<%= status_color %>"><span>Status</span></td>
+    <td id="status" class="value <%= status_color %>" data-defect-ratio="<%= defect_ratio %>"><%= "#{number_with_precision(status, :precision => 2)}%" %></td>
+  </tr>
+</table>
 
 <table class="list" style="text-align: center">
   <thead>
@@ -67,6 +76,26 @@
         cursor: {show: true, zoom: true},
         highlighter: {show: true, sizeAdjust: 7.5}
       });
+
+      jQuery('#test_code_coverage').change(function() {
+        var defectRatio = parseFloat(jQuery('#status').attr('data-defect-ratio')),
+          testCodeCoverage = jQuery(this).val().trim(),
+          value = 0.0;
+        if(/^\d+(\.\d+)?$/.test(testCodeCoverage)) {
+          value = parseFloat(0.5 * parseFloat(testCodeCoverage) + 0.5 * (100 * defectRatio)).toFixed(2);
+          jQuery('#status').text(value + '%').removeClass('red yellow green').addClass(statusColor(value));
+          jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(value));
+        } else {
+          jQuery('#status').text('').removeClass('red yellow green');
+          jQuery('#status-label').removeClass('red yellow green');
+        }
+      });
+
+      statusColor = function(status) {
+        if(status > 80) { return 'green' }
+        else if(status > 70) { return 'yellow' }
+        else { return 'red' }
+      };
     });
   </script>
 <% end %>

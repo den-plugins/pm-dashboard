@@ -48,4 +48,28 @@ module EfficiencyHelper
     conditions.merge!(:fixed_version_id => version_id) unless version_id.blank?
     Issue.count(:conditions => conditions)
   end
+
+  def test_code_coverage
+    coverage_field = @project.custom_values.detect { |v| v.custom_field.name == 'Test Code Coverage' }
+    coverage_field ? coverage_field.value.to_f : 0.0
+  end
+
+  def defect_ratio
+    bug_count(:closed) / bug_count.to_f
+  end
+
+  def status
+    # TODO for confirmation
+    0.5 * test_code_coverage + 0.5 * (100.0 * defect_ratio)
+  end
+
+  def status_color
+    if status > 80
+      'green'
+    elsif status > 70
+      'yellow'
+    else
+      'red'
+    end
+  end
 end
