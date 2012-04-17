@@ -56,8 +56,8 @@ module Pm
       
       def weekly_highlights
         h = {}
-        pbc= highlights.first(:conditions => ["posted_date is not null and is_for_next_period is false and created_at <= ?", 7.days.ago.end_of_week], :order => 'created_at DESC')
-        pac = highlights.first(:conditions => ["posted_date is not null and is_for_next_period is true and created_at <= ?", 7.days.ago.end_of_week], :order => 'created_at DESC')
+        pbc= highlights.first(:conditions => ["posted_date is not null and is_for_next_period is false and created_at <= ?", Date.today.end_of_week], :order => 'created_at DESC, updated_at DESC')
+        pac = highlights.first(:conditions => ["posted_date is not null and is_for_next_period is true and created_at <= ?", Date.today.end_of_week], :order => 'created_at DESC, updated_at DESC')
         
         posted = pbc || pac
         if pbc && pac
@@ -69,12 +69,12 @@ module Pm
         h[:posted_current] = highlights.for_the_week(date).post_current.first
         h[:posted_after_current] = highlights.for_the_week(date).post_after_current.first
         
-        h[:unposted_current] = highlights.first(:conditions => "is_for_next_period is false and posted_date is NULL", :order => 'created_at DESC')
-        h[:unposted_after_current] = highlights.first(:conditions => "is_for_next_period is true and posted_date is NULL", :order => 'created_at DESC')
+        h[:unposted_current] = highlights.first(:conditions => "is_for_next_period is false and posted_date is NULL", :order => 'created_at DESC, updated_at DESC')
+        h[:unposted_after_current] = highlights.first(:conditions => "is_for_next_period is true and posted_date is NULL", :order => 'created_at DESC, updated_at DESC')
         
         this_week = Date.today.monday
-        h[:current] = highlights.first(:conditions => ["is_for_next_period is false and created_at between ? and ?", this_week, (this_week + 6.days)], :order => 'created_at DESC')
-        h[:after_current] = highlights.first(:conditions => ["is_for_next_period is true and created_at between ? and ?", this_week, (this_week + 6.days)], :order => 'created_at DESC')
+        h[:current] = highlights.first(:conditions => ["is_for_next_period is false and created_at between ? and ?", this_week, (this_week + 6.days)], :order => 'created_at DESC, updated_at DESC')
+        h[:after_current] = highlights.first(:conditions => ["is_for_next_period is true and created_at between ? and ?", this_week, (this_week + 6.days)], :order => 'created_at DESC, updated_at DESC')
         h
       end
       

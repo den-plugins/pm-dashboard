@@ -1,0 +1,101 @@
+<%= render :partial => 'common/header' %>
+<%= include_calendar_headers_tags %>
+<%= heads_for_wiki_formatter %>
+<% content_for :header_tags do %>
+  <%= javascript_include_tag 'fixed_header.js', :plugin => 'management' %>
+  <%= stylesheet_link_tag 'facebox', :plugin => 'facebox_render' %>
+  <%= javascript_include_tag 'facebox.js', :plugin => 'facebox_render' %>
+<% end %>
+
+<h2>Efficiency</h2>
+<table id="efficiency_header">
+  <tr>
+    <td><span>Client</span></td>
+    <td class="value"><%= @project.client %></td>
+    <td><span>Current Test Code Coverage</span></td>
+    <td class="value"><%= text_field_tag 'test_code_coverage', number_with_precision(test_code_coverage, :precision => 2), :size => 3 %>%</td>
+    <td id="status-label" class="<%= status_color %>"><span>Status</span></td>
+    <td id="status" class="value <%= status_color %>" data-defect-ratio="<%= defect_ratio %>"><%= "#{number_with_precision(status, :precision => 2)}%" %></td>
+  </tr>
+</table>
+
+<table class="list" style="text-align: center">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Defects<br/> Raised</th>
+      <th>Defects<br/> Open</th>
+      <th>Defects<br/> Resolved/For Verification</th>
+      <th>Defects<br/> Closed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="even">
+      <td class="left">Start to Current</td>
+      <td><%= bug_count %></td>
+      <td><%= bug_count :open %></td>
+      <td><%= bug_count :resolved %></td>
+      <td><%= bug_count :closed %></td>
+    </tr>
+    <% @versions.each do |version| %>
+      <tr class="<%= cycle 'odd', 'even' %>">
+        <td class="left"><%= version.name %></td>
+        <td><%= bug_count nil, version %></td>
+        <td><%= bug_count :open, version %></td>
+        <td><%= bug_count :resolved, version %></td>
+        <td><%= bug_count :closed, version %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div id="efficiency_chart">
+</div>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'jquery.jqplot.css', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'jquery.jqplot.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.canvasAxisLabelRenderer.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.canvasAxisTickRenderer.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.canvasTextRenderer.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.categoryAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.cursor.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.dateAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.highlighter.min.js', :plugin => 'redmine_burndown' %>
+  <%= javascript_include_tag 'plugins/jqplot.pointLabels.min.js', :plugin => 'redmine_burndown' %>
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+      jQuery.jqplot('efficiency_chart', <%= chart_data.to_json %>, {
+        axes: {
+          xaxis: {label: 'Weeks', autoscale: true, renderer: jQuery.jqplot.DateAxisRenderer, tickRenderer: jQuery.jqplot.CanvasAxisTickRenderer, tickOptions: {showMark: false, fontSize: '8pt', formatString: '%m/%d/%y', angle: -30}},
+          yaxis: {min: 0, tickOptions: {formatString:'%d'}}
+        },
+        seriesColors: ['#ff0000', '#009900'],
+        series: {label: 'Raised'},
+        legend: {show: false},
+        cursor: {show: true, zoom: true},
+        highlighter: {show: true, sizeAdjust: 7.5}
+      });
+
+      jQuery('#test_code_coverage').change(function() {
+        var defectRatio = parseFloat(jQuery('#status').attr('data-defect-ratio')),
+          testCodeCoverage = jQuery(this).val().trim(),
+          value = 0.0;
+        if(/^\d+(\.\d+)?$/.test(testCodeCoverage)) {
+          value = parseFloat(0.5 * parseFloat(testCodeCoverage) + 0.5 * (100 * defectRatio)).toFixed(2);
+          jQuery('#status').text(value + '%').removeClass('red yellow green').addClass(statusColor(value));
+          jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(value));
+        } else {
+          jQuery('#status').text('').removeClass('red yellow green');
+          jQuery('#status-label').removeClass('red yellow green');
+        }
+      });
+
+      statusColor = function(status) {
+        if(status > 80) { return 'green' }
+        else if(status > 70) { return 'yellow' }
+        else { return 'red' }
+      };
+    });
+  </script>
+<% end %>

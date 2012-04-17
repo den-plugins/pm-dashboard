@@ -9,7 +9,30 @@ module HighlightsHelper
       params[:select_week] ? params[:select_week] : 7.days.ago.to_date
     end
   end
-
+  
+  def render_highlight_actions(period, highlight)
+    links = ""
+    links << link_to_remote("Save", {:url => {:action => 'save', :controller => 'highlights', :id => highlight, :project_id => @project},
+                                                                :with => "Form.serialize('#{period}_highlight_form')",
+                                                                :loading => "$('ajax-indicator').show()",
+                                                                :complete => "$('ajax-indicator').hide()" },
+                                                                :class => 'icon icon-save', :id => '#{period}_save_button')
+    if highlight && highlight.posted_date
+      links << link_to_remote("Unpost", {:url => {:action => 'unpost', :controller => 'highlights', :id => highlight, :project_id => @project},
+                                                                      :with => "Form.serialize('nextp_highlight_form')",
+                                                                      :loading => "$('ajax-indicator').show()",
+                                                                      :complete => "$('ajax-indicator').hide()" },
+                                                                      :class => 'icon icon-unpost')
+    else
+      links << link_to_remote("Post", {:url => {:action => 'post', :controller => 'highlights', :id => highlight, :project_id => @project},
+                                                                 :with => "Form.serialize('#{period}_highlight_form')",
+                                                                 :loading => "$('ajax-indicator').show()",
+                                                                 :complete => "$('ajax-indicator').hide()" },
+                                                                 :class => 'icon icon-checked')
+    end
+    links << link_to_remote("Cancel", {:url => {:action => 'save', :controller => 'highlights', :project_id => @project, :cancel => true}}, :class => "icon icon-cancel")
+  end
+  
   def render_highlight_message highlight, message
     if highlight && !highlight.new_record?
       content_tag 'p', textilizable(highlight.highlight)
