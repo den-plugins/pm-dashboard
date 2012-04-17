@@ -1,8 +1,11 @@
 class ProjectFixedCostJob < Struct.new(:project_id)
+  include Delayed::ScheduledJob
   include ResourceCostsHelper
   include ProjectBillabilityHelper
   include ResourceCostsHelper
   include PmDashboardsHelper
+
+  run_every(Time.parse("12am") + 1.day)
 
   def perform
     project = Project.find(project_id)

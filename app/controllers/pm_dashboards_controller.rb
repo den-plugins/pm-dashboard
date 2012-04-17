@@ -29,6 +29,7 @@ class PmDashboardsController < PmController
       if @project.planned_end_date && @project.planned_start_date
         handler = ProjectBillabilityJob.new(@project.id)
         @job = Delayed::Job.find_by_handler(handler.to_yaml)
+        @job = nil if @job and @job.run_at.eql?(Time.parse("12am") + 1.day)
         load_billability_file
         enqueue_billability_job(handler) if @billability.nil? || @billability.empty?
       end
@@ -36,6 +37,7 @@ class PmDashboardsController < PmController
       if @project.planned_start_date && (@project.actual_end_date || @project.planned_end_date)
         handler = ProjectFixedCostJob.new(@project.id)
         @job = Delayed::Job.find_by_handler(handler.to_yaml)
+        @job = nil if @job and @job.run_at.eql?(Time.parse("12am") + 1.day)
         load_fixed_cost_file
         enqueue_fixed_cost_job(handler) if @fixed_cost.nil? || @fixed_cost.empty?
       else
@@ -68,6 +70,7 @@ class PmDashboardsController < PmController
         load_billability_file
         handler = ProjectBillabilityJob.new(@project.id)
         @job = Delayed::Job.find_by_handler(handler.to_yaml)
+        @job = nil if @job and @job.run_at.eql?(Time.parse("12am") + 1.day)
         enqueue_billability_job(handler) if @project.planned_end_date && @project.planned_start_date
       else
         load_billability_file
@@ -88,6 +91,7 @@ class PmDashboardsController < PmController
         load_fixed_cost_file
         handler = ProjectFixedCostJob.new(@project.id)
         @job = Delayed::Job.find_by_handler(handler.to_yaml)
+        @job = nil if @job and @job.run_at.eql?(Time.parse("12am") + 1.day)
         enqueue_fixed_cost_job(handler)
       else
         load_fixed_cost_file
@@ -133,14 +137,14 @@ class PmDashboardsController < PmController
   end
 
   def enqueue_billability_job(handler)
-    unless @job
+    if @job.blank?
       puts "enqueuing billability job..."
       @job = Delayed::Job.enqueue handler
     end
   end
 
   def enqueue_fixed_cost_job(handler)
-    unless @job
+    if @job.blank?
       puts "enqueuing fixed cost job..."
       @job = Delayed::Job.enqueue handler
     end
