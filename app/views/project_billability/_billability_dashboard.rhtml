@@ -1,22 +1,17 @@
 <% if @project.planned_end_date && @project.planned_start_date %>
-
-      <%# first_time_entry = @project.time_entries.find(:first, :select => "spent_on", :conditions => "hours > 0", :order => "spent_on ASC") %>
-      <%# actual_start = @project.actual_start_date || (first_time_entry ? first_time_entry.spent_on : @project.planned_start_date) %>
-      <%# actual_end = (Date.today - 1.week).end_of_week %>
-      <%# weeks = get_weeks_range(actual_start, actual_end) %>
       <div style="width: 100%; margin: 0; padding: 0">
         <table class="list" style="text-align: center">
           <tr>
             <th>Billing Model</th>
             <td><%= @project.billing_model %></td>
             <th>Forecasted Hours</th>
-            <td><%= number_with_delimiter ("%0.2f" % (@billability["total_forecast"])) %></td>
+            <td><%= number_with_delimiter ("%0.2f" % (@billability['total_forecast'])) %></td>
           </tr>
           <tr>
             <th>Billability to date %</th>
-            <td><%= @percent_to_date = "%0.2f" % (@billability["total_percent_billability_week"]) %>%</td>
-            <th>Total Billable Hours</th>
-            <td><%= number_with_delimiter ("%0.2f" % (@billability["total_actuals"])) %></td>
+            <td><%= @percent_to_date = "%0.2f" % (@billability['total_percent_billability_week']) %>%</td>
+            <th><%= display_by_billing_model.eql?("billability") ? 'Total Billable Hours' : 'Total Hours' %></th>
+            <td><%= number_with_delimiter ("%0.2f" % (@billability['total_actuals'])) %></td>
           </tr>
         </table>
       </div>

@@ -72,11 +72,8 @@
   
   <% unless @client %>
   <div class="singleCol">
-    <% if display_by_billing_model.eql?("fixed") %>
-      <%= render :partial => "load_fixed_cost"  %>
-    <% elsif display_by_billing_model.eql?("billability") %>
-      <%= render :partial => "load_billability" %>
-    <% end %>
+    <%= render :partial => "load_fixed_cost" if display_by_billing_model.eql?("fixed")%>
+    <%= render :partial => "load_billability" unless @project.billing_model.blank? %>
     
     <div class="box">
       <h3>Time Logging as of Last Week</h3>

@@ -1,6 +1,17 @@
 PM DASHBOARD WIKI
 
 Dashboard
+  > Utilization/Billability
+    > for T and M projects
+      -- Billing Model = billing model of project
+      -- Forecasted Hours = total allocated hours for bilalble project team from actual start/first timelog/planned start to planned end
+      -- Total Billable Hours = total logged time of billable members to billable tickets
+      -- Billability to Date % = average of weekly (actual hours/forecasted hours) from actual start/first timelog/planned start to last week
+    > for Fixed bid projects
+      -- Billing Model = billing model of project
+      -- Forecasted Hours = total allocated hours for bilalble project team from actual start/first timelog/planned start to planned end
+      -- Total Hours = total logged time of billable members to billable and non-billable tickets
+      -- Billability to Date % = average of weekly (actual hours/forecasted hours) from actual start/first timelog/planned start to last week
 Info
 Assumptions
   > CRUD
@@ -25,6 +36,12 @@ Bottomline Cost Monitoring
 Resouce Utilization
 Time Logging
 Project Billability
+  > only for T and M projects
+  > tableized labour hours, forecast, and actual billable hours of billable resources in the project for the week
+  > duration: from=actual start date/first time log for project/planned start date, to=end of week last week
+  > # of resources = number of billable members in project team
+  > Billability % to Date = average of weekly (actual hours/forecasted hours) from actual start/first timelog/planned start to last week
+
 Milestone Plans
 Project Contracts
 Weekly Highlights

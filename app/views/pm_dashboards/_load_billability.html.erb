@@ -1,20 +1,19 @@
 <div class="box" id="billability_box">
-  <h3><%=l(:label_dashboard_billability)%>
-    <span id="updated_at" style="font-size:8pt; padding:2px; color:#666666; margin-left:70px;"></span>
-    <a href="#" onclick="jQuery('#processing_gif').show().text('Enqueuing job...'); $('billability_form').request({
-      parameters: { 'project_id': '<%= @project.id %>', 'refresh': 'true' }
-      });" title="Refresh" style="float:right; display:none;">
-      <% if request.env["HTTP_USER_AGENT"] =~ /MSIE 8.0/ || request.env["HTTP_USER_AGENT"] =~ /MSIE 7.0/%>
-        <%= image_tag('reload.png', :style => "margin-top: -30px;") %>
-      <% else %>
-        <%= image_tag('reload.png') %>
-      <% end %></a>
-  </h3>
+  <h3 style="float: left"><%=l(:label_dashboard_billability)%></h3>
+  <div style="float: right; font-size:8pt; padding:2px; color:#666666;">
+    <a href="#" onclick="jQuery('#processing_gif_tandm').show().text('Enqueuing job...'); $('billability_form').request({
+                                            parameters: { 'project_id': '<%= @project.id %>', 'refresh': 'true' }
+                                            });" title="Refresh" style="display:none;", class="contextual">
+      <%= image_tag('reload.png') %>
+    </a>
+    <span id="updated_at" class="contextual">
+      <% last_update = @billability['updated_at'] %>
+      <%= "as of #{last_update.strftime('%b %d, %Y %I:%M %p')}" if last_update %>
+    </span>
+  </div>
+  <div style="clear: both"></div>
   <span id="dashboard_billability">
-  <div id="processing_gif" class="flash notice"></div>
-  <% if !@billability.nil? && !@billability.empty?%>
-    <% @updated_at = @billability["updated_at"] ? @billability["updated_at"] : Time.now %>
-  <% end %>
+  <div id="processing_gif_tandm" class="flash notice"></div>
 
   <% if !@billability.nil? && !@billability.empty? %>
     <%= render :partial => "project_billability/billability_dashboard" %>
@@ -24,16 +23,12 @@
 
   <% if @job.nil? %>
     <script type="text/javascript">
-      jQuery("#processing_gif").hide();
+      jQuery("#processing_gif_tandm").hide();
       jQuery("#dashboard_billability").parent().find("a").show();
-      jQuery("#updated_at").text("");
-      jQuery("#updated_at").text("<%= "as of #{@updated_at.strftime('%b %d, %Y %I:%M %p')}" if @updated_at %>");
     </script>
   <% else %>
     <script type="text/javascript">
-      jQuery("#processing_gif").text("Job has been enqueued.");
-      jQuery("#updated_at").text("");
-      jQuery("#updated_at").text("<%= "as of #{@updated_at.strftime('%b %d, %Y %I:%M %p')}" if @updated_at %>");
+      jQuery("#processing_gif_tandm").text("Job has been enqueued.");
       jQuery("#dashboard_billability").parent().find("a").hide();
       setTimeout(function(){
         $('billability_form').request({

@@ -1,21 +1,20 @@
 <div class="box" id="fixed_cost_box">
-  <h3><%=l(:label_dashboard_status)%>
-    <span id="updated_at" style="font-size:8pt; padding:2px; color:#666666; margin-left:50px;"></span>
-    <a href="#" onclick="jQuery('#processing_gif').show().text('Enqueuing job...'); $('fixed_cost_form').request({
-      parameters: { 'project_id': '<%= @project.id %>', 'refresh': 'true' }
-      });" style="float:right; display:none;">
-      <% if request.env["HTTP_USER_AGENT"] =~ /MSIE 8.0/ || request.env["HTTP_USER_AGENT"] =~ /MSIE 7.0/%>
-        <%= image_tag('reload.png', :style => "margin-top: -30px;") %>
-      <% else %>
-        <%= image_tag('reload.png') %>
-      <% end %></a>
-  </h3>
+  <h3 style="float: left"><%=l(:label_dashboard_status)%></h3>
+  <div style="float: right; font-size:8pt; padding:2px; color:#666666;">
+    <a href="#" onclick="jQuery('#processing_gif_fixed').show().text('Enqueuing job...'); $('fixed_cost_form').request({
+                                            parameters: { 'project_id': '<%= @project.id %>', 'refresh': 'true' }
+                                            });" title="Refresh" style="display:none;", class="contextual">
+      <%= image_tag('reload.png') %>
+    </a>
+    <span id="updated_at" class="contextual">
+      <% last_update = @fixed_cost['updated_at'] %>
+      <%= "as of #{last_update.strftime('%b %d, %Y %I:%M %p')}" if last_update %>
+    </span>
+  </div>
+  <div style="clear: both"></div>
   <span id="dashboard_cost_monitoring">
-  <div id="processing_gif" class="flash notice"></div>
-  <% if !@fixed_cost.nil? && !@fixed_cost.empty? %>
-    <% @updated_at = @fixed_cost["updated_at"] ? @fixed_cost["updated_at"] : Time.now %>
-  <% end %>
-
+  <div id="processing_gif_fixed" class="flash notice"></div>
+ 
   <% if !@fixed_cost.nil? && !@fixed_cost.empty? %>
     <%= render :partial => "project_billability/cost_monitoring_dashboard" %>
   <% else %>
@@ -23,19 +22,14 @@
   <% end %>
 
   <% if @job.nil? %>
-    <% updated_at = @fixed_cost["updated_at"] ? "Updated last #{@fixed_cost['updated_at'].strftime('%b %d, %Y %I:%M %p')}" : "Refresh" %>
     <script type="text/javascript">
-      jQuery("#processing_gif").hide();
-      jQuery("#dashboard_cost_monitoring").parent().find("a").attr("title", "<%= updated_at %>").show();
-      jQuery("#updated_at").text("");
-      jQuery("#updated_at").text("<%= "as of #{@updated_at.strftime('%b %d, %Y %I:%M %p')}" if @updated_at %>");
+      jQuery("#processing_gif_fixed").hide();
+      jQuery("#dashboard_cost_monitoring").parent().find("a").show();
     </script>
   <% else %>
     <script type="text/javascript">
-      jQuery("#processing_gif").text("Job has been enqueued.");
-      jQuery("#updated_at").text("");
-      jQuery("#updated_at").text("<%= "as of #{@updated_at.strftime('%b %d, %Y %I:%M %p')}" if @updated_at %>");
-      jQuery("#dashboard_billability").parent().find("a").hide();
+      jQuery("#processing_gif_fixed").text("Job has been enqueued.");
+      jQuery("#dashboard_cost_monitoring").parent().find("a").hide();
       setTimeout(function(){
         $('fixed_cost_form').request({
           parameters: {
@@ -46,7 +40,6 @@
       }, 15000);
     </script>
   <% end %>
-
   <form id="fixed_cost_form" method="POST" action="/pm_dashboards/reload_fixed_cost">
   </form>
 
