@@ -60,12 +60,28 @@ function hide_ajax_popup() {
 function validatedatesinput(start_date, versionType){
   if(versionType == 0 || versionType == 2){
     jQuery("#version_started_date").attr("readonly", "readonly");
+    jQuery("#version_original_end_date").attr("readonly", "readonly");
+    jQuery("#version_effective_date").attr("readonly", "readonly");
     jQuery("#version_started_date").val(jQuery("#version_effective_date").val());
     jQuery("#version_started_date_trigger").hide();
+    jQuery("#version_original_end_date_trigger").hide();
+    jQuery("#version_effective_date_trigger").hide();
   }else{
     jQuery("#version_started_date").removeAttr("readonly");
+    jQuery("#version_original_end_date").removeAttr("readonly");
+    jQuery("#version_effective_date").removeAttr("readonly");
     jQuery("#version_started_date").val(start_date);
     jQuery("#version_started_date_trigger").show();
+    jQuery("#version_original_end_date_trigger").show();
+    jQuery("#version_effective_date_trigger").show();
+  }
+}
+
+function validateStartDatesOnchange(versionType){
+  if(versionType == 0 || versionType == 2){
+    jQuery("#version_original_end_date").val(jQuery("#version_original_start_date").val());
+    jQuery("#version_started_date").val(jQuery("#version_original_start_date").val());
+    jQuery("#version_effective_date").val(jQuery("#version_original_start_date").val());
   }
 }
 

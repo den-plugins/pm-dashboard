@@ -21,10 +21,12 @@ class MilestonePlansController < PmController
   		@version = Version.new(params[:version])
       @version.project_id = @project.id
 
-      if @version.save
+      if !@version.original_start_date.nil? && !@version.original_end_date.nil? && @version.save
         flash[:notice] = l(:notice_successful_create)
         redirect_to_milestone_plans
       else
+        @version.errors.add_to_base "Please input Original Start Date." if @version.original_start_date.nil?
+        @version.errors.add_to_base "Please input Original End Date." if @version.original_end_date.nil?
         render_milestone_plans('add')
       end
 		end

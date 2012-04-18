@@ -16,9 +16,20 @@
 		<th><b><%= l(:field_version_wiki) %>:</b></th>
 		<td><%= f.text_field :wiki_page_title %></td>
 	</tr>
+    <tr>
+  	  <th><%= l(:field_version_type) %>:</th>
+  	  <td>
+  		  <div>
+  		    <% Version::TYPES.each do |k,v| %>
+  		      <%= f.radio_button :version_type, k, :onchange => "validatedatesinput('#{@version.started_date}', #{k});" %><%= v %><br>
+  			  <% end %>
+  		  </div>
+  	  </td>
+    </tr>
 	<tr>
 		<th><%= l(:field_version_original_start_date) %>:</th>
-    <td><%= f.text_field :original_start_date, :size => 10 %><%= calendar_for('version_original_start_date') %></td>
+    <td><%= f.text_field :original_start_date, :size => 10, :onchange => "validateStartDatesOnchange(jQuery('input:checked').val())" %>
+    <%= calendar_for('version_original_start_date') %></td>
   </tr>
   <tr>
 		<th><%= l(:field_version_original_end_date) %>:</th>
@@ -32,16 +43,6 @@
   	<th><%= l(:field_version_end_date) %>:</th>
     <td><%= f.text_field :effective_date, :size => 10, :onchange => "validatedatesonchange(jQuery('input:checked').val())" %>
     <%= calendar_for('version_effective_date') %></td>
-  </tr>
-  <tr>
-  	<th><%= l(:field_version_type) %>:</th>
-  	<td>
-  		<div>
-  		  <% Version::TYPES.each do |k,v| %>
-  		    <%= f.radio_button :version_type, k, :onchange => "validatedatesinput('#{@version.started_date}', #{k});" %><%= v %><br>
-  			<% end %>
-  		</div>
-  	</td>
   </tr>
   <tr>
   	<th><%= l(:field_version_state) %>:</th>
