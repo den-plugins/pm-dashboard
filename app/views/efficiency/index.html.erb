@@ -67,12 +67,12 @@
     jQuery(document).ready(function() {
       jQuery.jqplot('efficiency_chart', <%= chart_data.to_json %>, {
         axes: {
-          xaxis: {label: 'Weeks', autoscale: true, renderer: jQuery.jqplot.DateAxisRenderer, tickRenderer: jQuery.jqplot.CanvasAxisTickRenderer, tickOptions: {showMark: false, fontSize: '8pt', formatString: '%m/%d/%y', angle: -30}},
-          yaxis: {min: 0, tickOptions: {formatString:'%d'}}
+          xaxis: {autoscale: true, renderer: jQuery.jqplot.DateAxisRenderer, tickRenderer: jQuery.jqplot.CanvasAxisTickRenderer, tickOptions: {showMark: false, fontSize: '8pt', formatString: '%m/%d/%y', angle: -30}},
+          yaxis: {tickOptions: {formatString:'%d'}}
         },
         seriesColors: ['#ff0000', '#009900'],
-        series: {label: 'Raised'},
-        legend: {show: false},
+        series: [{label: 'No. Raised'}, {label: 'No. Closed'}],
+        legend: {show: true},
         cursor: {show: true, zoom: true},
         highlighter: {show: true, sizeAdjust: 7.5}
       });
@@ -85,6 +85,8 @@
           value = parseFloat(0.5 * parseFloat(testCodeCoverage) + 0.5 * (100 * defectRatio)).toFixed(2);
           jQuery('#status').text(value + '%').removeClass('red yellow green').addClass(statusColor(value));
           jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(value));
+
+          jQuery.post(window.location.href + '/update_test_code_coverage', { 'coverage': jQuery(this).val() });
         } else {
           jQuery('#status').text('').removeClass('red yellow green');
           jQuery('#status-label').removeClass('red yellow green');
