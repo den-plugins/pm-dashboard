@@ -1,4 +1,8 @@
 module EfficiencyHelper
+  OPEN_STATUS = IssueStatus.all(:conditions => ['is_closed = ? AND name NOT IN (?)', false, ['Resolved', 'Verified by QA']])
+  RESOLVED_STATUS = IssueStatus.all(:conditions => ['name IN (?)', ['Resolved', 'Verified by QA']])
+  CLOSED_STATUS = IssueStatus.all(:conditions => { :is_closed => true }).map(&:id)
+
   def get_weeks_range(from, to) 
     if from && to
       start_date, end_date = from, to
@@ -24,14 +28,20 @@ module EfficiencyHelper
 
   def chart_data
     weeks = get_weeks_range((Date.today - 6.months).monday, (Date.today - 1.week).end_of_week - 2.days)
-    start_date = @project.actual_start_date || @project.planned_start_date || weeks.first.first
     raised = []
     closed = []
     weeks.each do |week|
-      weekly_raised = Issue.count(:conditions => ['project_id = ? AND tracker_id = ? AND created_on BETWEEN ? AND ?', @project.id, 1, start_date, week.last])
-      weekly_closed = Issue.count(:conditions => ['project_id = ? AND tracker_id = ? AND status_id = ? AND created_on BETWEEN ? AND ?', @project.id, 1, IssueStatus.find_by_name('Closed').id, start_date, week.last]) # TODO for confirmation
-      raised << [week.last, weekly_raised.to_i]
-      closed << [week.last, weekly_closed.to_i]
+      weekly_raised = Issue.count(:conditions => ['project_id = ? AND tracker_id = ? AND created_on <= ?', @project.id, 1, week.last])
+      weekly_closed = Issue.count(:conditions => ['project_id = ? AND tracker_id = ?
+                                                  AND journal_details.prop_key = ?
+                                                  AND journal_details.value IN (?)
+                                                  AND journals.created_on <= ?',
+                                                  @project.id, 1, 'status_id', CLOSED_STATUS.map(&:to_s), week.last],
+                                  :include => { :journals => :details })
+      if weekly_raised > 0 && weekly_closed > 0
+        raised << [week.last, weekly_raised.to_i]
+        closed << [week.last, weekly_closed.to_i]
+      end
     end
     [raised, closed]
   end
@@ -39,9 +49,9 @@ module EfficiencyHelper
   def bug_count(status=nil, version=nil)
     conditions = { :project_id => @project.id, :tracker_id => 1 }
     status_id = case status
-                when :open then IssueStatus.find_by_name('Open')
-                when :resolved then IssueStatus.find_by_name('Resolved')
-                when :closed then IssueStatus.find_by_name('Closed')
+                when :open     then OPEN_STATUS
+                when :resolved then RESOLVED_STATUS
+                when :closed   then CLOSED_STATUS
                 end
     version_id = version.id unless version.blank?
     conditions.merge!(:status_id => status_id) unless status_id.blank?
@@ -55,7 +65,7 @@ module EfficiencyHelper
   end
 
   def defect_ratio
-    bug_count(:closed) / bug_count.to_f
+    (bug_count(:closed) / bug_count.to_f).to_f
   end
 
   def status
