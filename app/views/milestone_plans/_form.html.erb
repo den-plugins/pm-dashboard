@@ -21,7 +21,7 @@
   	  <td>
   		  <div>
   		    <% Version::TYPES.each do |k,v| %>
-  		      <%= f.radio_button :version_type, k, :onchange => "validatedatesinput('#{@version.started_date}', #{k});" %><%= v %><br>
+  		      <%= f.radio_button :version_type, k, :onchange => "validatedatesinput('#{@version.started_date}', #{k}, '#{form_action}');" %><%= v %><br>
   			  <% end %>
   		  </div>
   	  </td>

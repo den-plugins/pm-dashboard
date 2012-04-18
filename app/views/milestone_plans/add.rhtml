@@ -10,7 +10,7 @@
 <div class="box">
 	<% form_for :version, @milestone, :url => {:controller => 'milestone_plans', :action => 'add', :project_id => @project, :milestone_id => @milestone, :release_id => params[:release_id]} do |f| %>
 		
-		<%= render :partial => 'milestone_plans/form', :locals => { :button_label => l(:button_create), :project => @project, :f => f } %>
+		<%= render :partial => 'milestone_plans/form', :locals => { :button_label => l(:button_create), :project => @project, :f => f, :form_action => 'add' } %>
 
 	<% end %>
 </div>

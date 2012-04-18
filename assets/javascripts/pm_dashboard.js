@@ -57,8 +57,8 @@ function hide_ajax_popup() {
   jQuery('#ajax-indicator').attr('style', 'z-index: 100;').hide();
 }
 
-function validatedatesinput(start_date, versionType){
-  if(versionType == 0 || versionType == 2){
+function validatedatesinput(start_date, versionType, formAction){
+  if((versionType == 0 || versionType == 2) && formAction == "add") {
     jQuery("#version_started_date").attr("readonly", "readonly");
     jQuery("#version_original_end_date").attr("readonly", "readonly");
     jQuery("#version_effective_date").attr("readonly", "readonly");
