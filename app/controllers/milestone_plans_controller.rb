@@ -38,10 +38,13 @@ class MilestonePlansController < PmController
     if request.xhr?
       render :partial => "milestone_plans/edit"
     else
-      if @version.update_attributes(params[:version])
+      if !@version.original_start_date.nil? && !@version.original_end_date.nil? && !@version.original_start_date.blank? &&
+         !@version.original_end_date.blank? && @version.update_attributes(params[:version])
         flash[:notice] = l(:notice_successful_update)
         redirect_to_milestone_plans
       else
+        @version.errors.add_to_base "Please input Original Start Date." if @version.original_start_date.nil?
+        @version.errors.add_to_base "Please input Original End Date." if @version.original_end_date.nil?
         render :template => "milestone_plans/edit_with_error"
       end
     end
