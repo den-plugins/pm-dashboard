@@ -18,7 +18,7 @@
         <td class="left"><%= s[:location] %></td> 
         <td class="left"><%= facebox_link_to s[:name], {:url => {:controller => 'ticker', :action => 'user_timelogs',
                                                                  :user_id => s[:user_id], :from => @from, :to => @to, 
-                                                                 :type => @columns}} %></td>
+                                                                 :type => @columns, :env => 'popup'}} %></td>
         <td class="left"><%= s[:role] %></td>
         <td><%= get_string s[:total_hours] %></td>
         <td><%= get_string s[:total_hours_on_selected] %></td>
