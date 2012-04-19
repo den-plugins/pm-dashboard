@@ -4,7 +4,7 @@ class EfficiencyController < PmController
   before_filter :role_check_client
 
   def index
-    @versions = @project.versions.all(:order => 'effective_date IS NULL, effective_date ASC')
+    @versions = @project.versions.all(:order => 'effective_date IS NULL, effective_date DESC').reverse
   end
 
   def update_test_code_coverage

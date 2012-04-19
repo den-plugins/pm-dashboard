@@ -19,10 +19,10 @@
   </tr>
 </table>
 
-<table class="list" style="text-align: center">
+<table class="list" border="1" style="text-align: center">
   <thead>
     <tr>
-      <th></th>
+      <th style="width: 50%"></th>
       <th>Defects<br/> Raised</th>
       <th>Defects<br/> Open</th>
       <th>Defects<br/> Resolved/For Verification</th>
@@ -31,7 +31,7 @@
   </thead>
   <tbody>
     <tr class="even">
-      <td class="left">Start to Current</td>
+      <td class="left"><em>Start to Current</em></td>
       <td><%= bug_count %></td>
       <td><%= bug_count :open %></td>
       <td><%= bug_count :resolved %></td>
@@ -39,7 +39,7 @@
     </tr>
     <% @versions.each do |version| %>
       <tr class="<%= cycle 'odd', 'even' %>">
-        <td class="left"><%= version.name %></td>
+        <td class="left"><em><%= version.name %></em></td>
         <td><%= bug_count nil, version %></td>
         <td><%= bug_count :open, version %></td>
         <td><%= bug_count :resolved, version %></td>
