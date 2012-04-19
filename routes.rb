@@ -13,3 +13,4 @@ map.connect 'projects/:project_id/project_management/highlights/:action', :contr
 map.connect 'projects/:project_id/project_management/utilization/:action', :controller => 'resource_utilization'
 map.connect 'projects/:project_id/project_management/timelog/:action', :controller => 'time_logging'
 map.connect 'projects/:project_id/project_management/efficiency/:action', :controller => 'efficiency'
+map.connect 'projects/:project_id/project_management/efficiency/load_chart.json', :controller => 'efficiency', :action => 'load_chart'

@@ -52,6 +52,9 @@
 </table>
 
 <div id="efficiency_chart">
+  <div style="text-align:center; margin-top: 100px">
+    <%= image_tag('ajax-loader.gif', :width => '25px', :plugin => 'management') %>
+  </div>
 </div>
 
 <% content_for :header_tags do %>
@@ -67,8 +70,8 @@
   <%= javascript_include_tag 'plugins/jqplot.pointLabels.min.js', :plugin => 'redmine_burndown' %>
   <script type="text/javascript">
     var chart = {
-      render: function(id) {
-        this.plot = jQuery.jqplot('efficiency_chart', <%= chart_data.to_json %>, {
+      render: function(id, data) {
+        this.plot = jQuery.jqplot('efficiency_chart', data, {
           axes: {
             xaxis: {autoscale: true, renderer: jQuery.jqplot.DateAxisRenderer, tickRenderer: jQuery.jqplot.CanvasAxisTickRenderer, tickOptions: {showMark: false, fontSize: '8pt', formatString: '%m/%d/%y', angle: -30}},
             yaxis: {tickOptions: {formatString:'%d'}}
@@ -83,13 +86,14 @@
     };
 
     jQuery(document).ready(function() {
-      chart.render('efficiency_chart');
+      jQuery.post(window.location.href + '/load_chart.json', function(data) {
+        jQuery('#efficiency_chart').empty();
+        chart.render('efficiency_chart', data);
+      });
 
       jQuery(window).resize(function() {
         if(chart.plot) {
-          var targetId = chart.plot.targetId;
-          jQuery(targetId).empty();
-          chart.render(targetId.replace('#', ''));
+          chart.plot.replot();
         }
       });
 
