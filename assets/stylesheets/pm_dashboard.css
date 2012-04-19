@@ -92,6 +92,12 @@ div#time_logging_table table thead tr { height: 60px; }
 tr.summary_total {height: 27px; ha:;}
 tr.summary_total td { color: black; font-weight: bold; text-align: center; background-color: #eee; vertical-align: middle;}
 
+#test_code_coverage { font-size: inherit; }
+#defects_list { margin: 1em 0; }
+#defects_list .fixed_version { width: 50%; }
+#defects_list .count { width: 10%; }
+#efficiency_chart { margin: 1em; }
+
 /**********************
   GENERAL CLASSES
 **********************/

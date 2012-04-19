@@ -8,9 +8,10 @@
 <% end %>
 
 <h2>Efficiency</h2>
+<div class="zero_wrap">
 <table id="efficiency_header">
   <tr>
-    <td><span>Client</span></td>
+    <td><span>CLIENT</span></td>
     <td class="value"><%= @project.client %></td>
     <td><span>Current Test Code Coverage</span></td>
     <td class="value"><%= text_field_tag 'test_code_coverage', number_with_precision(test_code_coverage, :precision => 2), :size => 3 %>%</td>
@@ -18,15 +19,16 @@
     <td id="status" class="value <%= status_color %>" data-defect-ratio="<%= defect_ratio %>"><%= "#{number_with_precision(status, :precision => 2)}%" %></td>
   </tr>
 </table>
+</div>
 
-<table class="list" border="1" style="text-align: center">
+<table id="defects_list" class="list" border="1" style="text-align: center">
   <thead>
     <tr>
-      <th style="width: 50%"></th>
-      <th>Defects<br/> Raised</th>
-      <th>Defects<br/> Open</th>
-      <th>Defects<br/> Resolved/For Verification</th>
-      <th>Defects<br/> Closed</th>
+      <th class="fixed_version"></th>
+      <th class="count">Defects<br/> Raised</th>
+      <th class="count">Defects<br/> Open</th>
+      <th class="count">Defects<br/> Resolved/For Verification</th>
+      <th class="count">Defects<br/> Closed</th>
     </tr>
   </thead>
   <tbody>
@@ -64,17 +66,31 @@
   <%= javascript_include_tag 'plugins/jqplot.highlighter.min.js', :plugin => 'redmine_burndown' %>
   <%= javascript_include_tag 'plugins/jqplot.pointLabels.min.js', :plugin => 'redmine_burndown' %>
   <script type="text/javascript">
+    var chart = {
+      render: function(id) {
+        this.plot = jQuery.jqplot('efficiency_chart', <%= chart_data.to_json %>, {
+          axes: {
+            xaxis: {autoscale: true, renderer: jQuery.jqplot.DateAxisRenderer, tickRenderer: jQuery.jqplot.CanvasAxisTickRenderer, tickOptions: {showMark: false, fontSize: '8pt', formatString: '%m/%d/%y', angle: -30}},
+            yaxis: {tickOptions: {formatString:'%d'}}
+          },
+          seriesColors: ['#ff0000', '#009900'],
+          series: [{label: 'No. Raised'}, {label: 'No. Closed'}],
+          legend: {show: true},
+          cursor: {show: true, zoom: true},
+          highlighter: {show: true, sizeAdjust: 7.5}
+        });
+      }
+    };
+
     jQuery(document).ready(function() {
-      jQuery.jqplot('efficiency_chart', <%= chart_data.to_json %>, {
-        axes: {
-          xaxis: {autoscale: true, renderer: jQuery.jqplot.DateAxisRenderer, tickRenderer: jQuery.jqplot.CanvasAxisTickRenderer, tickOptions: {showMark: false, fontSize: '8pt', formatString: '%m/%d/%y', angle: -30}},
-          yaxis: {tickOptions: {formatString:'%d'}}
-        },
-        seriesColors: ['#ff0000', '#009900'],
-        series: [{label: 'No. Raised'}, {label: 'No. Closed'}],
-        legend: {show: true},
-        cursor: {show: true, zoom: true},
-        highlighter: {show: true, sizeAdjust: 7.5}
+      chart.render('efficiency_chart');
+
+      jQuery(window).resize(function() {
+        if(chart.plot) {
+          var targetId = chart.plot.targetId;
+          jQuery(targetId).empty();
+          chart.render(targetId.replace('#', ''));
+        }
       });
 
       jQuery('#test_code_coverage').change(function() {
