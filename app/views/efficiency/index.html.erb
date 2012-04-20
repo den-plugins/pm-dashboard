@@ -73,7 +73,7 @@
       render: function(id, data) {
         this.plot = jQuery.jqplot('efficiency_chart', data, {
           axes: {
-            xaxis: {autoscale: true, renderer: jQuery.jqplot.DateAxisRenderer, tickRenderer: jQuery.jqplot.CanvasAxisTickRenderer, tickOptions: {showMark: false, fontSize: '8pt', formatString: '%m/%d/%y', angle: -30}},
+            xaxis: {renderer: jQuery.jqplot.DateAxisRenderer, tickRenderer: jQuery.jqplot.CanvasAxisTickRenderer, tickOptions: {showMark: false, fontSize: '8pt', formatString: '%d-%b'}, pad: 1.75, tickInterval: '2 weeks'},
             yaxis: {tickOptions: {formatString:'%d'}}
           },
           seriesColors: ['#ff0000', '#009900'],
