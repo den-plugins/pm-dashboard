@@ -33,8 +33,8 @@ class ProjectBillabilityController < PmController
       if params[:refresh]
         load_billability_file
         handler = ProjectBillabilityJob.new(@project.id)
-        @job = Delayed::Job.find_by_handler(handler.to_yaml)
-        @job = nil if @job and @job.run_at.eql?(Time.parse("12am") + 1.day)
+        @job = Delayed::Job.find(:first,
+              :conditions => ["handler = ? AND run_at <> ?", "#{handler.to_yaml}", (Time.parse("12am") + 1.day)])
         enqueue_billability_job(handler) if @project.planned_end_date && @project.planned_start_date
       else
         load_billability_file

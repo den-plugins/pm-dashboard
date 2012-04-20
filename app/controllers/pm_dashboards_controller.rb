@@ -27,16 +27,16 @@ class PmDashboardsController < PmController
     billing_model = display_by_billing_model
     if @project.planned_end_date && @project.planned_start_date
       handler = ProjectBillabilityJob.new(@project.id)
-      @job = Delayed::Job.find_by_handler(handler.to_yaml)
-      @job = nil if @job and @job.run_at.eql?(Time.parse("12am") + 1.day)
+      @job = Delayed::Job.find(:first,
+              :conditions => ["handler = ? AND run_at <> ?", "#{handler.to_yaml}", (Time.parse("12am") + 1.day)])
       load_billability_file
       enqueue_billability_job(handler) if @billability.nil? || @billability.empty?
     end
     if billing_model == "fixed"
       if @project.planned_start_date && (@project.actual_end_date || @project.planned_end_date)
         handler = ProjectFixedCostJob.new(@project.id)
-        @job = Delayed::Job.find_by_handler(handler.to_yaml)
-        @job = nil if @job and @job.run_at.eql?(Time.parse("12am") + 1.day)
+        @job = Delayed::Job.find(:first,
+              :conditions => ["handler = ? AND run_at <> ?", "#{handler.to_yaml}", (Time.parse("12am") + 1.day)])
         load_fixed_cost_file
         enqueue_fixed_cost_job(handler) if @fixed_cost.nil? || @fixed_cost.empty?
       else
@@ -68,8 +68,8 @@ class PmDashboardsController < PmController
       if params[:refresh]
         load_billability_file
         handler = ProjectBillabilityJob.new(@project.id)
-        @job = Delayed::Job.find_by_handler(handler.to_yaml)
-        @job = nil if @job and @job.run_at.eql?(Time.parse("12am") + 1.day)
+        @job = Delayed::Job.find(:first,
+              :conditions => ["handler = ? AND run_at <> ?", "#{handler.to_yaml}", (Time.parse("12am") + 1.day)])
         enqueue_billability_job(handler) if @project.planned_end_date && @project.planned_start_date
       else
         load_billability_file
@@ -89,8 +89,8 @@ class PmDashboardsController < PmController
       if params[:refresh]
         load_fixed_cost_file
         handler = ProjectFixedCostJob.new(@project.id)
-        @job = Delayed::Job.find_by_handler(handler.to_yaml)
-        @job = nil if @job and @job.run_at.eql?(Time.parse("12am") + 1.day)
+        @job = Delayed::Job.find(:first,
+              :conditions => ["handler = ? AND run_at <> ?", "#{handler.to_yaml}", (Time.parse("12am") + 1.day)])
         enqueue_fixed_cost_job(handler)
       else
         load_fixed_cost_file
