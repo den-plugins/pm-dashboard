@@ -6,10 +6,12 @@
                                             });" title="Refresh" style="display:none;", class="contextual">
       <%= image_tag('reload.png') %>
     </a>
+    <% if @billability %>
     <span id="updated_at" class="contextual">
       <% last_update = @billability['updated_at'] %>
       <%= "as of #{last_update.strftime('%b %d, %Y %I:%M %p')}" if last_update %>
     </span>
+    <% end %>
   </div>
   <div style="clear: both"></div>
   <span id="dashboard_billability">
