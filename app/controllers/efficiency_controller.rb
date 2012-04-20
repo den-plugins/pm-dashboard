@@ -18,8 +18,8 @@ class EfficiencyController < PmController
       else
         @project.custom_values.build(:custom_field => coverage_field, :value => params[:coverage].to_f.to_s).save
       end
-      head :ok
     end
+    head :ok
   end
 
   def load_chart
@@ -32,19 +32,20 @@ class EfficiencyController < PmController
 
   def chart_data
     weeks = get_full_weeks_range((Date.today - 6.months), Date.today)
-    journals_join = "INNER JOIN (
-                       SELECT journals.journalized_id, MAX(journals.created_on) AS created_on
-                       FROM journals
-                         LEFT OUTER JOIN journal_details ON journal_details.journal_id = journals.id
-                         WHERE journals.journalized_type = 'Issue'
-                           AND journal_details.prop_key = 'status_id'
-                           AND journal_details.value IN (#{[NOT_DEFECT_STATUS, CLOSED_STATUS].flatten.map{|v| %{'#{v}'}}.join(',')})
-                         GROUP BY journals.journalized_id
-                     ) details ON details.journalized_id = issues.id".squeeze(' ')
+    closed_statuses = [NOT_DEFECT_STATUS, CLOSED_STATUS].flatten.map{|v| %{'#{v}'}}.join(',')
     raised = []
     closed = []
 
     weeks.each do |week|
+      journals_join = "INNER JOIN (SELECT journals.journalized_id, MAX(journals.created_on) AS created_on
+                         FROM journals
+                           LEFT OUTER JOIN journal_details ON journal_details.journal_id = journals.id
+                           WHERE journals.journalized_type = 'Issue'
+                             AND journal_details.prop_key = 'status_id'
+                             AND journal_details.value IN (#{closed_statuses})
+                             AND journals.created_on <= '#{week.last}'
+                           GROUP BY journals.journalized_id) details ON details.journalized_id = issues.id".squeeze(' ')
+
       weekly_raised = Issue.count(:conditions => ['project_id = ? AND tracker_id = ? AND created_on <= ?',
                                                    @project.id, 1, week.last])
       weekly_closed = Issue.count(:joins => journals_join,
