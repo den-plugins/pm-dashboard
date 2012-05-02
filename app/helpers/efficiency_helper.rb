@@ -10,7 +10,7 @@ module EfficiencyHelper
                 when :open        then OPEN_STATUS
                 when :not_defect  then NOT_DEFECT_STATUS
                 when :resolved    then RESOLVED_STATUS
-                when :closed      then CLOSED_STATUS
+                when :closed      then [CLOSED_STATUS, NOT_DEFECT_STATUS].flatten
                 end
     version_id = version.id unless version.blank?
     conditions.merge!(:status_id => status_id) unless status_id.blank?
