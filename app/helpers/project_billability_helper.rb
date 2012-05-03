@@ -1,7 +1,7 @@
 module ProjectBillabilityHelper
 
   def compute_labor_hours(week, resources)
-    allocated = resources.select {|r| r.billable?(week.first, week.last)}
+    allocated = (resources ? resources.select {|r| r.billable?(week.first, week.last)} : [])
     8 * allocated.sum{|a| a.days_and_cost(week, nil, false)}
   end
 
