@@ -9,24 +9,22 @@
           </tr>
           <tr>
             <th>Budget</th>
-          <td> <%= number_with_delimiter ("%0.2f" % (@cost_budget = @fixed_cost["cost_budget"])) %></td>
+          <td id="budget_amount"><%= number_with_delimiter ("%0.2f" % (@cost_budget = @fixed_cost["cost_budget"])) %></td>
             <th>Forecast</th>
-            <td><%= number_with_delimiter ("%0.2f" % (@cost_forecast = @fixed_cost["cost_forecast"])) %></td>
+            <td id="forecast_amount"><%= number_with_delimiter ("%0.2f" % (@cost_forecast = @fixed_cost["cost_forecast"])) %></td>
           </tr>
           <tr>
           <th>Actuals</th>
-            <td><%= number_with_delimiter ("%0.2f" % (@cost_actual = @fixed_cost["cost_actual"])) %></td>
+            <td id="actual_amount"><%= number_with_delimiter ("%0.2f" % (@cost_actual = @fixed_cost["cost_actual"])) %></td>
             <th>Variance</th>
             <td><%= number_with_delimiter ("%0.2f" % (variants = @cost_budget - @cost_forecast)) %></td>
           </tr>
         </table>
       </div>
       
-      <script type="text/javascript">
-        var cost_color = "<%= code = cost_color_code_fixed(@cost_budget.to_f, @cost_forecast.to_f, @cost_actual.to_f) %>";
-        jQuery(".value.cost_color").text("<%= cost_color_code_label(code) %>");
-        jQuery(".cost_color").addClass(cost_color);
-      </script>
+      <% if display_by_billing_model.eql?('fixed') %>
+      <script type="text/javascript">cost_color_code_for_fixed();</script>
+      <% end %>
       
       <div id="bar_chart" style="height: 240px; display: none; "></div>
       <div id="show_cost_monitoring_chart">

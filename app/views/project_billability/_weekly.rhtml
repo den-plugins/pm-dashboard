@@ -20,9 +20,10 @@
             <th>Actuals (Billable)</th>
           </tr>
           <tr>
-            <td><%= "%0.2f" % billability_dates[week.last.to_s]["lh"] %></td>
-            <td><%= "%0.2f" % billability_dates[week.last.to_s]["fh"] %></td>
-            <td><%= "%0.2f" % billability_dates[week.last.to_s]["ah"] %></td>
+            <% bill_for_week = billability_dates[week.last.to_s] %>
+            <td><%= hnum(bill_for_week ? bill_for_week["lh"] : 0) %></td>
+            <td><%= hnum(bill_for_week ? bill_for_week["fh"] : 0) %></td>
+            <td><%= hnum(bill_for_week ? bill_for_week["ah"] : 0) %></td>
           </tr>
           <tr>
             <td colspan='3'>&nbsp;</td>

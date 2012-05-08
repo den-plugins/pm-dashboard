@@ -1,6 +1,6 @@
 <% if @project.planned_end_date && @project.planned_start_date %>
       <div style="width: 100%; margin: 0; padding: 0">
-        <table class="list" style="text-align: center">
+        <table id="pm_dashboard_utilization" class="list" style="text-align: center">
           <tr>
             <th>Billing Model</th>
             <td><%= @project.billing_model %></td>
@@ -9,18 +9,16 @@
           </tr>
           <tr>
             <th>Billability to date %</th>
-            <td><%= @percent_to_date = "%0.2f" % (@billability['total_percent_billability_week']) %>%</td>
+            <td id="percentage"><%= @percent_to_date = "%0.2f" % (@billability['total_percent_billability_week']) %>%</td>
             <th><%= display_by_billing_model.eql?("billability") ? 'Total Billable Hours' : 'Total Hours' %></th>
             <td><%= number_with_delimiter ("%0.2f" % (@billability['total_actuals'])) %></td>
           </tr>
         </table>
       </div>
-
-      <script type="text/javascript">
-          var cost_color = "<%= code = cost_color_code_billability(@percent_to_date.to_f) %>";
-          jQuery(".value.cost_color").text("<%= cost_color_code_label(code) %>");
-          jQuery(".cost_color").addClass(cost_color);
-      </script>
+      
+      <% if display_by_billing_model.eql?('billability') %>
+      <script type="text/javascript">cost_color_code_for_tm();</script>
+      <% end %>
       
       <% if @billability["billability_per_week"] and !@billability["billability_per_week"].empty? %>
       <div id="bchart2" style="height: 240px; display: none; "></div>

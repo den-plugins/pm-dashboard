@@ -95,9 +95,49 @@ function toggle_allocation_btn(){
   btn = jQuery("#btn_allocate_selected");
   (jQuery("input:checked").length > 0)? btn.show() : btn.hide();
 }
+
 function toggle_resources_selection(){
   btn = jQuery("#btn_toggle_resource_selection");
   (btn.hasClass("allChecked"))? btn.removeClass("allChecked") : btn.addClass("allChecked");
-  jQuery("INPUT[type='checkbox']").attr('checked', btn.hasClass("allChecked"));   
-  toggle_allocation_btn(); 
+  jQuery("INPUT[type='checkbox']").attr('checked', btn.hasClass("allChecked"));
+  toggle_allocation_btn();
+}
+
+// instead of on the fly computation, base it on what is displayed
+function cost_color_code_for_fixed() {
+  var budget = parseFloat(jQuery("#pm_dashboard_financial td#budget_amount").text().replace(',', ''));
+  var forecast = parseFloat(jQuery("#pm_dashboard_financial td#forecast_amount").text().replace(',', ''));
+  var actual = parseFloat(jQuery("#pm_dashboard_financial td#actual_amount").text().replace(',', ''));
+  
+  var cost_label = jQuery(".value.cost_color");
+  var cost_color = jQuery(".cost_color");
+  
+  if (actual > budget) {
+    cost_label.text("Red Flag");
+    cost_color.removeClass("yellow green").addClass("red");
+  } else if (forecast > budget) {
+    cost_label.text("Warning");
+    cost_color.removeClass("red green").addClass("yellow");
+  } else {
+    cost_label.text("Good");
+    cost_color.removeClass("yellow red").addClass("green");
+  }
+}
+
+function cost_color_code_for_tm() {
+  var percentage = parseFloat(jQuery("#pm_dashboard_utilization td#percentage").text().replace('%', '').replace(',',''));
+  
+  var cost_label = jQuery(".value.cost_color");
+  var cost_color = jQuery(".cost_color");
+  
+  if (percentage >= 85) {
+    cost_label.text("Good");
+    cost_color.removeClass("yellow red").addClass("green");
+  } else if (percentage >= 80 && percentage < 85) {
+    cost_label.text("Warning");
+    cost_color.removeClass("red green").addClass("yellow");
+  } else if (percentage >= 0 && percentage < 80) {
+    cost_label.text("Red Flag");
+    cost_color.removeClass("yellow green").addClass("red");
+  }
 }
