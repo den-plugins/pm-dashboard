@@ -15,5 +15,10 @@ module CostMonitoringHelper
     from, to = week.first, week.last
     resources.sum {|a| a.days_and_cost((from..to), nil, false, acctg) * 8}
   end
+
+  def cost_compute_forecasted_hours_with_capped_allocation(week, resources, acctg)
+    from, to = week.first, week.last
+    resources.sum {|a| a.capped_days_and_cost((from..to), nil, false, acctg) * 8}
+  end
 end
 

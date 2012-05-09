@@ -78,6 +78,40 @@ module Pm
         rate ? [days, cost] : days
       end
       
+      # allocation capped to 100%
+      def capped_days_and_cost(week, rate = nil, count_shadow=true, acctg='Billable')
+        days, cost = 0, 0
+        allocations = resource_allocations
+        unless allocations.empty?
+          week.each do |day|
+            unless day.wday.eql?(0) || day.wday.eql?(6)
+              allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
+              holiday = allocation.nil? ? 0 : detect_holidays_in_week(allocation.location, day)
+              if allocation and !allocation.resource_allocation.eql?(0) and holiday.eql?(0)
+                div = (allocation.resource_allocation > 100 ? round_up(allocation.resource_allocation) : 100)
+                if count_shadow
+                  days += (1 * (allocation.resource_allocation.to_f/div).to_f)
+                else
+                  case acctg.downcase
+                  when 'billable'
+                    # count only days where member is Billable
+                    days += (1 * (allocation.resource_allocation.to_f/div).to_f) if allocation.resource_type.eql?(0)
+                  when 'non-billable'
+                    #count only days where member is Non-billable
+                    days += (1 * (allocation.resource_allocation.to_f/div).to_f) if allocation.resource_type.eql?(1)
+                  when 'both'
+                    # count days where member is not a shadow
+                    days += (1 * (allocation.resource_allocation.to_f/div).to_f) if allocation.resource_type.eql?(0) or allocation.resource_type.eql?(1)
+                  end
+                end
+              end
+            end
+          end
+        end
+        cost = days * (rate.to_f)
+        rate ? [days, cost] : days
+      end
+
       def is_shadowed?(day)
         if a = resource_allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
           a.resource_type.eql?(2)
