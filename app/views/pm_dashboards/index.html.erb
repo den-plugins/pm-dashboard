@@ -110,7 +110,7 @@
       <h3><%=l(:label_dashboard_risks)%></h3>
       <ul>
       <% for risk in @key_risks %>
-        <li><strong><%= link_to risk.ref_number, :controller => 'risks', :action => 'show', :id => risk.id, :project_id => risk.project.identifier %></strong> - <%= risk.risk_description %></li>
+        <li class="<%= risk_rating_color_code(risk.final_risk_rating)%>"><strong><%= link_to risk.ref_number, {:controller => 'risks', :action => 'show', :id => risk.id, :project_id => risk.project.identifier}, :class => "#{risk_rating_color_code(risk.final_risk_rating)}" %></strong> - <%= risk.risk_description %></li>
       <% end %>
       </ul>
     </div>
