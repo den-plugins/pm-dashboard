@@ -119,7 +119,7 @@
       <h3><%=l(:label_dashboard_issues)%></h3>
       <ul>
       <% for issue in @key_issues %>
-        <li><strong><%= link_to issue.ref_number, :controller => 'pm_dashboard_issues', :action => 'show', :id => issue.id, :project_id => issue.project.identifier %></strong> - <%= issue.issue_description %></li>
+        <li class="<%= issue_impact_color_coding(issue.impact)%>"><strong><%= link_to issue.ref_number, {:controller => 'pm_dashboard_issues', :action => 'show', :id => issue.id, :project_id => issue.project.identifier}, :class => "#{issue_impact_color_coding(issue.impact)}" %></strong> - <%= issue.issue_description %></li>
       <% end %>
       </ul>
     </div>
