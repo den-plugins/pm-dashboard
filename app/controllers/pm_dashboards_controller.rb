@@ -18,7 +18,7 @@ class PmDashboardsController < PmController
     @key_issues ||= @project.pm_dashboard_issues.key
     @issues = @project.pm_dashboard_issues
     @project_team = @project.members.project_team
-    @milestones = Version.find(:all, :conditions => ["project_id=? and effective_date < ?", @project, Date.today], :order => "effective_date DESC", :limit => 2) +
+    @milestones = Version.find(:all, :conditions => ["project_id=? and effective_date < ?", @project, Date.today], :order => "effective_date ASC", :limit => 2) +
                                   Version.find(:all, :conditions => ["project_id=? and effective_date >= ?", @project, Date.today], :order => "effective_date ASC", :limit => 4)
     @milestones = @milestones.reverse {|v| v.effective_date}
     @current_sprint = @project.current_version
