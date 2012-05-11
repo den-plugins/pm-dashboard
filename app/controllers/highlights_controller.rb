@@ -32,6 +32,11 @@ class HighlightsController < PmController
     end
   end
   
+  def destroy
+    Highlight.delete params[:id]
+    render :nothing => true
+  end
+
   def update_highlight
 	  begin; date = params[:highlight][:created_at].to_date unless params[:highlight][:created_at].blank?; rescue; end
 	  get_highlight = Highlight.find(:all, :conditions => ["created_at = ? and project_id = ?", @highlight.created_at, @project.id])

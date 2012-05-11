@@ -36,5 +36,12 @@
       <%= content_tag "span", "[Posted]", :style => "color: #dc594e; margin-left: 10px;" if highlight.posted? %>
     </p>
   <% end %>
-  <span class="content_text"><%= render_highlight_message highlight, "No highlight for next week yet." %></span>
+  <div class = "span_format">
+    <div class = "span_format"><%= render_highlight_message highlight, "No highlight for this week yet." %></div>
+    <% if highlight and !highlight.new_record? and !highlight.posted? %>
+        <span class = "span_format"><%= link_to_remote "Delete", :url => { :action => "destroy", :project_id => params[:project_id], :controller => "highlights", :id => highlight.id }, 
+                                                                 :confirm => "Are you sure you want to delete this highlight?",
+                                                                 :success => "window.location.reload()" %></span>
+    <% end %>
+  </div>
 </span>

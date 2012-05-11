@@ -35,7 +35,7 @@ module HighlightsHelper
   
   def render_highlight_message highlight, message
     if highlight && !highlight.new_record?
-      content_tag 'p', textilizable(highlight.highlight)
+      highlight.highlight
     else
       content_tag 'p', h(message), :class => 'nodata'
     end
