@@ -104,7 +104,7 @@ tr.summary_total td { color: black; font-weight: bold; text-align: center; backg
   GENERAL CLASSES
 **********************/
 div.span_format {float:left; margin-right:10px;}
-span.span_format {position:absolute; float:right;}
+span.span_format {float:right;}
 .zero_wrap {overflow: hidden; width: 100%; margin: 0; padding: 0}
 .clear {clear: both}
 .even2 { background-color: #F5FFEE }
