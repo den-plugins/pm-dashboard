@@ -111,7 +111,22 @@ module Pm
         cost = days * (rate.to_f)
         rate ? [days, cost] : days
       end
-
+      
+      def resource_day_capacity(week)
+        days = 0
+        allocations = resource_allocations
+        unless allocations.empty?
+          week.each do |day|
+            allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
+            if allocation && day.wday < 6
+              div = (allocation.resource_allocation > 100 ? round_up(allocation.resource_allocation) : 100)
+              days += (8 * (allocation.resource_allocation.to_f/div).to_f)        
+            end
+          end
+        end
+        days
+      end
+      
       def is_shadowed?(day)
         if a = resource_allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
           a.resource_type.eql?(2)
