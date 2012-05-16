@@ -6,7 +6,8 @@ map.connect 'projects/:project_id/project_management/risks/:action', :controller
 map.connect 'projects/:project_id/project_management/forecasts/:action', :controller => 'resource_costs'
 map.connect 'projects/:project_id/project_management/bottomline/:action', :controller => 'cost_monitoring'
 map.connect 'projects/:project_id/project_management/billability/:action', :controller => 'project_billability'
-map.connect 'projects/:project_id/project_management/milestones/:action', :controller => 'milestone_plans'
+map.connect 'projects/:project_id/project_management/milestones/:action', :controller => 'milestone_plans' if User.current.admin?
+map.connect 'projects/:project_id/milestones/:action', :controller => 'milestone_plans' unless User.current.admin?
 map.connect 'projects/:project_id/project_management/contracts/:action', :controller => 'project_contracts'
 map.connect 'projects/:project_id/project_management/highlights/:action', :controller => 'highlights'
 map.connect 'projects/:project_id/project_management/highlights/:action/:id', :controller => 'highlights'
