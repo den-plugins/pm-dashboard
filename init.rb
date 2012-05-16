@@ -47,10 +47,19 @@ Redmine::Plugin.register :pm_dashboard do
                           :time_logging => [:index]
                       }, :public => false
   end
-  
+
+  project_module :milestone_plans do
+    permission :milestone_plans, {:milestone_plans => [:index, :add, :update, :destroy]}, :public => true
+  end
+
   menu  :project_menu, :pm_dashboards,
             {:controller => 'pm_dashboards', :action => 'index' },
               :caption=> 'PM Dashboard',
+              :param => :project_id
+
+  menu  :project_menu, :milestone_plans,
+            {:controller => 'milestone_plans', :action => 'index' },
+              :caption=> 'Milestone Plans',
               :param => :project_id
 
   Redmine::MenuManager.map :project_management do |menu|
