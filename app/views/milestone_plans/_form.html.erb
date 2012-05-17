@@ -33,7 +33,8 @@
   </tr>
   <tr>
 		<th><%= l(:field_version_original_end_date) %>:</th>
-    <td><%= f.text_field :original_end_date, :size => 10 %><%= calendar_for('version_original_end_date') %></td>
+    <td><%= f.text_field :original_end_date, :size => 10, :onchange => "validateEndDatesOnChange(jQuery('input:checked').val())" %>
+    <%= calendar_for('version_original_end_date') %></td>
   </tr>
   <tr>
   	<th><%= l(:field_version_start_date) %>:</th>

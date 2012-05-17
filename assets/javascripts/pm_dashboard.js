@@ -83,6 +83,15 @@ function validateStartDatesOnchange(versionType){
     jQuery("#version_started_date").val(jQuery("#version_original_start_date").val());
     jQuery("#version_effective_date").val(jQuery("#version_original_start_date").val());
   }
+  if(versionType == 1){
+    jQuery("#version_started_date").val(jQuery("#version_original_start_date").val());
+  }
+}
+
+function validateEndDatesOnChange(versionType){
+  if(versionType == 1){
+    jQuery("#version_effective_date").val(jQuery("#version_original_end_date").val());
+  }
 }
 
 function validatedatesonchange(versionType){
