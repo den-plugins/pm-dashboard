@@ -74,6 +74,8 @@ function validatedatesinput(start_date, versionType, formAction){
     jQuery("#version_started_date_trigger").show();
     jQuery("#version_original_end_date_trigger").show();
     jQuery("#version_effective_date_trigger").show();
+    jQuery("#version_started_date").val(jQuery("#version_original_start_date").val());
+    jQuery("#version_effective_date").val(jQuery("#version_original_end_date").val());
   }
 }
 
