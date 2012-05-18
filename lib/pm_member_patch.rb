@@ -118,9 +118,9 @@ module Pm
         unless allocations.empty?
           week.each do |day|
             allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
-            if allocation && day.wday < 6
-              div = (allocation.resource_allocation > 100 ? round_up(allocation.resource_allocation) : 100)
-              days += (8 * (allocation.resource_allocation.to_f/div).to_f)        
+            if allocation && (1..5) === day.wday
+              div = (allocation.resource_allocation.to_f / 100)
+              days += (8 * div)
             end
           end
         end
