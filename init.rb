@@ -49,7 +49,7 @@ Redmine::Plugin.register :pm_dashboard do
   end
 
   project_module :milestone_plans do
-    permission :milestone_plans, {:milestone_plans => [:index, :add, :update, :destroy]}, :public => true
+    permission :menu_milestone_plans, {:menu_milestone_plans => [:index, :add, :update, :destroy]}, :public => true
   end
 
   menu  :project_menu, :pm_dashboards,
@@ -57,8 +57,8 @@ Redmine::Plugin.register :pm_dashboard do
               :caption=> 'PM Dashboard',
               :param => :project_id
 
-  menu  :project_menu, :milestone_plans,
-            {:controller => 'milestone_plans', :action => 'index' },
+  menu  :project_menu, :menu_milestone_plans,
+            {:controller => 'menu_milestone_plans', :action => 'index' },
               :caption=> 'Milestone Plans',
               :param => :project_id
 

@@ -1,0 +1,66 @@
+<script type="text/javascript">
+  jQuery("document").ready(function(){
+    if(<%= @version.version_type.to_json %> != null) validatedatesinput('<%= @version.started_date %>', <%= @version.version_type.to_json %>);
+  });
+</script>
+<table class="box" align="center" style="width:500px">
+	<tr>
+		<th><%= l(:field_version_name) %>:</th>
+		<td><em><%= f.text_field :name %></em></td>
+	</tr>
+	<tr>
+		<th><%= l(:field_version_description) %>:</th>
+		<td><%= f.text_area :description, :rows => 3 %></td>
+	</tr>
+	<tr>
+		<th><b><%= l(:field_version_wiki) %>:</b></th>
+		<td><%= f.text_field :wiki_page_title %></td>
+	</tr>
+    <tr>
+  	  <th><%= l(:field_version_type) %>:</th>
+  	  <td>
+  		  <div>
+  		    <% Version::TYPES.each do |k,v| %>
+  		      <%= f.radio_button :version_type, k, :onchange => "validatedatesinput('#{@version.started_date}', #{k}, '#{form_action}');" %><%= v %><br>
+  			  <% end %>
+  		  </div>
+  	  </td>
+    </tr>
+	<tr>
+		<th><%= l(:field_version_original_start_date) %>:</th>
+    <td><%= f.text_field :original_start_date, :size => 10, :onchange => "validateStartDatesOnchange(jQuery('input:checked').val())" %>
+    <%= calendar_for('version_original_start_date') %></td>
+  </tr>
+  <tr>
+		<th><%= l(:field_version_original_end_date) %>:</th>
+    <td><%= f.text_field :original_end_date, :size => 10, :onchange => "validateEndDatesOnChange(jQuery('input:checked').val())" %>
+    <%= calendar_for('version_original_end_date') %></td>
+  </tr>
+  <tr>
+  	<th><%= l(:field_version_start_date) %>:</th>
+    <td><%= f.text_field :started_date, :size => 10 %><%= calendar_for('version_started_date') %></td>
+  </tr>
+  <tr>
+  	<th><%= l(:field_version_end_date) %>:</th>
+    <td><%= f.text_field :effective_date, :size => 10, :onchange => "validatedatesonchange(jQuery('input:checked').val())" %>
+    <%= calendar_for('version_effective_date') %></td>
+  </tr>
+  <tr>
+  	<th><%= l(:field_version_state) %>:</th>
+  	<td>
+  		<div>
+  			<%= select("version", "state", Version::STATES.collect {|k,v| [ v, k ] }, {:include_blank => true}) %>
+  		</div>
+  	</td>
+  </tr>
+  <tr>
+    <th>Remarks:</th>
+    <td><%= f.text_area :remarks, :rows => 3 %></td>
+  </tr>
+</table>
+	<div>
+		<%= f.submit button_label %>
+		<%= link_to "Cancel", :controller => "menu_milestone_plans", :project_id => @project%>
+	</div>
+</p>
+

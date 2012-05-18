@@ -1,0 +1,19 @@
+<%= render :partial => 'common/non_pm_header' %>
+
+<%= include_calendar_headers_tags %>
+<%= heads_for_wiki_formatter %>
+<%= javascript_include_tag 'select_list_move' %>
+
+<style>
+  td span {
+    font-weight: bold;
+    display: inline-block;
+    width: 200px;
+    text-align: right;
+    padding-right: 10px
+  }
+  td span:after { content: ":" }
+  pm_dashboard_header { width: 75% }
+</style>
+
+<%= render :partial => 'menu_milestone_plans/edit' %>

@@ -1,0 +1,16 @@
+<%= render :partial => 'common/non_pm_header' %>
+
+<%= include_calendar_headers_tags %>
+<%= heads_for_wiki_formatter %>
+<%= javascript_include_tag 'select_list_move' %>
+
+<h2>Milestone Entry</h2>
+<%= error_messages_for 'version' %>
+
+<div class="box">
+	<% form_for :version, @milestone, :url => {:controller => 'menu_milestone_plans', :action => 'add', :project_id => @project, :milestone_id => @milestone, :release_id => params[:release_id]} do |f| %>
+		
+		<%= render :partial => 'menu_milestone_plans/form', :locals => { :button_label => l(:button_create), :project => @project, :f => f, :form_action => 'add' } %>
+
+	<% end %>
+</div>
