@@ -21,12 +21,19 @@ class MenuMilestonePlansController < PmController
   		@version = Version.new(params[:version])
       @version.project_id = @project.id
 
-      if !@version.original_start_date.nil? && !@version.original_end_date.nil? && @version.save
+      accepted_iteration = true
+      if (@version.version_type = 1 && @version.started_date.nil?) || (@version.version_type = 1 && @version.effective_date.nil?)
+        accepted_iteration = false
+      end
+
+      if !@version.original_start_date.nil? && !@version.original_end_date.nil? && accepted_iteration  && @version.save
         flash[:notice] = l(:notice_successful_create)
         redirect_to_menu_milestone_plans
       else
         @version.errors.add_to_base "Please input Original Start Date." if @version.original_start_date.nil?
         @version.errors.add_to_base "Please input Original End Date." if @version.original_end_date.nil?
+        @version.errors.add_to_base "Please input Actual Start Date." if @version.version_type = 1 && @version.started_date.nil?
+        @version.errors.add_to_base "Please input Latest Re-plan Date." if @version.version_type = 1 && @version.effective_date.nil?
         render_menu_milestone_plans('add')
       end
 		end
