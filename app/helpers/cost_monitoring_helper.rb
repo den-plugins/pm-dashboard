@@ -2,7 +2,7 @@ module CostMonitoringHelper
 
   def cost_compute_actual_cost(week, resources, acctg=nil)
     from, to= week.first, (week.last.wday.eql?(5) ? (week.last+2.days) : week.last)
-    resources.sum {|a| (a.spent_time(from, to, acctg, false, false) * a.internal_rate.to_f)}
+    resources.sum {|a| (a.spent_time(from, to, acctg, true) * a.internal_rate.to_f)}
   end
   
   def cost_compute_forecasted_cost_without_contingency(week, resources, acctg, project=@project)

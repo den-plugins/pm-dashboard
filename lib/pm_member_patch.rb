@@ -162,7 +162,7 @@ module Pm
         end       
       end
 
-      def spent_time(from, to, acctg=nil, include_weekends=false, include_shadow=true)
+      def spent_time(from, to, acctg=nil, include_weekends=false, include_shadow=false)
         if from && to
           spent = time_entries.find(:all, :select => "hours, spent_on", :include => [:issue],
                                                 :conditions => ["#{TimeEntry.table_name}.project_id = ? and spent_on between ? and ?", project_id, from, to])
