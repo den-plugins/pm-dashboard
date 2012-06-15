@@ -162,12 +162,17 @@ module Pm
         end       
       end
 
-      def spent_time(from, to, acctg=nil, include_weekends=false)
+      def spent_time(from, to, acctg=nil, include_weekends=false, include_shadow=true)
         if from && to
           spent = time_entries.find(:all, :select => "hours, spent_on", :include => [:issue],
                                                 :conditions => ["#{TimeEntry.table_name}.project_id = ? and spent_on between ? and ?", project_id, from, to])
-
           spent = spent.select {|s| s.issue.accounting.name.casecmp(acctg) == 0} if acctg
+          if !include_shadow
+            shadow = resource_allocations.find(:all, :conditions=>{:resource_type=>2}).select{|ra| !((ra.start_date..ra.end_date).to_a & (from..to).to_a).empty?}
+            shadow.each do |s|
+              spent.reject!{|t| (s.start_date..s.end_date).include? t.spent_on}
+            end
+          end
           if include_weekends
             spent.sum{|s| s.hours}
           else
