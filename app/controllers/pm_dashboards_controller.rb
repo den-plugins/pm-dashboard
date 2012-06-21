@@ -65,16 +65,13 @@ class PmDashboardsController < PmController
 
   def reload_billability
     @job = Delayed::Job.find_by_id(params[:job_id])
-    if @job.nil?
-      if params[:refresh]
-        load_billability_file
-        handler = ProjectBillabilityJob.new(@project.id)
-        @job = Delayed::Job.find(:first,
-              :conditions => ["handler = ? AND run_at <> ?", "#{handler.to_yaml}", (Time.parse("12am") + 1.day)])
-        enqueue_billability_job(handler) if @project.planned_end_date && @project.planned_start_date
-      else
-        load_billability_file
-      end
+    if params[:refresh]
+      @job.destroy if !@job.nil?
+      load_billability_file
+      handler = ProjectBillabilityJob.new(@project.id)
+      @job = Delayed::Job.find(:first,
+            :conditions => ["handler = ? AND run_at <> ?", "#{handler.to_yaml}", (Time.parse("12am") + 1.day)])
+      enqueue_billability_job(handler) if @project.planned_end_date && @project.planned_start_date
     else
       load_billability_file
     end

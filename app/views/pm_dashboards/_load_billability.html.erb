@@ -3,7 +3,7 @@
   <div style="float: right; font-size:8pt; padding:2px; color:#666666;">
     <a href="#" onclick="jQuery('#processing_gif_tandm').show().text('Enqueuing job...'); $('billability_form').request({
                                             parameters: { 'project_id': '<%= @project.id %>', 'refresh': 'true' }
-                                            });" title="Refresh" style="display:none;", class="contextual">
+                                            });" title="Refresh" class="contextual">
       <%= image_tag('reload.png') %>
     </a>
     <% if @billability %>
@@ -26,12 +26,10 @@
   <% if @job.nil? %>
     <script type="text/javascript">
       jQuery("#processing_gif_tandm").hide();
-      jQuery("#dashboard_billability").parent().find("a").show();
     </script>
   <% else %>
     <script type="text/javascript">
       jQuery("#processing_gif_tandm").text("Job has been enqueued.");
-      jQuery("#dashboard_billability").parent().find("a").hide();
       setTimeout(function(){
         $('billability_form').request({
           parameters: {

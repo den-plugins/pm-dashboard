@@ -36,12 +36,10 @@
   
   <script type="text/javascript">
     jQuery("#processing_gif").hide();
-    jQuery("#refresh_lnk").show();
   </script>
 <% else %>
   <script type="text/javascript">
     jQuery("#processing_gif").text("Job has been enqueued.")
-    jQuery("#refresh_lnk").hide();
     setTimeout(function(){
       $('billability_form').request({
         parameters: { 'project_id': '<%= @project.id %>', 

@@ -13,7 +13,10 @@ class ProjectBillabilityController < PmController
     else
       handler = ProjectBillabilityJob.new(@project.id)
       @job = Delayed::Job.find_by_handler(handler.to_yaml)
-      @job = nil if @job and @job.run_at.eql?(Time.parse("12am") + 1.day)
+      if @job 
+        @job.destroy
+        @job = nil
+      end
       load_billability_file
       enqueue_billability_job(handler) if @billability.nil? || @billability.empty?
     end

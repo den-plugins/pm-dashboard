@@ -3,7 +3,7 @@
   <div style="float: right; font-size:8pt; padding:2px; color:#666666;">
     <a href="#" onclick="jQuery('#processing_gif_fixed').show().text('Enqueuing job...'); $('fixed_cost_form').request({
                                             parameters: { 'project_id': '<%= @project.id %>', 'refresh': 'true' }
-                                            });" title="Refresh" style="display:none;", class="contextual">
+                                            });" title="Refresh" class="contextual">
       <%= image_tag('reload.png') %>
     </a>
     <% if @fixed_cost %>
@@ -26,12 +26,10 @@
   <% if @job.nil? %>
     <script type="text/javascript">
       jQuery("#processing_gif_fixed").hide();
-      jQuery("#dashboard_cost_monitoring").parent().find("a").show();
     </script>
   <% else %>
     <script type="text/javascript">
       jQuery("#processing_gif_fixed").text("Job has been enqueued.");
-      jQuery("#dashboard_cost_monitoring").parent().find("a").hide();
       setTimeout(function(){
         $('fixed_cost_form').request({
           parameters: {
