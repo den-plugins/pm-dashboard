@@ -59,7 +59,13 @@ class MenuMilestonePlansController < PmController
 
   def destroy
   	@version = Version.find(params[:version_id])
-    if @version.destroy
+
+    begin
+      @version.destroy
+    rescue RuntimeError
+      flash[:error] = "Can't delete version"
+      redirect_to_menu_milestone_plans
+    else
       flash[:notice] = l(:notice_successful_delete)
       redirect_to_menu_milestone_plans
     end
