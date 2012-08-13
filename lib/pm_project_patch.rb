@@ -16,6 +16,7 @@ module Pm
         has_and_belongs_to_many :stakeholders
         has_many :weeks
         has_many :highlights
+        has_many :notes
         has_many :project_contracts
         belongs_to :manager, :class_name => 'User', :foreign_key => 'proj_manager'
         belongs_to :account_manager, :class_name => 'User', :foreign_key => 'acct_mngr'
