@@ -11,6 +11,7 @@ map.connect 'projects/:project_id/milestones/:action', :controller => 'menu_mile
 map.connect 'projects/:project_id/project_management/contracts/:action', :controller => 'project_contracts'
 map.connect 'projects/:project_id/project_management/highlights/:action', :controller => 'highlights'
 map.connect 'projects/:project_id/project_management/highlights/:action/:id', :controller => 'highlights'
+map.connect 'projects/:project_id/project_management/notes/:action', :controller => 'notes'
 map.connect 'projects/:project_id/project_management/utilization/:action', :controller => 'resource_utilization'
 map.connect 'projects/:project_id/project_management/timelog/:action', :controller => 'time_logging'
 map.connect 'projects/:project_id/project_management/efficiency/:action', :controller => 'efficiency'
