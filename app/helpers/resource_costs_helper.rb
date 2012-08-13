@@ -28,12 +28,12 @@ module ResourceCostsHelper
                        from.eql?(start_date) ? start_date : from.monday
                      end
         fri = if from.wday.eql?(0) || from.wday.eql?(6)
-                   from
+                  from
                  else
-                   from.weeks_ago(to).eql?(0) ? to : (mon.monday+4.days)
+                   mon.monday+4.days
                  end
-        from = mon.next_week
         weeks << (mon .. fri)
+        from = mon.next_week
       end
       weeks
     end
