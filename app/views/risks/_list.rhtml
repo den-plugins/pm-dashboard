@@ -1,7 +1,7 @@
 <table id="risks" class="list" style='text-align: center; '>
   <thead>
     <tr class='risks_header'>
-      <th><%= l(:field_key_risk) %></th>
+      <%= sort_header_tag('key_risk', :caption => l(:field_key_risk)) %>
       <th><%= l(:field_ref_number) %></th>
       <th><%= l(:field_env) %></th>
       <th><%= l(:field_date_recorded) %></th>
@@ -18,7 +18,7 @@
       <th class='narrow'><%= l(:field_final_risk_rating) %></th>
       <th><%= l(:field_target_resolution_date) %></th>
       <th class='narrow'><%= l(:field_days_overdue) %></th>
-      <th><%= l(:field_status) %></th>
+      <%= sort_header_tag('status', :caption => l(:field_status)) %>
       <th><%= l(:field_related_pm_issues) + "/ <br/>" + l(:field_related_assumptions)%></th>
       <th></th>
     </tr>

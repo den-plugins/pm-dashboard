@@ -1,5 +1,7 @@
 class RisksController < PmController
   menu_item :risks
+  helper :sort
+  include SortHelper
 
   before_filter :require_login
   before_filter :get_project, :only => [:index, :show, :add, :update, :destroy]
@@ -8,12 +10,15 @@ class RisksController < PmController
   before_filter :role_check_client
 
   def index
+    sort_init 'ref_number'
+    sort_update %w(ref_number key_risk status)
+
     @project ||= @risk.project
     if params[:id]
       @risks = (@client && @risk.env.eql?('E')) ? [] : [@risk]
     else
       condition = @client ? "env='E'" : ""
-      @risks = @project.risks.find(:all, :conditions => condition, :order => 'ref_number DESC')
+      @risks = @project.risks.find(:all, :conditions => condition, :order => sort_clause)
     end
   end
   
