@@ -1,0 +1,27 @@
+<div class="iter_<%= versions.first.id %> selected">
+  <h3>Current Iteration - <%= versions.first.name %></h3>
+  <% versions.first.notes.each do |n| %>
+    <div class="note_<%= n.id %>">
+      <%= n.date %>
+      <div class="highlight-box">
+        <span class="content_text">
+          <%= n.text %>
+        </span>
+      </div>
+    </div>
+  <% end %>
+  <% versions.delete versions.first %>
+</div>
+
+<% versions.each do |v| %>
+  <div class="iter_<%= v.id %> hidden">
+    <b>Past Iterations - <%= v.name %></b>
+    <% v.notes.each do |n| %>
+      <div class="highlight-box">
+        <span class="content_text">
+          <%= n.text %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+<% end %>

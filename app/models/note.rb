@@ -5,4 +5,8 @@ class Note < ActiveRecord::Base
   def iteration
     version_id ? Version.find(version_id) : nil
   end
+
+  def date
+    updated_at.strftime("%B %d, %Y - %I:%M:%S%p")
+  end
 end

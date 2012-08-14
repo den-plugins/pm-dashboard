@@ -216,7 +216,9 @@ div#period span {
   border-radius: 3px 3px 0 0;
   cursor: pointer;
 }
-div#period span.selected { background-color: #fff; font-weight: bold; color: #000;}
+div#period span.selected { 
+  background-color: #fff; font-weight: bold; color: #000;
+}
 
 
 /*******************
@@ -226,3 +228,33 @@ div#period span.selected { background-color: #fff; font-weight: bold; color: #00
 .btn_show_chart{ width: 100%; background-color: #dfdfdf; border: 1px solid #cfcfcf; padding: 5px; color: #777; font-size: 1em; font-weight: bold; }
 .btn_show_chart:hover{ color: #34c134; }
 .jqplot-pie-series.jqplot-data-label {color: black; }
+
+/*******************
+ RETROSPECTIVE NOTE
+*******************/
+
+.hidden {display:none;}
+div#content-left {float:left; width:49%;}
+div#content-left #content_version_id {float:right;}
+div#content-right {float:right; width:49%;}
+div#content-right span {
+  background-color: #F6F6F6;
+  color: #999;
+  border: 1px solid #E4E4E4;
+  padding: 3px;
+  border-bottom: 0;
+  -webkit-border-radius: 3px 3px 0 0;
+  -moz-border-radius: 3px 3px 0 0;
+  border-radius: 3px 3px 0 0;
+  cursor: pointer;
+}
+
+div#content-right span.selected { 
+  background-color: #fff; font-weight: bold; color: #000;
+}
+
+div#content-right #content, div#content-left .note-content {
+  background-color: #F6F6F6; border: 1px solid #E4E4E4; height: 470px; overflow: auto; padding: 30px 10px 0px 10px;
+}
+
+div#content-right #content textarea { width: 99%; height: 250px; resize: none; margin-top: 5px;}

@@ -10,6 +10,7 @@ module Pm
         const_set(:STATES, {1 => 'Planning', 2 => 'Active', 3 => 'Accepted'})
         const_set(:TYPES, { 0 => "Milestone", 1 => "Development Iteration", 2 => "Build Release"})
         
+        has_many :notes
         validates_inclusion_of :state, :in => Version::STATES.keys, :allow_nil => true
       end
     end

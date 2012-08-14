@@ -1,16 +1,45 @@
 <%= render :partial => 'common/header' %>
+<%= text_field_tag :proj_id, @project.id, :hidden => true %>
 
 <div id="note-container">
   <h2><%= l(:label_note_plural) %></h2>
   
   <div id="content-left">
-  
+    <div class="iteration note-content">
+      <%= select 'content', 'version_id', @versions, {:selected => @versions.last } %>
+      <% unless @versions.empty? %>
+        <%= render :partial => "notes/iteration_view.rhtml", :locals => {:versions => @version_list} %>
+      <% else %>
+        <h3>No Iteration Found</h3>
+      <% end %>
+    </div>
+    <div class="project note-content hidden">
+      <% unless @proj_notes.empty? %>
+        <%= render :partial => "notes/project_view.rhtml", :locals => {:notes => @proj_notes} %>
+      <% else %>
+        <h3>No Project Notes Found</h3>
+      <% end %>
+    </div>
   </div>
   
   <div id="content-right">
-    <div class="note-tabs" id="iteration">
-    </div>
-    <div class="note-tabs" id="project">
+    <span class='selected' id='current' rel="iteration">Iteration Note</span>
+    <span id='nextp' rel="project">Project Note</span>
+    <div id="content">
+      <div class="note-tabs iteration">
+        <%= label_tag :version, "Iteration: " %>
+        <%= select 'form', 'version_id', @versions, {:selected => @versions.last } %>
+        <%= text_field_tag :id_iter, nil, :hidden => true %>
+        <%= text_area_tag :text_iter %>
+        <%= wikitoolbar_for 'text_iter' %>
+        <button type="button" id="submit_iter">Submit</button>
+      </div>
+      <div class="note-tabs project hidden">
+        <%= text_field_tag :id_proj, nil, :hidden => true %>
+        <%= text_area_tag :text_proj %>
+        <%= wikitoolbar_for 'text_proj' %>
+        <button type="button" id="submit_proj">Submit</button>
+      </div>
     </div>
   </div>
 </div>

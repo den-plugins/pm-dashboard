@@ -156,3 +156,54 @@ function cost_color_code_for_tm() {
     cost_color.removeClass("yellow green").addClass("red");
   }
 }
+
+/* Retrospective Note Feature */
+
+jQuery("span#nextp").live("click", function(){
+  var current = jQuery("span#current");
+  var me = jQuery(this);
+  me.attr("id", "current");
+  me.addClass("selected");
+  jQuery("."+me.attr("rel")).removeClass("hidden")
+
+  current.attr("id", "nextp")
+  current.removeClass("selected")
+  jQuery("."+current.attr("rel")).addClass("hidden")
+});
+
+jQuery("#content_version_id").live("change", function(){
+  var option = jQuery(this).children("option:selected"),
+      new_selected = jQuery(this).parent().children(".iter_"+option.val()),
+      old_selected = jQuery(this).parent().children(".selected");
+  
+  new_selected.addClass("selected").removeClass("hidden");
+  old_selected.removeClass("selected").addClass("hidden");
+});
+
+jQuery("#submit_proj").live("click", function(){
+  var url = "/notes/";
+  var id = jQuery("#id_proj"),
+      text = jQuery("#text_proj"),
+      proj_id = jQuery("#proj_id");
+
+  if(id.val())
+    url += "update";
+  else
+    url += "create";
+  
+  jQuery('#ajax-indicator').show();
+  jQuery.ajax({
+    type: 'post',
+    url: url,
+    data: {'id': id.val(), 'text': text.val(), 'project_id': proj_id.val(), 'type': 'project'},
+    error: function(data) {
+      console.log(data);
+    },
+    success: function() {
+      jQuery('#ajax-indicator').hide();
+      id.val("");
+      text.val("");
+    }
+  });
+});
+

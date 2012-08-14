@@ -1,0 +1,10 @@
+<% notes.each do |n| %>
+  <div class="note_<%= n.id %>">
+    <%= n.date %>
+    <div class="highlight-box">
+      <span class="content_text">
+        <%= n.text %>
+      </span>
+    </div>
+  </div>
+<% end %>
