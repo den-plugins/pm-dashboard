@@ -13,14 +13,14 @@ class RisksController < PmController
     sort_init 'ref_number'
     sort_update %w(ref_number key_risk status)
     filters = params[:filters] if params[:filters]
-    @status = filters && filters[:status] ? filters[:status] : Risk::STATUS.first[0]
+    @status = filters && filters[:status] ? filters[:status] : "All"
     @project ||= @risk.project
     if params[:id]
       @risks = (@client && @risk.env.eql?('E')) ? [] : [@risk]
     else
       condition = @client ? ["env='E'"] : []
-      condition << "key_risk='#{filters[:key_risk]}'" if filters && filters[:key_risk]
-      condition << "status='#{filters[:status]}'" if filters && filters[:status]
+      condition << "key_risk='#{filters[:key_risk]}'" if filters && filters[:key_risk] && filters[:key_risk] == "1"
+      condition << "status='#{filters[:status]}'" if filters && filters[:status] && filters[:status] != "All"
       condition = condition.compact.join(" and ")
       @risks = @project.risks.find(:all, :conditions => condition, :order => sort_clause)
     end
