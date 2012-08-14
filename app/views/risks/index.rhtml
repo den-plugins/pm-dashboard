@@ -6,6 +6,29 @@
 
 <h2><%= l(:label_risk_plural) %></h2>
 
+<fieldset>
+  <legend>
+    <%= l(:label_filter_plural) %>
+    <%=link_to "(hide/show)", "", :onclick => "$('filter_content').toggle(); return false;" %>
+  </legend>
+  <div id="filter_content" style="padding: 5px;">
+    <% form_tag({:controller => 'risks', :action => 'index', :project_id => @project}, :method => "get",
+                :id => 'filter_for_risks_form') do %>
+        <div class="filter_group">
+          <%= mgt_field_tag "Key Risk", "key_risk", params, {:format => "bool"} %>
+          <%= label_tag("filters[status]", "Status") %>
+          <%= select_tag "filters[status]", options_for_select(collection_for_risk_status_select, @status) %>
+
+          <%= link_to_remote l(:button_apply), "#", :class => "icon icon-checked",
+                             :onclick => "$('filter_for_risks_form').submit();",
+                             :style => "margin-left: 15px;" %>
+
+    <% end %>
+    </div>
+  </div>
+</fieldset>
+
+
 <% if @risks.any? %>
   <%= render :partial => 'risks/summary' unless params[:id] %>
   <p><%= link_to l(:label_view_all_risks), :controller => 'risks', :action => "index", :project_id => @project  if params[:id]  %></p>
