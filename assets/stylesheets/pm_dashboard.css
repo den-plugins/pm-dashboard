@@ -234,8 +234,12 @@ div#period span.selected {
 *******************/
 
 .hidden {display:none;}
+.clickable {cursor:pointer; cursor:hand;}
+.main-content { background-color: #F6F6F6; border: 1px solid #E4E4E4; height: 470px; overflow: auto; padding: 5px;}
+
 div#content-left {float:left; width:49%;}
 div#content-left #content_version_id {float:right;}
+div#content-right .main-content{ height:455px;}
 div#content-right {float:right; width:49%;}
 div#content-right span {
   background-color: #F6F6F6;
@@ -253,8 +257,6 @@ div#content-right span.selected {
   background-color: #fff; font-weight: bold; color: #000;
 }
 
-div#content-right #content, div#content-left .note-content {
-  background-color: #F6F6F6; border: 1px solid #E4E4E4; height: 470px; overflow: auto; padding: 30px 10px 0px 10px;
-}
+div#content-right .main-content, div#content-left .note-content { padding: 30px 10px 0px 10px; }
 
-div#content-right #content textarea { width: 99%; height: 250px; resize: none; margin-top: 5px;}
+div#content-right .main-content textarea { width: 99%; height: 250px; resize: none; margin-top: 5px;}

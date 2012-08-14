@@ -31,7 +31,7 @@ Redmine::Plugin.register :pm_dashboard do
                       {  :assumptions => [:index, :show, :add, :update, :destroy],
                           :cost_monitoring => [:index],
                           :highlights => [:index, :save, :destroy, :update_highlight, :post, :unpost, :select_by_week, :select_duplicate],
-                          :notes => [:index, :create, :update, :destroy],
+                          :notes => [:index, :create, :edit, :update, :destroy],
                           :milestone_plans => [:index, :add, :update, :destroy],
                           :pm_dashboard_issues => [:index, :show, :add, :edit, :delete],
                           :pm_dashboards => [:index],

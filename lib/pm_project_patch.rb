@@ -100,6 +100,10 @@ module Pm
         end
         costs
       end
+
+      def project_notes
+        notes.select {|x| x.note_type == "project"}
+      end
     end
   end
 end

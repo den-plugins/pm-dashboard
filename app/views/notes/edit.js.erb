@@ -1,0 +1,5 @@
+<% if @type == "project" %>
+  jQuery(".note-tabs.project").html("<%= escape_javascript(render :partial => 'notes/note_content_project.rhtml', :locals => {:note => @note})%>");
+<% elsif @type == "iteration" %>
+  jQuery(".note-tabs.iteration").html("<%= escape_javascript(render :partial => 'notes/note_content_iteration.rhtml', :locals => {:note => @note})%>");
+<% end %>

@@ -1,26 +1,36 @@
-<div class="iter_<%= versions.first.id %> selected">
-  <h3>Current Iteration - <%= versions.first.name %></h3>
-  <% versions.first.notes.each do |n| %>
+<%= select 'content', 'version_id', select, {:selected => select.last } %>
+<div class="iter_<%= versions.last.id %> selected">
+  <h3>Current Iteration - <%= versions.last.name %></h3>
+  <% notes = versions.last.notes.sort_by {|z| z.updated_at}.reverse %> 
+  <% notes.each do |n| %>
     <div class="note_<%= n.id %>">
       <%= n.date %>
+      <%= image_tag 'edit.png', :class => "note_edit clickable iteration" %>
+      <%= image_tag 'delete.png', :class => "note_destroy clickable iteration" %>
       <div class="highlight-box">
         <span class="content_text">
-          <%= n.text %>
+          <%= content_tag 'p', textilizable(n.text) %>
         </span>
       </div>
     </div>
   <% end %>
-  <% versions.delete versions.first %>
+  <% versions.delete versions.last %>
 </div>
 
 <% versions.each do |v| %>
   <div class="iter_<%= v.id %> hidden">
-    <b>Past Iterations - <%= v.name %></b>
-    <% v.notes.each do |n| %>
-      <div class="highlight-box">
-        <span class="content_text">
-          <%= n.text %>
-        </span>
+    <h3>Past Iterations - <%= v.name %></h3>
+    <% notes = v.notes.sort_by {|z| z.updated_at}.reverse %> 
+    <% notes.each do |n| %>
+      <div class="note_<%= n.id %>">
+        <%= n.date %>
+        <%= image_tag 'edit.png', :class => "note_edit clickable iteration" %>
+        <%= image_tag 'delete.png', :class => "note_destroy clickable iteration" %>
+        <div class="highlight-box">
+          <span class="content_text">
+            <%= content_tag 'p', textilizable(n.text) %>
+          </span>
+        </div>
       </div>
     <% end %>
   </div>

@@ -1,0 +1,7 @@
+<%= label_tag :version, "Iteration: " %>
+<%= select 'form', 'version_id', @versions, {:selected => note ? [note.iteration.name, note.version_id] : @versions.last } %>
+<%= text_field_tag :id_iter, note ? note.id : nil, :hidden => true %>
+<%= text_area_tag :text_iter, note ? note.text : nil %>
+<%= wikitoolbar_for 'text_iter' %>
+<button type="button" id="submit_iter">Submit</button>
+

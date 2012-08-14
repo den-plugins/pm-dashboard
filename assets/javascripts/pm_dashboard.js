@@ -207,3 +207,78 @@ jQuery("#submit_proj").live("click", function(){
   });
 });
 
+jQuery("#submit_iter").live("click", function(){
+  var url = "/notes/";
+  var id = jQuery("#id_iter"),
+      text = jQuery("#text_iter"),
+      iter = jQuery("#form_version_id").children("option:selected"),
+      proj_id = jQuery("#proj_id");
+
+  if(id.val())
+    url += "update";
+  else
+    url += "create";
+  
+  jQuery('#ajax-indicator').show();
+  jQuery.ajax({
+    type: 'post',
+    url: url,
+    data: {'id': id.val(), 'text': text.val(), 'iter_id': iter.val(), 'project_id': proj_id.val(), 'type': 'iteration'},
+    error: function(data) {
+      console.log(data);
+    },
+    success: function() {
+      jQuery('#ajax-indicator').hide();
+      id.val("");
+      text.val("");
+    }
+  });
+});
+
+jQuery(".note_edit").live("click", function(){
+  var parent = jQuery(this).parent();
+  var type = "",
+      proj_id = jQuery("#proj_id");
+
+  if(jQuery(this).hasClass("iteration"))
+    type = "iteration"
+  else if(jQuery(this).hasClass("project"))
+    type = "project"
+
+  jQuery('#ajax-indicator').show();
+  jQuery.ajax({
+    type: 'post',
+    url: '/notes/edit',
+    data: {'id': parent.attr("class").replace("note_", ""), 'project_id': proj_id.val(), 'type': type},
+    error: function(data) {
+      console.log(data);
+    },
+    success: function() {
+      jQuery('#ajax-indicator').hide();
+    }
+  });
+});
+
+jQuery(".note_destroy").live("click", function(){
+  var parent = jQuery(this).parent();
+  var type = "",
+      proj_id = jQuery("#proj_id");
+
+  if(jQuery(this).hasClass("iteration"))
+    type = "iteration"
+  else if(jQuery(this).hasClass("project"))
+    type = "project"
+
+  jQuery('#ajax-indicator').show();
+  jQuery.ajax({
+    type: 'post',
+    url: '/notes/destroy',
+    data: {'id': parent.attr("class").replace("note_", ""), 'project_id': proj_id.val(), 'type': type},
+    error: function(data) {
+      console.log(data);
+    },
+    success: function() {
+      jQuery('#ajax-indicator').hide();
+    }
+  });
+});

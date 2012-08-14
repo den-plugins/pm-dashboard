@@ -1,0 +1,5 @@
+<%= text_field_tag :id_proj, note ? note.id : nil, :hidden => true %>
+<%= text_area_tag :text_proj, note ? note.text : nil%>
+<%= wikitoolbar_for 'text_proj' %>
+<button type="button" id="submit_proj">Submit</button>
+

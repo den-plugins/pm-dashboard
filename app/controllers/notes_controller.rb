@@ -9,35 +9,69 @@ class NotesController < PmController
   include NotesHelper
 
   def index
+    @proj_notes = @project.project_notes.sort_by {|z| z.updated_at}.reverse
     @versions = @project.versions.sort.collect {|v| [v.name, v.id] }
-    @version_list = @project.versions.sort.reverse
-    @proj_notes = @project.notes.sort_by {|z| z.updated_at}.reverse
+    @version_list = @project.versions.sort
   end
   
   def create
     project = Project.find params[:project_id]
-    case params[:type]
+    @type = params[:type]
+    case @type
       when 'project'
-        @type = "project"
-        project.notes.create :text => params[:text], :type => @type
-        @proj_notes = project.notes.sort_by {|z| z.updated_at}.reverse
+        project.notes.create :text => params[:text], :note_type => @type
+        @proj_notes = @project.project_notes.sort_by {|z| z.updated_at}.reverse
       when 'iteration'
-        @type = "iteration"
-        version = Version.find(params[:iter_id])
-        version.notes.create :text => params[:text], :type => @type, :project_id => project.id
-        @version_list = project.versions.sort.reverse
+        project.notes.create :text => params[:text], :note_type => @type, :version_id => params[:iter_id]
+        @versions = project.versions.sort.collect {|v| [v.name, v.id] }
+        @version_list = project.versions.sort
     end
     respond_to do |format|
       format.js {render :layout => false}
     end
   end
 
-  def update
+  def edit
+    @type = params[:type]
+    @versions = @project.versions.sort.collect {|v| [v.name, v.id] } if @type == "iteration"
+    @note = Note.find params[:id]
+    respond_to do |format|
+      format.js {render :layout => false}
+    end
+  end
 
+  def update
+    project = Project.find params[:project_id]
+    @type = params[:type]
+    note = Note.find params[:id]
+    case @type
+      when 'project'
+        note.update_attributes :text => params[:text]
+        @proj_notes = @project.project_notes.sort_by {|z| z.updated_at}.reverse
+      when 'iteration'
+        note.update_attributes :text => params[:text], :version_id => params[:iter_id]
+        @versions = project.versions.sort.collect {|v| [v.name, v.id] }
+        @version_list = project.versions.sort
+    end
+    respond_to do |format|
+      format.js {render :layout => false}
+    end
   end
   
   def destroy
-
+    project = Project.find params[:project_id]
+    Note.destroy params[:id]
+    @type = params[:type]
+    case @type
+      when 'project'
+        @proj_notes = @project.project_notes.sort_by {|z| z.updated_at}.reverse
+      when 'iteration'
+        @versions = project.versions.sort.collect {|v| [v.name, v.id] }
+        @version_list = project.versions.sort
+    end
+    respond_to do |format|
+      format.js {render :layout => false}
+    end
   end
 
   private
