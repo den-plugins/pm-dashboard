@@ -156,3 +156,85 @@ function cost_color_code_for_tm() {
     cost_color.removeClass("yellow green").addClass("red");
   }
 }
+
+/* Retrospective Note Feature */
+
+jQuery("span#nextp").live("click", function(){
+  var current = jQuery("span#current");
+  var me = jQuery(this);
+  me.attr("id", "current");
+  me.addClass("selected");
+  jQuery("."+me.attr("rel")).removeClass("hidden")
+
+  current.attr("id", "nextp")
+  current.removeClass("selected")
+  jQuery("."+current.attr("rel")).addClass("hidden")
+});
+
+jQuery("#content_version_id").live("change", function(){
+  var option = jQuery(this).children("option:selected"),
+      new_selected = jQuery(this).parent().children(".iter_"+option.val()),
+      old_selected = jQuery(this).parent().children(".selected");
+  
+  new_selected.addClass("selected").removeClass("hidden");
+  old_selected.removeClass("selected").addClass("hidden");
+});
+
+jQuery(".clear_button").live("click", function(){
+  var parent = jQuery(this).parent();
+  var url = parent.attr("action").replace("update", "create"),
+      onsubmit = parent.attr("onsubmit").replace("update", "create");
+      console.log(onsubmit);
+  parent.find("#note_id").val("");
+  parent.find("textarea").val("");
+  parent.attr("action", url);
+  parent[0].setAttribute("onsubmit", onsubmit);
+});
+
+jQuery(".note_edit").live("click", function(){
+  var parent = jQuery(this).parent();
+  var type = "",
+      proj_id = jQuery("#proj_id");
+
+  if(jQuery(this).hasClass("iteration"))
+    type = "iteration"
+  else if(jQuery(this).hasClass("project"))
+    type = "project"
+
+  jQuery('#ajax-indicator').show();
+  jQuery.ajax({
+    type: 'post',
+    url: '/notes/edit',
+    data: {'id': parent.attr("class").replace("note_", ""), 'project_id': proj_id.val(), 'type': type},
+    error: function(data) {
+      console.log(data);
+    },
+    success: function() {
+      jQuery('#ajax-indicator').hide();
+    }
+  });
+});
+
+jQuery(".note_destroy").live("click", function(){
+  var parent = jQuery(this).parent();
+  var type = "",
+      proj_id = jQuery("#proj_id");
+
+  if(jQuery(this).hasClass("iteration"))
+    type = "iteration"
+  else if(jQuery(this).hasClass("project"))
+    type = "project"
+
+  jQuery('#ajax-indicator').show();
+  jQuery.ajax({
+    type: 'post',
+    url: '/notes/destroy',
+    data: {'id': parent.attr("class").replace("note_", ""), 'project_id': proj_id.val(), 'type': type},
+    error: function(data) {
+      console.log(data);
+    },
+    success: function() {
+      jQuery('#ajax-indicator').hide();
+    }
+  });
+});

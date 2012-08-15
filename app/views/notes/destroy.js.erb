@@ -1,0 +1,5 @@
+<% if @type == "project" %>
+  jQuery("#content-left .project").html("<%= escape_javascript(render :partial => 'notes/project_view.rhtml', :locals => {:notes => @proj_notes})%>");
+<% elsif @type == "iteration" %>
+  jQuery("#content-left .iteration").html("<%= escape_javascript(render :partial => 'notes/iteration_view.rhtml', :locals => {:versions => @version_list, :select => @versions})%>");
+<% end %>

@@ -1,0 +1,36 @@
+<%= render :partial => 'common/header' %>
+<%= text_field_tag :proj_id, @project.id, :hidden => true %>
+
+<div id="note-container">
+  <h2><%= l(:label_note_plural) %></h2>
+  
+  <div id="content-left">
+    <div class="iteration note-content main-content">
+      <% unless @versions.empty? %>
+        <%= render :partial => "notes/iteration_view.rhtml", :locals => {:versions => @version_list, :select => @versions} %>
+      <% else %>
+        <h3>No Iteration Found</h3>
+      <% end %>
+    </div>
+    <div class="project note-content main-content hidden">
+      <% unless @proj_notes.empty? %>
+        <%= render :partial => "notes/project_view.rhtml", :locals => {:notes => @proj_notes} %>
+      <% else %>
+        <h3>No Project Notes Found</h3>
+      <% end %>
+    </div>
+  </div>
+  
+  <div id="content-right">
+    <span class='selected' id='current' rel="iteration">Iteration Note</span>
+    <span id='nextp' rel="project" class="<%= 'hi' unless @project.past_scheduled_end_date? %>">Project Note</span>
+    <div class="main-content">
+      <div class="note-tabs iteration">
+        <%= render :partial => "notes/note_content_iteration.rhtml", :locals => {:note => nil} %>
+      </div>
+      <div class="note-tabs project hidden">
+        <%= render :partial => "notes/note_content_project.rhtml", :locals => {:note => nil} %>
+      </div>
+    </div>
+  </div>
+</div>

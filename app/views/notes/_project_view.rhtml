@@ -1,0 +1,12 @@
+<% notes.each do |n| %>
+  <div class="note_<%= n.id %>">
+    <%= n.date %>
+    <%= image_tag 'edit.png', :class => "note_edit clickable project" %>
+    <%= image_tag 'delete.png', :class => "note_destroy clickable project" %>
+    <div class="highlight-box">
+      <span class="content_text">
+        <%= content_tag 'p', textilizable(n.text) %>
+      </span>
+    </div>
+  </div>
+<% end %>

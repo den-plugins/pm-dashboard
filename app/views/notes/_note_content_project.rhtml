@@ -1,0 +1,13 @@
+<% note ? action = "update" : action = "create" %>
+<% remote_form_for :note, @note, 
+                   :url => custom_notes_path(@project.identifier, action), 
+                   :loading => "jQuery('#ajax-indicator').show();", 
+                   :loaded => "jQuery('#ajax-indicator').hide();",
+                   :success => "jQuery('.note-tabs.project').find('.clear_button').click()" do |f| %>
+  <%= f.text_field :id, :value => note ? note.id : '', :hidden => true %>
+  <%= f.text_field :type, :value => 'project', :hidden => true %>
+  <%= f.text_area :text, :value => note ? note.text : nil, :id => "text_project", :required => true %>
+  <%= wikitoolbar_for 'text_project' %>
+  <%= f.submit "Save"%>
+  <button type="button" class="clear_button">Clear</button>
+<% end %>

@@ -179,6 +179,7 @@ en:
   label_effective_from: Effective from
   label_effective_to: Effective to
   label_approval_date: Approval Date
+  label_note_plural: Retrospective Notes
 
   activerecord:
     errors:

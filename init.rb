@@ -31,6 +31,7 @@ Redmine::Plugin.register :pm_dashboard do
                       {  :assumptions => [:index, :show, :add, :update, :destroy],
                           :cost_monitoring => [:index],
                           :highlights => [:index, :save, :destroy, :update_highlight, :post, :unpost, :select_by_week, :select_duplicate],
+                          :notes => [:index, :create, :edit, :update, :destroy],
                           :milestone_plans => [:index, :add, :update, :destroy],
                           :pm_dashboard_issues => [:index, :show, :add, :edit, :delete],
                           :pm_dashboards => [:index],
@@ -77,9 +78,10 @@ Redmine::Plugin.register :pm_dashboard do
     menu.push :milestones, {:controller => 'milestone_plans', :action =>'index' }, :caption => 'Milestone Plans', :param => :project_id
     menu.push :contracts, {:controller => 'project_contracts', :action =>'index' }, :caption => 'Project Contracts', :param => :project_id
     menu.push :highlights, {:controller => 'highlights', :action =>'index' }, :caption => 'Weekly Highlights', :param => :project_id
+    menu.push :notes, {:controller => 'notes', :action =>'index' }, :caption => 'Retrospective Notes', :param => :project_id
   end
   
-    Redmine::MenuManager.map :clients_project_management do |menu|
+  Redmine::MenuManager.map :clients_project_management do |menu|
     menu.push :dashboard, {:controller => 'pm_dashboards', :action => 'index' }, :param => :project_id
     menu.push :info, {:controller => 'project_info', :action =>'index' }, :param => :project_id
     menu.push :assumptions, {:controller => 'assumptions', :action =>'index' }, :param => :project_id
@@ -88,6 +90,7 @@ Redmine::Plugin.register :pm_dashboard do
     menu.push :milestones, {:controller => 'milestone_plans', :action =>'index' }, :caption => 'Milestone Plans', :param => :project_id
     menu.push :contracts, {:controller => 'project_contracts', :action =>'index' }, :caption => 'Project Contracts', :param => :project_id
     menu.push :highlights, {:controller => 'highlights', :action =>'index' }, :caption => 'Weekly Highlights', :param => :project_id
+    menu.push :notes, {:controller => 'notes', :action =>'index' }, :caption => 'Retrospective Notes', :param => :project_id
   end
 end
 
