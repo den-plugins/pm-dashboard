@@ -23,7 +23,7 @@
   
   <div id="content-right">
     <span class='selected' id='current' rel="iteration">Iteration Note</span>
-    <span id='nextp' rel="project">Project Note</span>
+    <span id='nextp' rel="project" class="<%= 'hi' unless @project.past_scheduled_end_date? %>">Project Note</span>
     <div class="main-content">
       <div class="note-tabs iteration">
         <%= render :partial => "notes/note_content_iteration.rhtml", :locals => {:note => nil} %>

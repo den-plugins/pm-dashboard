@@ -10,21 +10,19 @@ class NotesController < PmController
 
   def index
     @proj_notes = @project.project_notes.sort_by {|z| z.updated_at}.reverse
-    @versions = @project.versions.sort.collect {|v| [v.name, v.id] }
-    @version_list = @project.versions.sort
+    get_versions
+    @note = @project.notes.new
   end
   
   def create
-    project = Project.find params[:project_id]
-    @type = params[:type]
-    case @type
+    @note = params[:note]
+    @note[:note_type] = @note[:type]
+    @project.notes.create @note
+    case @note[:type]
       when 'project'
-        project.notes.create :text => params[:text], :note_type => @type
         @proj_notes = @project.project_notes.sort_by {|z| z.updated_at}.reverse
       when 'iteration'
-        project.notes.create :text => params[:text], :note_type => @type, :version_id => params[:iter_id]
-        @versions = project.versions.sort.collect {|v| [v.name, v.id] }
-        @version_list = project.versions.sort
+        get_versions
     end
     respond_to do |format|
       format.js {render :layout => false}
@@ -32,8 +30,9 @@ class NotesController < PmController
   end
 
   def edit
+    @note = @project.notes.new
     @type = params[:type]
-    @versions = @project.versions.sort.collect {|v| [v.name, v.id] } if @type == "iteration"
+    get_versions
     @note = Note.find params[:id]
     respond_to do |format|
       format.js {render :layout => false}
@@ -41,17 +40,13 @@ class NotesController < PmController
   end
 
   def update
-    project = Project.find params[:project_id]
-    @type = params[:type]
-    note = Note.find params[:id]
-    case @type
+    @note = params[:note]
+    Note.find(@note[:id]).update_attributes @note
+    case @note[:type]
       when 'project'
-        note.update_attributes :text => params[:text]
         @proj_notes = @project.project_notes.sort_by {|z| z.updated_at}.reverse
       when 'iteration'
-        note.update_attributes :text => params[:text], :version_id => params[:iter_id]
-        @versions = project.versions.sort.collect {|v| [v.name, v.id] }
-        @version_list = project.versions.sort
+        get_versions
     end
     respond_to do |format|
       format.js {render :layout => false}
@@ -59,15 +54,13 @@ class NotesController < PmController
   end
   
   def destroy
-    project = Project.find params[:project_id]
     Note.destroy params[:id]
     @type = params[:type]
     case @type
       when 'project'
         @proj_notes = @project.project_notes.sort_by {|z| z.updated_at}.reverse
       when 'iteration'
-        @versions = project.versions.sort.collect {|v| [v.name, v.id] }
-        @version_list = project.versions.sort
+        get_versions
     end
     respond_to do |format|
       format.js {render :layout => false}
@@ -79,5 +72,10 @@ class NotesController < PmController
     @project = Project.find(params[:project_id])
     rescue ActiveRecord::RecordNotFound
       render_404
+  end
+
+  def get_versions
+    @version_list = @project.versions.sort
+    @versions = @version_list.collect {|v| [v.name, v.id] }
   end
 end

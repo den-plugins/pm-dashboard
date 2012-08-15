@@ -1,7 +1,15 @@
-<%= label_tag :version, "Iteration: " %>
-<%= select 'form', 'version_id', @versions, {:selected => note ? [note.iteration.name, note.version_id] : @versions.last } %>
-<%= text_field_tag :id_iter, note ? note.id : nil, :hidden => true %>
-<%= text_area_tag :text_iter, note ? note.text : nil %>
-<%= wikitoolbar_for 'text_iter' %>
-<button type="button" id="submit_iter">Submit</button>
-
+<% note ? action = "update" : action = "create" %>
+<% remote_form_for :note, @note, 
+                   :url => custom_notes_path(@project.identifier, action), 
+                   :loading => "jQuery('#ajax-indicator').show();", 
+                   :loaded => "jQuery('#ajax-indicator').hide();",
+                   :success => "jQuery('.note-tabs.iteration').find('.clear_button').click()" do |f| %>
+  <%= f.label :iteration, "Iteration: " %>
+  <%= select 'note', 'version_id', @versions, {:selected => note ? [note.iteration.name, note.version_id] : @versions.last } %>
+  <%= f.text_field :id, :value => note ? note.id : '', :hidden => true %>
+  <%= f.text_field :type, :value => 'iteration', :hidden => true %>
+  <%= f.text_area :text, :value => note ? note.text : '' , :id => "text_iteration", :required => true %>
+  <%= wikitoolbar_for 'text_iteration' %>
+  <%= f.submit "Save"%>
+  <button type="button" class="clear_button">Clear</button>
+<% end %>

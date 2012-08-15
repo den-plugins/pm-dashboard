@@ -19,7 +19,7 @@
 
 <% versions.each do |v| %>
   <div class="iter_<%= v.id %> hidden">
-    <h3>Past Iterations - <%= v.name %></h3>
+    <h3>Past Iteration - <%= v.name %></h3>
     <% notes = v.notes.sort_by {|z| z.updated_at}.reverse %> 
     <% notes.each do |n| %>
       <div class="note_<%= n.id %>">

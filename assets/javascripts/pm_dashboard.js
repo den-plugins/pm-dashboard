@@ -180,59 +180,15 @@ jQuery("#content_version_id").live("change", function(){
   old_selected.removeClass("selected").addClass("hidden");
 });
 
-jQuery("#submit_proj").live("click", function(){
-  var url = "/notes/";
-  var id = jQuery("#id_proj"),
-      text = jQuery("#text_proj"),
-      proj_id = jQuery("#proj_id");
-
-  if(id.val())
-    url += "update";
-  else
-    url += "create";
-  
-  jQuery('#ajax-indicator').show();
-  jQuery.ajax({
-    type: 'post',
-    url: url,
-    data: {'id': id.val(), 'text': text.val(), 'project_id': proj_id.val(), 'type': 'project'},
-    error: function(data) {
-      console.log(data);
-    },
-    success: function() {
-      jQuery('#ajax-indicator').hide();
-      id.val("");
-      text.val("");
-    }
-  });
-});
-
-jQuery("#submit_iter").live("click", function(){
-  var url = "/notes/";
-  var id = jQuery("#id_iter"),
-      text = jQuery("#text_iter"),
-      iter = jQuery("#form_version_id").children("option:selected"),
-      proj_id = jQuery("#proj_id");
-
-  if(id.val())
-    url += "update";
-  else
-    url += "create";
-  
-  jQuery('#ajax-indicator').show();
-  jQuery.ajax({
-    type: 'post',
-    url: url,
-    data: {'id': id.val(), 'text': text.val(), 'iter_id': iter.val(), 'project_id': proj_id.val(), 'type': 'iteration'},
-    error: function(data) {
-      console.log(data);
-    },
-    success: function() {
-      jQuery('#ajax-indicator').hide();
-      id.val("");
-      text.val("");
-    }
-  });
+jQuery(".clear_button").live("click", function(){
+  var parent = jQuery(this).parent();
+  var url = parent.attr("action").replace("update", "create"),
+      onsubmit = parent.attr("onsubmit").replace("update", "create");
+      console.log(onsubmit);
+  parent.find("#note_id").val("");
+  parent.find("textarea").val("");
+  parent.attr("action", url);
+  parent[0].setAttribute("onsubmit", onsubmit);
 });
 
 jQuery(".note_edit").live("click", function(){

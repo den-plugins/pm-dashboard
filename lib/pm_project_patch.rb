@@ -104,6 +104,10 @@ module Pm
       def project_notes
         notes.select {|x| x.note_type == "project"}
       end
+
+      def past_scheduled_end_date?
+        actual_end_date and actual_end_date < Date.current
+      end
     end
   end
 end

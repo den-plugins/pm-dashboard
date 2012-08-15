@@ -236,6 +236,7 @@ div#period span.selected {
 .hidden {display:none;}
 .clickable {cursor:pointer; cursor:hand;}
 .main-content { background-color: #F6F6F6; border: 1px solid #E4E4E4; height: 470px; overflow: auto; padding: 5px;}
+#note-container .clear_button { vertical-align:middle; }
 
 div#content-left {float:left; width:49%;}
 div#content-left #content_version_id {float:right;}
