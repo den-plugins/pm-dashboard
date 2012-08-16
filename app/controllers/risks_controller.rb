@@ -24,6 +24,10 @@ class RisksController < PmController
       condition = condition.compact.join(" and ")
       @risks = @project.risks.find(:all, :conditions => condition, :order => sort_clause)
     end
+
+    respond_to do |format|
+      format.html { render :template => 'risks/index.rhtml', :layout => !request.xhr? }
+    end
   end
   
   def show
@@ -32,7 +36,9 @@ class RisksController < PmController
 
     @project ||= @risk.project
     @risks = (@client && !@risk.env.eql?('E')) ? [] : [@risk]
-    render :template => "risks/index"
+    respond_to do |format|
+      format.html { render :template => 'risks/index.rhtml', :layout => !request.xhr? }
+    end
   end
   
   def add
