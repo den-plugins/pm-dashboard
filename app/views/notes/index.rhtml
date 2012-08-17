@@ -7,7 +7,7 @@
   <div id="content-left">
     <div class="iteration note-content main-content">
       <% unless @versions.empty? %>
-        <%= render :partial => "notes/iteration_view.rhtml", :locals => {:versions => @version_list, :select => @versions} %>
+        <%= render :partial => "notes/iteration_view.rhtml", :locals => {:versions => @version_list, :select => @versions, :selected => nil} %>
       <% else %>
         <h3>No Iteration Found</h3>
       <% end %>

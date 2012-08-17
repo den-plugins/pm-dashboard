@@ -1,27 +1,14 @@
-<%= select 'content', 'version_id', select, {:selected => select.last } %>
-<div class="iter_<%= versions.last.id %> selected">
-  <h3>Current Iteration - <%= versions.last.name %></h3>
-  <% notes = versions.last.notes.sort_by {|z| z.updated_at}.reverse %> 
-  <% notes.each do |n| %>
-    <div class="note_<%= n.id %>">
-      <%= n.date %>
-      <%= image_tag 'edit.png', :class => "note_edit clickable iteration" %>
-      <%= image_tag 'delete.png', :class => "note_destroy clickable iteration" %>
-      <div class="highlight-box">
-        <span class="content_text">
-          <%= content_tag 'p', textilizable(n.text) %>
-        </span>
-      </div>
-    </div>
-  <% end %>
-  <% versions.delete versions.last %>
-</div>
+<% show_iter = selected ? selected.last : versions.last.id %>
 
+<%= select 'content', 'version_id', select, {:selected => selected ? selected : select.last } %>
 <% versions.each do |v| %>
-  <div class="iter_<%= v.id %> hidden">
-    <h3>Past Iteration - <%= v.name %></h3>
-    <% notes = v.notes.sort_by {|z| z.updated_at}.reverse %> 
-    <% notes.each do |n| %>
+  <div class="iter_<%= v.id %> <%= v.id == show_iter ? "selected" : "hidden"%>">
+    <% if v.id == versions.last.id %>
+      <h3>Current Iteration - <%= versions.last.name %></h3>
+    <% else %>
+      <h3>Past Iteration - <%= v.name %></h3>
+    <% end %>
+    <% v.notes.sort_by(&:updated_at).reverse.each do |n| %>
       <div class="note_<%= n.id %>">
         <%= n.date %>
         <%= image_tag 'edit.png', :class => "note_edit clickable iteration" %>

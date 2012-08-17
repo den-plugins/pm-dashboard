@@ -15,10 +15,11 @@ class NotesController < PmController
   end
   
   def create
-    @note = params[:note]
-    @note[:note_type] = @note[:type]
-    @project.notes.create @note
-    case @note[:type]
+    note = params[:note]
+    note[:note_type] = note[:type]
+    @project.notes.create note
+    @note = @project.notes.last
+    case @note.note_type
       when 'project'
         @proj_notes = @project.project_notes.sort_by {|z| z.updated_at}.reverse
       when 'iteration'
@@ -30,7 +31,6 @@ class NotesController < PmController
   end
 
   def edit
-    @note = @project.notes.new
     @type = params[:type]
     get_versions
     @note = Note.find params[:id]
@@ -40,9 +40,10 @@ class NotesController < PmController
   end
 
   def update
-    @note = params[:note]
-    Note.find(@note[:id]).update_attributes @note
-    case @note[:type]
+    note = params[:note]
+    @note = Note.find(note[:id])
+    @note.update_attributes note
+    case @note.note_type
       when 'project'
         @proj_notes = @project.project_notes.sort_by {|z| z.updated_at}.reverse
       when 'iteration'
@@ -54,6 +55,7 @@ class NotesController < PmController
   end
   
   def destroy
+    @iteration = Note.find(params[:id]).iteration
     Note.destroy params[:id]
     @type = params[:type]
     case @type
