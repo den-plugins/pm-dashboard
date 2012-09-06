@@ -7,7 +7,7 @@ module ProjectBillabilityHelper
 
   def compute_forecasted_hours(week, resources)
     from, to = week.first, week.last
-    allocated = resources.select {|r| r.billable?(from, to)}
+    allocated = (resources ? resources.select {|r| r.billable?(from, to)}: [])
     allocated.sum {|a| a.days_and_cost((from..to), nil, false) * 8}
   end
 
