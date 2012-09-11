@@ -27,7 +27,7 @@ module ProjectBillabilityHelper
 
   def compute_actual_cost(week, resources, acctg = nil)
     from, to= week.first, (week.last.wday.eql?(5) ? (week.last+2.days) : week.last)
-    allocated = resources.select {|r| r.billable?(from, to)}
+    allocated = (resources ? resources.select {|r| r.billable?(from, to)} : [])
     allocated.sum {|a| (a.spent_time(from, to, acctg, true) * a.internal_rate.to_f)}
   end
 
