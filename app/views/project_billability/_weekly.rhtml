@@ -2,7 +2,7 @@
 <% actual_start = @project.actual_start_date || (first_time_entry ? first_time_entry.spent_on : @project.planned_start_date) %>
 <% actual_end = (Date.today - 1.week).end_of_week %>
 
-<% weeks = get_weeks_range(actual_start, @project.planned_end_date) %>
+<% weeks = get_weeks_range(actual_start, @project.maintenance_end ? @project.maintenance_end : @project.planned_end_date) %>
 <% billability_dates = @billability["per_week_totals"] %>
 <% if !billability_dates.nil? && !billability_dates.empty? %>
 <div class='tables_container'>

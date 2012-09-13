@@ -18,8 +18,8 @@ class CostMonitoringController < PmController
     @project_budget = 0
     @estimate_to_complete = 0
 
-    pfrom, afrom, pto, ato = @project.planned_start_date, @project.actual_start_date, @project.planned_end_date, @project.actual_end_date
-    to = (ato || pto)
+    pfrom, afrom, pto, ato, maintenance_end_date = @project.planned_start_date, @project.actual_start_date, @project.planned_end_date, @project.actual_end_date, @project.maintenance_end
+    to = maintenance_end_date ? maintenance_end_date : (ato || pto)
     if pfrom && to
       team = @project.members.project_team.all
       
@@ -39,7 +39,7 @@ class CostMonitoringController < PmController
       forecast_list = forecast_range.collect {|r| r.first }
       actual_list = actual_range.collect {|r| r.first }
       estimate_list = estimate_range.collect {|r| r.first }
-      
+
       @cost.each do |k, v|
         @bac_hours += v[:budget_hours] if forecast_list.include?(k.to_date)
         if actual_list.include?(k.to_date)

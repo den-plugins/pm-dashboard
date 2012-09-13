@@ -29,7 +29,7 @@ class ProjectBillabilityJob < Struct.new(:project_id)
         actual_start = project.actual_start_date || (first_time_entry ? first_time_entry.spent_on : project.planned_start_date)
         actual_end = (Date.today - 1.week).end_of_week
         if view == 'week'
-          dates = get_weeks_range(actual_start, project.planned_end_date)
+          dates = get_weeks_range(actual_start, project.maintenance_end ? project.maintenance_end : project.planned_end_date)
         elsif view == 'month'
           dates = get_months_range(actual_start, project.planned_end_date)
         end
