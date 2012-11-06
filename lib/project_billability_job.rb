@@ -31,7 +31,7 @@ class ProjectBillabilityJob < Struct.new(:project_id)
         if view == 'week'
           dates = get_weeks_range(actual_start, project.maintenance_end ? project.maintenance_end : project.planned_end_date)
         elsif view == 'month'
-          dates = get_months_range(actual_start, project.planned_end_date)
+          dates = get_months_range(actual_start, project.maintenance_end ? project.maintenance_end : project.planned_end_date)
         end
         billability_per_date = Array.new
         bill_total, dates_total = 0, 0
@@ -55,13 +55,13 @@ class ProjectBillabilityJob < Struct.new(:project_id)
             billability_per_date << [date.last, bill.to_f] if date.last < (Date.today.monday + 4.days)
             unless (date.to_a & (actual_start..actual_end).to_a).empty?
               bill_total += bill.to_f
-              dates_total += 1
+              dates_total += 1 unless bill.to_f == 0 && project.planned_end_date < date.last && project.maintenance_end && date.last <= project.maintenance_end
             end
           elsif view == 'month'
             billability_per_date << [date.last, bill.to_f] if date.last <= (Date.today-1.month).end_of_month
             unless (date.to_a & (actual_start..((Date.today-1.month).end_of_month)).to_a).empty?
               bill_total += bill.to_f
-              dates_total += 1
+              dates_total += 1 unless bill.to_f == 0 && project.planned_end_date < date.last && project.maintenance_end && date.last <= project.maintenance_end
             end
           end
         end
