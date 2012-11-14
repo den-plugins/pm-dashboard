@@ -12,9 +12,9 @@ class ResourceAllocation < ActiveRecord::Base
   
   def validate_dates
     project = member.project
-    valid_end_date = project.maintenance_end #|| project.planned_end_date
+    valid_end_date = project.maintenance_end ? project.maintenance_end : project.actual_end_date || project.planned_end_date
     errors.add(:start_date, 'must be earlier than End Date') if start_date && end_date && (start_date > end_date)
-    errors.add(:end_date, "must not be beyond Maintenance End Date (#{valid_end_date.to_s})") if end_date && valid_end_date && (end_date > valid_end_date)
+    errors.add(:end_date, "must not be beyond (#{valid_end_date.to_s})") if end_date && valid_end_date && (end_date > valid_end_date)
     return false unless errors.empty?
   end
   
