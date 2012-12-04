@@ -14,7 +14,8 @@
         <% total_days, total_cost = 0, 0 %>
         <% @proj_team.each do |member| %>
         <tr class="<%= cycle('even', 'odd', :name => 'members') %>">
-          <% actual_days, cost = compute_days_and_cost(member, month, params[:rate]).collect %>
+          <% acctg = "both" %>
+          <% actual_days, cost = compute_days_and_cost(member, month, params[:rate], acctg).collect %>
           <% total_days += actual_days %>
           <% total_cost += cost %>
           <td><%= hnum actual_days %></td>

@@ -84,9 +84,9 @@ module ResourceCostsHelper
   end
   
   # computations
-  def compute_days_and_cost(member, range, rate)
+  def compute_days_and_cost(member, range, rate, acctg='Billable')
     mrate = (rate && rate.eql?('sow_rate')) ? daily_rate(member.sow_rate) : daily_rate(member.internal_rate)
-    member.days_and_cost(range, mrate, false)
+    member.days_and_cost(range, mrate, false, acctg)
   end
   
   def compute_totals_per_column(project, per_column, total_cost)
@@ -96,9 +96,11 @@ module ResourceCostsHelper
     [total_cost, total_with_contingency, actual_total, cumulative_total]
   end
   
-  def allocation_color_class(total, is_shadowed=false)
+  def allocation_color_class(total, is_shadowed=false, non_billable=false)
     if is_shadowed
       "lgray"
+    elsif non_billable
+      "lyellow"
     else
       return "" if total.eql?(0)
       total > 2.5 ? "lgreen" : ("lblue" if total <= 2.5)

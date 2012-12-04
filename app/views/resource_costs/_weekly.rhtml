@@ -16,10 +16,11 @@
         </tr>
         <% total_days, total_cost = 0, 0 %>
         <% @proj_team.each do |member| %>
-          <% actual_days, cost = compute_days_and_cost(member, week, params[:rate]).collect %>
+          <% acctg = "both" %>
+          <% actual_days, cost = compute_days_and_cost(member, week, params[:rate], acctg).collect %>
           <% total_days += actual_days %>
           <% total_cost += cost %>
-        <tr class="<%= cycle('even', 'odd', :name => 'members') %> <%= allocation_color_class(actual_days, member.is_shadowed?(week.last)) %>">
+        <tr class="<%= cycle('even', 'odd', :name => 'members') %> <%= allocation_color_class(actual_days, member.is_shadowed?(week.last), member.non_billable?(week.last)) %>">
           <td><%= hnum  actual_days %></td>
           <td class='cost'><%= hnum cost.to_f %></td>
         </tr>
