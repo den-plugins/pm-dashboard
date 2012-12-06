@@ -1,15 +1,31 @@
 <fieldset>
   <legend><%= l(:label_filter_plural) %></legend>
-  <% form_remote_tag(:url => { :project_id => @project },
-        :loading => "Element.show('ajax-indicator')",
-        :complete => "Element.hide('ajax-indicator'); jQuery('#undef_weeks').height(jQuery('#resource_costs').innerHeight());") do %>
-    <p>
-      <%= l(:label_details) %>:
-      <%= select_tag 'view', options_for_select([[l(:label_week), 'week'], [l(:label_month), 'month']], [l(:label_week), 'week']),
-                                                       :onchange => "this.form.onsubmit();" %>
-      <%= l(:label_daily_rate) %>:
-      <%= select_tag 'rate', options_for_select([['Internal Rate', 'internal_rate'], ['SOW Rate', 'sow_rate']], ['Internal Rate', 'internal_rate']),
-                                                       :onchange => "this.form.onsubmit();" %>
-    </p>
+  <% form_remote_tag(:url => {:project_id => @project},
+                     :loading => "Element.show('ajax-indicator')",
+                     :complete => "Element.hide('ajax-indicator'); jQuery('#undef_weeks').height(jQuery('#resource_costs').innerHeight());") do %>
+
+      <p>
+        <%= l(:label_details) %>:
+        <%= select_tag 'view', options_for_select([[l(:label_week), 'week'], [l(:label_month), 'month']], [l(:label_week), 'week']),
+                       :onchange => "this.form.onsubmit();" %>
+        <%= l(:label_daily_rate) %>:
+        <%= select_tag 'rate', options_for_select([['Internal Rate', 'internal_rate'], ['SOW Rate', 'sow_rate']], ['Internal Rate', 'internal_rate']),
+                       :onchange => "this.form.onsubmit();" %>
+      </p>
   <% end %>
+
+  <div class="smallfont plegend">
+    <p><em>Legend</em></p>
+
+    <div class="legsquare lgreen"></div>
+    Full Time on Project
+    <div class="legsquare lblue"></div>
+    Non-full Time on Project
+    <div class="legsquare lyellow"></div>
+    Non-billable
+    <div class="legsquare lgray"></div>
+    Shadow
+  </div>
+
 </fieldset>
+

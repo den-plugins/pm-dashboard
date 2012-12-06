@@ -36,11 +36,15 @@ table.list tbody tr.highlight { background-color: #ffffb0; color: #000; }
 tr.red, td.red, th.red { background-color: #DD0806; color: #FFF; }
 tr.yellow, td.yellow, th.yellow { background-color: #F4EB05; }
 tr.green, td.green, th.green { background-color: #006411; color: #FFF; }
-tr.lgreen, td.lgreen, th.lgreen { background-color: #9FC35B; color: #000; }
-tr.lblue, td.lblue, th.lblue { background-color: #99CCFF; color: #000; }
-tr.lgray, td.lgray, th.lgray { background-color: #9a9a9a; color: #FFF; }
-tr.lyellow, td.lyellow, th.lyellow { background-color: #ffff00; color: #000; }
+tr.lgreen, td.lgreen, th.lgreen, div.lgreen { background-color: #9FC35B; color: #000; }
+tr.lblue, td.lblue, th.lblue, div.lblue { background-color: #99CCFF; color: #000; }
+tr.lgray, td.lgray, th.lgray, div.lgray { background-color: #9a9a9a; color: #FFF; }
+tr.lyellow, td.lyellow, th.lyellow, div.lyellow { background-color: #ffff00; color: #000; }
 tr.lred, td.lred, th.lred { background-color: #E57E7C; color: #000; }
+.legsquare {display: inline-block; width: 10px; height: 10px; margin: 2px 5px -3px 15px; padding: 0; border: 1px soild white; }
+.plegend {margin-top: 7px; padding: 0 5px; }
+.plegend p { margin: 0; padding: 0;}
+.smallfont {font-size: 10px; }
 
 li.red, a.red { color: #DD0806!important; }
 
