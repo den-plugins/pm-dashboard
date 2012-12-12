@@ -38,6 +38,26 @@ module ResourceCostsHelper
       weeks
     end
   end
+
+  def get_weeks_range_with_weekend(from, to)
+    if from && to
+      start_date, end_date = from, to
+      weeks = []
+      # if from/to falls on a weekend, mon/fri is set to self (date)
+      until ((from..to).to_a & (start_date..end_date).to_a).empty?
+        mon = if from.wday.eql?(0) || from.wday.eql?(6)
+                from
+              else
+                from.eql?(start_date) ? start_date : from.monday
+              end
+        sun = mon.monday + 6.days
+
+        weeks << (mon .. sun)
+        from = mon.next_week
+      end
+      weeks
+    end
+  end
   
   def get_months(start_date, end_date)
     unless start_date.nil? or end_date.nil?
