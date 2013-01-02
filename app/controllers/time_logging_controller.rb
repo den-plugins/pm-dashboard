@@ -11,7 +11,7 @@ class TimeLoggingController < PmController
   def index
     sort_init "#{User.table_name}.lastname", "ASC"
     sort_update({"resource" =>  "#{User.table_name}.lastname", "location" => "location"})
-    @resources = @project.members.project_team.find(:all, :order => sort_clause)
+    @res = @project.members.project_team.find(:all, :order => sort_clause)
     retrieve_data
     render :template => "time_logging/index", :layout => !request.xhr?
   end
@@ -30,6 +30,7 @@ class TimeLoggingController < PmController
   
   def retrieve_data
     retrieve_date_range
+    @resources = @res.select {|v| !v.resource_allocations.find(:all, :conditions => ["start_date < ? AND end_date > ?", @to, @from]).empty?}
     @show_only = (params[:show_only].blank?)? "both" : params[:show_only]
     @columns = (params[:columns] && %w(year month week day).include?(params[:columns])) ? params[:columns] : 'day'
     @users = @resources.collect {|m| m.user }
