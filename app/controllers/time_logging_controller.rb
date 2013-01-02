@@ -10,7 +10,7 @@ class TimeLoggingController < PmController
 
   def index
     sort_init "#{User.table_name}.lastname", "ASC"
-    sort_update({"resource" =>  "#{User.table_name}.lastname"})
+    sort_update({"resource" =>  "#{User.table_name}.lastname", "location" => "location"})
     @resources = @project.members.project_team.find(:all, :order => sort_clause)
     retrieve_data
     render :template => "time_logging/index", :layout => !request.xhr?

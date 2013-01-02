@@ -3,7 +3,7 @@
     <table id='allocations_fixed_table' class="list fixed">
     <thead>
       <tr>
-        <th width='8%'>Location</th>
+        <%= sort_header_tag('location', :caption => "Location", :width => "25%") %>
         <%= sort_header_tag('resource', :caption => "Resource", :width => "25%") %>
         <th width='15%'>Role</th>
         <th width='13%'>Total Hours (<%= get_string @th %>)</th>
@@ -38,7 +38,7 @@
 
 <script type="text/javascript">
   jQuery('#ajax-indicator').hide();
-  jQuery('.sort').live('click', function(){
+  jQuery("th").find("a").live('click', function(){
     jQuery('#ajax-indicator').show();
   });
   jQuery(function(){
