@@ -16,8 +16,8 @@ class ProjectFixedCostJob < Struct.new(:project_id)
     contingency_amount = 0 # 0 for now
     project_budget = 0
     estimate_to_complete = 0
-    pfrom, afrom, pto, ato = project.planned_start_date, project.actual_start_date, project.planned_end_date, project.actual_end_date
-    to = (ato || pto)
+    pfrom, afrom, pto, ato, maintenance_end_date = project.planned_start_date, project.actual_start_date, project.planned_end_date, project.actual_end_date, project.maintenance_end
+    to = maintenance_end_date ? maintenance_end_date : (ato || pto)
     if pfrom && to
       team = project.members.project_team.all
       reporting_period = (Date.today-1.week).end_of_week
