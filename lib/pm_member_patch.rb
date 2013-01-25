@@ -95,7 +95,7 @@ module Pm
                   case acctg.downcase
                   when 'billable'
                     # count only days where member is Billable
-                    days += (1 * (allocation.resource_allocation.to_f/div).to_f) if allocation.resource_type.eql?(0)
+                    days += (1 * (allocation.resource_allocation.to_f/div).to_f) if allocation.resource_type.eql?(0) && project.project_type == "Development"
                   when 'non-billable'
                     #count only days where member is Non-billable
                     days += (1 * (allocation.resource_allocation.to_f/div).to_f) if allocation.resource_type.eql?(1)
