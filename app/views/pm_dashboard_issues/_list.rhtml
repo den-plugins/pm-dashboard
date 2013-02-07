@@ -25,8 +25,8 @@
         <td><%= issue.env %></td>
         <td><%= issue.created_on %></td>
         <td><%= User.find(issue.raised_by).name %></td>
-        <td style='text-align: left;'><%= issue.issue_description %></td>
-        <td style='text-align: left;'><%= issue.action %></td>
+        <td style='text-align: left;'><%= textilizable issue.issue_description, :pm_dashboard_issues => issue %></td>
+        <td style='text-align: left;'><%= textilizable issue.action, :pm_dashboard_issues => issue %></td>
         <td class="<%= issue_impact_color_coding(issue.impact)%>"><%= issue.impact %></td>
         <td><%= issue.user.name %></td>
         <td><%= issue.date_due %></td>

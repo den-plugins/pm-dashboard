@@ -30,13 +30,13 @@
       <td><%= risk.env %></td>
       <td><%= risk.created_on.to_date %></td>
       <td><%= risk.risk_type %></td>
-      <td style='text-align: left;'><%= risk.risk_description %></td>
-      <td><%= risk.potential_effect %></td>
+      <td style='text-align: left;'><%= textilizable risk.risk_description, :risks => risk %></td>
+      <td><%= textilizable risk.potential_effect, :risks => risk %></td>
       <td><%= risk.probability %></td>
       <td><%= risk.impact %></td>
       <td class="<%= risk_rating_color_code(risk.initial_risk_rating)%>"><%= risk.initial_risk_rating %></td>
       <td><%= risk.user.name  %></td>
-      <td><%= risk.mitigating_action %></td>
+      <td  style='text-align: left;'><%= textilizable risk.mitigating_action, :risks => risk %></td>
       <td><%= risk.probability_final %></td>
       <td><%= risk.impact_final %></td>
       <td class="<%= risk_rating_color_code(risk.final_risk_rating)%>"><%= risk.final_risk_rating %></td>
