@@ -37,8 +37,8 @@
     <tr>
       <td class="sched_color"><span>Schedule</span></td>
       <td class="value sched_color"><%= %></td>
-      <td class="cost_color"><span><%= display_by_billing_model.eql?("billability") ? "Billability" : "Cost" %></span></td>
-      <td class="value cost_color"><%= %></td>
+      <td class="<%= display_by_billing_model.eql?("billability") ? "billability_color #{@code}" : "cost_color"%>"><span><%= display_by_billing_model.eql?("billability") ? "Billability" : "Cost" %></span></td>
+      <td class="<%= display_by_billing_model.eql?("billability") ? "value billability_color #{@code}" : "value cost_color" %>"><%= %></td>
       <td class="<%= risk_color = risk_rating_color_code(risk_rating=compute_risk_average(@project)) %>"><span>Risk</span></td>
       <td class="value <%= risk_color %>"><%= risk_rating %></td>
       <td class="<%= issue_color = issue_impact_color_coding((issues_score=display_issues_average).to_f) %>"><span>Issue</span></td>
@@ -46,8 +46,6 @@
       <td><span>Productivity</span></td>
       <td class="value"><%= %></td>
       <td><span>Efficiency</span></td>
-      <td class="value"><%= %></td>
-      <td><span>Billability</span></td>
       <td class="value"><%= %></td>
     </tr>
   </table>
@@ -130,6 +128,9 @@
 <script type="text/javascript">
     var sched_color = "<%= scode = schedule_color_code %>";
     jQuery(".value.sched_color").text("<%= cost_color_code_label(scode) %>");
+    <% if display_by_billing_model.eql?("billability") %>
+      jQuery(".value.billability_color").text("<%= billability_color_code_label(@code) %>");
+    <% end %>
     jQuery(".sched_color").addClass(sched_color);
 </script>
 

@@ -44,6 +44,15 @@ class PmDashboardsController < PmController
         @fixed_cost = "none"
       end
     end
+    project_id = "billability_#{@project.id}"
+    bill = (@billability ? @billability["total_percent_billability_week"] : 0)
+    if bill < 85
+      @code = "red"
+    elsif bill >= 85 && bill < 88
+      @code = "yellow"
+    else
+      @code = "green"
+    end
   end
 
   def load_chart
