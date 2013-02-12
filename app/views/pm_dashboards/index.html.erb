@@ -129,7 +129,7 @@
     var sched_color = "<%= scode = schedule_color_code %>";
     jQuery(".value.sched_color").text("<%= cost_color_code_label(scode) %>");
     <% if display_by_billing_model.eql?("billability") %>
-      jQuery(".value.billability_color").text("<%= billability_color_code_label(@code) %>");
+      jQuery(".value.billability_color").text("<%= "%.2f" % @bill %> %");
     <% end %>
     jQuery(".sched_color").addClass(sched_color);
 </script>

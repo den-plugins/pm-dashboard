@@ -66,14 +66,6 @@ module ProjectBillabilityHelper
     end
   end
 
-  def billability_color_code_label(code)
-    case code
-      when "green"; "Good"
-      when "yellow"; "Warning"
-      when "red"; "Red Flag"
-    end
-  end
-
   def schedule_color_code
     if @project.planned_end_date && @project.actual_end_date
       (@project.actual_end_date > @project.planned_end_date) ? "red" : "green"
