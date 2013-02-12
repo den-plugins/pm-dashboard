@@ -15,7 +15,7 @@ class PmDashboardsController < PmController
   def index
     @highlights = @project.weekly_highlights
     @key_risks ||= @project.risks.key
-    @key_issues ||= @project.pm_dashboard_issues.key
+    @key_issues ||= @project.pm_dashboard_issues.key.reject{|i| i.date_close }
     @issues = @project.pm_dashboard_issues
     @project_team = @project.members.project_team
     @milestones = Version.find(:all, :conditions => ["project_id=? and effective_date < ?", @project, Date.today], :order => "effective_date DESC", :limit => 2) +
@@ -24,14 +24,22 @@ class PmDashboardsController < PmController
     @milestones = @milestones.reverse {|v| v.effective_date}
     @current_sprint = @project.current_version
     @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
-    
+
     billing_model = display_by_billing_model
     if @project.planned_end_date && @project.planned_start_date
       handler = ProjectBillabilityJob.new(@project.id)
       @job = Delayed::Job.find(:first,
               :conditions => ["handler = ? AND run_at <> ?", "#{handler.to_yaml}", (Time.parse("12am") + 1.day)])
       load_billability_file
+      @fri_last_week = (Date.today.at_beginning_of_week - 3).strftime
+      @to_date_fh = 0
+      @billability["per_week_totals"].each do |week|
+        if week[0] <= @fri_last_week
+          @to_date_fh += week[1]["fh"].to_i
+        end
+      end
       enqueue_billability_job(handler) if @billability.nil? || @billability.empty?
+      
     end
     if billing_model == "fixed"
       if @project.planned_start_date && (@project.actual_end_date || @project.planned_end_date)
