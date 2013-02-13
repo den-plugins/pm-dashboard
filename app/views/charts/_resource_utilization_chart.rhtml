@@ -4,7 +4,7 @@
     var plot1 = jQuery.jqplot('utilization_chart', [[[<%= with_complete_logs.to_json %>,1]]], {
       seriesDefaults: {
         renderer:jQuery.jqplot.BarRenderer,
-        pointLabels: { show: true, location: 'e', edgeTolerance: -15 },
+        pointLabels: { show: true, location: 'w', edgeTolerance: -15 },
         shadowAngle: 135,
         rendererOptions: {
           barDirection: 'horizontal',
