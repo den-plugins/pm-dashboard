@@ -112,7 +112,7 @@ module Pm
         rate ? [days, cost] : days
       end
 
-      def capped_days_and_cost_report(week, res_man, rate = nil, count_shadow=true, acctg='Billable', detail=false)
+      def capped_days_and_cost_report(week, rate = nil, count_shadow=true, acctg='Billable')
         days, cost = 0, 0
         allocations = resource_allocations
         unless allocations.empty?
@@ -124,23 +124,43 @@ module Pm
                 div = (allocation.resource_allocation > 100 ? round_up(allocation.resource_allocation) : 100)
                   case acctg.downcase
                     when 'billable'
-                      # count only days where member is Billable
                       days += (1 * (allocation.resource_allocation.to_f/div).to_f) if allocation.resource_type.eql?(0) && project.project_type == "Development"
                   end
-              end
-            end
-          end
-          alloc = allocations.select{ |a| a.start_date <= week.last && a.end_date >= week.first}
-          if alloc
-            alloc.each do |a|
-              if !a.resource_allocation.eql?(0)
-                res_man.info("#{name}, #{project.name}, #{user.location}, #{a.resource_allocation}, #{days}") if detail && a.resource_type.eql?(0) && project.project_type == "Development"
               end
             end
           end
         end
         cost = days * (rate.to_f)
         rate ? [days, cost] : days
+      end
+
+      def get_rate(week, sow=nil, count_shadow=true, acctg='Billable')
+        total_rate, day_rate, total_sow_rate, day_sow_rate = 0, 0, 0, 0
+        allocations = resource_allocations
+        unless allocations.empty?
+          week.each do |day|
+            unless day.wday.eql?(0) || day.wday.eql?(6)
+              allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
+              holiday = allocation.nil? ? 0 : detect_holidays_in_week(allocation.location, day)
+              if allocation and !allocation.resource_allocation.eql?(0) and holiday.eql?(0)
+                if allocation.resource_type.eql?(0) && project.project_type == "Development"
+                  case acctg.downcase
+                    when 'billable'
+                      total_rate += internal_rate if internal_rate
+                      total_sow_rate += sow_rate if sow_rate
+                      day_rate += 1 if internal_rate && internal_rate > 0
+                      day_sow_rate += 1 if sow_rate && sow_rate > 0
+                  end
+                end
+              end
+            end
+          end
+        end
+        if sow
+          cost = total_sow_rate && day_sow_rate && total_sow_rate > 0 && day_sow_rate > 0 ? total_sow_rate/day_sow_rate : 0
+        else
+          cost = total_rate && day_rate && total_rate > 0 && day_rate > 0 ? total_rate/day_rate : 0
+        end
       end
 
       def is_shadowed?(day)
