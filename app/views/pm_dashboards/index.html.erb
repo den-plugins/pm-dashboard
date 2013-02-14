@@ -74,7 +74,7 @@
     <%= render :partial => "load_billability" unless @project.billing_model.blank? %>
     
     <div class="box">
-      <h3>Time Logging as of Last Week</h3>
+      <h3>Time Logging as of Last Week (% Complete)</h3>
       <div id="utilization_chart"></div>
       <%= render :partial => "charts/resource_utilization_chart" %>
     </div>
@@ -113,6 +113,7 @@
       </ul>
     </div>
     
+    <% unless @key_issues.blank? %>
     <div class="box">
       <h3><%=l(:label_dashboard_issues)%></h3>
       <ul>
@@ -121,6 +122,7 @@
       <% end %>
       </ul>
     </div>
+    <% end %>
   </div>
 
 </div>

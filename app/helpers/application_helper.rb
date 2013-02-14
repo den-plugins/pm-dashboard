@@ -12,4 +12,12 @@ module ApplicationHelper
       render_main_menu project
     end
   end
+
+  def calendar_for(field_id)
+    include_calendar_headers_tags
+    date_close = (field_id == "issue_date_close" ? ",dateStatusFunc : futureDate" : "")
+    image_tag("calendar.png", {:id => "#{field_id}_trigger",:class => "calendar-trigger"}) +
+    javascript_tag("Calendar.setup({inputField : '#{field_id}', ifFormat : '%Y-%m-%d', button : '#{field_id}_trigger' #{date_close} })")
+  end
+
 end

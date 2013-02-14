@@ -157,6 +157,19 @@ function cost_color_code_for_tm() {
   }
 }
 
+function futureDate(date, y, m, d){
+  var c_mon = m;
+  var c_dt = d;
+  var c_yr = y;
+  var date = new Date();
+  var Currentdate = new Date(c_yr, c_mon, c_dt);
+  if (date > Currentdate) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 /* Retrospective Note Feature */
 
 jQuery("span#nextp").live("click", function(){

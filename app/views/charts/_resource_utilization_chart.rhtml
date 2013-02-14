@@ -1,13 +1,27 @@
 <% with_complete_logs = compute_percentage_utilization(@project_team) %>
 
 <script type="text/javascript">
-  var data = [['complete', <%= with_complete_logs.to_json %>], ['incomplete', <%= (100.0 - with_complete_logs).to_json %>]];
-  var plot1 = jQuery.jqplot('utilization_chart', [data], {
-    seriesDefaults: {
-      seriesColors: [ "#6295cd", "#fc787b"],
-      renderer: jQuery.jqplot.PieRenderer,
-      rendererOptions: {showDataLabels: true, highlightMouseOver: false, textColor: "#000" }
-    },
-    legend: { show: true, location: 'e'}
-  });
+    var plot1 = jQuery.jqplot('utilization_chart', [[[<%= with_complete_logs.to_json %>,1]]], {
+      seriesDefaults: {
+        renderer:jQuery.jqplot.BarRenderer,
+        pointLabels: { show: true, location: 'w', edgeTolerance: -15 },
+        shadowAngle: 135,
+        rendererOptions: {
+          barDirection: 'horizontal',
+          barWidth: 20
+        }
+      },
+      axes: {
+        yaxis: {
+          renderer: jQuery.jqplot.CategoryAxisRenderer,
+        },
+        xaxis: {
+          min:0,
+          max:100
+        }
+      },
+      // legend: {show: true, location: 'se'},
+      highlighter: {show: false}
+    });
+
 </script>

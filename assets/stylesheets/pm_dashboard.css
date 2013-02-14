@@ -266,3 +266,6 @@ div#content-right span.selected {
 div#content-right .main-content, div#content-left .note-content { padding: 30px 10px 0px 10px; }
 
 div#content-right .main-content textarea { width: 99%; height: 250px; resize: none; margin-top: 5px;}
+
+/* billability */
+div #utilization_chart { height: 80px; }
