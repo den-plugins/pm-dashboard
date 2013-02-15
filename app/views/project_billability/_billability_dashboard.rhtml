@@ -15,7 +15,7 @@
           </tr>
           <tr>
             <th>Billability last week %</th>
-            <td><%= @project.billing_model == "Fixed Cost" ? "N/A" : @billability["billability_per_week"].last[1]+"%" %></td>
+            <td><%= @project.billing_model == "Fixed Cost" ? "N/A" : "#{@billability['billability_per_week'].last[1]}%" %></td>
           </tr>
         </table>
       </div>
