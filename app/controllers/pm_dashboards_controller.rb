@@ -31,13 +31,6 @@ class PmDashboardsController < PmController
       @job = Delayed::Job.find(:first,
               :conditions => ["handler = ? AND run_at <> ?", "#{handler.to_yaml}", (Time.parse("12am") + 1.day)])
       load_billability_file
-      @fri_last_week = (Date.today.at_beginning_of_week - 3).strftime
-      @to_date_fh = 0
-      @billability["per_week_totals"].each do |week|
-        if week[0] <= @fri_last_week
-          @to_date_fh += week[1]["fh"].to_i
-        end
-      end
       enqueue_billability_job(handler) if @billability.nil? || @billability.empty?
       
     end

@@ -3,35 +3,19 @@
         <table id="pm_dashboard_utilization" class="list" style="text-align: center">
           <tr>
             <th>Billing Model</th>
-            <td colspan="2"><%= @project.billing_model %></td>
-          </tr>
-          <tr>
+            <td><%= @project.billing_model %></td>
             <th>Forecasted Hours</th>
-            <td colspan="2"><%= number_with_delimiter ("%0.2f" % (@billability['total_forecast'])) %></td>
+            <td><%= number_with_delimiter ("%0.2f" % (@billability['total_forecast'])) %></td>
           </tr>
           <tr>
-            <td colspan="5">&nbsp;</td>
-          </tr>
-          <tr>
-            <th>Billable</th>
-            <th>Last Week</th>
-            <th>To Date</th>
-          </tr>
-          <tr>
-            <td>Forecasted Hrs</td>
-            <td><%= @billability["per_week_totals"][@fri_last_week.to_s] ? @billability["per_week_totals"][@fri_last_week.to_s]["fh"].round : 0%></td>
-            <td><%= @to_date_fh %></td>
-          </tr>
-          <tr>
-            <td>Total Hrs</td>
-            <td><%= @billability["per_week_totals"][@fri_last_week.to_s] ? @billability["per_week_totals"][@fri_last_week.to_s]["ah"].round : 0%></td>
+            <th>Billability to date %</th>
+            <td id="percentage"><%= @percent_to_date = "%0.2f" % (@billability['total_percent_billability_week']) %>%</td>
+            <th><%= display_by_billing_model.eql?("billability") ? 'Total Billable Hours' : 'Total Hours' %></th>
             <td><%= number_with_delimiter ("%0.2f" % (@billability['total_actuals'])) %></td>
           </tr>
           <tr>
-            <td>Billability %</td>
-
-            <td><%= @billability["billability_per_week"] ? @billability["billability_per_week"].last[1] : 0 %>%</td>
-            <td id="percentage"><%= @percent_to_date = "%0.2f" % (@billability['total_percent_billability_week']) %>%</td>
+            <th>Billability last week %</th>
+            <td><%= @billability["billability_per_week"].last[1] %>%</td>
           </tr>
         </table>
       </div>
