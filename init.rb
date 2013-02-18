@@ -45,7 +45,7 @@ Redmine::Plugin.register :pm_dashboard do
                           :stakeholders => [:new, :create, :edit, :update, :remove],
                           :resource_utilization => [:index],
                           :efficiency => [:index, :update_test_code_coverage, :load_chart],
-                          :time_logging => [:index]
+                          :time_logging => [:index, :settings]
                       }, :public => false
   end
 
