@@ -1,7 +1,16 @@
+<% form_tag({:action => "settings"}) do %>
+    <p>
+      <%= check_box_tag 'lock_tl', true, @project.lock_time_logging.blank? ? false : true %> Lock Time Logging 
+      <%= text_field_tag 'lock_tl_date', @project.lock_time_logging ? @project.lock_time_logging : Date.today.strftime , {:readonly => true, :size => 7} %><%= calendar_for('lock_tl_date') %>
+      <%= submit_tag %>
+    </p>
+<% end %>
+
 <% form_remote_tag(:url => {}, :loading => "$('ajax-indicator').show()", :complete => "$('ajax-indicator').hide()",
                                        :html => {:method => :get, :id => "pm_utilization_filters_form"},
                                        :method => :get, :update => 'content') do %>
   <div id="utilization_filters">
+
     <p>
       <%= radio_button_tag 'period_type', '1', !@free_period %>
       <%= select_tag 'period', options_for_period_select(params[:period]),
@@ -28,5 +37,10 @@
     var to = jQuery("#to");
     validateDate(from);
     validateDate(to);
+    lockTimeLogging();
+  });
+
+  jQuery("#lock_tl").live("click", function(){
+    lockTimeLogging();
   });
 </script>

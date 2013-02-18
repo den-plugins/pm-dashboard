@@ -20,4 +20,27 @@ module ApplicationHelper
     javascript_tag("Calendar.setup({inputField : '#{field_id}', ifFormat : '%Y-%m-%d', button : '#{field_id}_trigger' #{date_close} })")
   end
 
+  def date_calendar_for(field_id, obj)
+    include_calendar_headers_tags
+
+    lt = case obj.class.to_s
+    when "Issue" then obj.project.lock_time_logging
+    when "Project" then obj.lock_time_logging
+    else nil
+    end
+
+    lock_time_logging = (lt.blank? ? "" : ",dateStatusFunc : 
+        function(date){ 
+          if (date > new Date('#{lt}')){
+            return false;
+          } else {
+            return true;
+          }
+        }") unless lt.blank?
+
+    image_tag("calendar.png", {:id => "#{field_id}_trigger",:class => "calendar-trigger"}) +
+    javascript_tag("Calendar.setup({inputField : '#{field_id}', ifFormat : '%Y-%m-%d', button : '#{field_id}_trigger' #{lock_time_logging} })")
+  end
+
+
 end

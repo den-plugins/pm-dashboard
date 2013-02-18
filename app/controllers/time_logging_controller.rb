@@ -16,6 +16,15 @@ class TimeLoggingController < PmController
     render :template => "time_logging/index", :layout => !request.xhr?
   end
 
+  def settings
+    if params[:lock_tl] && params[:lock_tl_date]
+      @project.update_attribute(:lock_time_logging, params[:lock_tl_date])
+    else
+      @project.update_attribute(:lock_time_logging, nil)
+    end
+    index
+  end
+
   private
   def get_project
     @project = params[:project_id] ? Project.find(params[:project_id]) : nil
