@@ -135,7 +135,7 @@ module Pm
       end
 
       def get_rate(week, sow=nil, count_shadow=true, acctg='Billable')
-        total_rate, day_rate, total_sow_rate, day_sow_rate = 0, 0, 0, 0
+        total_rate, day_rate, total_sow_rate, day_sow_rate, billed_hours = 0, 0, 0, 0, 0
         allocations = resource_allocations
         unless allocations.empty?
           week.each do |day|
@@ -146,6 +146,7 @@ module Pm
                 if allocation.resource_type.eql?(0) && project.project_type == "Development"
                   case acctg.downcase
                     when 'billable'
+                      billed_hours += sow_rate * 8 if sow_rate
                       total_rate += internal_rate if internal_rate
                       total_sow_rate += sow_rate if sow_rate
                       day_rate += 1 if internal_rate && internal_rate > 0
@@ -157,7 +158,8 @@ module Pm
           end
         end
         if sow
-          cost = total_sow_rate && day_sow_rate && total_sow_rate > 0 && day_sow_rate > 0 ? total_sow_rate/day_sow_rate : 0
+          #cost = total_sow_rate && day_sow_rate && total_sow_rate > 0 && day_sow_rate > 0 ? total_sow_rate/day_sow_rate : 0
+          cost = billed_hours ? billed_hours : 0
         else
           cost = total_rate && day_rate && total_rate > 0 && day_rate > 0 ? total_rate/day_rate : 0
         end
