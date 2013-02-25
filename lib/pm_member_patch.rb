@@ -134,37 +134,6 @@ module Pm
         rate ? [days, cost] : days
       end
 
-      def get_rate(week, sow=nil, count_shadow=true, acctg='Billable')
-        total_rate, day_rate, total_sow_rate, day_sow_rate, billed_hours = 0, 0, 0, 0, 0
-        allocations = resource_allocations
-        unless allocations.empty?
-          week.each do |day|
-            unless day.wday.eql?(0) || day.wday.eql?(6)
-              allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
-              holiday = allocation.nil? ? 0 : detect_holidays_in_week(allocation.location, day)
-              if allocation and !allocation.resource_allocation.eql?(0) and holiday.eql?(0)
-                if allocation.resource_type.eql?(0) && project.project_type == "Development"
-                  case acctg.downcase
-                    when 'billable'
-                      billed_hours += sow_rate * 8 if sow_rate
-                      total_rate += internal_rate if internal_rate
-                      total_sow_rate += sow_rate if sow_rate
-                      day_rate += 1 if internal_rate && internal_rate > 0
-                      day_sow_rate += 1 if sow_rate && sow_rate > 0
-                  end
-                end
-              end
-            end
-          end
-        end
-        if sow
-          #cost = total_sow_rate && day_sow_rate && total_sow_rate > 0 && day_sow_rate > 0 ? total_sow_rate/day_sow_rate : 0
-          cost = billed_hours ? billed_hours : 0
-        else
-          cost = total_rate && day_rate && total_rate > 0 && day_rate > 0 ? total_rate/day_rate : 0
-        end
-      end
-
       def is_shadowed?(day)
         if a = resource_allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
           a.resource_type.eql?(2)
