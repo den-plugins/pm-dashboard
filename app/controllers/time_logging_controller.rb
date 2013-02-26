@@ -17,6 +17,7 @@ class TimeLoggingController < PmController
   end
 
   def settings
+    flash.now[:notice] = "Lock time logging updated"
     if params[:lock_tl] && params[:lock_tl_date]
       @project.update_attribute(:lock_time_logging, params[:lock_tl_date])
     else
