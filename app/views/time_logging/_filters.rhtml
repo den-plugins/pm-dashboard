@@ -1,9 +1,11 @@
-<% form_tag({:action => "settings"}) do %>
-    <p>
-      <%= check_box_tag 'lock_tl', true, @project.lock_time_logging.blank? ? false : true %> Lock Time Logging until
-      <%= text_field_tag 'lock_tl_date', @project.lock_time_logging ? @project.lock_time_logging : Date.today.strftime , {:readonly => true, :size => 10} %><%= calendar_for('lock_tl_date') %>
-      <%= submit_tag %>
-    </p>
+<% unless @project.is_admin_project? %>
+  <% form_tag({:action => "settings"}) do %>
+      <p>
+        <%= check_box_tag 'lock_tl', true, @project.lock_time_logging.blank? ? false : true %> Lock Time Logging until
+        <%= text_field_tag 'lock_tl_date', @project.lock_time_logging ? @project.lock_time_logging : Date.today.strftime , {:readonly => true, :size => 10} %><%= calendar_for('lock_tl_date') %>
+        <%= submit_tag %>
+      </p>
+  <% end %>
 <% end %>
 
 <% form_remote_tag(:url => {}, :loading => "$('ajax-indicator').show()", :complete => "$('ajax-indicator').hide()",
