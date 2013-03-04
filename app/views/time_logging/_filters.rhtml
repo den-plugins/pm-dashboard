@@ -1,7 +1,7 @@
 <% form_tag({:action => "settings"}) do %>
     <p>
       <%= check_box_tag 'lock_tl', true, @project.lock_time_logging.blank? ? false : true %> Lock Time Logging until
-      <%= text_field_tag 'lock_tl_date', @project.lock_time_logging ? @project.lock_time_logging : Date.today.strftime , {:readonly => true, :size => 7} %><%= calendar_for('lock_tl_date') %>
+      <%= text_field_tag 'lock_tl_date', @project.lock_time_logging ? @project.lock_time_logging : Date.today.strftime , {:readonly => true, :size => 10} %><%= calendar_for('lock_tl_date') %>
       <%= submit_tag %>
     </p>
 <% end %>
