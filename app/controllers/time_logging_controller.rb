@@ -24,7 +24,7 @@ class TimeLoggingController < PmController
         # update corresponding admin lock time log date
         if @project.parent && @project.parent.children
           @project.parent.children.each do |child|
-            @child_admin = child if child.custom_values.select{|c| c.custom_field_id == 15}
+            @child_admin = child if child.is_admin_project?
           end
           if @child_admin
             @child_admin.update_attribute(:lock_time_logging, params[:lock_tl_date])
