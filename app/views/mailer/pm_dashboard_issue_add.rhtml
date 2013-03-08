@@ -1,11 +1,11 @@
 <%= l(:text_hello, :name => @issue.user.name) %>
 <%= l(:text_new, :feature => "Project Issue", :ref_number => "##{@issue.ref_number}", :project => @issue.project.name) %>
-<label>Project:</label>  <%= @issue.project.name %>
-<label>Raised by:</label>  <%= User.find(@issue.raised_by).name %>
-<label>Issue Description:</label>
+Project:  <%= @issue.project.name %>
+Raised by:  <%= User.find(@issue.raised_by).name %>
+Issue Description:
 <%= @issue.issue_description %>
-<label>Action Required/Taken:</label>
+Action Required/Taken:
 <%= @issue.action %>
-<label>Owner:</label>  <%= User.find(@issue.owner).name %>
-<label>Due Date:</label>  <%= @issue.date_due %>
+Owner:  <%= User.find(@issue.owner).name %>
+Due Date:  <%= @issue.date_due %>
 <%= l(:text_view_details, :url => @issue_url) %>

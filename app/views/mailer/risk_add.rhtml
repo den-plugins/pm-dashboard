@@ -1,12 +1,12 @@
 <%= l(:text_hello, :name => @risk.user.name) %>
 <%= l(:text_new, :project => @risk.project.name, :feature => "Risk", :ref_number => "##{@risk.ref_number}") %>
-<label>Project:</label>  <%= @risk.project.name %>
-<label>Risk Description:</label>
+Project:  <%= @risk.project.name %>
+Risk Description:
 <%= @risk.risk_description %>
-<label>Potential Effects:</label>
+Potential Effects:
 <%= @risk.potential_effect %>
-<label>Mitigation/ Contingency Strategy:</label>
+Mitigation/ Contingency Strategy:
 <%= @risk.mitigating_action %>
-<label>Owner:</label>  <%= User.find(@risk.owner).name %>
-<label>Due Date:</label>  <%= @risk.target_resolution_date %>
+Owner:  <%= User.find(@risk.owner).name %>
+Due Date:  <%= @risk.target_resolution_date %>
 <%= l(:text_view_details, :url => @risk_url) %>
