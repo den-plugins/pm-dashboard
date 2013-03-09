@@ -20,7 +20,7 @@
                                                                  :user_id => s[:user_id], :from => @from, :to => @to, 
                                                                  :type => @columns, :env => 'popup'}} %></td>
         <td class="left"><%= s[:role] %></td>
-        <td><%= get_string s[:total_hours] %></td>
+        <td class="<%= s[:total_hours] > s[:max_hours] ? 'fontRed' : '' %>"><%= get_string s[:total_hours] %></td>
         <td><%= get_string s[:total_hours_on_selected] %></td>
         <td><%= get_string s[:billable_hours] %></td>
         <td><%= get_string s[:non_billable_hours] %></td>
