@@ -17,6 +17,13 @@ module UserExtn
   end
   
   module InstanceMethods
+    def resource_allocations
+      allocations = []
+      projects.each do |proj|
+        allocations << proj.members.detect{|mem| mem.user_id == id}.resource_allocations
+      end
+      allocations
+    end
   end
 end
 
