@@ -16,12 +16,16 @@
       <% @summary.each do |s| %>
       <tr class="<%= cycle('odd','even') %> <%= color_code_log_time s %>">
         <td class="left"><%= s[:location] %></td> 
-        <td class="left"><%= facebox_link_to s[:name], {:url => {:controller => 'ticker', :action => 'user_timelogs',
-                                                                 :user_id => s[:user_id], :from => @from, :to => @to, 
-                                                                 :type => @columns, :env => 'popup'}} %></td>
+        <td class="left"><%= facebox_link_to s[:name], {:url => { :controller => 'ticker', :action => 'user_timelogs',
+                                                                  :user_id => s[:user_id], :from => @from, :to => @to, 
+                                                                  :type => @columns, :env => 'popup', :max_hours => s[:max_hours], 
+                                                                  :total_hours_on_selected => s[:total_hours_on_selected],
+                                                                  :project_id => s[:project_id].to_i}} %></td>
         <td class="left"><%= s[:role] %></td>
-        <td class="<%= s[:total_hours] > s[:max_hours] ? 'fontRed' : '' %>"><%= get_string s[:total_hours] %></td>
-        <td><%= get_string s[:total_hours_on_selected] %></td>
+        <td><%= get_string s[:total_hours] %></td>
+        <td class="<%= s[:total_hours_on_selected] > s[:max_hours] ? 'redFont' : '' %>">
+          <%= get_string s[:total_hours_on_selected] %>
+        </td>
         <td><%= get_string s[:billable_hours] %></td>
         <td><%= get_string s[:non_billable_hours] %></td>
       </tr>

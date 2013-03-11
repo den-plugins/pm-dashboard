@@ -95,37 +95,52 @@ class TimeLoggingController < PmController
     
     project_ids = [@project.id]
     @resources.each_with_index do |res, icount|
-      if res.class.to_s == "Member"
+      if res.class.to_s == "Member" and res.user.login == "jlarin"
         usr = res.user
         b = bounded_time_entries_billable.select{|v| v.user_id == usr.id }
         nb = bounded_time_entries_non_billable.select{|v| v.user_id == usr.id }
         x = Hash.new
 
         max_hours = 0
-        @hours = ["<br>"]
+        admin_log = 0
         (@from..@to).to_a.each do |day|
 
           holiday = Holiday.find(:first, :conditions => ["event_date = ?", day])
           allocation = res.resource_allocations.find(:first, :include => [:member] ,:conditions => ["members.user_id = ? and members.project_id = ? and (? BETWEEN start_date AND end_date )", res.user.id, res.project_id, day])
+          time_entries_for_the_day = TimeEntry.find(:all, :conditions => ["user_id = ? and spent_on = ?", res.user.id, day])
 
-          if allocation && ![0,6].include?(day.wday) && !(holiday && holiday.holiday_on_member_location?(res))
+          if time_entries_for_the_day
+            time_entries_for_the_day.each do |entry|
+              if entry.project.is_admin_project? && !entry.hours.eql?(0.0)
+                case allocation.resource_allocation
+                when 100
+                  admin_log += 8
+                when 75
+                  admin_log += 6
+                when 50
+                  admin_log += 4
+                when 25
+                  admin_log += 2
+                end
+              end
+            end
+          end
+
+          if allocation && ![0,6].include?(day.wday) && !(holiday && holiday.holiday_on_member_location?(res.user))
             case allocation.resource_allocation
             when 100
               max_hours += 8
-              @hours << "8 - #{day}<br>"
             when 75
               max_hours += 6
-              @hours << "6 - #{day}<br>"
             when 50
               max_hours += 4
-              @hours << "4 - #{day}<br>"
             when 25
               max_hours += 2
-              @hours << "2 - #{day}<br>"
             end
           end
         end
 
+        x[:project_id] = @project.id
         x[:count] = icount
         x[:user_id] = usr.id
         x[:location] = usr.location
@@ -133,11 +148,12 @@ class TimeLoggingController < PmController
         x[:role] = res.pmrole
         x[:entries] = b + nb
         x[:total_hours] = time_entries.select{|v| v.user_id == usr.id }.collect(&:hours).compact.sum
-        x[:max_hours] = max_hours
+        x[:max_hours] = max_hours - admin_log
         x[:billable_hours] = b.collect(&:hours).compact.sum
         x[:non_billable_hours] = nb.collect(&:hours).compact.sum
         x[:forecasted_hours_on_selected] = res.days_and_cost(@from..@to) * 8        # shadow allocations included
         x[:total_hours_on_selected] = x[:billable_hours] + x[:non_billable_hours]
+        
         @summary.push(x)
       end
     end
