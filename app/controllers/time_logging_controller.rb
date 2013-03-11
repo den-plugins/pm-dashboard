@@ -101,6 +101,31 @@ class TimeLoggingController < PmController
         nb = bounded_time_entries_non_billable.select{|v| v.user_id == usr.id }
         x = Hash.new
 
+        max_hours = 0
+        @hours = ["<br>"]
+        (@from..@to).to_a.each do |day|
+
+          holiday = Holiday.find(:first, :conditions => ["event_date = ?", day])
+          allocation = res.resource_allocations.find(:first, :include => [:member] ,:conditions => ["members.user_id = ? and members.project_id = ? and (? BETWEEN start_date AND end_date )", res.user.id, res.project_id, day])
+
+          if allocation && ![0,6].include?(day.wday) && !(holiday && holiday.holiday_on_member_location?(res))
+            case allocation.resource_allocation
+            when 100
+              max_hours += 8
+              @hours << "8 - #{day}<br>"
+            when 75
+              max_hours += 6
+              @hours << "6 - #{day}<br>"
+            when 50
+              max_hours += 4
+              @hours << "4 - #{day}<br>"
+            when 25
+              max_hours += 2
+              @hours << "2 - #{day}<br>"
+            end
+          end
+        end
+
         x[:count] = icount
         x[:user_id] = usr.id
         x[:location] = usr.location
@@ -108,6 +133,7 @@ class TimeLoggingController < PmController
         x[:role] = res.pmrole
         x[:entries] = b + nb
         x[:total_hours] = time_entries.select{|v| v.user_id == usr.id }.collect(&:hours).compact.sum
+        x[:max_hours] = max_hours
         x[:billable_hours] = b.collect(&:hours).compact.sum
         x[:non_billable_hours] = nb.collect(&:hours).compact.sum
         x[:forecasted_hours_on_selected] = res.days_and_cost(@from..@to) * 8        # shadow allocations included
