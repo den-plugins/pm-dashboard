@@ -95,7 +95,7 @@ class TimeLoggingController < PmController
     
     project_ids = [@project.id]
     @resources.each_with_index do |res, icount|
-      if res.class.to_s == "Member" and res.user.login == "jlarin"
+      if res.class.to_s == "Member"
         usr = res.user
         b = bounded_time_entries_billable.select{|v| v.user_id == usr.id }
         nb = bounded_time_entries_non_billable.select{|v| v.user_id == usr.id }
