@@ -1,8 +1,8 @@
 <% unless @project.is_admin_project? %>
   <% form_tag({:action => "settings"}) do %>
       <p>
-        <%= check_box_tag 'lock_tl', true, @project.lock_time_logging.blank? ? false : true %> Lock Time Logging until
-        <%= text_field_tag 'lock_tl_date', @project.lock_time_logging ? @project.lock_time_logging : Date.today.strftime , {:readonly => true, :size => 10} %><%= calendar_for('lock_tl_date') %>
+        Time logging locked until
+        <%= text_field_tag 'lock_tl_date', @project.lock_time_logging ? @project.lock_time_logging : Date.today.last_year.end_of_year , {:readonly => true, :size => 10} %><%= calendar_for('lock_tl_date') %>
         <%= submit_tag %>
       </p>
   <% end %>
@@ -39,10 +39,5 @@
     var to = jQuery("#to");
     validateDate(from);
     validateDate(to);
-    lockTimeLogging();
-  });
-
-  jQuery("#lock_tl").live("click", function(){
-    lockTimeLogging();
   });
 </script>

@@ -19,7 +19,7 @@ class TimeLoggingController < PmController
   def settings
     if request.post?
       flash.now[:notice] = "Lock time logging updated"
-      if params[:lock_tl] && params[:lock_tl_date]
+      if params[:lock_tl_date]
         @project.update_attribute(:lock_time_logging, params[:lock_tl_date])
         # update corresponding admin lock time log date
         if @project.parent && @project.parent.children
@@ -112,16 +112,7 @@ class TimeLoggingController < PmController
           if time_entries_for_the_day
             time_entries_for_the_day.each do |entry|
               if entry.project.is_admin_project? && !entry.hours.eql?(0.0)
-                case allocation.resource_allocation
-                when 100
-                  admin_log += 8
-                when 75
-                  admin_log += 6
-                when 50
-                  admin_log += 4
-                when 25
-                  admin_log += 2
-                end
+                admin_log += entry.hours
               end
             end
           end
@@ -153,7 +144,7 @@ class TimeLoggingController < PmController
         x[:non_billable_hours] = nb.collect(&:hours).compact.sum
         x[:forecasted_hours_on_selected] = res.days_and_cost(@from..@to) * 8        # shadow allocations included
         x[:total_hours_on_selected] = x[:billable_hours] + x[:non_billable_hours]
-        
+        x[:proj_logged_hours] = (x[:billable_hours] + x[:non_billable_hours]) - admin_log
         @summary.push(x)
       end
     end

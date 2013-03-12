@@ -19,11 +19,11 @@
         <td class="left"><%= facebox_link_to s[:name], {:url => { :controller => 'ticker', :action => 'user_timelogs',
                                                                   :user_id => s[:user_id], :from => @from, :to => @to, 
                                                                   :type => @columns, :env => 'popup', :max_hours => s[:max_hours], 
-                                                                  :total_hours_on_selected => s[:total_hours_on_selected],
+                                                                  :proj_logged_hours => s[:proj_logged_hours],
                                                                   :project_id => s[:project_id].to_i}} %></td>
         <td class="left"><%= s[:role] %></td>
         <td><%= get_string s[:total_hours] %></td>
-        <td class="<%#= s[:total_hours_on_selected] > s[:max_hours] ? 'redFont' : '' %>">
+        <td class="<%= s[:proj_logged_hours] > s[:max_hours] ? 'redFont' : '' %>">
           <%= get_string s[:total_hours_on_selected] %>
         </td>
         <td><%= get_string s[:billable_hours] %></td>

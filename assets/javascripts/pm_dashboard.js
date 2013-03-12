@@ -170,16 +170,6 @@ function futureDate(date, y, m, d){
   }
 }
 
-function lockTimeLogging(){
-  if(jQuery("#lock_tl").is(":checked")){
-    jQuery("#lock_tl_date").show();
-    jQuery("#lock_tl_date_trigger").show();
-  } else {
-    jQuery("#lock_tl_date").hide();
-    jQuery("#lock_tl_date_trigger").hide();
-  }
-}
-
 /* Retrospective Note Feature */
 
 jQuery("span#nextp").live("click", function(){
