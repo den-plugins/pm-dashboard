@@ -23,7 +23,7 @@
                                                                   :project_id => s[:project_id].to_i}} %></td>
         <td class="left"><%= s[:role] %></td>
         <td><%= get_string s[:total_hours] %></td>
-        <td class="<%= s[:total_hours_on_selected] > s[:max_hours] ? 'redFont' : '' %>">
+        <td class="<%#= s[:total_hours_on_selected] > s[:max_hours] ? 'redFont' : '' %>">
           <%= get_string s[:total_hours_on_selected] %>
         </td>
         <td><%= get_string s[:billable_hours] %></td>
