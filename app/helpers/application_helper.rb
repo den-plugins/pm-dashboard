@@ -13,6 +13,14 @@ module ApplicationHelper
     end
   end
 
+  def log_time_admin(user,proj)
+    if user.time_logs_admin?
+      calendar_for('lock_tl_date')
+    else
+      date_calendar_for('lock_tl_date',proj)
+    end
+  end
+
   def calendar_for(field_id)
     include_calendar_headers_tags
     date_close = (field_id == "issue_date_close" ? ",dateStatusFunc : futureDate" : "")

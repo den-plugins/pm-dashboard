@@ -2,7 +2,7 @@
   <% form_tag({:action => "settings"}) do %>
       <p>
         Time logging locked until
-        <%= text_field_tag 'lock_tl_date', @project.lock_time_logging ? @project.lock_time_logging : Date.today.last_year.end_of_year , {:readonly => true, :size => 10} %><%= calendar_for('lock_tl_date') %>
+        <%= text_field_tag 'lock_tl_date', @project.lock_time_logging ? @project.lock_time_logging : Date.today.last_year.end_of_year , {:readonly => true, :size => 10} %><%= log_time_admin(User.current,@project) %>
         <%= submit_tag %>
       </p>
   <% end %>
