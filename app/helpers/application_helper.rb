@@ -32,8 +32,8 @@ module ApplicationHelper
     include_calendar_headers_tags
 
     lt = case obj.class.to_s
-    when "Issue" then obj.project.lock_time_logging
-    when "Project" then obj.lock_time_logging
+    when "Issue" then obj.project.lock_time_logging - 1
+    when "Project" then obj.lock_time_logging - 1
     else nil
     end
 
@@ -45,7 +45,7 @@ module ApplicationHelper
             return true;
           }
         }") unless lt.blank?
-
+    debugger
     image_tag("calendar.png", {:id => "#{field_id}_trigger",:class => "calendar-trigger"}) +
     javascript_tag("Calendar.setup({inputField : '#{field_id}', ifFormat : '%Y-%m-%d', button : '#{field_id}_trigger' #{lock_time_logging} })")
   end
