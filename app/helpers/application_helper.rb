@@ -45,7 +45,7 @@ module ApplicationHelper
             return true;
           }
         }") unless lt.blank?
-    debugger
+
     image_tag("calendar.png", {:id => "#{field_id}_trigger",:class => "calendar-trigger"}) +
     javascript_tag("Calendar.setup({inputField : '#{field_id}', ifFormat : '%Y-%m-%d', button : '#{field_id}_trigger' #{lock_time_logging} })")
   end
