@@ -139,12 +139,11 @@ class TimeLoggingController < PmController
         x[:role] = res.pmrole
         x[:entries] = b + nb
         x[:total_hours] = time_entries.select{|v| v.user_id == usr.id }.collect(&:hours).compact.sum
-        x[:max_hours] = max_hours - admin_log
+        x[:max_hours] = max_hours
         x[:billable_hours] = b.collect(&:hours).compact.sum
         x[:non_billable_hours] = nb.collect(&:hours).compact.sum
         x[:forecasted_hours_on_selected] = res.days_and_cost(@from..@to) * 8        # shadow allocations included
         x[:total_hours_on_selected] = x[:billable_hours] + x[:non_billable_hours]
-        x[:proj_logged_hours] = (x[:billable_hours] + x[:non_billable_hours]) - admin_log
         @summary.push(x)
       end
     end
