@@ -32,8 +32,8 @@ module ApplicationHelper
     include_calendar_headers_tags
 
     lt = case obj.class.to_s
-    when "Issue" then obj.project.lock_time_logging - 1
-    when "Project" then obj.lock_time_logging - 1
+    when "Issue" && obj.project.lock_time_logging then obj.project.lock_time_logging - 1
+    when "Project" && obj.lock_time_logging then obj.lock_time_logging - 1
     else nil
     end
 
