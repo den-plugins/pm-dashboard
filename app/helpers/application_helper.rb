@@ -30,11 +30,13 @@ module ApplicationHelper
 
   def date_calendar_for(field_id, obj)
     include_calendar_headers_tags
-
-    lt = case obj.class.to_s
-    when "Issue" && obj.project.lock_time_logging then obj.project.lock_time_logging - 1
-    when "Project" && obj.lock_time_logging then obj.lock_time_logging - 1
-    else nil
+    
+    lt = if obj.class.to_s.eql?("Issue") && obj.project.lock_time_logging
+      obj.project.lock_time_logging - 1
+    elsif obj.class.to_s.eql?("Project") && obj.lock_time_logging
+      obj.lock_time_logging - 1
+    else
+      nil
     end
 
     lock_time_logging = (lt.blank? ? "" : ",dateStatusFunc : 
