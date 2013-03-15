@@ -14,6 +14,7 @@
     <%= f.select :resource_allocation, ((0..4).to_a.collect {|a| ["#{a*25} %", a*25] }), {}, {:style => "width: 63px; margin: 0"} %>
     <%= collection_of_allocation_type f %>
     <%= collection_of_allocation_location f, allocation %>
+    <%= label_tag :sow_rate, "SOW rate "%><%= f.text_field :sow_rate, :size => 1 %>
   </p>
   
   <div style='clear: both'></div>
