@@ -9,7 +9,7 @@
     <td><%= member.office_no %></td>
     <td><%= member.im_id %></td>
     <% if classification.eql?(:proj_team) %>
-      <td> <%= "%0.2f" % member.sow_rate.to_f %> </td>
+      <td> <%= member.resource_allocations.last && member.resource_allocations.last.sow_rate ? "%0.2f" % member.resource_allocations.last.sow_rate.to_f : "" %> </td>
       <td> <%= "%0.2f" % member.internal_rate.to_f %> </td>
       <td> <%= member.billable ? image_tag('true.png') : '' %> </td>
       <td> <%= member.remarks %> </td>

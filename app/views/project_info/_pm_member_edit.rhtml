@@ -41,10 +41,7 @@
     </td>
     <% if classification.eql?(:proj_team) %>
       <td>
-        <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :classif => classification}, :method => :post, :html => {:id => "form_sowrate_#{member.id}"}) do |f| %>
-          <%= f.text_field :sow_rate, :size => 5, :id => 'pteam_sow_rate_' + member.id.to_s, 
-                :onblur => "$('form_sowrate_#{member.id}').request(); return validateFloat(document.getElementById('pteam_sow_rate_#{member.id}'));" %>                   
-        <% end %>
+          <%= member.resource_allocations.last && member.resource_allocations.last.sow_rate ? member.resource_allocations.last.sow_rate : "" %>
       </td>
       <td>
         <% remote_form_for(:member, member, :url => {:controller => 'project_info', :action => 'pm_member_update', :id => member, :project_id => member.project, :classif => classification}, :method => :post, :html => {:id => "form_internalrate_#{member.id}"}) do |f| %>
