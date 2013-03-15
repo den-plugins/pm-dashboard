@@ -50,7 +50,11 @@ module ResourceCostsHelper
               else
                 from.eql?(start_date) ? start_date : from.monday
               end
-        sun = mon.monday + 6.days
+        sun = if mon.monday < to && to < mon.monday + 6.days
+                to
+              else
+                mon.monday + 6.days
+              end
 
         weeks << (mon .. sun)
         from = mon.next_week
