@@ -112,16 +112,7 @@ class TimeLoggingController < PmController
           if time_entries_for_the_day
             time_entries_for_the_day.each do |entry|
               if entry.project.is_admin_project? && !entry.hours.eql?(0.0)
-                case allocation.resource_allocation
-                when 100
-                  admin_log += 8
-                when 75
-                  admin_log += 6
-                when 50
-                  admin_log += 4
-                when 25
-                  admin_log += 2
-                end
+                admin_log += entry.hours
               end
             end
           end
