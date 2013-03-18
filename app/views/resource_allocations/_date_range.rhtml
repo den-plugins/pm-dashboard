@@ -7,7 +7,7 @@
   <span class='button-like' style="width: 51px;"><%= allocation.resource_allocation %> %</span>
   <span class='button-like' style="width: 114px;"><%= allocation.resource_type.nil? ? "&nbsp;" : ResourceAllocation::TYPES[allocation.resource_type].first %></span>
   <span class='button-like' style="width: 114px;"><%= allocation.location.nil? ? "&nbsp;" : Holiday::LOCATIONS[allocation.location.to_i] %></span>
-  <label>SOW rate </label><span class='button-like' style="width: 30px;"><%= allocation.sow_rate.nil? ? "&nbsp;" : allocation.sow_rate %></span>
+  <label>SOW rate </label><span class='button-like' style="width: 30px;"><%= allocation.sow_rate.nil? ? "&nbsp;" : number_with_precision(allocation.sow_rate, :precision => 2) %></span>
   <%= link_to_function image_tag('edit.png'), "edit_allocations(#{allocation.id})" %>
   <%= link_to_remote image_tag('delete.png', :size => "13x13"),
                                         :url => { :controller => 'resource_allocations' , :action => 'destroy', :member_id => @member, :id => allocation },
