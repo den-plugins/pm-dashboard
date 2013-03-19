@@ -82,9 +82,13 @@
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag 'facebox', :plugin => 'facebox_render' %>
   <%= javascript_include_tag 'facebox.js', :plugin => 'facebox_render' %>
+  <%= javascript_include_tag 'css_browser_selector.js', :plugin => 'pm_dashboard' %>
   <style type="text/css" rel="stylesheet" media="screen">
     #facebox .body { width: 380px;}
-    #facebox .popup { width: 674px;}
+    .linux.gecko #facebox .popup {
+        width: 871px;
+    }
+    #facebox .popup { width: 780px;}
     #facebox .tl, #facebox .tr, #facebox .bl, #facebox .br { background-repeat: no-repeat; width: 5px;}
   </style>
 <% end %>
