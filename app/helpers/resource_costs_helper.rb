@@ -109,8 +109,7 @@ module ResourceCostsHelper
   
   # computations
   def compute_days_and_cost(member, range, rate, acctg='Billable')
-    mrate = (rate && rate.eql?('sow_rate')) ? daily_rate(member.sow_rate) : daily_rate(member.internal_rate)
-    member.days_and_cost(range, mrate, false, acctg)
+    member.days_and_cost_modified(range, rate, false, acctg)
   end
   
   def compute_totals_per_column(project, per_column, total_cost)

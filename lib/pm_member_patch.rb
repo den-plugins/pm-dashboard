@@ -77,6 +77,42 @@ module Pm
         cost = days * (rate.to_f)
         rate ? [days, cost] : days
       end
+
+
+      def days_and_cost_modified(week, rate, count_shadow=true, acctg='Billable')
+        days, cost = 0, 0
+        allocations = resource_allocations
+        unless allocations.empty?
+          week.each do |day|
+            unless day.wday.eql?(0) || day.wday.eql?(6)
+              allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
+              holiday = allocation.nil? ? 0 : detect_holidays_in_week(allocation.location, day)
+              if allocation and !allocation.resource_allocation.eql?(0) and holiday.eql?(0)
+                if count_shadow
+                  days += (1 * (allocation.resource_allocation.to_f/100).to_f)
+                else
+                  case acctg.downcase
+                    when 'billable'
+                      # count only days where member is Billable
+                      days += (1 * (allocation.resource_allocation.to_f/100).to_f) if allocation.resource_type.eql?(0)
+                      cost += allocation.sow_rate.to_f if rate.eql?('sow_rate') && !allocation.resource_type.eql?(2)
+                    when 'non-billable'
+                      #count only days where member is Non-billable
+                      days += (1 * (allocation.resource_allocation.to_f/100).to_f) if allocation.resource_type.eql?(1)
+                      cost += allocation.sow_rate.to_f if rate.eql?('sow_rate') && !allocation.resource_type.eql?(2)
+                    when 'both'
+                      # count days where member is not a shadow
+                      days += (1 * (allocation.resource_allocation.to_f/100).to_f) if allocation.resource_type.eql?(0) or allocation.resource_type.eql?(1)
+                      cost += allocation.sow_rate.to_f if rate.eql?('sow_rate') && !allocation.resource_type.eql?(2)
+                  end
+                end
+              end
+            end
+          end
+        end
+        cost = days * (internal_rate.to_f) unless rate.eql?('sow_rate')
+        [days, cost]
+      end
       
       # allocation capped to 100%
       def capped_days_and_cost(week, rate = nil, count_shadow=true, acctg='Billable')
