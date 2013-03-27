@@ -46,7 +46,7 @@ class PmDashboardsController < PmController
       end
     end
     project_id = "billability_#{@project.id}"
-    @bill = (@billability ? @billability["total_percent_billability_week"] : 0)
+    @bill = (@billability ? @billability["total_percent_billability_week"].to_i : 0)
     if @bill < 85
       @code = "red"
     elsif @bill >= 85 && @bill < 88
