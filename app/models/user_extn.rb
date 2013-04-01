@@ -20,7 +20,8 @@ module UserExtn
     def resource_allocations
       allocations = []
       projects.each do |proj|
-        allocations << proj.members.detect{|mem| mem.user_id == id}.resource_allocations
+        member=proj.members.detect{|mem| mem.user_id == id}
+        allocations << member.resource_allocations if member && member.resource_allocations
       end
       allocations
     end
