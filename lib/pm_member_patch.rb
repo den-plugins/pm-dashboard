@@ -259,6 +259,26 @@ module Pm
         end
       end
 
+      def spent_cost(from, to, acctg=nil)
+        cost = 0
+        if from && to
+          spent = time_entries.find(:all, :select => "hours, spent_on", :include => [:issue],
+                                    :conditions => ["#{TimeEntry.table_name}.project_id = ? and spent_on between ? and ?", project_id, from, to])
+          spent = spent.select {|s| s.issue && s.issue.accounting.name.casecmp(acctg) == 0} if acctg
+
+          shadow = resource_allocations.find(:all, :conditions=>{:resource_type=>2}).select{|ra| !((ra.start_date..ra.end_date).to_a & (from..to).to_a).empty?}
+          shadow.each do |s|
+            spent.reject!{|t| (s.start_date..s.end_date).include? t.spent_on}
+          end
+
+          spent.each do |v|
+            alloc = resource_allocations.find :first, :conditions => ["start_date < ? and end_date > ?", v.spent_on, v.spent_on]
+            cost += alloc.sow_rate * v.hours if alloc && alloc.sow_rate
+          end
+        end
+        cost
+      end
+
       # check time logs only on specific project and its admin project.
       def with_complete_logs?(range)
         allocated = days_and_cost(range) * 8
