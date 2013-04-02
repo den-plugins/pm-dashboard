@@ -19,9 +19,9 @@
             <th>Actuals (Billable)</th>
           </tr>
           <tr>
-            <td><%= "%0.2f" % billability_dates[month.last.to_s]["lh"] %></td>
-            <td><%= "%0.2f" % billability_dates[month.last.to_s]["fh"] %></td>
-            <td><%= "%0.2f" % billability_dates[month.last.to_s]["ah"] %></td>
+            <td><%= billability_dates[month.last.to_s] ? "%0.2f" % billability_dates[month.last.to_s]["lh"] : 0 %></td>
+            <td><%= billability_dates[month.last.to_s] ? "%0.2f" % billability_dates[month.last.to_s]["fh"] : 0 %></td>
+            <td><%= billability_dates[month.last.to_s] ? "%0.2f" % billability_dates[month.last.to_s]["ah"] : 0 %></td>
           </tr>
           <tr>
             <td colspan='3'>&nbsp;</td>
