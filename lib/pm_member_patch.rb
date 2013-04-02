@@ -148,8 +148,8 @@ module Pm
         rate ? [days, cost] : days
       end
 
-      def capped_days_and_cost_report(week, rate = nil, count_shadow=true, acctg='Billable')
-        days, cost = 0, 0
+      def capped_days_report(week, rate = nil, count_shadow=true, acctg='Billable')
+        days = 0
         allocations = resource_allocations
         unless allocations.empty?
           week.each do |day|
@@ -166,8 +166,28 @@ module Pm
             end
           end
         end
-        cost = days * (rate.to_f)
-        rate ? [days, cost] : days
+        days
+      end
+
+      def capped_cost_report(week, rate = nil, count_shadow=true, acctg='Billable')
+        cost = 0
+        allocations = resource_allocations
+        unless allocations.empty?
+          week.each do |day|
+            unless day.wday.eql?(0) || day.wday.eql?(6)
+              allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
+              holiday = allocation.nil? ? 0 : detect_holidays_in_week(allocation.location, day)
+              if allocation and !allocation.resource_allocation.eql?(0) and holiday.eql?(0)
+                div = (allocation.resource_allocation > 100 ? round_up(allocation.resource_allocation) : 100)
+                case acctg.downcase
+                  when 'billable'
+                    cost += allocation.sow_rate.to_f * (8 * (allocation.resource_allocation.to_f/div).to_f) if allocation.sow_rate
+                end
+              end
+            end
+          end
+        end
+        cost
       end
 
       def is_shadowed?(day)
