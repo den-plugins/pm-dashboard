@@ -272,7 +272,7 @@ module Pm
           end
 
           spent.each do |v|
-            alloc = resource_allocations.find :first, :conditions => ["start_date < ? and end_date > ?", v.spent_on, v.spent_on]
+            alloc = resource_allocations.find :first, :conditions => ["start_date <= ? and end_date >= ?", v.spent_on, v.spent_on]
             cost += alloc.sow_rate * v.hours if alloc && alloc.sow_rate
           end
         end
