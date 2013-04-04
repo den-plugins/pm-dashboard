@@ -95,22 +95,22 @@ module Pm
                     when 'billable'
                       # count only days where member is Billable
                       days += (1 * (allocation.resource_allocation.to_f/100).to_f) if allocation.resource_type.eql?(0)
-                      cost += allocation.sow_rate.to_f * (1 * (allocation.resource_allocation.to_f/100).to_f) if rate.eql?('sow_rate') && !allocation.resource_type.eql?(2)
+                      cost += allocation.sow_rate.to_f * (8 * (allocation.resource_allocation.to_f/100).to_f) if rate.eql?('sow_rate') && !allocation.resource_type.eql?(2)
                     when 'non-billable'
                       #count only days where member is Non-billable
                       days += (1 * (allocation.resource_allocation.to_f/100).to_f) if allocation.resource_type.eql?(1)
-                      cost += allocation.sow_rate.to_f * (1 * (allocation.resource_allocation.to_f/100).to_f) if rate.eql?('sow_rate') && !allocation.resource_type.eql?(2)
+                      cost += allocation.sow_rate.to_f * (8 * (allocation.resource_allocation.to_f/100).to_f) if rate.eql?('sow_rate') && !allocation.resource_type.eql?(2)
                     when 'both'
                       # count days where member is not a shadow
                       days += (1 * (allocation.resource_allocation.to_f/100).to_f) if allocation.resource_type.eql?(0) or allocation.resource_type.eql?(1)
-                      cost += allocation.sow_rate.to_f * (1 * (allocation.resource_allocation.to_f/100).to_f) if rate.eql?('sow_rate') && !allocation.resource_type.eql?(2)
+                      cost += allocation.sow_rate.to_f * (8 * (allocation.resource_allocation.to_f/100).to_f) if rate.eql?('sow_rate') && !allocation.resource_type.eql?(2)
                   end
                 end
               end
             end
           end
         end
-        cost = days * (internal_rate.to_f) unless rate.eql?('sow_rate')
+        cost = (days * 8) * (internal_rate.to_f) unless rate.eql?('sow_rate')
         [days, cost]
       end
       
