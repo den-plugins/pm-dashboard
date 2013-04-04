@@ -26,7 +26,7 @@
         <%= facebox_link_to member.name, {:url => {:controller => 'resource_allocations', :action => 'index', :project_id => @project, :member_id => member }} %>
       </td>
       <% if params[:rate] && params[:rate].eql?('sow_rate') %>
-        <td class='daily_rate'><%= "%0.2f" % daily_rate(member.resource_allocations.last.sow_rate) %></td>
+        <td class='daily_rate'><%= member.resource_allocations && member.resource_allocations.last ? "%0.2f" % daily_rate(member.resource_allocations.last.sow_rate) : 0  %></td>
       <% else %>
         <td class='daily_rate'><%= "%0.2f" % daily_rate(member.internal_rate) %></td>
       <% end %>
