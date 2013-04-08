@@ -2,44 +2,82 @@
 <%= include_calendar_headers_tags %>
 <%= heads_for_wiki_formatter %>
 <% content_for :header_tags do %>
-  <%= javascript_include_tag 'fixed_header.js', :plugin => 'management' %>
-  <%= stylesheet_link_tag 'facebox', :plugin => 'facebox_render' %>
-  <%= javascript_include_tag 'facebox.js', :plugin => 'facebox_render' %>
+    <%= javascript_include_tag 'fixed_header.js', :plugin => 'management' %>
+    <%= stylesheet_link_tag 'facebox', :plugin => 'facebox_render' %>
+    <%= javascript_include_tag 'facebox.js', :plugin => 'facebox_render' %>
 <% end %>
 
 <h2>Efficiency</h2>
 <div class="zero_wrap">
-<table id="efficiency_header">
-  <tr>
-    <td><span>CLIENT</span></td>
-    <td class="value"><%= @project.client %></td>
-    <td><span>Current Test Code Coverage</span></td>
-    <td class="value"><%= text_field_tag 'test_code_coverage', number_with_precision(test_code_coverage, :precision => 2), :size => 3 %>%</td>
-    <td id="status-label" class="<%= status_color %>"><span>Status</span></td>
-    <td id="status" class="value <%= status_color %>" data-defect-ratio="<%= defect_ratio %>"><%= "#{number_with_precision(status, :precision => 2)}%" %></td>
-  </tr>
-</table>
+  <table id="efficiency_header">
+    <tr>
+      <td><span>CLIENT</span></td>
+      <td class="value"><%= @project.client %></td>
+      <td id="status-label" class="<%= status_color %>"><span>Status</span></td>
+      <td id="status" class="value <%= status_color %>" data-defect-ratio="<%= defect_ratio %>"><%= "#{number_with_precision(status, :precision => 2)}%" %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><strong>Weight</strong></td>
+      <td><strong>Score</strong></td>
+      <td><strong>Weighted Score</strong></td>
+    </tr>
+    <tr>
+      <td><span>Unit Testing Code Coverage</span></td>
+      <td class="value"><%= text_field_tag 'unit_testing_weight', number_with_precision(unit_testing_weight, :precision => 2), :size => 3 %></td>
+      <td class="value"><%= text_field_tag 'unit_testing_score', number_with_precision(unit_testing_score, :precision => 2), :size => 3 %>
+        %
+      </td>
+      <td id="unit_testing_weighted_score" class="value"><%= "#{number_with_precision(unit_testing_weighted_score, :precision => 2)}%" %></td>
+    </tr>
+    <tr>
+      <td><span>Automation Testing Code Coverage</span></td>
+      <td class="value"><%= text_field_tag 'automation_testing_weight', number_with_precision(automation_testing_weight, :precision => 2), :size => 3 %></td>
+      <td class="value"><%= text_field_tag 'automation_testing_score', number_with_precision(automation_testing_score, :precision => 2), :size => 3 %>
+        %
+      </td>
+      <td id="automation_testing_weighted_score" class="value"><%= "#{number_with_precision(automation_testing_weighted_score, :precision => 2)}%" %></td>
+    </tr>
+    <tr>
+      <td><span>Defect Removal</span></td>
+      <td class="value"><%= text_field_tag 'defect_removal_weight', number_with_precision(defect_removal_weight, :precision => 2), :size => 3 %></td>
+      <% if @project.for_time_logging_only? %>
+          <td id="defect_removal_score" class="value"><%= number_with_precision(defect_removal_score, :precision => 2) %>
+            %
+          </td>
+      <% else %>
+          <td id="defect_removal_score" class="value"><%= number_with_precision(defect_ratio, :precision => 2) %>%</td>
+      <% end %>
+      <td id="defect_removal_weighted_score" class="value"><%= "#{number_with_precision(defect_removal_weighted_score, :precision => 2)}%" %></td>
+      <% if @project.for_time_logging_only? %>
+          <td><span>Total Closed Defects</span></td>
+          <td class="value"><%= text_field_tag 'total_closed_defects', number_with_precision(total_closed_defects, :precision => 2), :size => 3 %></td>
+          <td><span>Total Raised Defects</span></td>
+          <td class="value"><%= text_field_tag 'total_raised_defects', number_with_precision(total_raised_defects, :precision => 2), :size => 3 %></td>
+      <% end %>
+    </tr>
+  </table>
 </div>
 
 <table id="defects_list" class="list" border="1" style="text-align: center">
   <thead>
-    <tr>
-      <th class="fixed_version"></th>
-      <th class="count">Defects<br/> Raised</th>
-      <th class="count">Defects<br/> Open</th>
-      <th class="count">Defects<br/> Resolved/For Verification</th>
-      <th class="count">Defects<br/> Closed</th>
-    </tr>
+  <tr>
+    <th class="fixed_version"></th>
+    <th class="count">Defects<br/> Raised</th>
+    <th class="count">Defects<br/> Open</th>
+    <th class="count">Defects<br/> Resolved/For Verification</th>
+    <th class="count">Defects<br/> Closed</th>
+  </tr>
   </thead>
   <tbody>
-    <tr class="even">
-      <td class="left"><em>Start to Current</em></td>
-      <td><%= bug_count %></td>
-      <td><%= bug_count :open %></td>
-      <td><%= bug_count :resolved %></td>
-      <td><%= bug_count :closed %></td>
-    </tr>
-    <% @versions.each do |version| %>
+  <tr class="even">
+    <td class="left"><em>Start to Current</em></td>
+    <td><%= bug_count %></td>
+    <td><%= bug_count :open %></td>
+    <td><%= bug_count :resolved %></td>
+    <td><%= bug_count :closed %></td>
+  </tr>
+  <% @versions.each do |version| %>
       <tr class="<%= cycle 'odd', 'even' %>">
         <td class="left"><em><%= version.name %></em></td>
         <td><%= bug_count nil, version %></td>
@@ -47,7 +85,7 @@
         <td><%= bug_count :resolved, version %></td>
         <td><%= bug_count :closed, version %></td>
       </tr>
-    <% end %>
+  <% end %>
   </tbody>
 </table>
 
@@ -58,66 +96,197 @@
 </div>
 
 <% content_for :header_tags do %>
-  <%= stylesheet_link_tag 'jquery.jqplot.css', :plugin => 'redmine_burndown' %>
-  <%= javascript_include_tag 'jquery.jqplot.js', :plugin => 'redmine_burndown' %>
-  <%= javascript_include_tag 'plugins/jqplot.canvasAxisLabelRenderer.min.js', :plugin => 'redmine_burndown' %>
-  <%= javascript_include_tag 'plugins/jqplot.canvasAxisTickRenderer.min.js', :plugin => 'redmine_burndown' %>
-  <%= javascript_include_tag 'plugins/jqplot.canvasTextRenderer.min.js', :plugin => 'redmine_burndown' %>
-  <%= javascript_include_tag 'plugins/jqplot.categoryAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
-  <%= javascript_include_tag 'plugins/jqplot.cursor.min.js', :plugin => 'redmine_burndown' %>
-  <%= javascript_include_tag 'plugins/jqplot.dateAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
-  <%= javascript_include_tag 'plugins/jqplot.highlighter.min.js', :plugin => 'redmine_burndown' %>
-  <%= javascript_include_tag 'plugins/jqplot.pointLabels.min.js', :plugin => 'redmine_burndown' %>
-  <script type="text/javascript">
-    var chart = {
-      render: function(id, data) {
-        this.plot = jQuery.jqplot('efficiency_chart', data, {
-          axes: {
-            xaxis: {renderer: jQuery.jqplot.DateAxisRenderer, tickRenderer: jQuery.jqplot.CanvasAxisTickRenderer, tickOptions: {showMark: false, fontSize: '8pt', formatString: '%d-%b'}, pad: 1.75, tickInterval: '2 weeks'},
-            yaxis: {tickOptions: {formatString:'%d'}}
-          },
-          seriesColors: ['#ff0000', '#009900'],
-          series: [{label: 'No. Raised'}, {label: 'No. Closed'}],
-          legend: {show: true},
-          cursor: {show: true, zoom: true},
-          highlighter: {show: true, sizeAdjust: 7.5}
+    <%= stylesheet_link_tag 'jquery.jqplot.css', :plugin => 'redmine_burndown' %>
+    <%= javascript_include_tag 'jquery.jqplot.js', :plugin => 'redmine_burndown' %>
+    <%= javascript_include_tag 'plugins/jqplot.canvasAxisLabelRenderer.min.js', :plugin => 'redmine_burndown' %>
+    <%= javascript_include_tag 'plugins/jqplot.canvasAxisTickRenderer.min.js', :plugin => 'redmine_burndown' %>
+    <%= javascript_include_tag 'plugins/jqplot.canvasTextRenderer.min.js', :plugin => 'redmine_burndown' %>
+    <%= javascript_include_tag 'plugins/jqplot.categoryAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
+    <%= javascript_include_tag 'plugins/jqplot.cursor.min.js', :plugin => 'redmine_burndown' %>
+    <%= javascript_include_tag 'plugins/jqplot.dateAxisRenderer.min.js', :plugin => 'redmine_burndown' %>
+    <%= javascript_include_tag 'plugins/jqplot.highlighter.min.js', :plugin => 'redmine_burndown' %>
+    <%= javascript_include_tag 'plugins/jqplot.pointLabels.min.js', :plugin => 'redmine_burndown' %>
+    <script type="text/javascript">
+        var chart = {
+            render: function (id, data) {
+                this.plot = jQuery.jqplot('efficiency_chart', data, {
+                    axes: {
+                        xaxis: {renderer: jQuery.jqplot.DateAxisRenderer, tickRenderer: jQuery.jqplot.CanvasAxisTickRenderer, tickOptions: {showMark: false, fontSize: '8pt', formatString: '%d-%b'}, pad: 1.75, tickInterval: '2 weeks'},
+                        yaxis: {tickOptions: {formatString: '%d'}}
+                    },
+                    seriesColors: ['#ff0000', '#009900'],
+                    series: [
+                        {label: 'No. Raised'},
+                        {label: 'No. Closed'}
+                    ],
+                    legend: {show: true},
+                    cursor: {show: true, zoom: true},
+                    highlighter: {show: true, sizeAdjust: 7.5}
+                });
+            }
+        };
+
+        jQuery(document).ready(function () {
+            jQuery.post(window.location.href + '/load_chart.json', function (data) {
+                jQuery('#efficiency_chart').empty();
+                chart.render('efficiency_chart', data);
+            });
+
+            jQuery(window).resize(function () {
+                if (chart.plot) {
+                    chart.plot.replot();
+                }
+            });
+
+            jQuery('#unit_testing_weight').change(function () {
+                var unitTestingScore = parseFloat(jQuery('#unit_testing_score').val().trim()),
+                        automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
+                        defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
+                        unitTestingScore = parseFloat(jQuery('#unit_testing_score').val().trim()),
+                        unitTestingWeight = jQuery(this).val().trim(),
+                        status = 0.0,
+                        value = 0.0;
+                if (/^\d+(\.\d+)?$/.test(unitTestingWeight)) {
+                    value = (parseFloat(unitTestingWeight) * parseFloat(unitTestingScore)).toFixed(2);
+                    jQuery('#unit_testing_weighted_score').text(value + '%');
+                    status = (parseFloat(value) + parseFloat(automationTestingWeightedScore) + parseFloat(defectRemovalWeightedScore)).toFixed(2);
+                    jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
+                    jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
+                    jQuery.post(window.location.href + '/update_unit_testing_weight', { 'coverage': jQuery(this).val() });
+                }
+            });
+
+            jQuery('#unit_testing_score').change(function () {
+                var unitTestingWeight = parseFloat(jQuery('#unit_testing_weight').val().trim()),
+                        automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
+                        defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
+                        unitTestingScore = jQuery(this).val().trim(),
+                        status = 0.0,
+                        value = 0.0;
+                if (/^\d+(\.\d+)?$/.test(unitTestingScore)) {
+                    value = (parseFloat(unitTestingWeight) * parseFloat(unitTestingScore)).toFixed(2);
+                    jQuery('#unit_testing_weighted_score').text(value + '%');
+                    status = (parseFloat(value) + parseFloat(automationTestingWeightedScore) + parseFloat(defectRemovalWeightedScore)).toFixed(2);
+                    jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
+                    jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
+                    jQuery.post(window.location.href + '/update_unit_testing_score', { 'coverage': jQuery(this).val() });
+                }
+            });
+
+            jQuery('#automation_testing_weight').change(function () {
+                var automationTestingScore = parseFloat(jQuery('#automation_testing_score').val().trim()),
+                        unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
+                        defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
+                        automationTestingWeight = jQuery(this).val().trim(),
+                        status = 0.0,
+                        value = 0.0;
+                if (/^\d+(\.\d+)?$/.test(automationTestingWeight)) {
+                    value = (parseFloat(automationTestingWeight) * parseFloat(automationTestingScore)).toFixed(2);
+                    jQuery('#automation_testing_weighted_score').text(value + '%')
+                    status = (parseFloat(unitTestingWeightedScore) + parseFloat(value) + parseFloat(defectRemovalWeightedScore)).toFixed(2);
+                    jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
+                    jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
+                    jQuery.post(window.location.href + '/update_automation_testing_weight', { 'coverage': jQuery(this).val() });
+                }
+            });
+
+            jQuery('#automation_testing_score').change(function () {
+                var automationTestingWeight = parseFloat(jQuery('#automation_testing_weight').val().trim()),
+                        unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
+                        defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
+                        automationTestingScore = jQuery(this).val().trim(),
+                        status = 0.0,
+                        value = 0.0;
+                if (/^\d+(\.\d+)?$/.test(automationTestingScore)) {
+                    value = (parseFloat(automationTestingWeight) * parseFloat(automationTestingScore)).toFixed(2);
+                    jQuery('#automation_testing_weighted_score').text(value + '%')
+                    status = (parseFloat(unitTestingWeightedScore) + parseFloat(value) + parseFloat(defectRemovalWeightedScore)).toFixed(2);
+                    jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
+                    jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
+                    jQuery.post(window.location.href + '/update_automation_testing_score', { 'coverage': jQuery(this).val() });
+                }
+            });
+
+            jQuery('#defect_removal_weight').change(function () {
+                var defectRemovalScore = parseFloat(jQuery('#defect_removal_score').text().split("%")[0]),
+                        unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
+                        automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
+                        defectRemovalWeight = jQuery(this).val().trim(),
+                        status = 0.0,
+                        value = 0.0;
+                if (/^\d+(\.\d+)?$/.test(defectRemovalWeight)) {
+                    value = (parseFloat(defectRemovalWeight) * parseFloat(defectRemovalScore)).toFixed(2);
+                    jQuery('#defect_removal_weighted_score').text(value + '%')
+                    status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(value)).toFixed(2);
+                    jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
+                    jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
+                    jQuery.post(window.location.href + '/update_defect_removal_weight', { 'coverage': jQuery(this).val() });
+                }
+            });
+
+            jQuery('#total_closed_defects').change(function () {
+                var totalRaisedDefects = parseFloat(jQuery('#total_raised_defects').val().trim()),
+                        unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
+                        automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
+                        totalClosedDefects = jQuery(this).val().trim(),
+                        weightedScore = 0.0,
+                        status = 0.0,
+                        value = 0.0;
+                if (/^\d+(\.\d+)?$/.test(totalClosedDefects)) {
+                    if (parseFloat(totalRaisedDefects) > 0) {
+                        value = (parseFloat(totalClosedDefects) / parseFloat(totalRaisedDefects)).toFixed(2);
+                    } else {
+                        value = 0.00;
+                    }
+                    jQuery('#defect_removal_score').text(value + '%');
+                    var defectRemovalScore = parseFloat(value),
+                            defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').val().trim());
+                    weightedScore = (parseFloat(defectRemovalWeight) * parseFloat(defectRemovalScore)).toFixed(2);
+                    jQuery('#defect_removal_weighted_score').text(weightedScore + '%');
+                    status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(weightedScore)).toFixed(2);
+                    jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
+                    jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
+                    jQuery.post(window.location.href + '/update_total_closed_defects', { 'coverage': jQuery(this).val() });
+                }
+            });
+
+            jQuery('#total_raised_defects').change(function () {
+                var totalRaisedDefects = parseFloat(jQuery('#total_closed_defects').val().trim()),
+                        unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
+                        automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
+                        totalClosedDefects = jQuery(this).val().trim(),
+                        weightedScore = 0.0,
+                        status = 0.0,
+                        value = 0.0;
+                if (/^\d+(\.\d+)?$/.test(totalRaisedDefects)) {
+                    if (parseFloat(totalRaisedDefects) > 0) {
+                        value = (parseFloat(totalClosedDefects) / parseFloat(totalRaisedDefects)).toFixed(2);
+                    } else {
+                        value = 0.00;
+                    }
+                    jQuery('#defect_removal_score').text(value + '%');
+                    var defectRemovalScore = parseFloat(value),
+                            defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').val().trim());
+                    weightedScore = (parseFloat(defectRemovalWeight) * parseFloat(defectRemovalScore)).toFixed(2);
+                    jQuery('#defect_removal_weighted_score').text(weightedScore + '%');
+                    status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(weightedScore)).toFixed(2);
+                    jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
+                    jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
+                    jQuery.post(window.location.href + '/update_total_raised_defects', { 'coverage': jQuery(this).val() });
+                }
+            });
+
+            statusColor = function (status) {
+                if (status > 80) {
+                    return 'green'
+                }
+                else if (status > 70) {
+                    return 'yellow'
+                }
+                else {
+                    return 'red'
+                }
+            };
         });
-      }
-    };
-
-    jQuery(document).ready(function() {
-      jQuery.post(window.location.href + '/load_chart.json', function(data) {
-        jQuery('#efficiency_chart').empty();
-        chart.render('efficiency_chart', data);
-      });
-
-      jQuery(window).resize(function() {
-        if(chart.plot) {
-          chart.plot.replot();
-        }
-      });
-
-      jQuery('#test_code_coverage').change(function() {
-        var defectRatio = parseFloat(jQuery('#status').attr('data-defect-ratio')),
-          testCodeCoverage = jQuery(this).val().trim(),
-          value = 0.0;
-        if(/^\d+(\.\d+)?$/.test(testCodeCoverage)) {
-          value = parseFloat(0.5 * parseFloat(testCodeCoverage) + 0.5 * (100 * defectRatio)).toFixed(2);
-          jQuery('#status').text(value + '%').removeClass('red yellow green').addClass(statusColor(value));
-          jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(value));
-
-          jQuery.post(window.location.href + '/update_test_code_coverage', { 'coverage': jQuery(this).val() });
-        } else {
-          jQuery('#status').text('').removeClass('red yellow green');
-          jQuery('#status-label').removeClass('red yellow green');
-        }
-      });
-
-      statusColor = function(status) {
-        if(status > 80) { return 'green' }
-        else if(status > 70) { return 'yellow' }
-        else { return 'red' }
-      };
-    });
-  </script>
+    </script>
 <% end %>

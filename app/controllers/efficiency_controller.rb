@@ -1,5 +1,7 @@
 class EfficiencyController < PmController
-  before_filter :get_project, :only => [:index, :update_test_code_coverage, :load_chart]
+  before_filter :get_project, :only => [:index, :update_test_code_coverage, :update_unit_testing_weight, :update_unit_testing_score,
+                                        :update_automation_testing_weight, :update_automation_testing_score, :update_defect_removal_weight,
+                                        :update_total_closed_defects, :update_total_raised_defects, :load_chart]
   before_filter :authorize
   before_filter :role_check_client
 
@@ -11,9 +13,75 @@ class EfficiencyController < PmController
     @versions = @project.versions.all(:order => 'effective_date IS NULL, effective_date DESC').reverse
   end
 
-  def update_test_code_coverage
-    if coverage_field = ProjectCustomField.find_by_name('Test Code Coverage')
-      if coverage_value = @project.custom_values.detect { |v| v.custom_field.name == 'Test Code Coverage' }
+  def update_unit_testing_weight
+    if coverage_field = ProjectCustomField.find_by_name('Unit Testing Weight')
+      if coverage_value = @project.custom_values.detect { |v| v.custom_field.name == 'Unit Testing Weight' }
+        coverage_value.update_attribute :value, params[:coverage].to_f.to_s
+      else
+        @project.custom_values.build(:custom_field => coverage_field, :value => params[:coverage].to_f.to_s).save
+      end
+    end
+    head :ok
+  end
+
+  def update_unit_testing_score
+    if coverage_field = ProjectCustomField.find_by_name('Unit Testing Score')
+      if coverage_value = @project.custom_values.detect { |v| v.custom_field.name == 'Unit Testing Score' }
+        coverage_value.update_attribute :value, params[:coverage].to_f.to_s
+      else
+        @project.custom_values.build(:custom_field => coverage_field, :value => params[:coverage].to_f.to_s).save
+      end
+    end
+    head :ok
+  end
+
+  def update_automation_testing_weight
+    if coverage_field = ProjectCustomField.find_by_name('Automation Testing Weight')
+      if coverage_value = @project.custom_values.detect { |v| v.custom_field.name == 'Automation Testing Weight' }
+        coverage_value.update_attribute :value, params[:coverage].to_f.to_s
+      else
+        @project.custom_values.build(:custom_field => coverage_field, :value => params[:coverage].to_f.to_s).save
+      end
+    end
+    head :ok
+  end
+
+  def update_automation_testing_score
+    if coverage_field = ProjectCustomField.find_by_name('Automation Testing Score')
+      if coverage_value = @project.custom_values.detect { |v| v.custom_field.name == 'Automation Testing Score' }
+        coverage_value.update_attribute :value, params[:coverage].to_f.to_s
+      else
+        @project.custom_values.build(:custom_field => coverage_field, :value => params[:coverage].to_f.to_s).save
+      end
+    end
+    head :ok
+  end
+
+  def update_defect_removal_weight
+    if coverage_field = ProjectCustomField.find_by_name('Defect Removal Weight')
+      if coverage_value = @project.custom_values.detect { |v| v.custom_field.name == 'Defect Removal Weight' }
+        coverage_value.update_attribute :value, params[:coverage].to_f.to_s
+      else
+        @project.custom_values.build(:custom_field => coverage_field, :value => params[:coverage].to_f.to_s).save
+      end
+    end
+    head :ok
+  end
+
+  def update_total_closed_defects
+    if coverage_field = ProjectCustomField.find_by_name('Total Closed Defects')
+      if coverage_value = @project.custom_values.detect { |v| v.custom_field.name == 'Total Closed Defects' }
+        coverage_value.update_attribute :value, params[:coverage].to_f.to_s
+      else
+        @project.custom_values.build(:custom_field => coverage_field, :value => params[:coverage].to_f.to_s).save
+      end
+    end
+    head :ok
+  end
+
+  def update_total_raised_defects
+    if coverage_field = ProjectCustomField.find_by_name('Total Raised Defects')
+      if coverage_value = @project.custom_values.detect { |v| v.custom_field.name == 'Total Raised Defects' }
         coverage_value.update_attribute :value, params[:coverage].to_f.to_s
       else
         @project.custom_values.build(:custom_field => coverage_field, :value => params[:coverage].to_f.to_s).save
