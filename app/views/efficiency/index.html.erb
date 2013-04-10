@@ -14,7 +14,7 @@
       <td><span>CLIENT</span></td>
       <td class="value"><%= @project.client %></td>
       <td id="status-label" class="<%= status_color %>"><span>Status</span></td>
-      <td id="status" class="value <%= status_color %>" data-defect-ratio="<%= defect_ratio %>"><%= "#{number_with_precision(status, :precision => 2)}%" %></td>
+      <td id="status" class="value <%= status_color %>"><%= "#{number_with_precision(status, :precision => 2)}%" %></td>
     </tr>
     <tr>
       <td></td>

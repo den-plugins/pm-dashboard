@@ -54,11 +54,11 @@ module EfficiencyHelper
   end
 
   def defect_ratio
-    (bug_count(:closed) / bug_count.to_f).to_f
+    ((bug_count(:closed) / bug_count.to_f) * 100).to_f
   end
 
   def defect_removal_score
-    ratio = total_raised_defects > 0 ? (total_closed_defects/total_raised_defects).to_f : 0.00
+    ratio = total_raised_defects > 0 ? ((total_closed_defects/total_raised_defects) * 100).to_f : 0.00
   end
 
   def status
