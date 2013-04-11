@@ -6,6 +6,8 @@ class PmDashboardsController < PmController
   helper :resource_costs
   helper :project_billability
   helper :pm_dashboard_issues
+  helper :efficiency
+
   include PmDashboardsHelper
   
   before_filter :get_project, :only => [:index, :load_chart, :reload_billability, :reload_fixed_cost]

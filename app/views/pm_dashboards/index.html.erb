@@ -45,8 +45,8 @@
       <td class="value <%= issue_color %>"><%= issues_score %></td>
       <td><span>Productivity</span></td>
       <td class="value"><%= %></td>
-      <td><span>Efficiency</span></td>
-      <td class="value"><%= %></td>
+      <td class="<%= status_color %>"><span>Efficiency</span></td>
+      <td class="value <%= status_color %>"><%= "#{number_with_precision(unit_testing_weighted_score + automation_testing_weighted_score + defect_removal_weighted_score, :precision => 2)}%" %></td>
     </tr>
   </table>
 </div>
