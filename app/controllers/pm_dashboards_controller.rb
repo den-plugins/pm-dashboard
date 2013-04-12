@@ -19,7 +19,10 @@ class PmDashboardsController < PmController
     @key_risks ||= @project.risks.key
     @key_issues ||= @project.pm_dashboard_issues.key.reject{|i| i.date_close }
     @issues = @project.pm_dashboard_issues
-    @project_team = @project.members.project_team
+    monday_last_week = (Date.today - 1.week).beginning_of_week
+    sunday_last_week = (Date.today - 1.week).end_of_week
+    @project_team = @project.members.project_team.select {|v| v.resource_allocations.last &&
+        v.resource_allocations.last.start_date < sunday_last_week && v.resource_allocations.last.end_date > monday_last_week}
     @milestones = Version.find(:all, :conditions => ["project_id=? and effective_date < ?", @project, Date.today], :order => "effective_date DESC", :limit => 2) +
                                   Version.find(:all, :conditions => ["project_id=? and effective_date >= ?", @project, Date.today], :order => "effective_date ASC", :limit => 4)
     @milestones = @milestones.sort {|a, b| a[:effective_date] <=> b[:effective_date]}
