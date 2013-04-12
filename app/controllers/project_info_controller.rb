@@ -24,14 +24,26 @@ class ProjectInfoController < PmController
     if request.post? and !request.xhr?
       @project.validate_client = true
       psd, ped = params[:project][:planned_start_date], params[:project][:planned_end_date]
-      if @project.update_attributes(params[:project])
-        if (!psd.blank? && (psd.to_date.cwday == 6 || psd.to_date.cwday == 7)) || 
-           (!ped.blank? && (ped.to_date.cwday == 6 || ped.to_date.cwday == 7))
-          flash[:warning] = "Cannot set weekends for planned start or end dates. Date is set to friday."
+      maintenance_end = to_date_safe(params[:project][:maintenance_end])
+      allocation_date = Date.new
+      @project.members.each do |member|
+        if member.resource_allocations.last && allocation_date < member.resource_allocations.last.end_date
+          allocation_date = member.resource_allocations.last.end_date
         end
-        redirect_to_info
+      end
+      unless allocation_date > maintenance_end
+        if @project.update_attributes(params[:project])
+          if (!psd.blank? && (psd.to_date.cwday == 6 || psd.to_date.cwday == 7)) ||
+             (!ped.blank? && (ped.to_date.cwday == 6 || ped.to_date.cwday == 7))
+            flash[:warning] = "Cannot set weekends for planned start or end dates. Date is set to friday."
+          end
+          redirect_to_info
+        else
+          render :template => "project_info/edit_with_error"
+        end
       else
-        render :template => "project_info/edit_with_error"
+        flash[:error] = "Maintenance End Date may only be edited to #{allocation_date + 1.day} or a later date"
+        redirect_to_info
       end
     else
       render :partial => "project_info/edit"
