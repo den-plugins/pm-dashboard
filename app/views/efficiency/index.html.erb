@@ -306,7 +306,7 @@
                         value = 0.0;
                 if (/^\d+(\.\d+)?$/.test(totalClosedDefects)) {
                     if (parseFloat(totalRaisedDefects) > 0) {
-                        value = (parseFloat(totalClosedDefects) / parseFloat(totalRaisedDefects)).toFixed(2);
+                        value = (parseFloat(totalClosedDefects) / parseFloat(totalRaisedDefects) * 100).toFixed(2);
                     } else {
                         value = 0.00;
                     }
@@ -332,7 +332,7 @@
                         value = 0.0;
                 if (/^\d+(\.\d+)?$/.test(totalRaisedDefects)) {
                     if (parseFloat(totalRaisedDefects) > 0) {
-                        value = (parseFloat(totalClosedDefects) / parseFloat(totalRaisedDefects)).toFixed(2);
+                        value = (parseFloat(totalClosedDefects) / parseFloat(totalRaisedDefects) * 100).toFixed(2);
                     } else {
                         value = 0.00;
                     }

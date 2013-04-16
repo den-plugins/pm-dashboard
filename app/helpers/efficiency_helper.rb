@@ -82,9 +82,9 @@ module EfficiencyHelper
   end
 
   def status_color
-    if status > 80
+    if status >= 80
       'green'
-    elsif status > 70
+    elsif status >= 70
       'yellow'
     else
       'red'
