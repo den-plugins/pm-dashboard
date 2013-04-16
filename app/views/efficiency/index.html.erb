@@ -305,54 +305,72 @@
                         status = 0.0,
                         value = 0.0;
                 if (/^\d+(\.\d+)?$/.test(totalClosedDefects)) {
-                    if (parseFloat(totalRaisedDefects) > 0) {
-                        value = (parseFloat(totalClosedDefects) / parseFloat(totalRaisedDefects) * 100).toFixed(2);
+                    if (parseFloat(totalRaisedDefects) >= parseFloat(totalClosedDefects)) {
+                        if (parseFloat(totalRaisedDefects) > 0) {
+                            value = (parseFloat(totalClosedDefects) / parseFloat(totalRaisedDefects) * 100).toFixed(2);
+                        } else {
+                            value = 0.00;
+                        }
+                        jQuery('#defect_removal_score').text(value + '%');
+                        var defectRemovalScore = parseFloat(value),
+                                defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').val().trim());
+                        weightedScore = (parseFloat(defectRemovalWeight) * parseFloat(defectRemovalScore)).toFixed(2);
+                        jQuery('#defect_removal_weighted_score').text(weightedScore + '%');
+                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(weightedScore)).toFixed(2);
+                        jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
+                        jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
+                        jQuery('#total_closed_defects').css({"background-color": ""});
+                        jQuery('#error').text("")
+                        jQuery('#error').css({"background-color": ""});
+                        jQuery.post(window.location.href + '/update_total_closed_defects', { 'coverage': jQuery(this).val() });
                     } else {
-                        value = 0.00;
+                        jQuery('#total_closed_defects').css({"background-color": "#FFE4C4"});
+                        jQuery('#error').text("Total Closed Defects should not be more than Total Raised Defects.")
+                        jQuery('#error').css({"background-color": "#FFE4C4"});
                     }
-                    jQuery('#defect_removal_score').text(value + '%');
-                    var defectRemovalScore = parseFloat(value),
-                            defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').val().trim());
-                    weightedScore = (parseFloat(defectRemovalWeight) * parseFloat(defectRemovalScore)).toFixed(2);
-                    jQuery('#defect_removal_weighted_score').text(weightedScore + '%');
-                    status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(weightedScore)).toFixed(2);
-                    jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
-                    jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
-                    jQuery.post(window.location.href + '/update_total_closed_defects', { 'coverage': jQuery(this).val() });
                 }
             });
 
             jQuery('#total_raised_defects').change(function () {
-                var totalRaisedDefects = parseFloat(jQuery('#total_closed_defects').val().trim()),
+                var totalClosedDefects = parseFloat(jQuery('#total_closed_defects').val().trim()),
                         unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
                         automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
-                        totalClosedDefects = jQuery(this).val().trim(),
+                        totalRaisedDefects = jQuery(this).val().trim(),
                         weightedScore = 0.0,
                         status = 0.0,
                         value = 0.0;
                 if (/^\d+(\.\d+)?$/.test(totalRaisedDefects)) {
-                    if (parseFloat(totalRaisedDefects) > 0) {
-                        value = (parseFloat(totalClosedDefects) / parseFloat(totalRaisedDefects) * 100).toFixed(2);
+                    if (parseFloat(totalRaisedDefects) >= parseFloat(totalClosedDefects)) {
+                        if (parseFloat(totalRaisedDefects) > 0) {
+                            value = (parseFloat(totalClosedDefects) / parseFloat(totalRaisedDefects) * 100).toFixed(2);
+                        } else {
+                            value = 0.00;
+                        }
+                        jQuery('#defect_removal_score').text(value + '%');
+                        var defectRemovalScore = parseFloat(value),
+                                defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').val().trim());
+                        weightedScore = (parseFloat(defectRemovalWeight) * parseFloat(defectRemovalScore)).toFixed(2);
+                        jQuery('#defect_removal_weighted_score').text(weightedScore + '%');
+                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(weightedScore)).toFixed(2);
+                        jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
+                        jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
+                        jQuery('#total_raised_defects').css({"background-color": ""});
+                        jQuery('#error').text("")
+                        jQuery('#error').css({"background-color": ""});
+                        jQuery.post(window.location.href + '/update_total_raised_defects', { 'coverage': jQuery(this).val() });
                     } else {
-                        value = 0.00;
+                        jQuery('#total_raised_defects').css({"background-color": "#FFE4C4"});
+                        jQuery('#error').text("Total Closed Defects should not be more than Total Raised Defects.")
+                        jQuery('#error').css({"background-color": "#FFE4C4"});
                     }
-                    jQuery('#defect_removal_score').text(value + '%');
-                    var defectRemovalScore = parseFloat(value),
-                            defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').val().trim());
-                    weightedScore = (parseFloat(defectRemovalWeight) * parseFloat(defectRemovalScore)).toFixed(2);
-                    jQuery('#defect_removal_weighted_score').text(weightedScore + '%');
-                    status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(weightedScore)).toFixed(2);
-                    jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
-                    jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
-                    jQuery.post(window.location.href + '/update_total_raised_defects', { 'coverage': jQuery(this).val() });
                 }
             });
 
             statusColor = function (status) {
-                if (status > 80) {
+                if (status >= 80) {
                     return 'green'
                 }
-                else if (status > 70) {
+                else if (status >= 70) {
                     return 'yellow'
                 }
                 else {
