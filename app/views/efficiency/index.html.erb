@@ -24,7 +24,7 @@
     </tr>
     <tr>
       <td><span>Unit Testing Code Coverage</span></td>
-      <td class="value"><%= text_field_tag 'unit_testing_weight', number_with_precision(unit_testing_weight, :precision => 2), :size => 3 %></td>
+      <td id="unit_testing_weight" class="value"><%= number_with_precision(unit_testing_weight, :precision => 2) %></td>
       <td class="value"><%= text_field_tag 'unit_testing_score', number_with_precision(unit_testing_score, :precision => 2), :size => 3 %>
         %
       </td>
@@ -32,7 +32,7 @@
     </tr>
     <tr>
       <td><span>Automation Testing Code Coverage</span></td>
-      <td class="value"><%= text_field_tag 'automation_testing_weight', number_with_precision(automation_testing_weight, :precision => 2), :size => 3 %></td>
+      <td id="automation_testing_weight" class="value"><%= number_with_precision(automation_testing_weight, :precision => 2) %></td>
       <td class="value"><%= text_field_tag 'automation_testing_score', number_with_precision(automation_testing_score, :precision => 2), :size => 3 %>
         %
       </td>
@@ -40,7 +40,7 @@
     </tr>
     <tr>
       <td><span>Defect Removal</span></td>
-      <td class="value"><%= text_field_tag 'defect_removal_weight', number_with_precision(defect_removal_weight, :precision => 2), :size => 3 %></td>
+      <td id="defect_removal_weight" class="value"><%= number_with_precision(defect_removal_weight, :precision => 2) %></td>
       <% if @project.for_time_logging_only? %>
           <td id="defect_removal_score" class="value"><%= number_with_precision(defect_removal_score, :precision => 2) %>
             %
@@ -143,9 +143,9 @@
                         automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
                         defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
                         unitTestingScore = parseFloat(jQuery('#unit_testing_score').val().trim()),
-                        automationTestingWeight = parseFloat(jQuery('#automation_testing_weight').val().trim()),
-                        defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').val().trim()),
-                        unitTestingWeight = jQuery(this).val().trim(),
+                        automationTestingWeight = parseFloat(jQuery('#automation_testing_weight').text().split("%")[0]),
+                        defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').text().split("%")[0]),
+                        unitTestingWeight = jQuery(this).text().split("%")[0],
                         totalWeight = parseFloat(unitTestingWeight) + parseFloat(automationTestingWeight) + parseFloat(defectRemovalWeight),
                         status = 0.0,
                         value = 0.0;
@@ -175,7 +175,7 @@
             });
 
             jQuery('#unit_testing_score').change(function () {
-                var unitTestingWeight = parseFloat(jQuery('#unit_testing_weight').val().trim()),
+                var unitTestingWeight = parseFloat(jQuery('#unit_testing_weight').text().split("%")[0]),
                         automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
                         defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
                         unitTestingScore = jQuery(this).val().trim(),
@@ -204,9 +204,9 @@
                 var automationTestingScore = parseFloat(jQuery('#automation_testing_score').val().trim()),
                         unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
                         defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
-                        unitTestingWeight = parseFloat(jQuery('#unit_testing_weight').val().trim()),
-                        defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').val().trim()),
-                        automationTestingWeight = jQuery(this).val().trim(),
+                        unitTestingWeight = parseFloat(jQuery('#unit_testing_weight').text().split("%")[0]),
+                        defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').text().split("%")[0]),
+                        automationTestingWeight = jQuery(this).text().split("%")[0],
                         totalWeight = parseFloat(unitTestingWeight) + parseFloat(automationTestingWeight) + parseFloat(defectRemovalWeight),
                         status = 0.0,
                         value = 0.0;
@@ -236,7 +236,7 @@
             });
 
             jQuery('#automation_testing_score').change(function () {
-                var automationTestingWeight = parseFloat(jQuery('#automation_testing_weight').val().trim()),
+                var automationTestingWeight = parseFloat(jQuery('#automation_testing_weight').text().split("%")[0]),
                         unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
                         defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
                         automationTestingScore = jQuery(this).val().trim(),
@@ -265,9 +265,9 @@
                 var defectRemovalScore = parseFloat(jQuery('#defect_removal_score').text().split("%")[0]),
                         unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
                         automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
-                        unitTestingWeight = parseFloat(jQuery('#unit_testing_weight').val().trim()),
-                        automationTestingWeight = parseFloat(jQuery('#automation_testing_weight').val().trim()),
-                        defectRemovalWeight = jQuery(this).val().trim(),
+                        unitTestingWeight = parseFloat(jQuery('#unit_testing_weight').text().split("%")[0]),
+                        automationTestingWeight = parseFloat(jQuery('#automation_testing_weight').text().split("%")[0]),
+                        defectRemovalWeight = jQuery(this).text().split("%")[0],
                         totalWeight = parseFloat(unitTestingWeight) + parseFloat(automationTestingWeight) + parseFloat(defectRemovalWeight),
                         status = 0.0,
                         value = 0.0;
@@ -313,13 +313,14 @@
                         }
                         jQuery('#defect_removal_score').text(value + '%');
                         var defectRemovalScore = parseFloat(value),
-                                defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').val().trim());
+                                defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').text().split("%")[0]);
                         weightedScore = (parseFloat(defectRemovalWeight) * parseFloat(defectRemovalScore)).toFixed(2);
                         jQuery('#defect_removal_weighted_score').text(weightedScore + '%');
                         status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(weightedScore)).toFixed(2);
                         jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#total_closed_defects').css({"background-color": ""});
+                        jQuery('#total_raised_defects').css({"background-color": ""});
                         jQuery('#error').text("")
                         jQuery('#error').css({"background-color": ""});
                         jQuery.post(window.location.href + '/update_total_closed_defects', { 'coverage': jQuery(this).val() });
@@ -348,13 +349,14 @@
                         }
                         jQuery('#defect_removal_score').text(value + '%');
                         var defectRemovalScore = parseFloat(value),
-                                defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').val().trim());
+                                defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').text().split("%")[0]);
                         weightedScore = (parseFloat(defectRemovalWeight) * parseFloat(defectRemovalScore)).toFixed(2);
                         jQuery('#defect_removal_weighted_score').text(weightedScore + '%');
                         status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(weightedScore)).toFixed(2);
                         jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#total_raised_defects').css({"background-color": ""});
+                        jQuery('#total_closed_defects').css({"background-color": ""});
                         jQuery('#error').text("")
                         jQuery('#error').css({"background-color": ""});
                         jQuery.post(window.location.href + '/update_total_raised_defects', { 'coverage': jQuery(this).val() });
