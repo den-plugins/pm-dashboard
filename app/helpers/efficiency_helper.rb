@@ -54,7 +54,7 @@ module EfficiencyHelper
   end
 
   def defect_ratio
-    ((bug_count(:closed) / bug_count.to_f) * 100).to_f
+    bug_count > 0 ? ((bug_count(:closed) / bug_count.to_f) * 100).to_f : 0.00
   end
 
   def defect_removal_score
@@ -86,6 +86,8 @@ module EfficiencyHelper
       'green'
     elsif status >= 70
       'yellow'
+    elsif status == 0
+      ''
     else
       'red'
     end
