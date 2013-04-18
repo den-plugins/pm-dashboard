@@ -43,6 +43,7 @@
       <td class="value <%= risk_color %>"><%= risk_rating %></td>
       <td class="<%= issue_color = issue_impact_color_coding((issues_score=display_issues_average).to_f) %>"><span>Issue</span></td>
       <td class="value <%= issue_color %>"><%= issues_score %></td>
+      <% @dev_project = @project %>
       <td class="<%= status_color %>"><span>Efficiency</span></td>
       <td class="value <%= status_color %>"><%= "#{number_with_precision(unit_testing_weighted_score + automation_testing_weighted_score + defect_removal_weighted_score, :precision => 2)}%" %></td>
       <td><span>Productivity</span></td>

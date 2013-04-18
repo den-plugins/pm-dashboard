@@ -12,7 +12,7 @@
   <table id="efficiency_header">
     <tr>
       <td><span>CLIENT</span></td>
-      <td class="value"><%= @project.client %></td>
+      <td class="value"><%= @dev_project.client %></td>
       <td id="status-label" class="<%= status_color %>"><span>Status</span></td>
       <td id="status" class="value <%= status_color %>"><%= "#{number_with_precision(status, :precision => 2)}%" %></td>
     </tr>
@@ -41,7 +41,7 @@
     <tr>
       <td><span>Defect Removal</span></td>
       <td id="defect_removal_weight" class="value"><%= number_with_precision(defect_removal_weight, :precision => 2) %></td>
-      <% if @project.for_time_logging_only? %>
+      <% if @dev_project.for_time_logging_only? %>
           <td id="defect_removal_score" class="value"><%= number_with_precision(defect_removal_score, :precision => 2) %>
             %
           </td>
@@ -49,7 +49,7 @@
           <td id="defect_removal_score" class="value"><%= number_with_precision(defect_ratio, :precision => 2) %>%</td>
       <% end %>
       <td id="defect_removal_weighted_score" class="value"><%= "#{number_with_precision(defect_removal_weighted_score, :precision => 2)}%" %></td>
-      <% if @project.for_time_logging_only? %>
+      <% if @dev_project.for_time_logging_only? %>
           <td><span>Total Closed Defects</span></td>
           <td class="value"><%= text_field_tag 'total_closed_defects', number_with_precision(total_closed_defects, :precision => 2), :size => 3 %></td>
           <td><span>Total Raised Defects</span></td>

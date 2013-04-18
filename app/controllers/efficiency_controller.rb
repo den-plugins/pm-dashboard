@@ -130,7 +130,7 @@ class EfficiencyController < PmController
 
 private
   def get_project
-    @project = Project.find(params[:project_id])
+    @dev_project = @project = Project.find(params[:project_id])
   rescue ActiveRecord::RecordNotFound
     render_404
   end

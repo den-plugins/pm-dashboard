@@ -5,7 +5,7 @@ module EfficiencyHelper
   CLOSED_STATUS = IssueStatus.all(:conditions => ['is_closed = ? AND name NOT IN (?)', true, ['Not a Defect', 'Cannot Reproduce']]).map(&:id).freeze
 
   def bug_count(status=nil, version=nil)
-    conditions = { :project_id => @project.id, :tracker_id => 1 }
+    conditions = { :project_id => @dev_project.id, :tracker_id => 1 }
     status_id = case status
                 when :open        then OPEN_STATUS
                 when :not_defect  then NOT_DEFECT_STATUS
@@ -19,37 +19,37 @@ module EfficiencyHelper
   end
 
   def unit_testing_weight
-    coverage_field = @project.custom_values.detect { |v| v.custom_field.name == 'Unit Testing Weight' }
+    coverage_field = @dev_project.custom_values.detect { |v| v.custom_field.name == 'Unit Testing Weight' }
     coverage_field ? coverage_field.value.to_f : 0.0
   end
 
   def unit_testing_score
-    coverage_field = @project.custom_values.detect { |v| v.custom_field.name == 'Unit Testing Score' }
+    coverage_field = @dev_project.custom_values.detect { |v| v.custom_field.name == 'Unit Testing Score' }
     coverage_field ? coverage_field.value.to_f : 0.0
   end
 
   def automation_testing_weight
-    coverage_field = @project.custom_values.detect { |v| v.custom_field.name == 'Automation Testing Weight' }
+    coverage_field = @dev_project.custom_values.detect { |v| v.custom_field.name == 'Automation Testing Weight' }
     coverage_field ? coverage_field.value.to_f : 0.0
   end
 
   def automation_testing_score
-    coverage_field = @project.custom_values.detect { |v| v.custom_field.name == 'Automation Testing Score' }
+    coverage_field = @dev_project.custom_values.detect { |v| v.custom_field.name == 'Automation Testing Score' }
     coverage_field ? coverage_field.value.to_f : 0.0
   end
 
   def defect_removal_weight
-    coverage_field = @project.custom_values.detect { |v| v.custom_field.name == 'Defect Removal Weight' }
+    coverage_field = @dev_project.custom_values.detect { |v| v.custom_field.name == 'Defect Removal Weight' }
     coverage_field ? coverage_field.value.to_f : 0.0
   end
 
   def total_closed_defects
-    coverage_field = @project.custom_values.detect { |v| v.custom_field.name == 'Total Closed Defects' }
+    coverage_field = @dev_project.custom_values.detect { |v| v.custom_field.name == 'Total Closed Defects' }
     coverage_field ? coverage_field.value.to_f : 0.0
   end
 
   def total_raised_defects
-    coverage_field = @project.custom_values.detect { |v| v.custom_field.name == 'Total Raised Defects' }
+    coverage_field = @dev_project.custom_values.detect { |v| v.custom_field.name == 'Total Raised Defects' }
     coverage_field ? coverage_field.value.to_f : 0.0
   end
 
@@ -74,7 +74,7 @@ module EfficiencyHelper
   end
 
   def defect_removal_weighted_score
-    if @project.for_time_logging_only?
+    if @dev_project.for_time_logging_only?
       defect_removal_weight * defect_removal_score
     else
       defect_removal_weight * defect_ratio
