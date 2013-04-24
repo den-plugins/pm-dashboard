@@ -2,7 +2,7 @@ class EfficiencyController < PmController
   before_filter :get_project, :only => [:index, :update_test_code_coverage, :update_unit_testing_weight, :update_unit_testing_score,
                                         :update_automation_testing_weight, :update_automation_testing_score, :update_defect_removal_weight,
                                         :update_total_closed_defects, :update_total_raised_defects, :update_continuous_integration_score,
-                                        :load_chart]
+                                        :setting, :load_chart]
   before_filter :authorize
   before_filter :role_check_client
 
@@ -100,6 +100,10 @@ class EfficiencyController < PmController
       end
     end
     head :ok
+  end
+
+  def setting
+
   end
 
   def load_chart

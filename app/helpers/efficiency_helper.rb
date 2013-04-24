@@ -106,4 +106,14 @@ module EfficiencyHelper
       'red'
     end
   end
+
+  def incremental_value
+    option = 0.0
+    option_array = [option]
+    while option <= 1 do
+      option += 0.05
+      option_array << option
+    end
+    option_array
+  end
 end

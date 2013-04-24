@@ -1,0 +1,19 @@
+<%= render :partial => 'common/header' %>
+<%= include_calendar_headers_tags %>
+<%= heads_for_wiki_formatter %>
+<% content_for :header_tags do %>
+    <%= javascript_include_tag 'fixed_header.js', :plugin => 'management' %>
+    <%= stylesheet_link_tag 'facebox', :plugin => 'facebox_render' %>
+    <%= javascript_include_tag 'facebox.js', :plugin => 'facebox_render' %>
+<% end %>
+<% field = @project.get_efficiency_fields %>
+<h2>Settings</h2>
+
+<% @project.custom_field_values.each do |value| %>
+    <% if (field.include? value.custom_field.name) && value.custom_field.name.downcase.include?("weight") %>
+        <div>
+          <span style="float:left; width:170px"><%= value.custom_field.name %></span>
+          <span><%= select_tag value.custom_field.name, options_for_select(incremental_value) %></span>
+        </div>
+    <% end %>
+<% end %>
