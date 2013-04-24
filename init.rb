@@ -46,7 +46,8 @@ Redmine::Plugin.register :pm_dashboard do
                           :resource_utilization => [:index],
                           :efficiency => [:index, :update_test_code_coverage, :update_unit_testing_weight, :update_unit_testing_score,
                                           :update_automation_testing_weight, :update_automation_testing_score, :update_defect_removal_weight,
-                                          :update_total_closed_defects, :update_total_raised_defects, :load_chart],
+                                          :update_total_closed_defects, :update_total_raised_defects, :update_continuous_integration_score,
+                                          :load_chart],
                           :time_logging => [:index, :settings]
                       }, :public => false
   end

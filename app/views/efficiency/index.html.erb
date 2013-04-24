@@ -39,6 +39,14 @@
       <td id="automation_testing_weighted_score" class="value"><%= "#{number_with_precision(automation_testing_weighted_score, :precision => 2)}%" %></td>
     </tr>
     <tr>
+      <td><span>Continuous Integration</span></td>
+      <td id="continuous_integration_weight" class="value"><%= number_with_precision(continuous_integration_weight, :precision => 2) %></td>
+      <td class="value"><%= text_field_tag 'continuous_integration_score', number_with_precision(continuous_integration_score, :precision => 2), :size => 3 %>
+        %
+      </td>
+      <td id="continuous_integration_weighted_score" class="value"><%= "#{number_with_precision(continuous_integration_weighted_score, :precision => 2)}%" %></td>
+    </tr>
+    <tr>
       <td><span>Defect Removal</span></td>
       <td id="defect_removal_weight" class="value"><%= number_with_precision(defect_removal_weight, :precision => 2) %></td>
       <% if @dev_project.for_time_logging_only? %>
@@ -138,46 +146,11 @@
                 }
             });
 
-            jQuery('#unit_testing_weight').change(function () {
-                var unitTestingScore = parseFloat(jQuery('#unit_testing_score').val().trim()),
-                        automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
-                        defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
-                        unitTestingScore = parseFloat(jQuery('#unit_testing_score').val().trim()),
-                        automationTestingWeight = parseFloat(jQuery('#automation_testing_weight').text().split("%")[0]),
-                        defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').text().split("%")[0]),
-                        unitTestingWeight = jQuery(this).text().split("%")[0],
-                        totalWeight = parseFloat(unitTestingWeight) + parseFloat(automationTestingWeight) + parseFloat(defectRemovalWeight),
-                        status = 0.0,
-                        value = 0.0;
-                if (/^\d+(\.\d+)?$/.test(unitTestingWeight)) {
-                    if (unitTestingWeight >= 0 && unitTestingWeight <= 1) {
-                        value = (parseFloat(unitTestingWeight) * parseFloat(unitTestingScore)).toFixed(2);
-                        jQuery('#unit_testing_weighted_score').text(value + '%');
-                        status = (parseFloat(value) + parseFloat(automationTestingWeightedScore) + parseFloat(defectRemovalWeightedScore)).toFixed(2);
-                        jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
-                        jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
-                        if (totalWeight == 1) {
-                            jQuery('#unit_testing_weight').css({"background-color": ""});
-                            jQuery('#error').text("")
-                            jQuery('#error').css({"background-color": ""});
-                        } else {
-                            jQuery('#unit_testing_weight').css({"background-color": ""});
-                            jQuery('#error').text("WARNING: Total Unit Testing Code Coverage, Automation Testing Code Coverage and Defect Removal should sum up to 1.0")
-                            jQuery('#error').css({"background-color": "#FFE4C4"});
-                        }
-                        jQuery.post(window.location.href + '/update_unit_testing_weight', { 'coverage': jQuery(this).val() });
-                    } else {
-                        jQuery('#unit_testing_weight').css({"background-color": "#FFE4C4"});
-                        jQuery('#error').text("Weight should be between 0 and 1.")
-                        jQuery('#error').css({"background-color": "#FFE4C4"});
-                    }
-                }
-            });
-
             jQuery('#unit_testing_score').change(function () {
                 var unitTestingWeight = parseFloat(jQuery('#unit_testing_weight').text().split("%")[0]),
                         automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
                         defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
+                        continuousIntegrationWeightedScore = parseFloat(jQuery('#continuous_integration_weighted_score').text().split("%")[0]),
                         unitTestingScore = jQuery(this).val().trim(),
                         status = 0.0,
                         value = 0.0;
@@ -185,7 +158,7 @@
                     if (unitTestingScore >= 0 && unitTestingScore <= 100) {
                         value = (parseFloat(unitTestingWeight) * parseFloat(unitTestingScore)).toFixed(2);
                         jQuery('#unit_testing_weighted_score').text(value + '%');
-                        status = (parseFloat(value) + parseFloat(automationTestingWeightedScore) + parseFloat(defectRemovalWeightedScore)).toFixed(2);
+                        status = (parseFloat(value) + parseFloat(automationTestingWeightedScore) + parseFloat(defectRemovalWeightedScore) + parseFloat(continuousIntegrationWeightedScore)).toFixed(2);
                         jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#unit_testing_score').css({"background-color": ""});
@@ -200,51 +173,17 @@
                 }
             });
 
-            jQuery('#automation_testing_weight').change(function () {
-                var automationTestingScore = parseFloat(jQuery('#automation_testing_score').val().trim()),
-                        unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
-                        defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
-                        unitTestingWeight = parseFloat(jQuery('#unit_testing_weight').text().split("%")[0]),
-                        defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').text().split("%")[0]),
-                        automationTestingWeight = jQuery(this).text().split("%")[0],
-                        totalWeight = parseFloat(unitTestingWeight) + parseFloat(automationTestingWeight) + parseFloat(defectRemovalWeight),
-                        status = 0.0,
-                        value = 0.0;
-                if (/^\d+(\.\d+)?$/.test(automationTestingWeight)) {
-                    if (automationTestingWeight >= 0 && automationTestingWeight <= 1) {
-                        value = (parseFloat(automationTestingWeight) * parseFloat(automationTestingScore)).toFixed(2);
-                        jQuery('#automation_testing_weighted_score').text(value + '%')
-                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(value) + parseFloat(defectRemovalWeightedScore)).toFixed(2);
-                        jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
-                        jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
-                        if (totalWeight == 1) {
-                            jQuery('#automation_testing_weight').css({"background-color": ""});
-                            jQuery('#error').text("")
-                            jQuery('#error').css({"background-color": ""});
-                        } else {
-                            jQuery('#automation_testing_weight').css({"background-color": ""});
-                            jQuery('#error').text("WARNING: Total Unit Testing Code Coverage, Automation Testing Code Coverage and Defect Removal should sum up to 1.0")
-                            jQuery('#error').css({"background-color": "#FFE4C4"});
-                        }
-                        jQuery.post(window.location.href + '/update_automation_testing_weight', { 'coverage': jQuery(this).val() });
-                    } else {
-                        jQuery('#automation_testing_weight').css({"background-color": "#FFE4C4"});
-                        jQuery('#error').text("Weight should be between 0 and 1.")
-                        jQuery('#error').css({"background-color": "#FFE4C4"});
-                    }
-                }
-            });
-
             jQuery('#automation_testing_score').change(function () {
                 var automationTestingWeight = parseFloat(jQuery('#automation_testing_weight').text().split("%")[0]),
                         unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
                         defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
+                        continuousIntegrationWeightedScore = parseFloat(jQuery('#continuous_integration_weighted_score').text().split("%")[0]),
                         automationTestingScore = jQuery(this).val().trim(),
                         status = 0.0,
                         value = 0.0;
                 if (/^\d+(\.\d+)?$/.test(automationTestingScore)) {
                     if (automationTestingScore >= 0 && automationTestingScore <= 100) {
-                        value = (parseFloat(automationTestingWeight) * parseFloat(automationTestingScore)).toFixed(2);
+                        value = (parseFloat(automationTestingWeight) * parseFloat(automationTestingScore) + parseFloat(continuousIntegrationWeightedScore)).toFixed(2);
                         jQuery('#automation_testing_weighted_score').text(value + '%')
                         status = (parseFloat(unitTestingWeightedScore) + parseFloat(value) + parseFloat(defectRemovalWeightedScore)).toFixed(2);
                         jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
@@ -261,36 +200,28 @@
                 }
             });
 
-            jQuery('#defect_removal_weight').change(function () {
-                var defectRemovalScore = parseFloat(jQuery('#defect_removal_score').text().split("%")[0]),
+            jQuery('#continuous_integration_score').change(function () {
+                var continuousIntegrationWeight = parseFloat(jQuery('#continuous_integration_weight').text().split("%")[0]),
                         unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
                         automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
-                        unitTestingWeight = parseFloat(jQuery('#unit_testing_weight').text().split("%")[0]),
-                        automationTestingWeight = parseFloat(jQuery('#automation_testing_weight').text().split("%")[0]),
-                        defectRemovalWeight = jQuery(this).text().split("%")[0],
-                        totalWeight = parseFloat(unitTestingWeight) + parseFloat(automationTestingWeight) + parseFloat(defectRemovalWeight),
+                        defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
+                        continuousIntegrationScore = jQuery(this).val().trim(),
                         status = 0.0,
                         value = 0.0;
-                if (/^\d+(\.\d+)?$/.test(defectRemovalWeight)) {
-                    if (defectRemovalWeight >= 0 && defectRemovalWeight <= 1) {
-                        value = (parseFloat(defectRemovalWeight) * parseFloat(defectRemovalScore)).toFixed(2);
-                        jQuery('#defect_removal_weighted_score').text(value + '%')
-                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(value)).toFixed(2);
+                if (/^\d+(\.\d+)?$/.test(continuousIntegrationScore)) {
+                    if (continuousIntegrationScore >= 0 && continuousIntegrationScore <= 100) {
+                        value = (parseFloat(continuousIntegrationWeight) * parseFloat(continuousIntegrationScore)).toFixed(2);
+                        jQuery('#continuous_integration_weighted_score').text(value + '%')
+                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(defectRemovalWeightedScore) + parseFloat(value)).toFixed(2);
                         jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
-                        if (totalWeight == 1) {
-                            jQuery('#defect_removal_weight').css({"background-color": ""});
-                            jQuery('#error').text("")
-                            jQuery('#error').css({"background-color": ""});
-                        } else {
-                            jQuery('#defect_removal_weight').css({"background-color": ""});
-                            jQuery('#error').text("WARNING: Total Unit Testing Code Coverage, Automation Testing Code Coverage and Defect Removal should sum up to 1.0")
-                            jQuery('#error').css({"background-color": "#FFE4C4"});
-                        }
-                        jQuery.post(window.location.href + '/update_defect_removal_weight', { 'coverage': jQuery(this).val() });
+                        jQuery('#continuous_integration_score').css({"background-color": ""});
+                        jQuery('#error').text("")
+                        jQuery('#error').css({"background-color": ""});
+                        jQuery.post(window.location.href + '/update_continuous_integration_score', { 'coverage': jQuery(this).val() });
                     } else {
-                        jQuery('#defect_removal_weight').css({"background-color": "#FFE4C4"});
-                        jQuery('#error').text("Weight should be between 0 and 1.")
+                        jQuery('#continuous_integration_score').css({"background-color": "#FFE4C4"});
+                        jQuery('#error').text("Score should be between 0 and 100.")
                         jQuery('#error').css({"background-color": "#FFE4C4"});
                     }
                 }
@@ -300,6 +231,7 @@
                 var totalRaisedDefects = parseFloat(jQuery('#total_raised_defects').val().trim()),
                         unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
                         automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
+                        continuousIntegrationWeightedScore = parseFloat(jQuery('#continuous_integration_weighted_score').text().split("%")[0]),
                         totalClosedDefects = jQuery(this).val().trim(),
                         weightedScore = 0.0,
                         status = 0.0,
@@ -316,7 +248,7 @@
                                 defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').text().split("%")[0]);
                         weightedScore = (parseFloat(defectRemovalWeight) * parseFloat(defectRemovalScore)).toFixed(2);
                         jQuery('#defect_removal_weighted_score').text(weightedScore + '%');
-                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(weightedScore)).toFixed(2);
+                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(weightedScore) + parseFloat(continuousIntegrationWeightedScore)).toFixed(2);
                         jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#total_closed_defects').css({"background-color": ""});
@@ -336,6 +268,7 @@
                 var totalClosedDefects = parseFloat(jQuery('#total_closed_defects').val().trim()),
                         unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
                         automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
+                        continuousIntegrationWeightedScore = parseFloat(jQuery('#continuous_integration_weighted_score').text().split("%")[0]),
                         totalRaisedDefects = jQuery(this).val().trim(),
                         weightedScore = 0.0,
                         status = 0.0,
@@ -352,7 +285,7 @@
                                 defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').text().split("%")[0]);
                         weightedScore = (parseFloat(defectRemovalWeight) * parseFloat(defectRemovalScore)).toFixed(2);
                         jQuery('#defect_removal_weighted_score').text(weightedScore + '%');
-                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(weightedScore)).toFixed(2);
+                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(weightedScore) + parseFloat(continuousIntegrationWeightedScore)).toFixed(2);
                         jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#total_raised_defects').css({"background-color": ""});

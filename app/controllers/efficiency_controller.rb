@@ -1,7 +1,8 @@
 class EfficiencyController < PmController
   before_filter :get_project, :only => [:index, :update_test_code_coverage, :update_unit_testing_weight, :update_unit_testing_score,
                                         :update_automation_testing_weight, :update_automation_testing_score, :update_defect_removal_weight,
-                                        :update_total_closed_defects, :update_total_raised_defects, :load_chart]
+                                        :update_total_closed_defects, :update_total_raised_defects, :update_continuous_integration_score,
+                                        :load_chart]
   before_filter :authorize
   before_filter :role_check_client
 
@@ -60,6 +61,17 @@ class EfficiencyController < PmController
   def update_defect_removal_weight
     if coverage_field = ProjectCustomField.find_by_name('Defect Removal Weight')
       if coverage_value = @project.custom_values.detect { |v| v.custom_field.name == 'Defect Removal Weight' }
+        coverage_value.update_attribute :value, params[:coverage].to_f.to_s
+      else
+        @project.custom_values.build(:custom_field => coverage_field, :value => params[:coverage].to_f.to_s).save
+      end
+    end
+    head :ok
+  end
+
+  def update_continuous_integration_score
+    if coverage_field = ProjectCustomField.find_by_name('Continuous Integration Score')
+      if coverage_value = @project.custom_values.detect { |v| v.custom_field.name == 'Continuous Integration Score' }
         coverage_value.update_attribute :value, params[:coverage].to_f.to_s
       else
         @project.custom_values.build(:custom_field => coverage_field, :value => params[:coverage].to_f.to_s).save
