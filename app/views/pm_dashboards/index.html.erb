@@ -45,7 +45,7 @@
       <td class="value <%= issue_color %>"><%= issues_score %></td>
       <% @dev_project = @project %>
       <td class="<%= status_color %>"><span>Efficiency</span></td>
-      <% efficiency_status = number_with_precision(unit_testing_weighted_score + automation_testing_weighted_score + defect_removal_weighted_score, :precision => 2) %>
+      <% efficiency_status = number_with_precision(status, :precision => 2) %>
       <td class="value <%= status_color %>"><%= "#{efficiency_status}%" %></td>
       <td><span>Productivity</span></td>
       <td class="value"><%= %></td>
