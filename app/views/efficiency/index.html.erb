@@ -160,6 +160,7 @@
                         automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
                         defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
                         continuousIntegrationWeightedScore = parseFloat(jQuery('#continuous_integration_weighted_score').text().split("%")[0]),
+                        othersWeightedScore = parseFloat(jQuery('#others_weighted_score').text().split("%")[0]),
                         unitTestingScore = jQuery(this).val().trim(),
                         status = 0.0,
                         value = 0.0;
@@ -167,7 +168,7 @@
                     if (unitTestingScore >= 0 && unitTestingScore <= 100) {
                         value = (parseFloat(unitTestingWeight) * parseFloat(unitTestingScore)).toFixed(2);
                         jQuery('#unit_testing_weighted_score').text(value + '%');
-                        status = (parseFloat(value) + parseFloat(automationTestingWeightedScore) + parseFloat(defectRemovalWeightedScore) + parseFloat(continuousIntegrationWeightedScore)).toFixed(2);
+                        status = (parseFloat(value) + parseFloat(automationTestingWeightedScore) + parseFloat(defectRemovalWeightedScore) + parseFloat(continuousIntegrationWeightedScore) +  + parseFloat(othersWeightedScore)).toFixed(2);
                         jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#unit_testing_score').css({"background-color": ""});
