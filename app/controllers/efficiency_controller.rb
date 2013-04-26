@@ -13,6 +13,14 @@ class EfficiencyController < PmController
 
   def index
     @versions = @project.versions.all(:order => 'effective_date IS NULL, effective_date DESC').reverse
+    @other_weight = "Others"
+    if FileTest.exists?("#{RAILS_ROOT}/config/efficiency_setting.yml")
+      if file = YAML.load(File.open("#{RAILS_ROOT}/config/efficiency_setting.yml"))
+        if efficiency_file = file["projects_#{@project.id}"]
+          @other_weight = efficiency_file["weight"]["other_weight"]
+        end
+      end
+    end
   end
 
   def update_unit_testing_weight

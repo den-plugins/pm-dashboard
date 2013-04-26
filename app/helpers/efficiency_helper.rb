@@ -48,6 +48,16 @@ module EfficiencyHelper
     coverage_field ? coverage_field.value.to_f : 0.0
   end
 
+  def others_weight
+    coverage_field = @dev_project.custom_values.detect { |v| v.custom_field.name == 'Others Weight' }
+    coverage_field ? coverage_field.value.to_f : 0.0
+  end
+
+  def others_score
+    coverage_field = @dev_project.custom_values.detect { |v| v.custom_field.name == 'Others Score' }
+    coverage_field ? coverage_field.value.to_f : 0.0
+  end
+
   def defect_removal_weight
     coverage_field = @dev_project.custom_values.detect { |v| v.custom_field.name == 'Defect Removal Weight' }
     coverage_field ? coverage_field.value.to_f : 0.0
@@ -72,7 +82,7 @@ module EfficiencyHelper
   end
 
   def status
-    unit_testing_weighted_score + automation_testing_weighted_score + continuous_integration_weighted_score + defect_removal_weighted_score
+    unit_testing_weighted_score + automation_testing_weighted_score + continuous_integration_weighted_score + defect_removal_weighted_score + others_weighted_score
   end
 
   def unit_testing_weighted_score
@@ -85,6 +95,10 @@ module EfficiencyHelper
 
   def continuous_integration_weighted_score
     continuous_integration_weight * continuous_integration_score
+  end
+
+  def others_weighted_score
+    others_weight * others_score
   end
 
   def defect_removal_weighted_score

@@ -48,6 +48,14 @@
       <td id="continuous_integration_weighted_score" class="value"><%= "#{number_with_precision(continuous_integration_weighted_score, :precision => 2)}%" %></td>
     </tr>
     <tr>
+      <td><span><%= @other_weight %></span></td>
+      <td id="others_weight" class="value"><%= number_with_precision(others_weight, :precision => 2) %></td>
+      <td class="value"><%= text_field_tag 'others_score', number_with_precision(others_score, :precision => 2), :size => 3 %>
+        %
+      </td>
+      <td id="others_weighted_score" class="value"><%= "#{number_with_precision(others_weighted_score, :precision => 2)}%" %></td>
+    </tr>
+    <tr>
       <td><span>Defect Removal</span></td>
       <td id="defect_removal_weight" class="value"><%= number_with_precision(defect_removal_weight, :precision => 2) %></td>
       <% if @dev_project.for_time_logging_only? %>
@@ -179,14 +187,15 @@
                         unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
                         defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
                         continuousIntegrationWeightedScore = parseFloat(jQuery('#continuous_integration_weighted_score').text().split("%")[0]),
+                        othersWeightedScore = parseFloat(jQuery('#others_weighted_score').text().split("%")[0]),
                         automationTestingScore = jQuery(this).val().trim(),
                         status = 0.0,
                         value = 0.0;
                 if (/^\d+(\.\d+)?$/.test(automationTestingScore)) {
                     if (automationTestingScore >= 0 && automationTestingScore <= 100) {
-                        value = (parseFloat(automationTestingWeight) * parseFloat(automationTestingScore) + parseFloat(continuousIntegrationWeightedScore)).toFixed(2);
+                        value = (parseFloat(automationTestingWeight) * parseFloat(automationTestingScore)).toFixed(2);
                         jQuery('#automation_testing_weighted_score').text(value + '%')
-                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(value) + parseFloat(defectRemovalWeightedScore)).toFixed(2);
+                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(value) + parseFloat(defectRemovalWeightedScore) + parseFloat(continuousIntegrationWeightedScore) + parseFloat(othersWeightedScore)).toFixed(2);
                         jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#automation_testing_score').css({"background-color": ""});
@@ -206,6 +215,7 @@
                         unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
                         automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
                         defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
+                        othersWeightedScore = parseFloat(jQuery('#others_weighted_score').text().split("%")[0]),
                         continuousIntegrationScore = jQuery(this).val().trim(),
                         status = 0.0,
                         value = 0.0;
@@ -213,7 +223,7 @@
                     if (continuousIntegrationScore >= 0 && continuousIntegrationScore <= 100) {
                         value = (parseFloat(continuousIntegrationWeight) * parseFloat(continuousIntegrationScore)).toFixed(2);
                         jQuery('#continuous_integration_weighted_score').text(value + '%')
-                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(defectRemovalWeightedScore) + parseFloat(value)).toFixed(2);
+                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(defectRemovalWeightedScore) + parseFloat(value) + parseFloat(othersWeightedScore)).toFixed(2);
                         jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#continuous_integration_score').css({"background-color": ""});
@@ -228,11 +238,40 @@
                 }
             });
 
+            jQuery('#others_score').change(function () {
+                var othersWeight = parseFloat(jQuery('#others_weight').text().split("%")[0]),
+                        unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
+                        automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
+                        defectRemovalWeightedScore = parseFloat(jQuery('#defect_removal_weighted_score').text().split("%")[0]),
+                        othersWeightedScore = parseFloat(jQuery('#others_weighted_score').text().split("%")[0]),
+                        othersScore = jQuery(this).val().trim(),
+                        status = 0.0,
+                        value = 0.0;
+                if (/^\d+(\.\d+)?$/.test(othersScore)) {
+                    if (othersScore >= 0 && othersScore <= 100) {
+                        value = (parseFloat(othersWeight) * parseFloat(othersScore)).toFixed(2);
+                        jQuery('#others_weighted_score').text(value + '%')
+                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(defectRemovalWeightedScore) + parseFloat(value) + parseFloat(othersWeightedScore)).toFixed(2);
+                        jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
+                        jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
+                        jQuery('#others_score').css({"background-color": ""});
+                        jQuery('#error').text("")
+                        jQuery('#error').css({"background-color": ""});
+                        jQuery.post(window.location.href + '/update_others_score', { 'coverage': jQuery(this).val() });
+                    } else {
+                        jQuery('#others_score').css({"background-color": "#FFE4C4"});
+                        jQuery('#error').text("Score should be between 0 and 100.")
+                        jQuery('#error').css({"background-color": "#FFE4C4"});
+                    }
+                }
+            });
+
             jQuery('#total_closed_defects').change(function () {
                 var totalRaisedDefects = parseFloat(jQuery('#total_raised_defects').val().trim()),
                         unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
                         automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
                         continuousIntegrationWeightedScore = parseFloat(jQuery('#continuous_integration_weighted_score').text().split("%")[0]),
+                        othersWeightedScore = parseFloat(jQuery('#others_weighted_score').text().split("%")[0]),
                         totalClosedDefects = jQuery(this).val().trim(),
                         weightedScore = 0.0,
                         status = 0.0,
@@ -249,7 +288,7 @@
                                 defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').text().split("%")[0]);
                         weightedScore = (parseFloat(defectRemovalWeight) * parseFloat(defectRemovalScore)).toFixed(2);
                         jQuery('#defect_removal_weighted_score').text(weightedScore + '%');
-                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(weightedScore) + parseFloat(continuousIntegrationWeightedScore)).toFixed(2);
+                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(weightedScore) + parseFloat(continuousIntegrationWeightedScore) + parseFloat(othersWeightedScore)).toFixed(2);
                         jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#total_closed_defects').css({"background-color": ""});
@@ -270,6 +309,7 @@
                         unitTestingWeightedScore = parseFloat(jQuery('#unit_testing_weighted_score').text().split("%")[0]),
                         automationTestingWeightedScore = parseFloat(jQuery('#automation_testing_weighted_score').text().split("%")[0]),
                         continuousIntegrationWeightedScore = parseFloat(jQuery('#continuous_integration_weighted_score').text().split("%")[0]),
+                        othersWeightedScore = parseFloat(jQuery('#others_weighted_score').text().split("%")[0]),
                         totalRaisedDefects = jQuery(this).val().trim(),
                         weightedScore = 0.0,
                         status = 0.0,
@@ -286,7 +326,7 @@
                                 defectRemovalWeight = parseFloat(jQuery('#defect_removal_weight').text().split("%")[0]);
                         weightedScore = (parseFloat(defectRemovalWeight) * parseFloat(defectRemovalScore)).toFixed(2);
                         jQuery('#defect_removal_weighted_score').text(weightedScore + '%');
-                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(weightedScore) + parseFloat(continuousIntegrationWeightedScore)).toFixed(2);
+                        status = (parseFloat(unitTestingWeightedScore) + parseFloat(automationTestingWeightedScore) + parseFloat(weightedScore) + parseFloat(continuousIntegrationWeightedScore) + parseFloat(othersWeightedScore)).toFixed(2);
                         jQuery('#status').text(status + '%').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#status-label').removeClass('red yellow green').addClass(statusColor(status));
                         jQuery('#total_raised_defects').css({"background-color": ""});
