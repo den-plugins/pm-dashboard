@@ -17,12 +17,12 @@
           <% if value.custom_field.name == "Others Weight" %>
               <tr>
                 <td><%= text_field_tag value.custom_field.name, @other_weight, :size => "10", :id => "other_weight_label" %></td>
-                <td><%= text_field_tag value.custom_field.name, efficiency_value, :size => "1" %></td>
+                <td><%= text_field_tag value.custom_field.name, efficiency_value, :size => "3" %></td>
               </tr>
           <% else %>
               <tr>
                 <td><%= value.custom_field.name %></td>
-                <td><%= text_field_tag value.custom_field.name, efficiency_value, :size => "1" %></td>
+                <td><%= text_field_tag value.custom_field.name, efficiency_value, :size => "3" %></td>
               </tr>
           <% end %>
       <% end %>
