@@ -13,17 +13,24 @@
 <table>
   <% @project.custom_field_values.each do |value| %>
       <% if (field.include? value.custom_field.name) && value.custom_field.name.downcase.include?("weight") %>
-          <tr>
-            <td><%= value.custom_field.name %></td>
-            <% total_value += selected = value.value.empty? ? 0.0 : value.value.to_f %>
-            <td><%= select_tag value.custom_field.name, options_for_select(incremental_value, selected) %></td>
-          </tr>
+          <% total_value += efficiency_value = value.value.empty? ? 0.0 : value.value.to_f %>
+          <% if value.custom_field.name == "Others Weight" %>
+              <tr>
+                <td><%= text_field_tag value.custom_field.name, @other_weight, :size => "10", :id => "other_weight_label" %></td>
+                <td><%= text_field_tag value.custom_field.name, efficiency_value, :size => "1" %></td>
+              </tr>
+          <% else %>
+              <tr>
+                <td><%= value.custom_field.name %></td>
+                <td><%= text_field_tag value.custom_field.name, efficiency_value, :size => "1" %></td>
+              </tr>
+          <% end %>
       <% end %>
   <% end %>
   <tr></tr>
   <tr>
-    <td><strong>Total Weight</strong></td>
-    <td id="total_value"><%= total_value %></td>
+    <td style="height:70px;"><strong>Total Weight</strong></td>
+    <td id="total_value" style="height:70px;"><%= total_value %></td>
   </tr>
 </table>
 
@@ -32,25 +39,31 @@
         var automationTestingWeight = parseFloat(jQuery('#Automation_Testing_Weight').val().trim()),
                 defectRemovalWeight = parseFloat(jQuery('#Defect_Removal_Weight').val().trim()),
                 continuousIntegrationWeight = parseFloat(jQuery('#Continuous_Integration_Weight').val().trim()),
+                othersWeight = parseFloat(jQuery('#Others_Weight').val().trim()),
                 unitTestingWeight = jQuery(this).val().trim(),
                 total = 0.0;
-
-        total = (parseFloat(automationTestingWeight) + parseFloat(defectRemovalWeight) + parseFloat(continuousIntegrationWeight) + parseFloat(unitTestingWeight)).toFixed(2);
+        if (unitTestingWeight == "") {
+            jQuery('#Unit_Testing_Weight').val(0.0);
+            unitTestingWeight = jQuery(this).val().trim();
+        }
+        total = (parseFloat(automationTestingWeight) + parseFloat(defectRemovalWeight) + parseFloat(continuousIntegrationWeight) + parseFloat(unitTestingWeight) + parseFloat(othersWeight)).toFixed(2);
         jQuery('#total_value').text(total);
-        if (total <= 1) {
+        if (total == 1) {
             jQuery('#Unit_Testing_Weight').css({"background-color": ""});
             jQuery('#Automation_Testing_Weight').css({"background-color": ""});
             jQuery('#Defect_Removal_Weight').css({"background-color": ""});
             jQuery('#Continuous_Integration_Weight').css({"background-color": ""});
+            jQuery('#Others_Weight').css({"background-color": ""});
             jQuery('#error').text("")
             jQuery('#error').css({"background-color": ""});
             jQuery.post(window.location.href + '/update_unit_testing_weight', { 'coverage': jQuery(this).val() });
             jQuery.post(window.location.href + '/update_automation_testing_weight', { 'coverage': jQuery('#Automation_Testing_Weight').val() });
             jQuery.post(window.location.href + '/update_defect_removal_weight', { 'coverage': jQuery('#Defect_Removal_Weight').val() });
             jQuery.post(window.location.href + '/update_continuous_integration_weight', { 'coverage': jQuery('#Continuous_Integration_Weight').val() });
+            jQuery.post(window.location.href + '/update_others_weight', { 'coverage': jQuery('#Others_Weight').val() });
         } else {
             jQuery('#Unit_Testing_Weight').css({"background-color": "#FFE4C4"});
-            jQuery('#error').text("Weight should be between 0 and 1.")
+            jQuery('#error').text("Weights should sum up to 1.0.")
             jQuery('#error').css({"background-color": "#FFE4C4"});
         }
 
@@ -60,25 +73,31 @@
         var unitTestingWeight = parseFloat(jQuery('#Unit_Testing_Weight').val().trim()),
                 defectRemovalWeight = parseFloat(jQuery('#Defect_Removal_Weight').val().trim()),
                 continuousIntegrationWeight = parseFloat(jQuery('#Continuous_Integration_Weight').val().trim()),
+                othersWeight = parseFloat(jQuery('#Others_Weight').val().trim()),
                 automationTestingWeight = jQuery(this).val().trim(),
                 total = 0.0;
-
-        total = (parseFloat(automationTestingWeight) + parseFloat(defectRemovalWeight) + parseFloat(continuousIntegrationWeight) + parseFloat(unitTestingWeight)).toFixed(2);
+        if (automationTestingWeight == "") {
+            jQuery('#Automation_Testing_Weight').val(0.0);
+            automationTestingWeight = jQuery(this).val().trim();
+        }
+        total = (parseFloat(automationTestingWeight) + parseFloat(defectRemovalWeight) + parseFloat(continuousIntegrationWeight) + parseFloat(unitTestingWeight) + parseFloat(othersWeight)).toFixed(2);
         jQuery('#total_value').text(total);
-        if (total <= 1) {
+        if (total == 1) {
             jQuery('#Unit_Testing_Weight').css({"background-color": ""});
             jQuery('#Automation_Testing_Weight').css({"background-color": ""});
             jQuery('#Defect_Removal_Weight').css({"background-color": ""});
             jQuery('#Continuous_Integration_Weight').css({"background-color": ""});
+            jQuery('#Others_Weight').css({"background-color": ""});
             jQuery('#error').text("")
             jQuery('#error').css({"background-color": ""});
             jQuery.post(window.location.href + '/update_automation_testing_weight', { 'coverage': jQuery(this).val() });
             jQuery.post(window.location.href + '/update_defect_removal_weight', { 'coverage': jQuery('#Defect_Removal_Weight').val() });
             jQuery.post(window.location.href + '/update_continuous_integration_weight', { 'coverage': jQuery('#Continuous_Integration_Weight').val() });
             jQuery.post(window.location.href + '/update_unit_testing_weight', { 'coverage': jQuery('#Unit_Testing_Weight').val() });
+            jQuery.post(window.location.href + '/update_others_weight', { 'coverage': jQuery('#Others_Weight').val() });
         } else {
             jQuery('#Automation_Testing_Weight').css({"background-color": "#FFE4C4"});
-            jQuery('#error').text("Weight should be between 0 and 1.")
+            jQuery('#error').text("Weights should sum up to 1.0.")
             jQuery('#error').css({"background-color": "#FFE4C4"});
         }
     });
@@ -87,25 +106,31 @@
         var unitTestingWeight = parseFloat(jQuery('#Unit_Testing_Weight').val().trim()),
                 automationTestingWeight = parseFloat(jQuery('#Automation_Testing_Weight').val().trim()),
                 continuousIntegrationWeight = parseFloat(jQuery('#Continuous_Integration_Weight').val().trim()),
+                othersWeight = parseFloat(jQuery('#Others_Weight').val().trim()),
                 defectRemovalWeight = jQuery(this).val().trim(),
                 total = 0.0;
-
-        total = (parseFloat(automationTestingWeight) + parseFloat(defectRemovalWeight) + parseFloat(continuousIntegrationWeight) + parseFloat(unitTestingWeight)).toFixed(2);
+        if (defectRemovalWeight == "") {
+            jQuery('#Defect_Removal_Weight').val(0.0);
+            defectRemovalWeight = jQuery(this).val().trim();
+        }
+        total = (parseFloat(automationTestingWeight) + parseFloat(defectRemovalWeight) + parseFloat(continuousIntegrationWeight) + parseFloat(unitTestingWeight) + parseFloat(othersWeight)).toFixed(2);
         jQuery('#total_value').text(total);
-        if (total <= 1) {
+        if (total == 1) {
             jQuery('#Unit_Testing_Weight').css({"background-color": ""});
             jQuery('#Automation_Testing_Weight').css({"background-color": ""});
             jQuery('#Defect_Removal_Weight').css({"background-color": ""});
             jQuery('#Continuous_Integration_Weight').css({"background-color": ""});
+            jQuery('#Others_Weight').css({"background-color": ""});
             jQuery('#error').text("")
             jQuery('#error').css({"background-color": ""});
             jQuery.post(window.location.href + '/update_defect_removal_weight', { 'coverage': jQuery(this).val() });
             jQuery.post(window.location.href + '/update_automation_testing_weight', { 'coverage': jQuery('#Automation_Testing_Weight').val() });
             jQuery.post(window.location.href + '/update_continuous_integration_weight', { 'coverage': jQuery('#Continuous_Integration_Weight').val() });
             jQuery.post(window.location.href + '/update_unit_testing_weight', { 'coverage': jQuery('#Unit_Testing_Weight').val() });
+            jQuery.post(window.location.href + '/update_others_weight', { 'coverage': jQuery('#Others_Weight').val() });
         } else {
             jQuery('#Defect_Removal_Weight').css({"background-color": "#FFE4C4"});
-            jQuery('#error').text("Weight should be between 0 and 1.")
+            jQuery('#error').text("Weights should sum up to 1.0.")
             jQuery('#error').css({"background-color": "#FFE4C4"});
         }
     });
@@ -114,26 +139,70 @@
         var unitTestingWeight = parseFloat(jQuery('#Unit_Testing_Weight').val().trim()),
                 automationTestingWeight = parseFloat(jQuery('#Automation_Testing_Weight').val().trim()),
                 defectRemovalWeight = parseFloat(jQuery('#Defect_Removal_Weight').val().trim()),
+                othersWeight = parseFloat(jQuery('#Others_Weight').val().trim()),
                 continuousIntegrationWeight = jQuery(this).val().trim(),
                 total = 0.0;
-
-        total = (parseFloat(automationTestingWeight) + parseFloat(defectRemovalWeight) + parseFloat(continuousIntegrationWeight) + parseFloat(unitTestingWeight)).toFixed(2);
+        if (continuousIntegrationWeight == "") {
+            jQuery('#Continuous_Integration_Weight').val(0.0);
+            continuousIntegrationWeight = jQuery(this).val().trim();
+        }
+        total = (parseFloat(automationTestingWeight) + parseFloat(defectRemovalWeight) + parseFloat(continuousIntegrationWeight) + parseFloat(unitTestingWeight) + parseFloat(othersWeight)).toFixed(2);
         jQuery('#total_value').text(total);
-        if (total <= 1) {
+        if (total == 1) {
             jQuery('#Unit_Testing_Weight').css({"background-color": ""});
             jQuery('#Automation_Testing_Weight').css({"background-color": ""});
             jQuery('#Defect_Removal_Weight').css({"background-color": ""});
             jQuery('#Continuous_Integration_Weight').css({"background-color": ""});
+            jQuery('#Others_Weight').css({"background-color": ""});
             jQuery('#error').text("")
             jQuery('#error').css({"background-color": ""});
             jQuery.post(window.location.href + '/update_continuous_integration_weight', { 'coverage': jQuery(this).val() });
             jQuery.post(window.location.href + '/update_defect_removal_weight', { 'coverage': jQuery('#Defect_Removal_Weight').val() });
             jQuery.post(window.location.href + '/update_automation_testing_weight', { 'coverage': jQuery('#Automation_Testing_Weight').val() });
             jQuery.post(window.location.href + '/update_unit_testing_weight', { 'coverage': jQuery('#Unit_Testing_Weight').val() });
+            jQuery.post(window.location.href + '/update_others_weight', { 'coverage': jQuery('#Others_Weight').val() });
         } else {
             jQuery('#Continuous_Integration_Weight').css({"background-color": "#FFE4C4"});
-            jQuery('#error').text("Weight should be between 0 and 1.")
+            jQuery('#error').text("Weights should sum up to 1.0.")
             jQuery('#error').css({"background-color": "#FFE4C4"});
         }
     });
+
+    jQuery('#Others_Weight').change(function () {
+        var unitTestingWeight = parseFloat(jQuery('#Unit_Testing_Weight').val().trim()),
+                automationTestingWeight = parseFloat(jQuery('#Automation_Testing_Weight').val().trim()),
+                defectRemovalWeight = parseFloat(jQuery('#Defect_Removal_Weight').val().trim()),
+                continuousIntegrationWeight = parseFloat(jQuery('#Continuous_Integration_Weight').val().trim()),
+                othersWeight = jQuery(this).val().trim(),
+                total = 0.0;
+        if (othersWeight == "") {
+            jQuery('#Others_Weight').val(0.0);
+            othersWeight = jQuery(this).val().trim();
+        }
+        total = (parseFloat(automationTestingWeight) + parseFloat(defectRemovalWeight) + parseFloat(continuousIntegrationWeight) + parseFloat(unitTestingWeight) + parseFloat(othersWeight)).toFixed(2);
+        jQuery('#total_value').text(total);
+        if (total == 1) {
+            jQuery('#Unit_Testing_Weight').css({"background-color": ""});
+            jQuery('#Automation_Testing_Weight').css({"background-color": ""});
+            jQuery('#Defect_Removal_Weight').css({"background-color": ""});
+            jQuery('#Continuous_Integration_Weight').css({"background-color": ""});
+            jQuery('#Others_Weight').css({"background-color": ""});
+            jQuery('#error').text("")
+            jQuery('#error').css({"background-color": ""});
+            jQuery.post(window.location.href + '/update_continuous_integration_weight', { 'coverage': jQuery(this).val() });
+            jQuery.post(window.location.href + '/update_defect_removal_weight', { 'coverage': jQuery('#Defect_Removal_Weight').val() });
+            jQuery.post(window.location.href + '/update_automation_testing_weight', { 'coverage': jQuery('#Automation_Testing_Weight').val() });
+            jQuery.post(window.location.href + '/update_unit_testing_weight', { 'coverage': jQuery('#Unit_Testing_Weight').val() });
+            jQuery.post(window.location.href + '/update_others_weight', { 'coverage': jQuery('#Others_Weight').val() });
+        } else {
+            jQuery('#Others_Weight').css({"background-color": "#FFE4C4"});
+            jQuery('#error').text("Weights should sum up to 1.0.")
+            jQuery('#error').css({"background-color": "#FFE4C4"});
+        }
+    });
+
+    jQuery('#other_weight_label').change(function () {
+        jQuery.post(window.location.href + '/update_weight_label', { 'label': jQuery('#other_weight_label').val() });
+    });
+
 </script>

@@ -2,7 +2,8 @@ class EfficiencyController < PmController
   before_filter :get_project, :only => [:index, :update_test_code_coverage, :update_unit_testing_weight, :update_unit_testing_score,
                                         :update_automation_testing_weight, :update_automation_testing_score, :update_defect_removal_weight,
                                         :update_total_closed_defects, :update_total_raised_defects, :update_continuous_integration_score,
-                                        :update_continuous_integration_weight, :setting, :load_chart]
+                                        :update_continuous_integration_weight, :update_weight_label, :update_others_weight, :update_others_score,
+                                        :setting, :load_chart]
   before_filter :authorize
   before_filter :role_check_client
 
@@ -113,8 +114,57 @@ class EfficiencyController < PmController
     head :ok
   end
 
-  def setting
+  def update_others_weight
+    if coverage_field = ProjectCustomField.find_by_name('Others Weight')
+      if coverage_value = @project.custom_values.detect { |v| v.custom_field.name == 'Others Weight' }
+        coverage_value.update_attribute :value, params[:coverage].to_f.to_s
+      else
+        @project.custom_values.build(:custom_field => coverage_field, :value => params[:coverage].to_f.to_s).save
+      end
+    end
+    head :ok
+  end
 
+  def update_others_score
+    if coverage_field = ProjectCustomField.find_by_name('Others Score')
+      if coverage_value = @project.custom_values.detect { |v| v.custom_field.name == 'Others Score' }
+        coverage_value.update_attribute :value, params[:coverage].to_f.to_s
+      else
+        @project.custom_values.build(:custom_field => coverage_field, :value => params[:coverage].to_f.to_s).save
+      end
+    end
+    head :ok
+  end
+
+  def update_weight_label
+    if FileTest.exists?("#{RAILS_ROOT}/config/efficiency_setting.yml")
+      efficiency_file = (file=YAML.load(File.open("#{RAILS_ROOT}/config/efficiency_setting.yml"))) ? file : {}
+    else
+      efficiency_file = {}
+    end
+    weight = {}
+    updated_at = Time.now
+    weight_label = weight
+    weight_label["other_weight"] = params[:label].to_s
+    weight_label["updated_at"] = updated_at
+
+    weight = weight_label
+    efficiency_file["projects_#{@project.id}"] = {"weight" => weight}
+    File.open("#{RAILS_ROOT}/config/efficiency_setting.yml", "w") do |out|
+      YAML.dump(efficiency_file, out)
+    end
+    head :ok
+  end
+
+  def setting
+    @other_weight = ""
+    if FileTest.exists?("#{RAILS_ROOT}/config/efficiency_setting.yml")
+      if file = YAML.load(File.open("#{RAILS_ROOT}/config/efficiency_setting.yml"))
+        if efficiency_file = file["projects_#{@project.id}"]
+          @other_weight = efficiency_file["weight"]["other_weight"]
+        end
+      end
+    end
   end
 
   def load_chart
