@@ -117,7 +117,7 @@ class TimeLoggingController < PmController
             end
           end
 
-          if allocation && ![0,6].include?(day.wday) && !(holiday && holiday.holiday_on_member_location?(res.user))
+          if allocation && ![0,6].include?(day.wday) || allocation && (holiday && holiday.holiday_on_member_location?(res.user))
             case allocation.resource_allocation
             when 100
               max_hours += 8
