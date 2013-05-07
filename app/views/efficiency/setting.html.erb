@@ -11,6 +11,12 @@
 <h2>Settings</h2>
 <% total_value = 0.0 %>
 <table>
+  <thead>
+  <tr>
+    <td></td>
+    <td><strong>Weight</strong></td>
+  </tr>
+  </thead>
   <% @project.custom_field_values.each do |value| %>
       <% if (field.include? value.custom_field.name) && value.custom_field.name.downcase.include?("weight") %>
           <% total_value += efficiency_value = value.value.empty? ? 0.0 : value.value.to_f %>
@@ -21,7 +27,7 @@
               </tr>
           <% else %>
               <tr>
-                <td><%= value.custom_field.name %></td>
+                <td><%= value.custom_field.name.gsub!(/Weight/, '') %></td>
                 <td><%= text_field_tag value.custom_field.name, efficiency_value, :size => "3" %></td>
               </tr>
           <% end %>
