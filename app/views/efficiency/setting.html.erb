@@ -197,11 +197,11 @@
             jQuery('#Others_Weight').css({"background-color": ""});
             jQuery('#error').text("")
             jQuery('#error').css({"background-color": ""});
-            jQuery.post(window.location.href + '/update_continuous_integration_weight', { 'coverage': jQuery(this).val() });
+            jQuery.post(window.location.href + '/update_continuous_integration_weight', { 'coverage': jQuery("#Continuous_Integration_").val() });
             jQuery.post(window.location.href + '/update_defect_removal_weight', { 'coverage': jQuery('#Defect_Removal_').val() });
             jQuery.post(window.location.href + '/update_automation_testing_weight', { 'coverage': jQuery('#Automation_Testing_').val() });
             jQuery.post(window.location.href + '/update_unit_testing_weight', { 'coverage': jQuery('#Unit_Testing_').val() });
-            jQuery.post(window.location.href + '/update_others_weight', { 'coverage': jQuery('#Others_Weight').val() });
+            jQuery.post(window.location.href + '/update_others_weight', { 'coverage': jQuery(this).val() });
         } else {
             jQuery('#Others_Weight').css({"background-color": "#FFE4C4"});
             jQuery('#error').text("Weights should sum up to 1.0.")
