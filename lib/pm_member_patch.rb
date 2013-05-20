@@ -78,6 +78,41 @@ module Pm
         rate ? [days, cost] : days
       end
 
+      def days_and_cost_with_sow_rate(week, count_shadow=true, acctg='Billable')
+        days, cost = 0, 0
+        allocations = resource_allocations
+        unless allocations.empty?
+          week.each do |day|
+            unless day.wday.eql?(0) || day.wday.eql?(6)
+              allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
+              holiday = allocation.nil? ? 0 : detect_holidays_in_week(allocation.location, day)
+              if allocation and !allocation.resource_allocation.eql?(0) and holiday.eql?(0)
+                if count_shadow
+                  days += (1 * (allocation.resource_allocation.to_f/100).to_f)
+                  cost += 1 * (allocation.sow_rate.to_f * 8)
+                else
+                  case acctg.downcase
+                    when 'billable'
+                      # count only days where member is Billable
+                      days += (1 * (allocation.resource_allocation.to_f/100).to_f) if allocation.resource_type.eql?(0)
+                      cost += 1 * (allocation.sow_rate.to_f * 8)
+                    when 'non-billable'
+                      #count only days where member is Non-billable
+                      days += (1 * (allocation.resource_allocation.to_f/100).to_f) if allocation.resource_type.eql?(1)
+                      cost += 1 * (allocation.sow_rate.to_f * 8)
+                    when 'both'
+                      # count days where member is not a shadow
+                      days += (1 * (allocation.resource_allocation.to_f/100).to_f) if allocation.resource_type.eql?(0) or allocation.resource_type.eql?(1)
+                      cost += 1 * (allocation.sow_rate.to_f * 8)
+                  end
+                end
+              end
+            end
+          end
+        end
+        [days, cost]
+      end
+
 
       def days_and_cost_modified(week, rate, count_shadow=true, acctg='Billable')
         days, cost = 0, 0
@@ -257,6 +292,33 @@ module Pm
             spent.sum{|s| s.spent_on.wday.eql?(0) || s.spent_on.wday.eql?(6) ? 0 : s.hours}
           end
         end
+      end
+
+      def actual_cost_per_resource(from, to, acctg=nil, include_weekends=false, include_shadow=false)
+        if from && to
+          spent = time_entries.find(:all, :select => "hours, spent_on", :include => [:issue],
+                                    :conditions => ["#{TimeEntry.table_name}.project_id = ? and spent_on between ? and ?", project_id, from, to])
+          spent = spent.select {|s| s.issue && s.issue.accounting.name.casecmp(acctg) == 0} if acctg
+          if !include_shadow
+            shadow = resource_allocations.find(:all, :conditions=>{:resource_type=>2}).select{|ra| !((ra.start_date..ra.end_date).to_a & (from..to).to_a).empty?}
+            shadow.each do |s|
+              spent.reject!{|t| (s.start_date..s.end_date).include? t.spent_on}
+            end
+          end
+          spent_cost_total = 0.00
+          if include_weekends
+            spent.each do |s|
+              alloc = resource_allocations.find(:first, :conditions=>["start_date <= ? and end_date >= ?", s.spent_on, s.spent_on])
+              spent_cost_total += s.hours * alloc.sow_rate.to_f if alloc && alloc.sow_rate
+            end
+          else
+            spent.each do |s|
+              alloc = resource_allocations.find(:first, :conditions=>["spent_on between ? and ?", s.start_date, s.end_date])
+              spent_cost_total += s.spent_on.wday.eql?(0) || s.spent_on.wday.eql?(6) ? 0 : s.hours * alloc.sow_rate.to_f if alloc
+            end
+          end
+        end
+        spent_cost_total
       end
 
       def spent_cost(from, to, acctg=nil)
