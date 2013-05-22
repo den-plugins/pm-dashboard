@@ -186,17 +186,22 @@ module Pm
       def capped_days_report(week, rate = nil, count_shadow=true, acctg='Billable')
         days = 0
         allocations = resource_allocations
+        bm = project.billing_model
         unless allocations.empty?
-          week.each do |day|
-            unless day.wday.eql?(0) || day.wday.eql?(6)
-              allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
-              holiday = allocation.nil? ? 0 : detect_holidays_in_week(allocation.location, day)
-              if allocation and !allocation.resource_allocation.eql?(0) and holiday.eql?(0)
-                div = (allocation.resource_allocation > 100 ? round_up(allocation.resource_allocation) : 100)
-                  case acctg.downcase
-                    when 'billable'
-                      days += (1 * (allocation.resource_allocation.to_f/div).to_f) if allocation.resource_type.eql?(0) && project.project_type == "Development"
-                  end
+          if bm == "T and M (Man-month)" && allocations.detect { |alloc| alloc.start_date <= week.first.beginning_of_month }
+            days = 20
+          else
+            week.each do |day|
+              unless day.wday.eql?(0) || day.wday.eql?(6)
+                allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
+                holiday = allocation.nil? ? 0 : detect_holidays_in_week(allocation.location, day)
+                if allocation and !allocation.resource_allocation.eql?(0) and holiday.eql?(0)
+                  div = (allocation.resource_allocation > 100 ? round_up(allocation.resource_allocation) : 100)
+                    case acctg.downcase
+                      when 'billable'
+                        days += (1 * (allocation.resource_allocation.to_f/div).to_f) if allocation.resource_type.eql?(0) && project.project_type == "Development"
+                    end
+                end
               end
             end
           end
@@ -207,16 +212,21 @@ module Pm
       def capped_cost_report(week, rate = nil, count_shadow=true, acctg='Billable')
         cost = 0
         allocations = resource_allocations
+        bm = project.billing_model
         unless allocations.empty?
-          week.each do |day|
-            unless day.wday.eql?(0) || day.wday.eql?(6)
-              allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
-              holiday = allocation.nil? ? 0 : detect_holidays_in_week(allocation.location, day)
-              if allocation and !allocation.resource_allocation.eql?(0) and holiday.eql?(0)
-                div = (allocation.resource_allocation > 100 ? round_up(allocation.resource_allocation) : 100)
-                case acctg.downcase
-                  when 'billable'
-                    cost += allocation.sow_rate.to_f * (8 * (allocation.resource_allocation.to_f/div).to_f) if allocation.sow_rate
+          if bm == "T and M (Man-month)" && allocation = allocations.detect { |alloc| alloc.start_date <= week.first.beginning_of_month }
+            cost = 160 * allocation.sow_rate
+          else
+            week.each do |day|
+              unless day.wday.eql?(0) || day.wday.eql?(6)
+                allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
+                holiday = allocation.nil? ? 0 : detect_holidays_in_week(allocation.location, day)
+                if allocation and !allocation.resource_allocation.eql?(0) and holiday.eql?(0)
+                  div = (allocation.resource_allocation > 100 ? round_up(allocation.resource_allocation) : 100)
+                  case acctg.downcase
+                    when 'billable'
+                      cost += allocation.sow_rate.to_f * (8 * (allocation.resource_allocation.to_f/div).to_f) if allocation.sow_rate
+                  end
                 end
               end
             end
