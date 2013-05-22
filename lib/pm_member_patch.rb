@@ -215,7 +215,8 @@ module Pm
         bm = project.billing_model
         unless allocations.empty?
           if bm == "T and M (Man-month)" && allocation = allocations.detect { |alloc| alloc.start_date <= week.first.beginning_of_month }
-            cost = 160 * allocation.sow_rate
+            res_sow_rate = allocation.sow_rate ? allocation.sow_rate.to_f : 0.00
+            cost = 160 * res_sow_rate
           else
             week.each do |day|
               unless day.wday.eql?(0) || day.wday.eql?(6)
