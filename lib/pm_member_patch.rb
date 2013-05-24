@@ -153,7 +153,11 @@ module Pm
       def capped_days_and_cost(week, rate = nil, count_shadow=true, acctg='Billable')
         days, cost = 0, 0
         allocations = resource_allocations
+        bm = Project.find_by_id(project.id).billing_model
         unless allocations.empty?
+          if bm == "T and M (Man-month)" && allocations.detect { |alloc| alloc.start_date <= week.first }
+            days = 20
+          else
           week.each do |day|
             unless day.wday.eql?(0) || day.wday.eql?(6)
               allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
@@ -177,6 +181,7 @@ module Pm
                 end
               end
             end
+          end
           end
         end
         cost = days * (rate.to_f)
