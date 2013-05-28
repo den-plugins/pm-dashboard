@@ -151,20 +151,16 @@ module Pm
       
       # allocation capped to 100%
       def capped_days_and_cost(week, rate = nil, count_shadow=true, acctg='Billable')
-        from = week.first
-        to = week.last
         days, cost = 0, 0
         allocations = resource_allocations
         bm = Project.find_by_id(project.id).billing_model
         h_date, r_date = to_date_safe(user.hired_date), to_date_safe(user.resignation_date)
-        unless (h_date && h_date >= to ) || (r_date && r_date <= from )
-          to = r_date if r_date && r_date < to
-          from = h_date if h_date && h_date > from
+        unless (h_date && h_date >= week.last ) || (r_date && r_date <= week.first )
           unless allocations.empty?
-            if bm == "T and M (Man-month)" && allocations.detect { |alloc| alloc.start_date <= from.beginning_of_month && alloc.resource_type.eql?(0)}
+            if bm == "T and M (Man-month)" && allocations.detect { |alloc| alloc.start_date <= week.first && alloc.resource_type.eql?(0)}
               days = 20
             else
-            (from..to).each do |day|
+            week.each do |day|
               unless day.wday.eql?(0) || day.wday.eql?(6)
                 allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
                 holiday = allocation.nil? ? 0 : detect_holidays_in_week(allocation.location, day)
@@ -196,20 +192,16 @@ module Pm
       end
 
       def capped_days_report(week, rate = nil, count_shadow=true, acctg='Billable')
-        from = week.first
-        to = week.last
         days = 0
         allocations = resource_allocations
         bm = project.billing_model
         h_date, r_date = to_date_safe(user.hired_date), to_date_safe(user.resignation_date)
-        unless (h_date && h_date >= to ) || (r_date && r_date <= from )
-          to = r_date if r_date && r_date < to
-          from = h_date if h_date && h_date > from
+        unless (h_date && h_date >= week.last ) || (r_date && r_date <= week.first )
           unless allocations.empty?
-            if bm == "T and M (Man-month)" && allocations.detect { |alloc| alloc.start_date <= from.beginning_of_month && alloc.resource_type.eql?(0) }
+            if bm == "T and M (Man-month)" && allocations.detect { |alloc| alloc.start_date <= week.first.beginning_of_month && alloc.resource_type.eql?(0) }
               days = 20
             else
-              (from..to).each do |day|
+              week.each do |day|
                 unless day.wday.eql?(0) || day.wday.eql?(6)
                   allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
                   holiday = allocation.nil? ? 0 : detect_holidays_in_week(allocation.location, day)
