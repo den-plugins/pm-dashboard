@@ -157,7 +157,7 @@ module Pm
         h_date, r_date = to_date_safe(user.hired_date), to_date_safe(user.resignation_date)
         unless (h_date && h_date >= week.last ) || (r_date && r_date <= week.first )
           unless allocations.empty?
-            if bm == "T and M (Man-month)" && allocations.detect { |alloc| alloc.start_date <= week.first && alloc.resource_type.eql?(0)}
+            if bm == "T and M (Man-month)" && allocations.detect { |alloc| alloc.start_date <= week.first.end_of_month && alloc.end_date >= week.first.beginning_of_month && alloc.start_date <= week.first.beginning_of_month && alloc.resource_type.eql?(0) && alloc.resource_allocation == 100 }
               days = 20
             else
             week.each do |day|
@@ -198,7 +198,7 @@ module Pm
         h_date, r_date = to_date_safe(user.hired_date), to_date_safe(user.resignation_date)
         unless (h_date && h_date >= week.last ) || (r_date && r_date <= week.first )
           unless allocations.empty?
-            if bm == "T and M (Man-month)" && allocations.detect { |alloc| alloc.start_date <= week.first.beginning_of_month && alloc.resource_type.eql?(0) }
+            if bm == "T and M (Man-month)" && allocations.detect { |alloc| alloc.start_date <= week.first.end_of_month && alloc.end_date >= week.first.beginning_of_month && alloc.start_date <= week.first.beginning_of_month && alloc.resource_type.eql?(0) && alloc.resource_allocation == 100 }
               days = 20
             else
               week.each do |day|
@@ -227,7 +227,7 @@ module Pm
         h_date, r_date = to_date_safe(user.hired_date), to_date_safe(user.resignation_date)
         unless (h_date && h_date >= week.last ) || (r_date && r_date <= week.first )
           unless allocations.empty?
-            if bm == "T and M (Man-month)" && allocation = allocations.detect { |alloc| alloc.start_date <= week.first.beginning_of_month }
+            if bm == "T and M (Man-month)" && allocation = allocations.detect { |alloc| alloc.start_date <= week.first.end_of_month && alloc.end_date >= week.first.beginning_of_month && alloc.start_date <= week.first.beginning_of_month && alloc.resource_type.eql?(0) && alloc.resource_allocation == 100 }
               res_sow_rate = allocation.sow_rate ? allocation.sow_rate.to_f : 0.00
               cost = 160 * res_sow_rate
             else
