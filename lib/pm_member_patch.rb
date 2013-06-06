@@ -235,6 +235,9 @@ module Pm
                     case acctg.downcase
                       when 'billable'
                         days += (1 * (allocation.resource_allocation.to_f/div).to_f) if allocation.resource_type.eql?(0) && project.project_type == "Development"
+                      when 'both'
+                        # count days where member is not a shadow
+                        days += (1 * (allocation.resource_allocation.to_f/div).to_f) if allocation.resource_type.eql?(0) or allocation.resource_type.eql?(1) && project.project_type == "Development"
                     end
                   end
                 end
