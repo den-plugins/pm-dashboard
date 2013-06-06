@@ -220,6 +220,30 @@ module Pm
         days
       end
 
+      def capped_days_weekly_report(week, rate = nil, count_shadow=true, acctg='Billable')
+        days = 0
+        allocations = resource_allocations
+        h_date, r_date = to_date_safe(user.hired_date), to_date_safe(user.resignation_date)
+        unless (h_date && h_date >= week.last ) || (r_date && r_date <= week.first )
+          unless allocations.empty?
+              week.each do |day|
+                unless day.wday.eql?(0) || day.wday.eql?(6)
+                  allocation = allocations.detect{ |a| a.start_date <= day && a.end_date >= day}
+                  holiday = allocation.nil? ? 0 : detect_holidays_in_week(allocation.location, day)
+                  if allocation and !allocation.resource_allocation.eql?(0) and holiday.eql?(0)
+                    div = (allocation.resource_allocation > 100 ? round_up(allocation.resource_allocation) : 100)
+                    case acctg.downcase
+                      when 'billable'
+                        days += (1 * (allocation.resource_allocation.to_f/div).to_f) if allocation.resource_type.eql?(0) && project.project_type == "Development"
+                    end
+                  end
+                end
+              end
+          end
+        end
+        days
+      end
+
       def capped_cost_report(week, rate = nil, count_shadow=true, acctg='Billable')
         cost = 0
         allocations = resource_allocations
