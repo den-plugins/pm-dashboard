@@ -151,14 +151,15 @@ module Pm
       
       # allocation capped to 100%
       def capped_days_and_cost(week, rate = nil, count_shadow=true, acctg='Billable')
-        days, cost = 0, 0
+        days, cost, div = 0, 0, 0
         allocations = resource_allocations
         bm = Project.find_by_id(project.id).billing_model
         h_date, r_date = to_date_safe(user.hired_date), to_date_safe(user.resignation_date)
         unless (h_date && h_date >= week.last ) || (r_date && r_date <= week.first )
           unless allocations.empty?
-            if bm == "T and M (Man-month)" && allocations.detect { |alloc| alloc.start_date <= week.first.end_of_month && alloc.end_date >= week.first.beginning_of_month && alloc.start_date <= week.first.beginning_of_month && alloc.resource_type.eql?(0) && alloc.resource_allocation == 100 }
-              days = 20
+            if bm == "T and M (Man-month)" && allocation = allocations.detect { |alloc| alloc.start_date <= week.first.end_of_month && alloc.end_date >= week.first.beginning_of_month && alloc.start_date <= week.first.beginning_of_month && alloc.resource_type.eql?(0) }
+              div = (allocation.resource_allocation.to_f/100.00).to_f
+              days = 20*div if div > 0
             else
             week.each do |day|
               unless day.wday.eql?(0) || day.wday.eql?(6)
@@ -192,14 +193,15 @@ module Pm
       end
 
       def capped_days_report(week, rate = nil, count_shadow=true, acctg='Billable')
-        days = 0
+        days, div = 0, 0
         allocations = resource_allocations
         bm = project.billing_model
         h_date, r_date = to_date_safe(user.hired_date), to_date_safe(user.resignation_date)
         unless (h_date && h_date >= week.last ) || (r_date && r_date <= week.first )
           unless allocations.empty?
-            if bm == "T and M (Man-month)" && allocations.detect { |alloc| alloc.start_date <= week.first.end_of_month && alloc.end_date >= week.first.beginning_of_month && alloc.start_date <= week.first.beginning_of_month && alloc.resource_type.eql?(0) && alloc.resource_allocation == 100 }
-              days = 20
+            if bm == "T and M (Man-month)" && allocation = allocations.detect { |alloc| alloc.start_date <= week.first.end_of_month && alloc.end_date >= week.first.beginning_of_month && alloc.start_date <= week.first.beginning_of_month && alloc.resource_type.eql?(0) }
+              div = (allocation.resource_allocation.to_f/100.00).to_f
+              days = 20*div if div > 0
             else
               week.each do |day|
                 unless day.wday.eql?(0) || day.wday.eql?(6)
