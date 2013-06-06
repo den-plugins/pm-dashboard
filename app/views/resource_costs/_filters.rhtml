@@ -9,7 +9,7 @@
         <%= select_tag 'view', options_for_select([[l(:label_week), 'week'], [l(:label_month), 'month']], [l(:label_week), 'week']),
                        :onchange => "this.form.onsubmit();" %>
         <%= l(:label_daily_rate) %>:
-        <%= select_tag 'rate', options_for_select([['Internal Rate', 'internal_rate'], ['SOW Rate', 'sow_rate']], ['Internal Rate', 'internal_rate']),
+        <%= select_tag 'rate', options_for_select([['Internal Rate', 'internal_rate'], ['SOW Rate', 'sow_rate']], ['SOW Rate', 'sow_rate']),
                        :onchange => "this.form.onsubmit();" %>
       </p>
   <% end %>
