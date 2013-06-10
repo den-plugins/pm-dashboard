@@ -157,7 +157,8 @@ module Pm
         h_date, r_date = to_date_safe(user.hired_date), to_date_safe(user.resignation_date)
         unless (h_date && h_date >= week.last ) || (r_date && r_date <= week.first )
           unless allocations.empty?
-            if bm == "T and M (Man-month)" && allocation = allocations.detect { |alloc| alloc.start_date <= week.first.end_of_month && alloc.end_date >= week.first.beginning_of_month && alloc.start_date <= week.first.beginning_of_month && alloc.resource_type.eql?(0) }
+            allocation = allocations.detect { |alloc| alloc.start_date <= week.first.end_of_month && alloc.end_date >= week.first.beginning_of_month && alloc.start_date <= week.first.beginning_of_month && alloc.resource_type.eql?(0) }
+            if bm == "T and M (Man-month)" && allocation && (allocation.end_date - week.first.beginning_of_month) >= (user.available_hours(week.first, week.last, user.location)/8)
               div = (allocation.resource_allocation.to_f/100.00).to_f
               days = 20*div if div > 0
             else
@@ -199,7 +200,9 @@ module Pm
         h_date, r_date = to_date_safe(user.hired_date), to_date_safe(user.resignation_date)
         unless (h_date && h_date >= week.last ) || (r_date && r_date <= week.first )
           unless allocations.empty?
-            if bm == "T and M (Man-month)" && allocation = allocations.detect { |alloc| alloc.start_date <= week.first.end_of_month && alloc.end_date >= week.first.beginning_of_month && alloc.start_date <= week.first.beginning_of_month && alloc.resource_type.eql?(0) }
+            allocation = allocations.detect { |alloc| alloc.start_date <= week.first.end_of_month && alloc.end_date >= week.first.beginning_of_month && alloc.start_date <= week.first.beginning_of_month && alloc.resource_type.eql?(0) }
+            if bm == "T and M (Man-month)" && allocation &&
+                (allocation.end_date - week.first.beginning_of_month) >= (user.available_hours(week.first, week.last, user.location)/8)
               div = (allocation.resource_allocation.to_f/100.00).to_f
               days = 20*div if div > 0
             else
@@ -256,7 +259,9 @@ module Pm
         h_date, r_date = to_date_safe(user.hired_date), to_date_safe(user.resignation_date)
         unless (h_date && h_date >= week.last ) || (r_date && r_date <= week.first )
           unless allocations.empty?
-            if bm == "T and M (Man-month)" && allocation = allocations.detect { |alloc| alloc.start_date <= week.first.end_of_month && alloc.end_date >= week.first.beginning_of_month && alloc.start_date <= week.first.beginning_of_month && alloc.resource_type.eql?(0) && alloc.resource_allocation == 100 }
+            allocation = allocations.detect { |alloc| alloc.start_date <= week.first.end_of_month && alloc.end_date >= week.first.beginning_of_month && alloc.start_date <= week.first.beginning_of_month && alloc.resource_type.eql?(0) && alloc.resource_allocation == 100 }
+            if bm == "T and M (Man-month)" && allocation &&
+                (allocation.end_date - week.first.beginning_of_month) >= (user.available_hours(week.first, week.last, user.location)/8)
               res_sow_rate = allocation.sow_rate ? allocation.sow_rate.to_f : 0.00
               cost = 160 * res_sow_rate
             else
@@ -268,7 +273,7 @@ module Pm
                     div = (allocation.resource_allocation > 100 ? round_up(allocation.resource_allocation) : 100)
                     case acctg.downcase
                       when 'billable'
-                        cost += allocation.sow_rate.to_f * (8 * (allocation.resource_allocation.to_f/div).to_f) if allocation.sow_rate
+                        cost += allocation.sow_rate.to_f * (8 * (allocation.resource_allocation.to_f/div).to_f) if allocation.sow_rate && allocation.resource_type.eql?(0) && project.project_type == "Development"
                     end
                   end
                 end
