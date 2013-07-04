@@ -133,7 +133,7 @@ class PmDashboardsController < PmController
         @billability = file["billability_#{@project.id}"]
       else
         @billability = {}
-      end
+      end rescue {}
     else
      @billability = {}
     end
