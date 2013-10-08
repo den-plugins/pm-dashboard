@@ -125,6 +125,7 @@ module Pm
               if allocation and !allocation.resource_allocation.eql?(0) and holiday.eql?(0)
                 if count_shadow
                   days += (1 * (allocation.resource_allocation.to_f/100).to_f)
+                  cost += allocation.sow_rate.to_f * (8 * (allocation.resource_allocation.to_f/100).to_f) if rate.eql?('sow_rate')
                 else
                   case acctg.downcase
                     when 'billable'
