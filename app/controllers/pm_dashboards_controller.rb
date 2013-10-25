@@ -50,6 +50,7 @@ class PmDashboardsController < PmController
         @fixed_cost = "none"
       end
     end
+    
     project_id = "billability_#{@project.id}"
     @bill = (@billability ? @billability["total_percent_billability_week"].to_i : 0)
     if @bill < 85
@@ -59,6 +60,24 @@ class PmDashboardsController < PmController
     else
       @code = "green"
     end
+  
+    # --------------------------------------------------------------------------
+    # Get Project Contract Status
+    @project_contracts ||= @project.project_contracts.find(:all, :order => 'effective_to DESC')
+    @effective_date = @project_contracts.first.effective_to
+    @contract_about_to_expire_in_two_weeks = (@project_contracts.first.effective_to + 14.days)
+    
+    if (Date.today < @effective_date)
+      @contract_status_color_code = 'green'
+      @contract_status = 'In Progress'
+    elsif (@contract_about_to_expire_in_two_weeks == Date.today)
+      @contract_status_color_code = 'yellow'
+      @contract_status = 'About to expire'
+    else
+      @contract_status_color_code = 'red'
+      @contract_status = 'Expired'
+    end
+    # --------------------------------------------------------------------------  
   end
 
   def load_chart
