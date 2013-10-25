@@ -7,7 +7,7 @@ module CostMonitoringHelper
   
   def cost_compute_forecasted_cost_without_contingency(week, resources, acctg, project=@project)
     from, to = week.first, week.last
-    bac_amount = resources.sum {|a| a.days_and_cost_with_sow_rate((from..to), false, acctg).last}
+    bac_amount = resources.sum {|a| a.days_and_cost_modified((from..to), 'sow_rate', false, acctg).last}
     total_budget = bac_amount.to_f
   end
   

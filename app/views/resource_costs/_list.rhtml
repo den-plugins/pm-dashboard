@@ -8,15 +8,15 @@
       </th>
       <th height="40px">
         <span style="display: inline-block; width: 50px;">
-        <%= facebox_link_to "Allocate", "#", :onclick => "requestAllocation()", 
+        <%= facebox_link_to "Allocate", "#", :onclick => "requestAllocation()",
             :style => "padding:2px; border: 1px solid #7f7f7f; background-color: #fff; display: none;",
-            :id => "btn_allocate_selected" %> 
+            :id => "btn_allocate_selected" %>
         </span>
-        <%= l(:label_direct_labor) %> 
+        <%= l(:label_direct_labor) %>
       </th>
       <th height="40px" class='daily_rate'><%= l(:label_daily_rate)%></th>
     </tr>
-    
+
     <% @proj_team.each do |member| %>
     <tr class="<%= cycle('even', 'odd', :name => 'members') %>">
       <td style="width:20px">
@@ -25,15 +25,15 @@
       <td>
         <%= facebox_link_to member.name, {:url => {:controller => 'resource_allocations', :action => 'index', :project_id => @project, :member_id => member }} %>
       </td>
-      <% if params[:rate] && params[:rate].eql?('sow_rate') %>
-        <td class='daily_rate'><%= member.resource_allocations && member.resource_allocations.last ? "%0.2f" % daily_rate(member.resource_allocations.last.sow_rate) : 0  %></td>
-      <% else %>
+      <% if params[:rate] && params[:rate].eql?('internal_rate') %>
         <td class='daily_rate'><%= "%0.2f" % daily_rate(member.internal_rate) %></td>
+      <% else %>
+        <td class='daily_rate'><%= member.resource_allocations && member.resource_allocations.last ? "%0.2f" % daily_rate(member.resource_allocations.last.sow_rate) : 0  %></td>
       <% end %>
     </tr>
     <% end %>
     <% reset_cycle('members') %>
-    
+
     <tr>
       <th colspan='2' style='text-align: left;'>Other Direct Costs</th>
       <th class='daily_rate'>Subtotals</th>
