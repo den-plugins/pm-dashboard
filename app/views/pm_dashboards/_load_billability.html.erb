@@ -9,7 +9,7 @@
     <% if @billability %>
     <span id="updated_at" class="contextual">
       <% last_update = @billability['updated_at'] %>
-      <%= "as of #{last_update.strftime('%b %d, %Y %I:%M %p')}" if last_update %>
+      <%= "as of #{Time.parse(last_update).strftime('%b %d, %Y %I:%M %p')}" if last_update %>
     </span>
     <% end %>
   </div>

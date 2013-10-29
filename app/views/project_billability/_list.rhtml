@@ -8,5 +8,5 @@
 
 <script type="text/javascript">
   jQuery("#updated_at").text("");
-  jQuery("#updated_at").text("<%= "as of #{@updated_at.strftime('%b %d, %Y %I:%M %p')}" if @updated_at %>");
+  jQuery("#updated_at").text("<%= "as of #{Time.parse(@updated_at).strftime('%b %d, %Y %I:%M %p')}" if @updated_at %>");
 </script>
