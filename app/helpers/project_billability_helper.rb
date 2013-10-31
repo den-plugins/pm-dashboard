@@ -1,3 +1,5 @@
+require 'json'
+
 module ProjectBillabilityHelper
 
   def compute_labor_hours(week, resources)
@@ -72,5 +74,21 @@ module ProjectBillabilityHelper
     else
       "yellow"
     end
+  end
+
+  def load_billability_file(project_id=nil)
+    billability_json_file = "#{RAILS_ROOT}/config/billability.json"
+    file = {}
+
+    if File.exist?(billability_json_file)
+      contents = File.read(billability_json_file)
+      file     = (contents && contents.length >= 2) ? JSON.parse(contents) : {}
+
+      if project_id
+        file = file["billability_#{project_id}"] || {}
+      end
+    end
+
+    file
   end
 end
