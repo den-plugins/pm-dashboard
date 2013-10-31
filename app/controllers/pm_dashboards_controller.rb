@@ -64,8 +64,9 @@ class PmDashboardsController < PmController
   
     # --------------------------------------------------------------------------
     # Get Project Contract Status
-    @project_contracts ||= @project.project_contracts.find(:all, :order => 'effective_to DESC')
-    @effective_date = @project_contracts.first.effective_to if @project_contracts
+    #@project_contracts ||= @project.project_contracts.find(:all, :order => 'effective_to DESC')
+    @project_contract = ProjectContract.find(:first, :conditions => "project_id = #{@project.id}", :order => "effective_to DESC")
+    @effective_date = @project_contract.effective_to if @project_contract
     @contract_about_to_expire_in_two_weeks = (@effective_date + 14.days)
     
     if (Date.today < @effective_date)
