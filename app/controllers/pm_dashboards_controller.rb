@@ -9,11 +9,12 @@ class PmDashboardsController < PmController
   helper :efficiency
 
   include PmDashboardsHelper
-  
+  include ProjectBillabilityHelper
+
   before_filter :get_project, :only => [:index, :load_chart, :reload_billability, :reload_fixed_cost]
   before_filter :authorize, :only => [:index]
   before_filter :role_check_client, :only => [:index]
-  
+
   def index
     @highlights = @project.weekly_highlights
     @key_risks ||= @project.risks.key
@@ -35,9 +36,9 @@ class PmDashboardsController < PmController
       handler = ProjectBillabilityJob.new(@project.id)
       @job = Delayed::Job.find(:first,
               :conditions => ["handler = ? AND run_at <> ?", "#{handler.to_yaml}", (Time.parse("12am") + 1.day)])
-      load_billability_file
+      @billability = load_billability_file(@project.id)
       enqueue_billability_job(handler) if @billability.nil? || @billability.empty?
-      
+
     end
     if billing_model == "fixed"
       if @project.planned_start_date && (@project.actual_end_date || @project.planned_end_date)
@@ -86,7 +87,7 @@ class PmDashboardsController < PmController
       @burndown_chart = (@current_sprint and BurndownChart.sprint_has_started(@current_sprint.id))? BurndownChart.new(@current_sprint) : nil
     elsif params[:chart] == "billability_chart"
     #@project_resources  = @project.members.select(&:billable?)
-      load_billability_file
+      @billability = load_billability_file(@project.id)
     elsif params[:chart] == "cost_monitoring_chart"
       @cost_budget = params[:cost_budget].to_f
       @cost_forecast = params[:cost_forecast].to_f
@@ -101,18 +102,18 @@ class PmDashboardsController < PmController
     @job = Delayed::Job.find_by_id(params[:job_id])
     if @job.nil?
       if params[:refresh]
-        load_billability_file
+        @billability = load_billability_file(@project.id)
         handler = ProjectBillabilityJob.new(@project.id)
         @job = Delayed::Job.find(:first,
               :conditions => ["handler = ? AND run_at <> ?", "#{handler.to_yaml}", (Time.parse("12am") + 1.day)])
         enqueue_billability_job(handler) if @project.planned_end_date && @project.planned_start_date
       else
-        load_billability_file
+        @billability = load_billability_file(@project.id)
       end
     else
-      load_billability_file
+      @billability = load_billability_file(@project.id)
     end
-    
+
     render :update do |page|
       page.replace :billability_box, :partial => "pm_dashboards/load_billability"
     end
@@ -137,25 +138,13 @@ class PmDashboardsController < PmController
       page.replace :fixed_cost_box, :partial => "pm_dashboards/load_fixed_cost"
     end
   end
-  
+
   private
-  
+
   def get_project
     @project = Project.find(params[:project_id])
     rescue ActiveRecord::RecordNotFound
       render_404
-  end
-
-  def load_billability_file
-    if File.exists?("#{RAILS_ROOT}/config/billability.yml")
-      if file = YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))
-        @billability = file["billability_#{@project.id}"]
-      else
-        @billability = {}
-      end rescue {}
-    else
-     @billability = {}
-    end
   end
 
   def load_fixed_cost_file

@@ -85,22 +85,10 @@ class ProjectBillabilityJob < Struct.new(:project_id)
                 "updated_at" => updated_at}
           billability["billability_#{project.id}"] = billability["billability_#{project.id}"].merge(temp)
         end
-        File.open( "#{RAILS_ROOT}/config/billability.yml", 'w' ) do |out|
-          YAML.dump( billability, out )
+        File.open( "#{RAILS_ROOT}/config/billability.json", 'w' ) do |f|
+          f.write(billability.to_json)
         end
       end
-    end
-  end
-
-  def load_billability_file
-    if File.exists?("#{RAILS_ROOT}/config/billability.yml")
-      if file = YAML.load(File.open("#{RAILS_ROOT}/config/billability.yml"))
-        billability = file
-      else
-        billability = {}
-      end
-    else
-     billability = {}
     end
   end
 end
