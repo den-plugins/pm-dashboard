@@ -66,18 +66,30 @@ class PmDashboardsController < PmController
     # Get Project Contract Status
     #@project_contracts ||= @project.project_contracts.find(:all, :order => 'effective_to DESC')
     @project_contract = ProjectContract.find(:first, :conditions => "project_id = #{@project.id}", :order => "effective_to DESC")
-    @effective_date = @project_contract.effective_to if @project_contract
-    @contract_about_to_expire_in_two_weeks = (@effective_date + 14.days) if @effective_date
-
-    if @effective_date && (Date.today < @effective_date)
-      @contract_status_color_code = 'green'
-      @contract_status = 'In Progress'
-    elsif (@contract_about_to_expire_in_two_weeks && (@contract_about_to_expire_in_two_weeks == Date.today))
-      @contract_status_color_code = 'yellow'
-      @contract_status = 'About to expire'
-    else
+    
+    if @project_contract
+      @effective_date = @project_contract.effective_to
+      @project_contract_status = @project_contract.contract_status
+      @contract_about_to_expire_in_two_weeks = (@effective_date + 14.days) if @effective_date
+    end
+    
+    if @effective_date.nil?
       @contract_status_color_code = 'red'
-      @contract_status = 'Expired'
+      @contract_status = 'No Contract'
+    else 
+      if (@project_contract_status == 1 && Date.today < @effective_date)
+        @contract_status_color_code = 'green'
+        @contract_status = 'In Progress'
+      elsif (@project_contract_status == 1 && (@contract_about_to_expire_in_two_weeks && (@contract_about_to_expire_in_two_weeks == Date.today)))
+        @contract_status_color_code = 'yellow'
+        @contract_status = 'About to expire'
+      elsif (Date.today > @effective_date && @project_contract_status == 1)
+        @contract_status_color_code = 'red'
+        @contract_status = 'Expired'
+      elsif (@project_contract_status == 2)
+        @contract_status_color_code = 'nocolor'
+        @contract_status = 'Completed'
+      end
     end
     # --------------------------------------------------------------------------  
   end

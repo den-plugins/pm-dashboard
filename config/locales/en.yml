@@ -113,6 +113,7 @@ en:
   field_date_closed: Date Closed
   field_days_overdue: Days Overdue
   field_status: Status
+  field_contract_status: Contract Status
   field_pc_type: Type
   field_amount: Amount
   field_effective_from: Effective from
@@ -174,6 +175,7 @@ en:
   label_amount: Amount
   label_description: Description
   label_status: Status
+  label_contract_status: Contract Status
   label_attachments: Attachments
   label_total_amount: Total Amount
   label_effective_from: Effective from

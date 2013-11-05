@@ -3,6 +3,8 @@ class ProjectContract < ActiveRecord::Base
 
   TYPES =  [['Please Select',0],['SOW',1],['CO',2]]
   STATUSES =  [['Please Select',0],['For Sign Off',1],['With Provisional Approval',2],['Signed off',3]]
+  CONTRACT_STATUSES =  [['Please Select',0],['In Progress',1],['Completed',2]]
+
 
   before_save :validate_dates
 
