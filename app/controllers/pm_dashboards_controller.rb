@@ -74,8 +74,8 @@ class PmDashboardsController < PmController
     end
     
     if @effective_date.nil?
-      @contract_status_color_code = 'nocolor'
-      @contract_status = ''
+      @contract_status_color_code = 'red'
+      @contract_status = 'No Contract'
     else 
       if (@project_contract_status == 1 && Date.today < @effective_date)
         @contract_status_color_code = 'green'
