@@ -61,7 +61,7 @@ class PmDashboardsController < PmController
     else
       @code = "green"
     end
-  
+
     # --------------------------------------------------------------------------
     # Get Project Contract Status
     #@project_contracts ||= @project.project_contracts.find(:all, :order => 'effective_to DESC')
@@ -76,7 +76,7 @@ class PmDashboardsController < PmController
     if @effective_date.nil?
       @contract_status_color_code = 'nocolor'
       @contract_status = ''
-    else
+    else 
       if (Date.today < @effective_date)
         @contract_status_color_code = 'green'
         @contract_status = 'In Progress'
